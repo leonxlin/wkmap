@@ -133,6 +133,3 @@ dmypy.json
 
 # project-specific
 data/
-
-# js
-node_modules/
