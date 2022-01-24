@@ -60267,16 +60267,16 @@ return a / b;`;
         return __awaiter(this, void 0, void 0, function* () {
             const raw = yield text("./data/wiki-news-300d-10k-filtered.vec");
             const dsv = dsvFormat(" ");
-            return dsv.parseRows(raw).map((row) => {
+            return dsv.parseRows(raw).map((row, index) => {
                 return {
                     word: row[0],
                     vector: row.slice(1).map((a) => parseFloat(a)),
+                    freqRank: index,
                 };
             });
         });
     }
     getData().then(function (data) {
-        console.log(data.slice(0, 100));
         data = data.slice(0, 1000);
         console.log(tensor(data[0].vector));
         // TODO: consider doing transforms within svg instead of in d3?
@@ -60296,6 +60296,10 @@ return a / b;`;
             .append("g")
             .attr("transform", `translate(${margin.left}, 0)`)
             .call(axisLeft(y));
+        const freqRankToRadius = pow$2()
+            .exponent(0.5)
+            .domain(extent$1(data, (d) => d.freqRank))
+            .range([15, 2]);
         // Add dots
         svg
             .append("g")
@@ -60308,7 +60312,7 @@ return a / b;`;
             .attr("cy", function (d) {
             return y(d.vector[1]);
         })
-            .attr("r", 4)
+            .attr("r", (d) => freqRankToRadius(d.freqRank))
             .style("fill", "#69b3a2")
             .style("opacity", 0.5)
             .on("mouseover", function (event, d) {

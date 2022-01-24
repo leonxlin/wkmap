@@ -30,21 +30,22 @@ const tooltip = d3.select(".tooltip");
 interface Record {
   word: string;
   vector: number[];
+  freqRank: number;
 }
 
 async function getData(): Promise<Record[]> {
   const raw = await d3.text("./data/wiki-news-300d-10k-filtered.vec");
   const dsv = d3.dsvFormat(" ");
-  return dsv.parseRows(raw).map((row) => {
+  return dsv.parseRows(raw).map((row, index) => {
     return {
       word: row[0],
       vector: row.slice(1).map((a) => parseFloat(a)),
+      freqRank: index,
     };
   });
 }
 
 getData().then(function (data: Record[]) {
-  console.log(data.slice(0, 100));
   data = data.slice(0, 1000);
 
   console.log(tf.tensor(data[0].vector));
@@ -70,6 +71,12 @@ getData().then(function (data: Record[]) {
     .attr("transform", `translate(${margin.left}, 0)`)
     .call(d3.axisLeft(y));
 
+  const freqRankToRadius = d3
+    .scalePow()
+    .exponent(0.5)
+    .domain(d3.extent(data, (d) => d.freqRank) as [number, number])
+    .range([15, 2]);
+
   // Add dots
   svg
     .append("g")
@@ -82,7 +89,7 @@ getData().then(function (data: Record[]) {
     .attr("cy", function (d) {
       return y(d.vector[1]);
     })
-    .attr("r", 4)
+    .attr("r", (d) => freqRankToRadius(d.freqRank))
     .style("fill", "#69b3a2")
     .style("opacity", 0.5)
     .on("mouseover", function (event: MouseEvent, d: Record) {
