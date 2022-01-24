@@ -32,6 +32,7 @@ const tooltip = d3.select(".tooltip");
 interface Record {
   word: string;
   vector: number[];
+  vectorNormed?: number[];
   freqRank: number;
   node?: Element;
 }
@@ -48,19 +49,40 @@ async function getData(): Promise<Record[]> {
   });
 }
 
+function saveVectorsNormed(data: Record[], vectorsNormed: tf.Tensor) {
+  const vals = vectorsNormed.arraySync() as number[][];
+  for (let i = 0; i < vals.length; ++i) {
+    data[i].vectorNormed = vals[i];
+  }
+}
+
+function xComp(d: Record) {
+  // TODO: make this better
+  return d.vectorNormed ? d.vectorNormed[0] : d.vector[0];
+}
+
+function yComp(d: Record) {
+  // TODO: make this better
+  return d.vectorNormed ? d.vectorNormed[1] : d.vector[1];
+}
+
 getData().then(function (data: Record[]) {
-  data = data.slice(0, 1000);
+  data = data.slice(0, 10000);
 
   const vectors = tf.tensor2d(data.map((d) => d.vector));
-  const defaultColor = "#69b3a2";
+  const vectorsNormed = tf.div(
+    vectors,
+    tf.norm(vectors, /*ord=*/ 2, /*dim=*/ 0, /*keepDims=*/ true)
+  );
+  saveVectorsNormed(data, vectorsNormed);
 
-  console.log(tf.tensor(data[0].vector));
+  const defaultColor = "#69b3a2";
 
   // TODO: consider doing transforms within svg instead of in d3?
   // Add X axis
   const x = d3
     .scaleLinear()
-    .domain(d3.extent(data, (d) => d.vector[0]) as [number, number])
+    .domain(d3.extent(data, xComp) as [number, number])
     .range([margin.left, margin.left + width]);
   svg
     .append("g")
@@ -70,7 +92,7 @@ getData().then(function (data: Record[]) {
   // Add Y axis
   const y = d3
     .scaleLinear()
-    .domain(d3.extent(data, (d) => d.vector[1]) as [number, number])
+    .domain(d3.extent(data, yComp) as [number, number])
     .range([margin.top + height, margin.top]);
   svg
     .append("g")
@@ -87,14 +109,14 @@ getData().then(function (data: Record[]) {
   svg
     .append("g")
     .selectAll("dot")
-    .data(data.slice(0, 1000))
+    .data(data)
     .join("circle")
     .attr("class", "word-embedding")
     .attr("cx", function (d) {
-      return x(d.vector[0]);
+      return x(xComp(d));
     })
     .attr("cy", function (d) {
-      return y(d.vector[1]);
+      return y(yComp(d));
     })
     .attr("r", (d) => freqRankToRadius(d.freqRank))
     .style("fill", defaultColor)
@@ -109,7 +131,7 @@ getData().then(function (data: Record[]) {
         coords[0] += 10;
         coords[1] += 10;
         tooltip
-          .html(`${d.word}: ${d.vector[0]}, ${d.vector[1]}`)
+          .html(`${d.word}: ${xComp(d)}, ${yComp(d)}`)
           .style("left", coords[0] + "px")
           .style("top", coords[1] + "px");
         d3.select(this).style("opacity", 1);
@@ -128,12 +150,23 @@ getData().then(function (data: Record[]) {
       d3.selectAll(".word-embedding").style("fill", defaultColor);
 
       const similarities = tf.util.flatten(
-        tf.matMul(vectors, tf.tensor2d(d.vector, [300, 1])).arraySync()
+        tf
+          .matMul(
+            vectorsNormed,
+            tf.tensor2d(d.vectorNormed || d.vector, [300, 1])
+          )
+          .arraySync()
       ) as number[];
       const sim10 = [...similarities].sort(d3.descending)[10];
 
       d3.selectAll(".word-embedding")
         .filter((d) => similarities[(d as Record).freqRank] >= sim10)
-        .style("fill", "red");
+        .style("fill", "red")
+        .each(function (this) {
+          const node = this as Element;
+          if (node.parentNode) {
+            node.parentNode.appendChild(node); // Bring to front.
+          }
+        });
     });
 });

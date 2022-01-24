@@ -77993,15 +77993,30 @@ return a / b;`;
             });
         });
     }
+    function saveVectorsNormed(data, vectorsNormed) {
+        const vals = vectorsNormed.arraySync();
+        for (let i = 0; i < vals.length; ++i) {
+            data[i].vectorNormed = vals[i];
+        }
+    }
+    function xComp(d) {
+        // TODO: make this better
+        return d.vectorNormed ? d.vectorNormed[0] : d.vector[0];
+    }
+    function yComp(d) {
+        // TODO: make this better
+        return d.vectorNormed ? d.vectorNormed[1] : d.vector[1];
+    }
     getData().then(function (data) {
-        data = data.slice(0, 1000);
+        data = data.slice(0, 10000);
         const vectors = tensor2d(data.map((d) => d.vector));
+        const vectorsNormed = div$1(vectors, norm(vectors, /*ord=*/ 2, /*dim=*/ 0, /*keepDims=*/ true));
+        saveVectorsNormed(data, vectorsNormed);
         const defaultColor = "#69b3a2";
-        console.log(tensor(data[0].vector));
         // TODO: consider doing transforms within svg instead of in d3?
         // Add X axis
         const x = linear()
-            .domain(extent$1(data, (d) => d.vector[0]))
+            .domain(extent$1(data, xComp))
             .range([margin.left, margin.left + width]);
         svg
             .append("g")
@@ -78009,7 +78024,7 @@ return a / b;`;
             .call(axisBottom(x));
         // Add Y axis
         const y = linear()
-            .domain(extent$1(data, (d) => d.vector[1]))
+            .domain(extent$1(data, yComp))
             .range([margin.top + height, margin.top]);
         svg
             .append("g")
@@ -78023,14 +78038,14 @@ return a / b;`;
         svg
             .append("g")
             .selectAll("dot")
-            .data(data.slice(0, 1000))
+            .data(data)
             .join("circle")
             .attr("class", "word-embedding")
             .attr("cx", function (d) {
-            return x(d.vector[0]);
+            return x(xComp(d));
         })
             .attr("cy", function (d) {
-            return y(d.vector[1]);
+            return y(yComp(d));
         })
             .attr("r", (d) => freqRankToRadius(d.freqRank))
             .style("fill", defaultColor)
@@ -78043,7 +78058,7 @@ return a / b;`;
             coords[0] += 10;
             coords[1] += 10;
             tooltip
-                .html(`${d.word}: ${d.vector[0]}, ${d.vector[1]}`)
+                .html(`${d.word}: ${xComp(d)}, ${yComp(d)}`)
                 .style("left", coords[0] + "px")
                 .style("top", coords[1] + "px");
             select$3(this).style("opacity", 1);
@@ -78055,11 +78070,18 @@ return a / b;`;
             .on("click", (event, d) => {
             // Highlight the 10 nearest neighbors.
             selectAll(".word-embedding").style("fill", defaultColor);
-            const similarities = flatten(matMul$1(vectors, tensor2d(d.vector, [300, 1])).arraySync());
+            const similarities = flatten(matMul$1(vectorsNormed, tensor2d(d.vectorNormed || d.vector, [300, 1]))
+                .arraySync());
             const sim10 = [...similarities].sort(descending$2)[10];
             selectAll(".word-embedding")
                 .filter((d) => similarities[d.freqRank] >= sim10)
-                .style("fill", "red");
+                .style("fill", "red")
+                .each(function () {
+                const node = this;
+                if (node.parentNode) {
+                    node.parentNode.appendChild(node); // Bring to front.
+                }
+            });
         });
     });
 
