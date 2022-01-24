@@ -1,5 +1,9 @@
 import * as d3 from "d3";
 
+import "@tensorflow/tfjs-backend-cpu";
+import "@tensorflow/tfjs-backend-webgl";
+import * as tf from "@tensorflow/tfjs-core";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Needed to make typescript happy when defining properties on the global window object for easy debugging.
 declare global {
@@ -42,6 +46,8 @@ async function getData(): Promise<Record[]> {
 getData().then(function (data: Record[]) {
   console.log(data.slice(0, 100));
   data = data.slice(0, 1000);
+
+  console.log(tf.tensor(data[0].vector));
 
   // TODO: consider doing transforms within svg instead of in d3?
   // Add X axis
