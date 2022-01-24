@@ -9,9 +9,11 @@ import * as tf from "@tensorflow/tfjs-core";
 declare global {
   interface Window {
     d3: any;
+    tf: any;
   }
 }
 window.d3 = d3;
+window.tf = tf;
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 // Set the dimensions and margins of the plot
@@ -31,6 +33,7 @@ interface Record {
   word: string;
   vector: number[];
   freqRank: number;
+  node?: Element;
 }
 
 async function getData(): Promise<Record[]> {
@@ -47,6 +50,9 @@ async function getData(): Promise<Record[]> {
 
 getData().then(function (data: Record[]) {
   data = data.slice(0, 1000);
+
+  const vectors = tf.tensor2d(data.map((d) => d.vector));
+  const defaultColor = "#69b3a2";
 
   console.log(tf.tensor(data[0].vector));
 
@@ -83,6 +89,7 @@ getData().then(function (data: Record[]) {
     .selectAll("dot")
     .data(data.slice(0, 1000))
     .join("circle")
+    .attr("class", "word-embedding")
     .attr("cx", function (d) {
       return x(d.vector[0]);
     })
@@ -90,7 +97,7 @@ getData().then(function (data: Record[]) {
       return y(d.vector[1]);
     })
     .attr("r", (d) => freqRankToRadius(d.freqRank))
-    .style("fill", "#69b3a2")
+    .style("fill", defaultColor)
     .style("opacity", 0.5)
     .on("mouseover", function (event: MouseEvent, d: Record) {
       tooltip.style("display", "block");
@@ -114,5 +121,19 @@ getData().then(function (data: Record[]) {
         d3.select(this).style("opacity", 0.5);
         tooltip.style("display", "none");
       }
-    );
+    )
+    .on("click", (event: MouseEvent, d: Record) => {
+      // Highlight the 10 nearest neighbors.
+
+      d3.selectAll(".word-embedding").style("fill", defaultColor);
+
+      const similarities = tf.util.flatten(
+        tf.matMul(vectors, tf.tensor2d(d.vector, [300, 1])).arraySync()
+      ) as number[];
+      const sim10 = [...similarities].sort(d3.descending)[10];
+
+      d3.selectAll(".word-embedding")
+        .filter((d) => similarities[(d as Record).freqRank] >= sim10)
+        .style("fill", "red");
+    });
 });

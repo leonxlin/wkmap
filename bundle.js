@@ -168,7 +168,7 @@
       }
     }
 
-    function cumsum$2(values, valueof) {
+    function cumsum$3(values, valueof) {
       var sum = 0, index = 0;
       return Float64Array.from(values, valueof === undefined
         ? v => (sum += +v || 0)
@@ -412,14 +412,14 @@
     }
 
     function index$4(values, ...keys) {
-      return nest(values, identity$b, unique$2, keys);
+      return nest(values, identity$b, unique$3, keys);
     }
 
     function indexes(values, ...keys) {
-      return nest(values, Array.from, unique$2, keys);
+      return nest(values, Array.from, unique$3, keys);
     }
 
-    function unique$2(values) {
+    function unique$3(values) {
       if (values.length !== 1) throw new Error("duplicate key");
       return values[0];
     }
@@ -493,7 +493,7 @@
 
     var array$5 = Array.prototype;
 
-    var slice$5 = array$5.slice;
+    var slice$6 = array$5.slice;
 
     function constant$b(x) {
       return () => x;
@@ -662,13 +662,13 @@
       };
 
       histogram.thresholds = function(_) {
-        return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? constant$b(slice$5.call(_)) : constant$b(_), histogram) : threshold;
+        return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? constant$b(slice$6.call(_)) : constant$b(_), histogram) : threshold;
       };
 
       return histogram;
     }
 
-    function max$5(values, valueof) {
+    function max$6(values, valueof) {
       let max;
       if (valueof === undefined) {
         for (const value of values) {
@@ -689,7 +689,7 @@
       return max;
     }
 
-    function min$4(values, valueof) {
+    function min$5(values, valueof) {
       let min;
       if (valueof === undefined) {
         for (const value of values) {
@@ -758,13 +758,13 @@
     function quantile$1(values, p, valueof) {
       values = Float64Array.from(numbers(values, valueof));
       if (!(n = values.length)) return;
-      if ((p = +p) <= 0 || n < 2) return min$4(values);
-      if (p >= 1) return max$5(values);
+      if ((p = +p) <= 0 || n < 2) return min$5(values);
+      if (p >= 1) return max$6(values);
       var n,
           i = (n - 1) * p,
           i0 = Math.floor(i),
-          value0 = max$5(quickselect(values, i0).subarray(0, i0 + 1)),
-          value1 = min$4(values.subarray(i0 + 1));
+          value0 = max$6(quickselect(values, i0).subarray(0, i0 + 1)),
+          value1 = min$5(values.subarray(i0 + 1));
       return value0 + (value1 - value0) * (i - i0);
     }
 
@@ -811,7 +811,7 @@
       return maxIndex;
     }
 
-    function mean$1(values, valueof) {
+    function mean$2(values, valueof) {
       let count = 0;
       let sum = 0;
       if (valueof === undefined) {
@@ -911,7 +911,7 @@
       return [a, b];
     }
 
-    function range$4(start, stop, step) {
+    function range$5(start, stop, step) {
       start = +start, stop = +stop, step = (n = arguments.length) < 2 ? (stop = start, start = 0, 1) : n < 3 ? 1 : +step;
 
       var i = -1,
@@ -1042,7 +1042,7 @@
       return index < 0 ? undefined : index;
     }
 
-    var shuffle$1 = shuffler(Math.random);
+    var shuffle$2 = shuffler(Math.random);
 
     function shuffler(random) {
       return function shuffle(array, i0 = 0, i1 = array.length) {
@@ -1075,9 +1075,9 @@
       return sum;
     }
 
-    function transpose$2(matrix) {
+    function transpose$3(matrix) {
       if (!(n = matrix.length)) return [];
-      for (var i = -1, m = min$4(matrix, length$2), transpose = new Array(m); ++i < m;) {
+      for (var i = -1, m = min$5(matrix, length$2), transpose = new Array(m); ++i < m;) {
         for (var j = -1, n, row = transpose[i] = new Array(n); ++j < n;) {
           row[j] = matrix[j][i];
         }
@@ -1090,7 +1090,7 @@
     }
 
     function zip() {
-      return transpose$2(arguments);
+      return transpose$3(arguments);
     }
 
     function every(values, test) {
@@ -1148,7 +1148,7 @@
       return value;
     }
 
-    function reverse$3(values) {
+    function reverse$4(values) {
       if (typeof values[Symbol.iterator] !== "function") throw new TypeError("values is not iterable");
       return Array.from(values).reverse();
     }
@@ -1653,12 +1653,12 @@
       return new Selection$1(subgroups, this._parents);
     }
 
-    function sparse(update) {
+    function sparse$1(update) {
       return new Array(update.length);
     }
 
     function selection_enter() {
-      return new Selection$1(this._enter || this._groups.map(sparse), this._parents);
+      return new Selection$1(this._enter || this._groups.map(sparse$1), this._parents);
     }
 
     function EnterNode(parent, datum) {
@@ -1809,7 +1809,7 @@
     }
 
     function selection_exit() {
-      return new Selection$1(this._exit || this._groups.map(sparse), this._parents);
+      return new Selection$1(this._exit || this._groups.map(sparse$1), this._parents);
     }
 
     function selection_join(onenter, onupdate, onexit) {
@@ -3693,15 +3693,15 @@
 
     var epsilon2$1 = 1e-12;
 
-    function cosh$2(x) {
+    function cosh$3(x) {
       return ((x = Math.exp(x)) + 1 / x) / 2;
     }
 
-    function sinh$2(x) {
+    function sinh$3(x) {
       return ((x = Math.exp(x)) - 1 / x) / 2;
     }
 
-    function tanh$2(x) {
+    function tanh$4(x) {
       return ((x = Math.exp(2 * x)) - 1) / (x + 1);
     }
 
@@ -3740,12 +3740,12 @@
           S = (r1 - r0) / rho;
           i = function(t) {
             var s = t * S,
-                coshr0 = cosh$2(r0),
-                u = w0 / (rho2 * d1) * (coshr0 * tanh$2(rho * s + r0) - sinh$2(r0));
+                coshr0 = cosh$3(r0),
+                u = w0 / (rho2 * d1) * (coshr0 * tanh$4(rho * s + r0) - sinh$3(r0));
             return [
               ux0 + u * dx,
               uy0 + u * dy,
-              w0 * coshr0 / cosh$2(rho * s + r0)
+              w0 * coshr0 / cosh$3(rho * s + r0)
             ];
           };
         }
@@ -3858,7 +3858,7 @@
       return samples;
     }
 
-    var frame = 0, // is an animation frame pending?
+    var frame$1 = 0, // is an animation frame pending?
         timeout$1 = 0, // is a timeout pending?
         interval$1 = 0, // are any timers active?
         pokeDelay = 1000, // how frequently we check for clock skew
@@ -3915,22 +3915,22 @@
 
     function timerFlush() {
       now$1(); // Get the current time, if not already set.
-      ++frame; // Pretend we’ve set an alarm, if we haven’t already.
+      ++frame$1; // Pretend we’ve set an alarm, if we haven’t already.
       var t = taskHead, e;
       while (t) {
         if ((e = clockNow - t._time) >= 0) t._call.call(undefined, e);
         t = t._next;
       }
-      --frame;
+      --frame$1;
     }
 
     function wake() {
       clockNow = (clockLast = clock.now()) + clockSkew;
-      frame = timeout$1 = 0;
+      frame$1 = timeout$1 = 0;
       try {
         timerFlush();
       } finally {
-        frame = 0;
+        frame$1 = 0;
         nap();
         clockNow = 0;
       }
@@ -3957,7 +3957,7 @@
     }
 
     function sleep(time) {
-      if (frame) return; // Soonest alarm already set, or will be.
+      if (frame$1) return; // Soonest alarm already set, or will be.
       if (timeout$1) timeout$1 = clearTimeout(timeout$1);
       var delay = time - clockNow; // Strictly less than if we recomputed clockNow.
       if (delay > 24) {
@@ -3965,7 +3965,7 @@
         if (interval$1) interval$1 = clearInterval(interval$1);
       } else {
         if (!interval$1) clockLast = clock.now(), interval$1 = setInterval(poke, pokeDelay);
-        frame = 1, setFrame(wake);
+        frame$1 = 1, setFrame(wake);
       }
     }
 
@@ -5128,7 +5128,7 @@
         MODE_HANDLE = {name: "handle"},
         MODE_CENTER = {name: "center"};
 
-    const {abs: abs$5, max: max$4, min: min$3} = Math;
+    const {abs: abs$6, max: max$5, min: min$4} = Math;
 
     function number1(e) {
       return [+e[0], +e[1]];
@@ -5484,11 +5484,11 @@
           if (selection) moving = true;
           const pts = [points[0], points[1] || points[0]];
           state.selection = selection = [[
-              w0 = dim === Y ? W : min$3(pts[0][0], pts[1][0]),
-              n0 = dim === X ? N : min$3(pts[0][1], pts[1][1])
+              w0 = dim === Y ? W : min$4(pts[0][0], pts[1][0]),
+              n0 = dim === X ? N : min$4(pts[0][1], pts[1][1])
             ], [
-              e0 = dim === Y ? E : max$4(pts[0][0], pts[1][0]),
-              s0 = dim === X ? S : max$4(pts[0][1], pts[1][1])
+              e0 = dim === Y ? E : max$5(pts[0][0], pts[1][0]),
+              s0 = dim === X ? S : max$5(pts[0][1], pts[1][1])
             ]];
           if (points.length > 1) move(event);
         } else {
@@ -5533,7 +5533,7 @@
           }
           if (shifting && !lockX && !lockY && points.length === 1) {
             const point = points[0];
-            if (abs$5(point.cur[0] - point[0]) > abs$5(point.cur[1] - point[1]))
+            if (abs$6(point.cur[0] - point[0]) > abs$6(point.cur[1] - point[1]))
               lockY = true;
             else
               lockX = true;
@@ -5555,25 +5555,25 @@
           switch (mode) {
             case MODE_SPACE:
             case MODE_DRAG: {
-              if (signX) dx = max$4(W - w0, min$3(E - e0, dx)), w1 = w0 + dx, e1 = e0 + dx;
-              if (signY) dy = max$4(N - n0, min$3(S - s0, dy)), n1 = n0 + dy, s1 = s0 + dy;
+              if (signX) dx = max$5(W - w0, min$4(E - e0, dx)), w1 = w0 + dx, e1 = e0 + dx;
+              if (signY) dy = max$5(N - n0, min$4(S - s0, dy)), n1 = n0 + dy, s1 = s0 + dy;
               break;
             }
             case MODE_HANDLE: {
               if (points[1]) {
-                if (signX) w1 = max$4(W, min$3(E, points[0][0])), e1 = max$4(W, min$3(E, points[1][0])), signX = 1;
-                if (signY) n1 = max$4(N, min$3(S, points[0][1])), s1 = max$4(N, min$3(S, points[1][1])), signY = 1;
+                if (signX) w1 = max$5(W, min$4(E, points[0][0])), e1 = max$5(W, min$4(E, points[1][0])), signX = 1;
+                if (signY) n1 = max$5(N, min$4(S, points[0][1])), s1 = max$5(N, min$4(S, points[1][1])), signY = 1;
               } else {
-                if (signX < 0) dx = max$4(W - w0, min$3(E - w0, dx)), w1 = w0 + dx, e1 = e0;
-                else if (signX > 0) dx = max$4(W - e0, min$3(E - e0, dx)), w1 = w0, e1 = e0 + dx;
-                if (signY < 0) dy = max$4(N - n0, min$3(S - n0, dy)), n1 = n0 + dy, s1 = s0;
-                else if (signY > 0) dy = max$4(N - s0, min$3(S - s0, dy)), n1 = n0, s1 = s0 + dy;
+                if (signX < 0) dx = max$5(W - w0, min$4(E - w0, dx)), w1 = w0 + dx, e1 = e0;
+                else if (signX > 0) dx = max$5(W - e0, min$4(E - e0, dx)), w1 = w0, e1 = e0 + dx;
+                if (signY < 0) dy = max$5(N - n0, min$4(S - n0, dy)), n1 = n0 + dy, s1 = s0;
+                else if (signY > 0) dy = max$5(N - s0, min$4(S - s0, dy)), n1 = n0, s1 = s0 + dy;
               }
               break;
             }
             case MODE_CENTER: {
-              if (signX) w1 = max$4(W, min$3(E, w0 - dx * signX)), e1 = max$4(W, min$3(E, e0 + dx * signX));
-              if (signY) n1 = max$4(N, min$3(S, n0 - dy * signY)), s1 = max$4(N, min$3(S, s0 + dy * signY));
+              if (signX) w1 = max$5(W, min$4(E, w0 - dx * signX)), e1 = max$5(W, min$4(E, e0 + dx * signX));
+              if (signY) n1 = max$5(N, min$4(S, n0 - dy * signY)), s1 = max$5(N, min$4(S, s0 + dy * signY));
               break;
             }
           }
@@ -5736,16 +5736,16 @@
       return brush;
     }
 
-    var abs$4 = Math.abs;
-    var cos$4 = Math.cos;
-    var sin$4 = Math.sin;
+    var abs$5 = Math.abs;
+    var cos$5 = Math.cos;
+    var sin$5 = Math.sin;
     var pi$3 = Math.PI;
     var halfPi$2 = pi$3 / 2;
     var tau$4 = pi$3 * 2;
-    var max$3 = Math.max;
+    var max$4 = Math.max;
     var epsilon$6 = 1e-12;
 
-    function range$3(i, j) {
+    function range$4(i, j) {
       return Array.from({length: j - i}, (_, k) => i + k);
     }
 
@@ -5779,7 +5779,7 @@
       function chord(matrix) {
         var n = matrix.length,
             groupSums = new Array(n),
-            groupIndex = range$3(0, n),
+            groupIndex = range$4(0, n),
             chords = new Array(n * n),
             groups = new Array(n),
             k = 0, dx;
@@ -5794,7 +5794,7 @@
           for (let j = 0; j < n; ++j) x += matrix[i * n + j] + directed * matrix[j * n + i];
           k += groupSums[i] = x;
         }
-        k = max$3(0, tau$4 - padAngle * n) / k;
+        k = max$4(0, tau$4 - padAngle * n) / k;
         dx = k ? padAngle : tau$4 / n;
 
         // Compute the angles for each group and constituent chord.
@@ -5804,7 +5804,7 @@
           for (const i of groupIndex) {
             const x0 = x;
             if (directed) {
-              const subgroupIndex = range$3(~n + 1, n).filter(j => j < 0 ? matrix[~j * n + i] : matrix[i * n + j]);
+              const subgroupIndex = range$4(~n + 1, n).filter(j => j < 0 ? matrix[~j * n + i] : matrix[i * n + j]);
               if (sortSubgroups) subgroupIndex.sort((a, b) => sortSubgroups(a < 0 ? -matrix[~a * n + i] : matrix[i * n + a], b < 0 ? -matrix[~b * n + i] : matrix[i * n + b]));
               for (const j of subgroupIndex) {
                 if (j < 0) {
@@ -5817,7 +5817,7 @@
               }
               groups[i] = {index: i, startAngle: x0, endAngle: x, value: groupSums[i]};
             } else {
-              const subgroupIndex = range$3(0, n).filter(j => matrix[i * n + j] || matrix[j * n + i]);
+              const subgroupIndex = range$4(0, n).filter(j => matrix[i * n + j] || matrix[j * n + i]);
               if (sortSubgroups) subgroupIndex.sort((a, b) => sortSubgroups(matrix[i * n + a], matrix[i * n + b]));
               for (const j of subgroupIndex) {
                 let chord;
@@ -5848,7 +5848,7 @@
       }
 
       chord.padAngle = function(_) {
-        return arguments.length ? (padAngle = max$3(0, _), chord) : padAngle;
+        return arguments.length ? (padAngle = max$4(0, _), chord) : padAngle;
       };
 
       chord.sortGroups = function(_) {
@@ -5995,7 +5995,7 @@
       }
     };
 
-    var slice$4 = Array.prototype.slice;
+    var slice$5 = Array.prototype.slice;
 
     function constant$6(x) {
       return function() {
@@ -6046,7 +6046,7 @@
             s = source.apply(this, arguments),
             t = target.apply(this, arguments),
             ap = padAngle.apply(this, arguments) / 2,
-            argv = slice$4.call(arguments),
+            argv = slice$5.call(arguments),
             sr = +sourceRadius.apply(this, (argv[0] = s, argv)),
             sa0 = startAngle.apply(this, argv) - halfPi$2,
             sa1 = endAngle.apply(this, argv) - halfPi$2,
@@ -6057,26 +6057,26 @@
         if (!context) context = buffer = path();
 
         if (ap > epsilon$6) {
-          if (abs$4(sa1 - sa0) > ap * 2 + epsilon$6) sa1 > sa0 ? (sa0 += ap, sa1 -= ap) : (sa0 -= ap, sa1 += ap);
+          if (abs$5(sa1 - sa0) > ap * 2 + epsilon$6) sa1 > sa0 ? (sa0 += ap, sa1 -= ap) : (sa0 -= ap, sa1 += ap);
           else sa0 = sa1 = (sa0 + sa1) / 2;
-          if (abs$4(ta1 - ta0) > ap * 2 + epsilon$6) ta1 > ta0 ? (ta0 += ap, ta1 -= ap) : (ta0 -= ap, ta1 += ap);
+          if (abs$5(ta1 - ta0) > ap * 2 + epsilon$6) ta1 > ta0 ? (ta0 += ap, ta1 -= ap) : (ta0 -= ap, ta1 += ap);
           else ta0 = ta1 = (ta0 + ta1) / 2;
         }
 
-        context.moveTo(sr * cos$4(sa0), sr * sin$4(sa0));
+        context.moveTo(sr * cos$5(sa0), sr * sin$5(sa0));
         context.arc(0, 0, sr, sa0, sa1);
         if (sa0 !== ta0 || sa1 !== ta1) {
           if (headRadius) {
             var hr = +headRadius.apply(this, arguments), tr2 = tr - hr, ta2 = (ta0 + ta1) / 2;
-            context.quadraticCurveTo(0, 0, tr2 * cos$4(ta0), tr2 * sin$4(ta0));
-            context.lineTo(tr * cos$4(ta2), tr * sin$4(ta2));
-            context.lineTo(tr2 * cos$4(ta1), tr2 * sin$4(ta1));
+            context.quadraticCurveTo(0, 0, tr2 * cos$5(ta0), tr2 * sin$5(ta0));
+            context.lineTo(tr * cos$5(ta2), tr * sin$5(ta2));
+            context.lineTo(tr2 * cos$5(ta1), tr2 * sin$5(ta1));
           } else {
-            context.quadraticCurveTo(0, 0, tr * cos$4(ta0), tr * sin$4(ta0));
+            context.quadraticCurveTo(0, 0, tr * cos$5(ta0), tr * sin$5(ta0));
             context.arc(0, 0, tr, ta0, ta1);
           }
         }
-        context.quadraticCurveTo(0, 0, sr * cos$4(sa0), sr * sin$4(sa0));
+        context.quadraticCurveTo(0, 0, sr * cos$5(sa0), sr * sin$5(sa0));
         context.closePath();
 
         if (buffer) return context = null, buffer + "" || null;
@@ -6135,7 +6135,7 @@
 
     var array$2 = Array.prototype;
 
-    var slice$3 = array$2.slice;
+    var slice$4 = array$2.slice;
 
     function ascending$1(a, b) {
       return a - b;
@@ -6362,7 +6362,7 @@
       };
 
       contours.thresholds = function(_) {
-        return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? constant$5(slice$3.call(_)) : constant$5(_), contours) : threshold;
+        return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? constant$5(slice$4.call(_)) : constant$5(_), contours) : threshold;
       };
 
       contours.smooth = function(_) {
@@ -6474,9 +6474,9 @@
 
         // Convert number of thresholds into uniform thresholds.
         if (!Array.isArray(tz)) {
-          var stop = max$5(values0);
+          var stop = max$6(values0);
           tz = tickStep(0, stop, tz);
-          tz = range$4(0, Math.floor(stop / tz) * tz, tz);
+          tz = range$5(0, Math.floor(stop / tz) * tz, tz);
           tz.shift();
         }
 
@@ -6540,7 +6540,7 @@
       };
 
       density.thresholds = function(_) {
-        return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? constant$5(slice$3.call(_)) : constant$5(_), density) : threshold;
+        return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? constant$5(slice$4.call(_)) : constant$5(_), density) : threshold;
       };
 
       density.bandwidth = function(_) {
@@ -7681,7 +7681,7 @@
       }
     }
 
-    const tau$2 = 2 * Math.PI, pow$4 = Math.pow;
+    const tau$2 = 2 * Math.PI, pow$5 = Math.pow;
 
     function pointX(p) {
       return p[0];
@@ -7817,12 +7817,12 @@
         const {inedges, hull, _hullIndex, halfedges, triangles, points} = this;
         if (inedges[i] === -1 || !points.length) return (i + 1) % (points.length >> 1);
         let c = i;
-        let dc = pow$4(x - points[i * 2], 2) + pow$4(y - points[i * 2 + 1], 2);
+        let dc = pow$5(x - points[i * 2], 2) + pow$5(y - points[i * 2 + 1], 2);
         const e0 = inedges[i];
         let e = e0;
         do {
           let t = triangles[e];
-          const dt = pow$4(x - points[t * 2], 2) + pow$4(y - points[t * 2 + 1], 2);
+          const dt = pow$5(x - points[t * 2], 2) + pow$5(y - points[t * 2 + 1], 2);
           if (dt < dc) dc = dt, c = t;
           e = e % 3 === 2 ? e - 2 : e + 1;
           if (triangles[e] !== i) break; // bad triangulation
@@ -7830,7 +7830,7 @@
           if (e === -1) {
             e = hull[(_hullIndex[i] + 1) % hull.length];
             if (e !== t) {
-              if (pow$4(x - points[e * 2], 2) + pow$4(y - points[e * 2 + 1], 2) < dc) return e;
+              if (pow$5(x - points[e * 2], 2) + pow$5(y - points[e * 2 + 1], 2) < dc) return e;
             }
             break;
           }
@@ -7960,15 +7960,15 @@
       return columns;
     }
 
-    function pad$1(value, width) {
+    function pad$2(value, width) {
       var s = value + "", length = s.length;
       return length < width ? new Array(width - length + 1).join(0) + s : s;
     }
 
     function formatYear$1(year) {
-      return year < 0 ? "-" + pad$1(-year, 6)
-        : year > 9999 ? "+" + pad$1(year, 6)
-        : pad$1(year, 4);
+      return year < 0 ? "-" + pad$2(-year, 6)
+        : year > 9999 ? "+" + pad$2(year, 6)
+        : pad$2(year, 4);
     }
 
     function formatDate(date) {
@@ -7977,10 +7977,10 @@
           seconds = date.getUTCSeconds(),
           milliseconds = date.getUTCMilliseconds();
       return isNaN(date) ? "Invalid Date"
-          : formatYear$1(date.getUTCFullYear()) + "-" + pad$1(date.getUTCMonth() + 1, 2) + "-" + pad$1(date.getUTCDate(), 2)
-          + (milliseconds ? "T" + pad$1(hours, 2) + ":" + pad$1(minutes, 2) + ":" + pad$1(seconds, 2) + "." + pad$1(milliseconds, 3) + "Z"
-          : seconds ? "T" + pad$1(hours, 2) + ":" + pad$1(minutes, 2) + ":" + pad$1(seconds, 2) + "Z"
-          : minutes || hours ? "T" + pad$1(hours, 2) + ":" + pad$1(minutes, 2) + "Z"
+          : formatYear$1(date.getUTCFullYear()) + "-" + pad$2(date.getUTCMonth() + 1, 2) + "-" + pad$2(date.getUTCDate(), 2)
+          + (milliseconds ? "T" + pad$2(hours, 2) + ":" + pad$2(minutes, 2) + ":" + pad$2(seconds, 2) + "." + pad$2(milliseconds, 3) + "Z"
+          : seconds ? "T" + pad$2(hours, 2) + ":" + pad$2(minutes, 2) + ":" + pad$2(seconds, 2) + "Z"
+          : minutes || hours ? "T" + pad$2(hours, 2) + ":" + pad$2(minutes, 2) + "Z"
           : "");
     }
 
@@ -8178,7 +8178,7 @@
     var csv = dsvParse(csvParse);
     var tsv = dsvParse(tsvParse);
 
-    function image(input, init) {
+    function image$1(input, init) {
       return new Promise(function(resolve, reject) {
         var image = new Image;
         for (var key in init) image[key] = init[key];
@@ -8253,10 +8253,10 @@
     function tree_add(d) {
       const x = +this._x.call(null, d),
           y = +this._y.call(null, d);
-      return add$2(this.cover(x, y), x, y, d);
+      return add$3(this.cover(x, y), x, y, d);
     }
 
-    function add$2(tree, x, y, d) {
+    function add$3(tree, x, y, d) {
       if (isNaN(x) || isNaN(y)) return tree; // ignore invalid points
 
       var parent,
@@ -8329,7 +8329,7 @@
 
       // Add the new points.
       for (i = 0; i < n; ++i) {
-        add$2(this, xz[i], yz[i], data[i]);
+        add$3(this, xz[i], yz[i], data[i]);
       }
 
       return this;
@@ -9627,30 +9627,30 @@
     var degrees = 180 / pi$1;
     var radians = pi$1 / 180;
 
-    var abs$3 = Math.abs;
-    var atan$2 = Math.atan;
-    var atan2$3 = Math.atan2;
-    var cos$3 = Math.cos;
-    var ceil$2 = Math.ceil;
-    var exp$2 = Math.exp;
+    var abs$4 = Math.abs;
+    var atan$3 = Math.atan;
+    var atan2$4 = Math.atan2;
+    var cos$4 = Math.cos;
+    var ceil$3 = Math.ceil;
+    var exp$3 = Math.exp;
     var hypot = Math.hypot;
-    var log$4 = Math.log;
-    var pow$3 = Math.pow;
-    var sin$3 = Math.sin;
-    var sign$3 = Math.sign || function(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; };
-    var sqrt$4 = Math.sqrt;
-    var tan$2 = Math.tan;
+    var log$5 = Math.log;
+    var pow$4 = Math.pow;
+    var sin$4 = Math.sin;
+    var sign$4 = Math.sign || function(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; };
+    var sqrt$5 = Math.sqrt;
+    var tan$3 = Math.tan;
 
-    function acos$3(x) {
+    function acos$4(x) {
       return x > 1 ? 0 : x < -1 ? pi$1 : Math.acos(x);
     }
 
-    function asin$3(x) {
+    function asin$4(x) {
       return x > 1 ? halfPi$1 : x < -1 ? -halfPi$1 : Math.asin(x);
     }
 
     function haversin(x) {
-      return (x = sin$3(x / 2)) * x;
+      return (x = sin$4(x / 2)) * x;
     }
 
     function noop$1() {}
@@ -9767,7 +9767,7 @@
       areaStream$1.point = areaPoint$1;
       lambda00$2 = lambda, phi00$2 = phi;
       lambda *= radians, phi *= radians;
-      lambda0$2 = lambda, cosPhi0$1 = cos$3(phi = phi / 2 + quarterPi), sinPhi0$1 = sin$3(phi);
+      lambda0$2 = lambda, cosPhi0$1 = cos$4(phi = phi / 2 + quarterPi), sinPhi0$1 = sin$4(phi);
     }
 
     function areaPoint$1(lambda, phi) {
@@ -9780,12 +9780,12 @@
       var dLambda = lambda - lambda0$2,
           sdLambda = dLambda >= 0 ? 1 : -1,
           adLambda = sdLambda * dLambda,
-          cosPhi = cos$3(phi),
-          sinPhi = sin$3(phi),
+          cosPhi = cos$4(phi),
+          sinPhi = sin$4(phi),
           k = sinPhi0$1 * sinPhi,
-          u = cosPhi0$1 * cosPhi + k * cos$3(adLambda),
-          v = k * sdLambda * sin$3(adLambda);
-      areaRingSum$1.add(atan2$3(v, u));
+          u = cosPhi0$1 * cosPhi + k * cos$4(adLambda),
+          v = k * sdLambda * sin$4(adLambda);
+      areaRingSum$1.add(atan2$4(v, u));
 
       // Advance the previous points.
       lambda0$2 = lambda, cosPhi0$1 = cosPhi, sinPhi0$1 = sinPhi;
@@ -9798,12 +9798,12 @@
     }
 
     function spherical(cartesian) {
-      return [atan2$3(cartesian[1], cartesian[0]), asin$3(cartesian[2])];
+      return [atan2$4(cartesian[1], cartesian[0]), asin$4(cartesian[2])];
     }
 
     function cartesian(spherical) {
-      var lambda = spherical[0], phi = spherical[1], cosPhi = cos$3(phi);
-      return [cosPhi * cos$3(lambda), cosPhi * sin$3(lambda), sin$3(phi)];
+      var lambda = spherical[0], phi = spherical[1], cosPhi = cos$4(phi);
+      return [cosPhi * cos$4(lambda), cosPhi * sin$4(lambda), sin$4(phi)];
     }
 
     function cartesianDot(a, b) {
@@ -9825,7 +9825,7 @@
 
     // TODO return d
     function cartesianNormalizeInPlace(d) {
-      var l = sqrt$4(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+      var l = sqrt$5(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
       d[0] /= l, d[1] /= l, d[2] /= l;
     }
 
@@ -9835,7 +9835,7 @@
         p0, // previous 3D point
         deltaSum,
         ranges,
-        range$2;
+        range$3;
 
     var boundsStream$2 = {
       point: boundsPoint$1,
@@ -9856,7 +9856,7 @@
         if (areaRingSum$1 < 0) lambda0$1 = -(lambda1 = 180), phi0 = -(phi1 = 90);
         else if (deltaSum > epsilon$2) phi1 = 90;
         else if (deltaSum < -epsilon$2) phi0 = -90;
-        range$2[0] = lambda0$1, range$2[1] = lambda1;
+        range$3[0] = lambda0$1, range$3[1] = lambda1;
       },
       sphere: function() {
         lambda0$1 = -(lambda1 = 180), phi0 = -(phi1 = 90);
@@ -9864,7 +9864,7 @@
     };
 
     function boundsPoint$1(lambda, phi) {
-      ranges.push(range$2 = [lambda0$1 = lambda, lambda1 = lambda]);
+      ranges.push(range$3 = [lambda0$1 = lambda, lambda1 = lambda]);
       if (phi < phi0) phi0 = phi;
       if (phi > phi1) phi1 = phi;
     }
@@ -9881,7 +9881,7 @@
             sign = delta > 0 ? 1 : -1,
             lambdai = inflection[0] * degrees * sign,
             phii,
-            antimeridian = abs$3(delta) > 180;
+            antimeridian = abs$4(delta) > 180;
         if (antimeridian ^ (sign * lambda2 < lambdai && lambdai < sign * lambda)) {
           phii = inflection[1] * degrees;
           if (phii > phi1) phi1 = phii;
@@ -9911,7 +9911,7 @@
           }
         }
       } else {
-        ranges.push(range$2 = [lambda0$1 = lambda, lambda1 = lambda]);
+        ranges.push(range$3 = [lambda0$1 = lambda, lambda1 = lambda]);
       }
       if (phi < phi0) phi0 = phi;
       if (phi > phi1) phi1 = phi;
@@ -9923,7 +9923,7 @@
     }
 
     function boundsLineEnd() {
-      range$2[0] = lambda0$1, range$2[1] = lambda1;
+      range$3[0] = lambda0$1, range$3[1] = lambda1;
       boundsStream$2.point = boundsPoint$1;
       p0 = null;
     }
@@ -9931,7 +9931,7 @@
     function boundsRingPoint(lambda, phi) {
       if (p0) {
         var delta = lambda - lambda2;
-        deltaSum.add(abs$3(delta) > 180 ? delta + (delta > 0 ? 360 : -360) : delta);
+        deltaSum.add(abs$4(delta) > 180 ? delta + (delta > 0 ? 360 : -360) : delta);
       } else {
         lambda00$1 = lambda, phi00$1 = phi;
       }
@@ -9946,8 +9946,8 @@
     function boundsRingEnd() {
       boundsRingPoint(lambda00$1, phi00$1);
       areaStream$1.lineEnd();
-      if (abs$3(deltaSum) > epsilon$2) lambda0$1 = -(lambda1 = 180);
-      range$2[0] = lambda0$1, range$2[1] = lambda1;
+      if (abs$4(deltaSum) > epsilon$2) lambda0$1 = -(lambda1 = 180);
+      range$3[0] = lambda0$1, range$3[1] = lambda1;
       p0 = null;
     }
 
@@ -9996,7 +9996,7 @@
         }
       }
 
-      ranges = range$2 = null;
+      ranges = range$3 = null;
 
       return lambda0$1 === Infinity || phi0 === Infinity
           ? [[NaN, NaN], [NaN, NaN]]
@@ -10028,8 +10028,8 @@
     // Arithmetic mean of Cartesian vectors.
     function centroidPoint$1(lambda, phi) {
       lambda *= radians, phi *= radians;
-      var cosPhi = cos$3(phi);
-      centroidPointCartesian(cosPhi * cos$3(lambda), cosPhi * sin$3(lambda), sin$3(phi));
+      var cosPhi = cos$4(phi);
+      centroidPointCartesian(cosPhi * cos$4(lambda), cosPhi * sin$4(lambda), sin$4(phi));
     }
 
     function centroidPointCartesian(x, y, z) {
@@ -10045,21 +10045,21 @@
 
     function centroidLinePointFirst(lambda, phi) {
       lambda *= radians, phi *= radians;
-      var cosPhi = cos$3(phi);
-      x0$4 = cosPhi * cos$3(lambda);
-      y0$4 = cosPhi * sin$3(lambda);
-      z0 = sin$3(phi);
+      var cosPhi = cos$4(phi);
+      x0$4 = cosPhi * cos$4(lambda);
+      y0$4 = cosPhi * sin$4(lambda);
+      z0 = sin$4(phi);
       centroidStream$1.point = centroidLinePoint;
       centroidPointCartesian(x0$4, y0$4, z0);
     }
 
     function centroidLinePoint(lambda, phi) {
       lambda *= radians, phi *= radians;
-      var cosPhi = cos$3(phi),
-          x = cosPhi * cos$3(lambda),
-          y = cosPhi * sin$3(lambda),
-          z = sin$3(phi),
-          w = atan2$3(sqrt$4((w = y0$4 * z - z0 * y) * w + (w = z0 * x - x0$4 * z) * w + (w = x0$4 * y - y0$4 * x) * w), x0$4 * x + y0$4 * y + z0 * z);
+      var cosPhi = cos$4(phi),
+          x = cosPhi * cos$4(lambda),
+          y = cosPhi * sin$4(lambda),
+          z = sin$4(phi),
+          w = atan2$4(sqrt$5((w = y0$4 * z - z0 * y) * w + (w = z0 * x - x0$4 * z) * w + (w = x0$4 * y - y0$4 * x) * w), x0$4 * x + y0$4 * y + z0 * z);
       W1 += w;
       X1$1 += w * (x0$4 + (x0$4 = x));
       Y1$1 += w * (y0$4 + (y0$4 = y));
@@ -10086,24 +10086,24 @@
       lambda00 = lambda, phi00 = phi;
       lambda *= radians, phi *= radians;
       centroidStream$1.point = centroidRingPoint;
-      var cosPhi = cos$3(phi);
-      x0$4 = cosPhi * cos$3(lambda);
-      y0$4 = cosPhi * sin$3(lambda);
-      z0 = sin$3(phi);
+      var cosPhi = cos$4(phi);
+      x0$4 = cosPhi * cos$4(lambda);
+      y0$4 = cosPhi * sin$4(lambda);
+      z0 = sin$4(phi);
       centroidPointCartesian(x0$4, y0$4, z0);
     }
 
     function centroidRingPoint(lambda, phi) {
       lambda *= radians, phi *= radians;
-      var cosPhi = cos$3(phi),
-          x = cosPhi * cos$3(lambda),
-          y = cosPhi * sin$3(lambda),
-          z = sin$3(phi),
+      var cosPhi = cos$4(phi),
+          x = cosPhi * cos$4(lambda),
+          y = cosPhi * sin$4(lambda),
+          z = sin$4(phi),
           cx = y0$4 * z - z0 * y,
           cy = z0 * x - x0$4 * z,
           cz = x0$4 * y - y0$4 * x,
           m = hypot(cx, cy, cz),
-          w = asin$3(m), // line weight = angle
+          w = asin$4(m), // line weight = angle
           v = m && -w / m; // area weight multiplier
       X2$1.add(v * cx);
       Y2$1.add(v * cy);
@@ -10139,7 +10139,7 @@
         if (m < epsilon2) return [NaN, NaN];
       }
 
-      return [atan2$3(y, x) * degrees, asin$3(z / m) * degrees];
+      return [atan2$4(y, x) * degrees, asin$4(z / m) * degrees];
     }
 
     function constant$3(x) {
@@ -10162,7 +10162,7 @@
     }
 
     function rotationIdentity(lambda, phi) {
-      return [abs$3(lambda) > pi$1 ? lambda + Math.round(-lambda / tau$1) * tau$1 : lambda, phi];
+      return [abs$4(lambda) > pi$1 ? lambda + Math.round(-lambda / tau$1) * tau$1 : lambda, phi];
     }
 
     rotationIdentity.invert = rotationIdentity;
@@ -10187,32 +10187,32 @@
     }
 
     function rotationPhiGamma(deltaPhi, deltaGamma) {
-      var cosDeltaPhi = cos$3(deltaPhi),
-          sinDeltaPhi = sin$3(deltaPhi),
-          cosDeltaGamma = cos$3(deltaGamma),
-          sinDeltaGamma = sin$3(deltaGamma);
+      var cosDeltaPhi = cos$4(deltaPhi),
+          sinDeltaPhi = sin$4(deltaPhi),
+          cosDeltaGamma = cos$4(deltaGamma),
+          sinDeltaGamma = sin$4(deltaGamma);
 
       function rotation(lambda, phi) {
-        var cosPhi = cos$3(phi),
-            x = cos$3(lambda) * cosPhi,
-            y = sin$3(lambda) * cosPhi,
-            z = sin$3(phi),
+        var cosPhi = cos$4(phi),
+            x = cos$4(lambda) * cosPhi,
+            y = sin$4(lambda) * cosPhi,
+            z = sin$4(phi),
             k = z * cosDeltaPhi + x * sinDeltaPhi;
         return [
-          atan2$3(y * cosDeltaGamma - k * sinDeltaGamma, x * cosDeltaPhi - z * sinDeltaPhi),
-          asin$3(k * cosDeltaGamma + y * sinDeltaGamma)
+          atan2$4(y * cosDeltaGamma - k * sinDeltaGamma, x * cosDeltaPhi - z * sinDeltaPhi),
+          asin$4(k * cosDeltaGamma + y * sinDeltaGamma)
         ];
       }
 
       rotation.invert = function(lambda, phi) {
-        var cosPhi = cos$3(phi),
-            x = cos$3(lambda) * cosPhi,
-            y = sin$3(lambda) * cosPhi,
-            z = sin$3(phi),
+        var cosPhi = cos$4(phi),
+            x = cos$4(lambda) * cosPhi,
+            y = sin$4(lambda) * cosPhi,
+            z = sin$4(phi),
             k = z * cosDeltaGamma - y * sinDeltaGamma;
         return [
-          atan2$3(y * cosDeltaGamma + z * sinDeltaGamma, x * cosDeltaPhi + k * sinDeltaPhi),
-          asin$3(k * cosDeltaPhi - x * sinDeltaPhi)
+          atan2$4(y * cosDeltaGamma + z * sinDeltaGamma, x * cosDeltaPhi + k * sinDeltaPhi),
+          asin$4(k * cosDeltaPhi - x * sinDeltaPhi)
         ];
       };
 
@@ -10238,8 +10238,8 @@
     // Generates a circle centered at [0°, 0°], with a given radius and precision.
     function circleStream(stream, radius, delta, direction, t0, t1) {
       if (!delta) return;
-      var cosRadius = cos$3(radius),
-          sinRadius = sin$3(radius),
+      var cosRadius = cos$4(radius),
+          sinRadius = sin$4(radius),
           step = direction * delta;
       if (t0 == null) {
         t0 = radius + direction * tau$1;
@@ -10250,7 +10250,7 @@
         if (direction > 0 ? t0 < t1 : t0 > t1) t0 += direction * tau$1;
       }
       for (var point, t = t0; direction > 0 ? t > t1 : t < t1; t -= step) {
-        point = spherical([cosRadius, -sinRadius * cos$3(t), -sinRadius * sin$3(t)]);
+        point = spherical([cosRadius, -sinRadius * cos$4(t), -sinRadius * sin$4(t)]);
         stream.point(point[0], point[1]);
       }
     }
@@ -10259,7 +10259,7 @@
     function circleRadius(cosRadius, point) {
       point = cartesian(point), point[0] -= cosRadius;
       cartesianNormalizeInPlace(point);
-      var radius = acos$3(-point[1]);
+      var radius = acos$4(-point[1]);
       return ((-point[2] < 0 ? -radius : radius) + tau$1 - epsilon$2) % tau$1;
     }
 
@@ -10327,7 +10327,7 @@
     }
 
     function pointEqual(a, b) {
-      return abs$3(a[0] - b[0]) < epsilon$2 && abs$3(a[1] - b[1]) < epsilon$2;
+      return abs$4(a[0] - b[0]) < epsilon$2 && abs$4(a[1] - b[1]) < epsilon$2;
     }
 
     function Intersection(point, points, other, entry) {
@@ -10432,14 +10432,14 @@
     }
 
     function longitude(point) {
-      return abs$3(point[0]) <= pi$1 ? point[0] : sign$3(point[0]) * ((abs$3(point[0]) + pi$1) % tau$1 - pi$1);
+      return abs$4(point[0]) <= pi$1 ? point[0] : sign$4(point[0]) * ((abs$4(point[0]) + pi$1) % tau$1 - pi$1);
     }
 
     function polygonContains(polygon, point) {
       var lambda = longitude(point),
           phi = point[1],
-          sinPhi = sin$3(phi),
-          normal = [sin$3(lambda), -cos$3(lambda), 0],
+          sinPhi = sin$4(phi),
+          normal = [sin$4(lambda), -cos$4(lambda), 0],
           angle = 0,
           winding = 0;
 
@@ -10455,22 +10455,22 @@
             point0 = ring[m - 1],
             lambda0 = longitude(point0),
             phi0 = point0[1] / 2 + quarterPi,
-            sinPhi0 = sin$3(phi0),
-            cosPhi0 = cos$3(phi0);
+            sinPhi0 = sin$4(phi0),
+            cosPhi0 = cos$4(phi0);
 
         for (var j = 0; j < m; ++j, lambda0 = lambda1, sinPhi0 = sinPhi1, cosPhi0 = cosPhi1, point0 = point1) {
           var point1 = ring[j],
               lambda1 = longitude(point1),
               phi1 = point1[1] / 2 + quarterPi,
-              sinPhi1 = sin$3(phi1),
-              cosPhi1 = cos$3(phi1),
+              sinPhi1 = sin$4(phi1),
+              cosPhi1 = cos$4(phi1),
               delta = lambda1 - lambda0,
               sign = delta >= 0 ? 1 : -1,
               absDelta = sign * delta,
               antimeridian = absDelta > pi$1,
               k = sinPhi0 * sinPhi1;
 
-          sum.add(atan2$3(k * sign * sin$3(absDelta), cosPhi0 * cosPhi1 + k * cos$3(absDelta)));
+          sum.add(atan2$4(k * sign * sin$4(absDelta), cosPhi0 * cosPhi1 + k * cos$4(absDelta)));
           angle += antimeridian ? delta + sign * tau$1 : delta;
 
           // Are the longitudes either side of the point’s meridian (lambda),
@@ -10480,7 +10480,7 @@
             cartesianNormalizeInPlace(arc);
             var intersection = cartesianCross(normal, arc);
             cartesianNormalizeInPlace(intersection);
-            var phiArc = (antimeridian ^ delta >= 0 ? -1 : 1) * asin$3(intersection[2]);
+            var phiArc = (antimeridian ^ delta >= 0 ? -1 : 1) * asin$4(intersection[2]);
             if (phi > phiArc || phi === phiArc && (arc[0] || arc[1])) {
               winding += antimeridian ^ delta >= 0 ? 1 : -1;
             }
@@ -10651,8 +10651,8 @@
         },
         point: function(lambda1, phi1) {
           var sign1 = lambda1 > 0 ? pi$1 : -pi$1,
-              delta = abs$3(lambda1 - lambda0);
-          if (abs$3(delta - pi$1) < epsilon$2) { // line crosses a pole
+              delta = abs$4(lambda1 - lambda0);
+          if (abs$4(delta - pi$1) < epsilon$2) { // line crosses a pole
             stream.point(lambda0, phi0 = (phi0 + phi1) / 2 > 0 ? halfPi$1 : -halfPi$1);
             stream.point(sign0, phi0);
             stream.lineEnd();
@@ -10661,8 +10661,8 @@
             stream.point(lambda1, phi0);
             clean = 0;
           } else if (sign0 !== sign1 && delta >= pi$1) { // line crosses antimeridian
-            if (abs$3(lambda0 - sign0) < epsilon$2) lambda0 -= sign0 * epsilon$2; // handle degeneracies
-            if (abs$3(lambda1 - sign1) < epsilon$2) lambda1 -= sign1 * epsilon$2;
+            if (abs$4(lambda0 - sign0) < epsilon$2) lambda0 -= sign0 * epsilon$2; // handle degeneracies
+            if (abs$4(lambda1 - sign1) < epsilon$2) lambda1 -= sign1 * epsilon$2;
             phi0 = clipAntimeridianIntersect(lambda0, phi0, lambda1, phi1);
             stream.point(sign0, phi0);
             stream.lineEnd();
@@ -10686,10 +10686,10 @@
     function clipAntimeridianIntersect(lambda0, phi0, lambda1, phi1) {
       var cosPhi0,
           cosPhi1,
-          sinLambda0Lambda1 = sin$3(lambda0 - lambda1);
-      return abs$3(sinLambda0Lambda1) > epsilon$2
-          ? atan$2((sin$3(phi0) * (cosPhi1 = cos$3(phi1)) * sin$3(lambda1)
-              - sin$3(phi1) * (cosPhi0 = cos$3(phi0)) * sin$3(lambda0))
+          sinLambda0Lambda1 = sin$4(lambda0 - lambda1);
+      return abs$4(sinLambda0Lambda1) > epsilon$2
+          ? atan$3((sin$4(phi0) * (cosPhi1 = cos$4(phi1)) * sin$4(lambda1)
+              - sin$4(phi1) * (cosPhi0 = cos$4(phi0)) * sin$4(lambda0))
               / (cosPhi0 * cosPhi1 * sinLambda0Lambda1))
           : (phi0 + phi1) / 2;
     }
@@ -10707,7 +10707,7 @@
         stream.point(-pi$1, -phi);
         stream.point(-pi$1, 0);
         stream.point(-pi$1, phi);
-      } else if (abs$3(from[0] - to[0]) > epsilon$2) {
+      } else if (abs$4(from[0] - to[0]) > epsilon$2) {
         var lambda = from[0] < to[0] ? pi$1 : -pi$1;
         phi = direction * lambda / 2;
         stream.point(-lambda, phi);
@@ -10719,17 +10719,17 @@
     }
 
     function clipCircle(radius) {
-      var cr = cos$3(radius),
+      var cr = cos$4(radius),
           delta = 6 * radians,
           smallRadius = cr > 0,
-          notHemisphere = abs$3(cr) > epsilon$2; // TODO optimise for this common case
+          notHemisphere = abs$4(cr) > epsilon$2; // TODO optimise for this common case
 
       function interpolate(from, to, direction, stream) {
         circleStream(stream, radius, delta, direction, from, to);
       }
 
       function visible(lambda, phi) {
-        return cos$3(lambda) * cos$3(phi) > cr;
+        return cos$4(lambda) * cos$4(phi) > cr;
       }
 
       // Takes a line and cuts into visible segments. Return values used for polygon
@@ -10841,7 +10841,7 @@
 
         if (t2 < 0) return;
 
-        var t = sqrt$4(t2),
+        var t = sqrt$5(t2),
             q = cartesianScale(u, (-w - t) / uu);
         cartesianAddInPlace(q, A);
         q = spherical(q);
@@ -10858,7 +10858,7 @@
         if (lambda1 < lambda0) z = lambda0, lambda0 = lambda1, lambda1 = z;
 
         var delta = lambda1 - lambda0,
-            polar = abs$3(delta - pi$1) < epsilon$2,
+            polar = abs$4(delta - pi$1) < epsilon$2,
             meridian = polar || delta < epsilon$2;
 
         if (!polar && phi1 < phi0) z = phi0, phi0 = phi1, phi1 = z;
@@ -10866,7 +10866,7 @@
         // Check that the first point is between a and b.
         if (meridian
             ? polar
-              ? phi0 + phi1 > 0 ^ q[1] < (abs$3(q[0] - lambda0) < epsilon$2 ? phi0 : phi1)
+              ? phi0 + phi1 > 0 ^ q[1] < (abs$4(q[0] - lambda0) < epsilon$2 ? phi0 : phi1)
               : phi0 <= q[1] && q[1] <= phi1
             : delta > pi$1 ^ (lambda0 <= q[0] && q[0] <= lambda1)) {
           var q1 = cartesianScale(u, (-w + t) / uu);
@@ -10974,9 +10974,9 @@
       }
 
       function corner(p, direction) {
-        return abs$3(p[0] - x0) < epsilon$2 ? direction > 0 ? 0 : 3
-            : abs$3(p[0] - x1) < epsilon$2 ? direction > 0 ? 2 : 1
-            : abs$3(p[1] - y0) < epsilon$2 ? direction > 0 ? 1 : 0
+        return abs$4(p[0] - x0) < epsilon$2 ? direction > 0 ? 0 : 3
+            : abs$4(p[0] - x1) < epsilon$2 ? direction > 0 ? 2 : 1
+            : abs$4(p[1] - y0) < epsilon$2 ? direction > 0 ? 1 : 0
             : direction > 0 ? 3 : 2; // abs(p[1] - y1) < epsilon
       }
 
@@ -11157,21 +11157,21 @@
 
     function lengthPointFirst$1(lambda, phi) {
       lambda *= radians, phi *= radians;
-      lambda0 = lambda, sinPhi0 = sin$3(phi), cosPhi0 = cos$3(phi);
+      lambda0 = lambda, sinPhi0 = sin$4(phi), cosPhi0 = cos$4(phi);
       lengthStream$1.point = lengthPoint$1;
     }
 
     function lengthPoint$1(lambda, phi) {
       lambda *= radians, phi *= radians;
-      var sinPhi = sin$3(phi),
-          cosPhi = cos$3(phi),
-          delta = abs$3(lambda - lambda0),
-          cosDelta = cos$3(delta),
-          sinDelta = sin$3(delta),
+      var sinPhi = sin$4(phi),
+          cosPhi = cos$4(phi),
+          delta = abs$4(lambda - lambda0),
+          cosDelta = cos$4(delta),
+          sinDelta = sin$4(delta),
           x = cosPhi * sinDelta,
           y = cosPhi0 * sinPhi - sinPhi0 * cosPhi * cosDelta,
           z = sinPhi0 * sinPhi + cosPhi0 * cosPhi * cosDelta;
-      lengthSum$1.add(atan2$3(sqrt$4(x * x + y * y), z));
+      lengthSum$1.add(atan2$4(sqrt$5(x * x + y * y), z));
       lambda0 = lambda, sinPhi0 = sinPhi, cosPhi0 = cosPhi;
     }
 
@@ -11285,12 +11285,12 @@
     }
 
     function graticuleX(y0, y1, dy) {
-      var y = range$4(y0, y1 - epsilon$2, dy).concat(y1);
+      var y = range$5(y0, y1 - epsilon$2, dy).concat(y1);
       return function(x) { return y.map(function(y) { return [x, y]; }); };
     }
 
     function graticuleY(x0, x1, dx) {
-      var x = range$4(x0, x1 - epsilon$2, dx).concat(x1);
+      var x = range$5(x0, x1 - epsilon$2, dx).concat(x1);
       return function(y) { return x.map(function(x) { return [x, y]; }); };
     }
 
@@ -11306,10 +11306,10 @@
       }
 
       function lines() {
-        return range$4(ceil$2(X0 / DX) * DX, X1, DX).map(X)
-            .concat(range$4(ceil$2(Y0 / DY) * DY, Y1, DY).map(Y))
-            .concat(range$4(ceil$2(x0 / dx) * dx, x1, dx).filter(function(x) { return abs$3(x % DX) > epsilon$2; }).map(x))
-            .concat(range$4(ceil$2(y0 / dy) * dy, y1, dy).filter(function(y) { return abs$3(y % DY) > epsilon$2; }).map(y));
+        return range$5(ceil$3(X0 / DX) * DX, X1, DX).map(X)
+            .concat(range$5(ceil$3(Y0 / DY) * DY, Y1, DY).map(Y))
+            .concat(range$5(ceil$3(x0 / dx) * dx, x1, dx).filter(function(x) { return abs$4(x % DX) > epsilon$2; }).map(x))
+            .concat(range$5(ceil$3(y0 / dy) * dy, y1, dy).filter(function(y) { return abs$4(y % DY) > epsilon$2; }).map(y));
       }
 
       graticule.lines = function() {
@@ -11392,26 +11392,26 @@
           y0 = a[1] * radians,
           x1 = b[0] * radians,
           y1 = b[1] * radians,
-          cy0 = cos$3(y0),
-          sy0 = sin$3(y0),
-          cy1 = cos$3(y1),
-          sy1 = sin$3(y1),
-          kx0 = cy0 * cos$3(x0),
-          ky0 = cy0 * sin$3(x0),
-          kx1 = cy1 * cos$3(x1),
-          ky1 = cy1 * sin$3(x1),
-          d = 2 * asin$3(sqrt$4(haversin(y1 - y0) + cy0 * cy1 * haversin(x1 - x0))),
-          k = sin$3(d);
+          cy0 = cos$4(y0),
+          sy0 = sin$4(y0),
+          cy1 = cos$4(y1),
+          sy1 = sin$4(y1),
+          kx0 = cy0 * cos$4(x0),
+          ky0 = cy0 * sin$4(x0),
+          kx1 = cy1 * cos$4(x1),
+          ky1 = cy1 * sin$4(x1),
+          d = 2 * asin$4(sqrt$5(haversin(y1 - y0) + cy0 * cy1 * haversin(x1 - x0))),
+          k = sin$4(d);
 
       var interpolate = d ? function(t) {
-        var B = sin$3(t *= d) / k,
-            A = sin$3(d - t) / k,
+        var B = sin$4(t *= d) / k,
+            A = sin$4(d - t) / k,
             x = A * kx0 + B * kx1,
             y = A * ky0 + B * ky1,
             z = A * sy0 + B * sy1;
         return [
-          atan2$3(y, x) * degrees,
-          atan2$3(z, sqrt$4(x * x + y * y)) * degrees
+          atan2$4(y, x) * degrees,
+          atan2$4(z, sqrt$5(x * x + y * y)) * degrees
         ];
       } : function() {
         return [x0 * degrees, y0 * degrees];
@@ -11441,7 +11441,7 @@
       },
       polygonEnd: function() {
         areaStream.lineStart = areaStream.lineEnd = areaStream.point = noop$1;
-        areaSum.add(abs$3(areaRingSum));
+        areaSum.add(abs$4(areaRingSum));
         areaRingSum = new Adder();
       },
       result: function() {
@@ -11555,7 +11555,7 @@
     }
 
     function centroidPointLine(x, y) {
-      var dx = x - x0$1, dy = y - y0$1, z = sqrt$4(dx * dx + dy * dy);
+      var dx = x - x0$1, dy = y - y0$1, z = sqrt$5(dx * dx + dy * dy);
       X1 += z * (x0$1 + x) / 2;
       Y1 += z * (y0$1 + y) / 2;
       Z1 += z;
@@ -11582,7 +11582,7 @@
     function centroidPointRing(x, y) {
       var dx = x - x0$1,
           dy = y - y0$1,
-          z = sqrt$4(dx * dx + dy * dy);
+          z = sqrt$5(dx * dx + dy * dy);
 
       X1 += z * (x0$1 + x) / 2;
       Y1 += z * (y0$1 + y) / 2;
@@ -11676,7 +11676,7 @@
 
     function lengthPoint(x, y) {
       x0 -= x, y0 -= y;
-      lengthSum.add(sqrt$4(x0 * x0 + y0 * y0));
+      lengthSum.add(sqrt$5(x0 * x0 + y0 * y0));
       x0 = x, y0 = y;
     }
 
@@ -11795,7 +11795,7 @@
       return path.projection(projection).context(context);
     }
 
-    function transform$3(methods) {
+    function transform$4(methods) {
       return {
         stream: transformer$3(methods)
       };
@@ -11868,7 +11868,7 @@
     }
 
     var maxDepth = 16, // maximum depth of subdivision
-        cosMinDistance = cos$3(30 * radians); // cos(minimum angular distance)
+        cosMinDistance = cos$4(30 * radians); // cos(minimum angular distance)
 
     function resample(project, delta2) {
       return +delta2 ? resample$1(project, delta2) : resampleNone(project);
@@ -11893,9 +11893,9 @@
           var a = a0 + a1,
               b = b0 + b1,
               c = c0 + c1,
-              m = sqrt$4(a * a + b * b + c * c),
-              phi2 = asin$3(c /= m),
-              lambda2 = abs$3(abs$3(c) - 1) < epsilon$2 || abs$3(lambda0 - lambda1) < epsilon$2 ? (lambda0 + lambda1) / 2 : atan2$3(b, a),
+              m = sqrt$5(a * a + b * b + c * c),
+              phi2 = asin$4(c /= m),
+              lambda2 = abs$4(abs$4(c) - 1) < epsilon$2 || abs$4(lambda0 - lambda1) < epsilon$2 ? (lambda0 + lambda1) / 2 : atan2$4(b, a),
               p = project(lambda2, phi2),
               x2 = p[0],
               y2 = p[1],
@@ -11903,7 +11903,7 @@
               dy2 = y2 - y0,
               dz = dy * dx2 - dx * dy2;
           if (dz * dz / d2 > delta2 // perpendicular projected distance
-              || abs$3((dx * dx2 + dy * dy2) / d2 - 0.5) > 0.3 // midpoint close to an end
+              || abs$4((dx * dx2 + dy * dy2) / d2 - 0.5) > 0.3 // midpoint close to an end
               || a0 * a1 + b0 * b1 + c0 * c1 < cosMinDistance) { // angular distance
             resampleLineTo(x0, y0, lambda0, a0, b0, c0, x2, y2, lambda2, a /= m, b /= m, c, depth, stream);
             stream.point(x2, y2);
@@ -11994,8 +11994,8 @@
 
     function scaleTranslateRotate(k, dx, dy, sx, sy, alpha) {
       if (!alpha) return scaleTranslate(k, dx, dy, sx, sy);
-      var cosAlpha = cos$3(alpha),
-          sinAlpha = sin$3(alpha),
+      var cosAlpha = cos$4(alpha),
+          sinAlpha = sin$4(alpha),
           a = cosAlpha * k,
           b = sinAlpha * k,
           ai = cosAlpha / k,
@@ -12092,7 +12092,7 @@
       };
 
       projection.precision = function(_) {
-        return arguments.length ? (projectResample = resample(projectTransform, delta2 = _ * _), reset()) : sqrt$4(delta2);
+        return arguments.length ? (projectResample = resample(projectTransform, delta2 = _ * _), reset()) : sqrt$5(delta2);
       };
 
       projection.fitExtent = function(extent, object) {
@@ -12147,38 +12147,38 @@
     }
 
     function cylindricalEqualAreaRaw(phi0) {
-      var cosPhi0 = cos$3(phi0);
+      var cosPhi0 = cos$4(phi0);
 
       function forward(lambda, phi) {
-        return [lambda * cosPhi0, sin$3(phi) / cosPhi0];
+        return [lambda * cosPhi0, sin$4(phi) / cosPhi0];
       }
 
       forward.invert = function(x, y) {
-        return [x / cosPhi0, asin$3(y * cosPhi0)];
+        return [x / cosPhi0, asin$4(y * cosPhi0)];
       };
 
       return forward;
     }
 
     function conicEqualAreaRaw(y0, y1) {
-      var sy0 = sin$3(y0), n = (sy0 + sin$3(y1)) / 2;
+      var sy0 = sin$4(y0), n = (sy0 + sin$4(y1)) / 2;
 
       // Are the parallels symmetrical around the Equator?
-      if (abs$3(n) < epsilon$2) return cylindricalEqualAreaRaw(y0);
+      if (abs$4(n) < epsilon$2) return cylindricalEqualAreaRaw(y0);
 
-      var c = 1 + sy0 * (2 * n - sy0), r0 = sqrt$4(c) / n;
+      var c = 1 + sy0 * (2 * n - sy0), r0 = sqrt$5(c) / n;
 
       function project(x, y) {
-        var r = sqrt$4(c - 2 * n * sin$3(y)) / n;
-        return [r * sin$3(x *= n), r0 - r * cos$3(x)];
+        var r = sqrt$5(c - 2 * n * sin$4(y)) / n;
+        return [r * sin$4(x *= n), r0 - r * cos$4(x)];
       }
 
       project.invert = function(x, y) {
         var r0y = r0 - y,
-            l = atan2$3(x, abs$3(r0y)) * sign$3(r0y);
+            l = atan2$4(x, abs$4(r0y)) * sign$4(r0y);
         if (r0y * n < 0)
-          l -= pi$1 * sign$3(x) * sign$3(r0y);
-        return [l / n, asin$3((c - (x * x + r0y * r0y) * n * n) / (2 * n))];
+          l -= pi$1 * sign$4(x) * sign$4(r0y);
+        return [l / n, asin$4((c - (x * x + r0y * r0y) * n * n) / (2 * n))];
       };
 
       return project;
@@ -12308,36 +12308,36 @@
 
     function azimuthalRaw(scale) {
       return function(x, y) {
-        var cx = cos$3(x),
-            cy = cos$3(y),
+        var cx = cos$4(x),
+            cy = cos$4(y),
             k = scale(cx * cy);
             if (k === Infinity) return [2, 0];
         return [
-          k * cy * sin$3(x),
-          k * sin$3(y)
+          k * cy * sin$4(x),
+          k * sin$4(y)
         ];
       }
     }
 
     function azimuthalInvert(angle) {
       return function(x, y) {
-        var z = sqrt$4(x * x + y * y),
+        var z = sqrt$5(x * x + y * y),
             c = angle(z),
-            sc = sin$3(c),
-            cc = cos$3(c);
+            sc = sin$4(c),
+            cc = cos$4(c);
         return [
-          atan2$3(x * sc, z * cc),
-          asin$3(z && y * sc / z)
+          atan2$4(x * sc, z * cc),
+          asin$4(z && y * sc / z)
         ];
       }
     }
 
     var azimuthalEqualAreaRaw = azimuthalRaw(function(cxcy) {
-      return sqrt$4(2 / (1 + cxcy));
+      return sqrt$5(2 / (1 + cxcy));
     });
 
     azimuthalEqualAreaRaw.invert = azimuthalInvert(function(z) {
-      return 2 * asin$3(z / 2);
+      return 2 * asin$4(z / 2);
     });
 
     function azimuthalEqualArea() {
@@ -12347,7 +12347,7 @@
     }
 
     var azimuthalEquidistantRaw = azimuthalRaw(function(c) {
-      return (c = acos$3(c)) && c / sin$3(c);
+      return (c = acos$4(c)) && c / sin$4(c);
     });
 
     azimuthalEquidistantRaw.invert = azimuthalInvert(function(z) {
@@ -12361,11 +12361,11 @@
     }
 
     function mercatorRaw(lambda, phi) {
-      return [lambda, log$4(tan$2((halfPi$1 + phi) / 2))];
+      return [lambda, log$5(tan$3((halfPi$1 + phi) / 2))];
     }
 
     mercatorRaw.invert = function(x, y) {
-      return [x, 2 * atan$2(exp$2(y)) - halfPi$1];
+      return [x, 2 * atan$3(exp$3(y)) - halfPi$1];
     };
 
     function mercator() {
@@ -12410,29 +12410,29 @@
     }
 
     function tany(y) {
-      return tan$2((halfPi$1 + y) / 2);
+      return tan$3((halfPi$1 + y) / 2);
     }
 
     function conicConformalRaw(y0, y1) {
-      var cy0 = cos$3(y0),
-          n = y0 === y1 ? sin$3(y0) : log$4(cy0 / cos$3(y1)) / log$4(tany(y1) / tany(y0)),
-          f = cy0 * pow$3(tany(y0), n) / n;
+      var cy0 = cos$4(y0),
+          n = y0 === y1 ? sin$4(y0) : log$5(cy0 / cos$4(y1)) / log$5(tany(y1) / tany(y0)),
+          f = cy0 * pow$4(tany(y0), n) / n;
 
       if (!n) return mercatorRaw;
 
       function project(x, y) {
         if (f > 0) { if (y < -halfPi$1 + epsilon$2) y = -halfPi$1 + epsilon$2; }
         else { if (y > halfPi$1 - epsilon$2) y = halfPi$1 - epsilon$2; }
-        var r = f / pow$3(tany(y), n);
-        return [r * sin$3(n * x), f - r * cos$3(n * x)];
+        var r = f / pow$4(tany(y), n);
+        return [r * sin$4(n * x), f - r * cos$4(n * x)];
       }
 
       project.invert = function(x, y) {
-        var fy = f - y, r = sign$3(n) * sqrt$4(x * x + fy * fy),
-          l = atan2$3(x, abs$3(fy)) * sign$3(fy);
+        var fy = f - y, r = sign$4(n) * sqrt$5(x * x + fy * fy),
+          l = atan2$4(x, abs$4(fy)) * sign$4(fy);
         if (fy * n < 0)
-          l -= pi$1 * sign$3(x) * sign$3(fy);
-        return [l / n, 2 * atan$2(pow$3(f / r, 1 / n)) - halfPi$1];
+          l -= pi$1 * sign$4(x) * sign$4(fy);
+        return [l / n, 2 * atan$3(pow$4(f / r, 1 / n)) - halfPi$1];
       };
 
       return project;
@@ -12456,23 +12456,23 @@
     }
 
     function conicEquidistantRaw(y0, y1) {
-      var cy0 = cos$3(y0),
-          n = y0 === y1 ? sin$3(y0) : (cy0 - cos$3(y1)) / (y1 - y0),
+      var cy0 = cos$4(y0),
+          n = y0 === y1 ? sin$4(y0) : (cy0 - cos$4(y1)) / (y1 - y0),
           g = cy0 / n + y0;
 
-      if (abs$3(n) < epsilon$2) return equirectangularRaw;
+      if (abs$4(n) < epsilon$2) return equirectangularRaw;
 
       function project(x, y) {
         var gy = g - y, nx = n * x;
-        return [gy * sin$3(nx), g - gy * cos$3(nx)];
+        return [gy * sin$4(nx), g - gy * cos$4(nx)];
       }
 
       project.invert = function(x, y) {
         var gy = g - y,
-            l = atan2$3(x, abs$3(gy)) * sign$3(gy);
+            l = atan2$4(x, abs$4(gy)) * sign$4(gy);
         if (gy * n < 0)
-          l -= pi$1 * sign$3(x) * sign$3(gy);
-        return [l / n, g - sign$3(n) * sqrt$4(x * x + gy * gy)];
+          l -= pi$1 * sign$4(x) * sign$4(gy);
+        return [l / n, g - sign$4(n) * sqrt$5(x * x + gy * gy)];
       };
 
       return project;
@@ -12488,13 +12488,13 @@
         A2 = -0.081106,
         A3 = 0.000893,
         A4 = 0.003796,
-        M = sqrt$4(3) / 2,
+        M = sqrt$5(3) / 2,
         iterations = 12;
 
     function equalEarthRaw(lambda, phi) {
-      var l = asin$3(M * sin$3(phi)), l2 = l * l, l6 = l2 * l2 * l2;
+      var l = asin$4(M * sin$4(phi)), l2 = l * l, l6 = l2 * l2 * l2;
       return [
-        lambda * cos$3(l) / (M * (A1 + 3 * A2 * l2 + l6 * (7 * A3 + 9 * A4 * l2))),
+        lambda * cos$4(l) / (M * (A1 + 3 * A2 * l2 + l6 * (7 * A3 + 9 * A4 * l2))),
         l * (A1 + A2 * l2 + l6 * (A3 + A4 * l2))
       ];
     }
@@ -12505,11 +12505,11 @@
         fy = l * (A1 + A2 * l2 + l6 * (A3 + A4 * l2)) - y;
         fpy = A1 + 3 * A2 * l2 + l6 * (7 * A3 + 9 * A4 * l2);
         l -= delta = fy / fpy, l2 = l * l, l6 = l2 * l2 * l2;
-        if (abs$3(delta) < epsilon2) break;
+        if (abs$4(delta) < epsilon2) break;
       }
       return [
-        M * x * (A1 + 3 * A2 * l2 + l6 * (7 * A3 + 9 * A4 * l2)) / cos$3(l),
-        asin$3(sin$3(l) / M)
+        M * x * (A1 + 3 * A2 * l2 + l6 * (7 * A3 + 9 * A4 * l2)) / cos$4(l),
+        asin$4(sin$4(l) / M)
       ];
     };
 
@@ -12519,11 +12519,11 @@
     }
 
     function gnomonicRaw(x, y) {
-      var cy = cos$3(y), k = cos$3(x) * cy;
-      return [cy * sin$3(x) / k, sin$3(y) / k];
+      var cy = cos$4(y), k = cos$4(x) * cy;
+      return [cy * sin$4(x) / k, sin$4(y) / k];
     }
 
-    gnomonicRaw.invert = azimuthalInvert(atan$2);
+    gnomonicRaw.invert = azimuthalInvert(atan$3);
 
     function gnomonic() {
       return projection(gnomonicRaw)
@@ -12587,7 +12587,7 @@
         return arguments.length ? (tx = +_[0], ty = +_[1], reset()) : [tx, ty];
       };
       projection.angle = function(_) {
-        return arguments.length ? (alpha = _ % 360 * radians, sa = sin$3(alpha), ca = cos$3(alpha), reset()) : alpha * degrees;
+        return arguments.length ? (alpha = _ % 360 * radians, sa = sin$4(alpha), ca = cos$4(alpha), reset()) : alpha * degrees;
       };
       projection.reflectX = function(_) {
         return arguments.length ? (sx = _ ? -1 : 1, reset()) : sx < 0;
@@ -12625,7 +12625,7 @@
         var phi2 = phi * phi, phi4 = phi2 * phi2;
         phi -= delta = (phi * (1.007226 + phi2 * (0.015085 + phi4 * (-0.044475 + 0.028874 * phi2 - 0.005916 * phi4))) - y) /
             (1.007226 + phi2 * (0.015085 * 3 + phi4 * (-0.044475 * 7 + 0.028874 * 9 * phi2 - 0.005916 * 11 * phi4)));
-      } while (abs$3(delta) > epsilon$2 && --i > 0);
+      } while (abs$4(delta) > epsilon$2 && --i > 0);
       return [
         x / (0.8707 + (phi2 = phi * phi) * (-0.131979 + phi2 * (-0.013791 + phi2 * phi2 * phi2 * (0.003971 - 0.001529 * phi2)))),
         phi
@@ -12638,10 +12638,10 @@
     }
 
     function orthographicRaw(x, y) {
-      return [cos$3(y) * sin$3(x), sin$3(y)];
+      return [cos$4(y) * sin$4(x), sin$4(y)];
     }
 
-    orthographicRaw.invert = azimuthalInvert(asin$3);
+    orthographicRaw.invert = azimuthalInvert(asin$4);
 
     function orthographic() {
       return projection(orthographicRaw)
@@ -12650,12 +12650,12 @@
     }
 
     function stereographicRaw(x, y) {
-      var cy = cos$3(y), k = 1 + cos$3(x) * cy;
-      return [cy * sin$3(x) / k, sin$3(y) / k];
+      var cy = cos$4(y), k = 1 + cos$4(x) * cy;
+      return [cy * sin$4(x) / k, sin$4(y) / k];
     }
 
     stereographicRaw.invert = azimuthalInvert(function(z) {
-      return 2 * atan$2(z);
+      return 2 * atan$3(z);
     });
 
     function stereographic() {
@@ -12665,11 +12665,11 @@
     }
 
     function transverseMercatorRaw(lambda, phi) {
-      return [log$4(tan$2((halfPi$1 + phi) / 2)), -lambda];
+      return [log$5(tan$3((halfPi$1 + phi) / 2)), -lambda];
     }
 
     transverseMercatorRaw.invert = function(x, y) {
-      return [-y, 2 * atan$2(exp$2(x)) - halfPi$1];
+      return [-y, 2 * atan$3(exp$3(x)) - halfPi$1];
     };
 
     function transverseMercator() {
@@ -13013,7 +13013,7 @@
         : Array.from(x); // Map, Set, iterable, string, or anything else
     }
 
-    function shuffle(array) {
+    function shuffle$1(array) {
       var m = array.length,
           t,
           i;
@@ -13029,7 +13029,7 @@
     }
 
     function enclose(circles) {
-      var i = 0, n = (circles = shuffle(Array.from(circles))).length, B = [], p, e;
+      var i = 0, n = (circles = shuffle$1(Array.from(circles))).length, B = [], p, e;
 
       while (i < n) {
         p = circles[i];
@@ -14616,7 +14616,7 @@
         start += (stop - start - step * (n - paddingInner)) * align;
         bandwidth = step * (1 - paddingInner);
         if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
-        var values = range$4(n).map(function(i) { return start + step * i; });
+        var values = range$5(n).map(function(i) { return start + step * i; });
         return ordinalRange(reverse ? values.reverse() : values);
       }
 
@@ -15086,9 +15086,9 @@
       return scale;
     }
 
-    function log$3() {
+    function log$4() {
       const scale = loggish(transformer$2()).domain([1, 10]);
-      scale.copy = () => copy$1(scale, log$3()).base(scale.base());
+      scale.copy = () => copy$1(scale, log$4()).base(scale.base());
       initRange.apply(scale, arguments);
       return scale;
     }
@@ -15156,11 +15156,11 @@
       return linearish(scale);
     }
 
-    function pow$2() {
+    function pow$3() {
       var scale = powish(transformer$2());
 
       scale.copy = function() {
-        return copy$1(scale, pow$2()).exponent(scale.exponent());
+        return copy$1(scale, pow$3()).exponent(scale.exponent());
       };
 
       initRange.apply(scale, arguments);
@@ -15168,11 +15168,11 @@
       return scale;
     }
 
-    function sqrt$3() {
-      return pow$2.apply(null, arguments).exponent(0.5);
+    function sqrt$4() {
+      return pow$3.apply(null, arguments).exponent(0.5);
     }
 
-    function square$2(x) {
+    function square$3(x) {
       return Math.sign(x) * x * x;
     }
 
@@ -15192,7 +15192,7 @@
       }
 
       scale.invert = function(y) {
-        return squared.invert(square$2(y));
+        return squared.invert(square$3(y));
       };
 
       scale.domain = function(_) {
@@ -15200,7 +15200,7 @@
       };
 
       scale.range = function(_) {
-        return arguments.length ? (squared.range((range = Array.from(_, number$1)).map(square$2)), scale) : range.slice();
+        return arguments.length ? (squared.range((range = Array.from(_, number$1)).map(square$3)), scale) : range.slice();
       };
 
       scale.rangeRound = function(_) {
@@ -15339,7 +15339,7 @@
       return initRange.apply(linearish(scale), arguments);
     }
 
-    function threshold$1() {
+    function threshold$2() {
       var domain = [0.5],
           range = [0, 1],
           unknown,
@@ -15367,7 +15367,7 @@
       };
 
       scale.copy = function() {
-        return threshold$1()
+        return threshold$2()
             .domain(domain)
             .range(range)
             .unknown(unknown);
@@ -16125,7 +16125,7 @@
         percentRe = /^%/,
         requoteRe = /[\\^$*+?|[\]().{}]/g;
 
-    function pad(value, fill, width) {
+    function pad$1(value, fill, width) {
       var sign = value < 0 ? "-" : "",
           string = (sign ? -value : value) + "",
           length = string.length;
@@ -16245,23 +16245,23 @@
     }
 
     function formatDayOfMonth(d, p) {
-      return pad(d.getDate(), p, 2);
+      return pad$1(d.getDate(), p, 2);
     }
 
     function formatHour24(d, p) {
-      return pad(d.getHours(), p, 2);
+      return pad$1(d.getHours(), p, 2);
     }
 
     function formatHour12(d, p) {
-      return pad(d.getHours() % 12 || 12, p, 2);
+      return pad$1(d.getHours() % 12 || 12, p, 2);
     }
 
     function formatDayOfYear(d, p) {
-      return pad(1 + timeDay.count(timeYear(d), d), p, 3);
+      return pad$1(1 + timeDay.count(timeYear(d), d), p, 3);
     }
 
     function formatMilliseconds(d, p) {
-      return pad(d.getMilliseconds(), p, 3);
+      return pad$1(d.getMilliseconds(), p, 3);
     }
 
     function formatMicroseconds(d, p) {
@@ -16269,15 +16269,15 @@
     }
 
     function formatMonthNumber(d, p) {
-      return pad(d.getMonth() + 1, p, 2);
+      return pad$1(d.getMonth() + 1, p, 2);
     }
 
     function formatMinutes(d, p) {
-      return pad(d.getMinutes(), p, 2);
+      return pad$1(d.getMinutes(), p, 2);
     }
 
     function formatSeconds(d, p) {
-      return pad(d.getSeconds(), p, 2);
+      return pad$1(d.getSeconds(), p, 2);
     }
 
     function formatWeekdayNumberMonday(d) {
@@ -16286,7 +16286,7 @@
     }
 
     function formatWeekNumberSunday(d, p) {
-      return pad(sunday.count(timeYear(d) - 1, d), p, 2);
+      return pad$1(sunday.count(timeYear(d) - 1, d), p, 2);
     }
 
     function dISO(d) {
@@ -16296,7 +16296,7 @@
 
     function formatWeekNumberISO(d, p) {
       d = dISO(d);
-      return pad(thursday.count(timeYear(d), d) + (timeYear(d).getDay() === 4), p, 2);
+      return pad$1(thursday.count(timeYear(d), d) + (timeYear(d).getDay() === 4), p, 2);
     }
 
     function formatWeekdayNumberSunday(d) {
@@ -16304,53 +16304,53 @@
     }
 
     function formatWeekNumberMonday(d, p) {
-      return pad(monday.count(timeYear(d) - 1, d), p, 2);
+      return pad$1(monday.count(timeYear(d) - 1, d), p, 2);
     }
 
     function formatYear(d, p) {
-      return pad(d.getFullYear() % 100, p, 2);
+      return pad$1(d.getFullYear() % 100, p, 2);
     }
 
     function formatYearISO(d, p) {
       d = dISO(d);
-      return pad(d.getFullYear() % 100, p, 2);
+      return pad$1(d.getFullYear() % 100, p, 2);
     }
 
     function formatFullYear(d, p) {
-      return pad(d.getFullYear() % 10000, p, 4);
+      return pad$1(d.getFullYear() % 10000, p, 4);
     }
 
     function formatFullYearISO(d, p) {
       var day = d.getDay();
       d = (day >= 4 || day === 0) ? thursday(d) : thursday.ceil(d);
-      return pad(d.getFullYear() % 10000, p, 4);
+      return pad$1(d.getFullYear() % 10000, p, 4);
     }
 
     function formatZone(d) {
       var z = d.getTimezoneOffset();
       return (z > 0 ? "-" : (z *= -1, "+"))
-          + pad(z / 60 | 0, "0", 2)
-          + pad(z % 60, "0", 2);
+          + pad$1(z / 60 | 0, "0", 2)
+          + pad$1(z % 60, "0", 2);
     }
 
     function formatUTCDayOfMonth(d, p) {
-      return pad(d.getUTCDate(), p, 2);
+      return pad$1(d.getUTCDate(), p, 2);
     }
 
     function formatUTCHour24(d, p) {
-      return pad(d.getUTCHours(), p, 2);
+      return pad$1(d.getUTCHours(), p, 2);
     }
 
     function formatUTCHour12(d, p) {
-      return pad(d.getUTCHours() % 12 || 12, p, 2);
+      return pad$1(d.getUTCHours() % 12 || 12, p, 2);
     }
 
     function formatUTCDayOfYear(d, p) {
-      return pad(1 + utcDay$1.count(utcYear$1(d), d), p, 3);
+      return pad$1(1 + utcDay$1.count(utcYear$1(d), d), p, 3);
     }
 
     function formatUTCMilliseconds(d, p) {
-      return pad(d.getUTCMilliseconds(), p, 3);
+      return pad$1(d.getUTCMilliseconds(), p, 3);
     }
 
     function formatUTCMicroseconds(d, p) {
@@ -16358,15 +16358,15 @@
     }
 
     function formatUTCMonthNumber(d, p) {
-      return pad(d.getUTCMonth() + 1, p, 2);
+      return pad$1(d.getUTCMonth() + 1, p, 2);
     }
 
     function formatUTCMinutes(d, p) {
-      return pad(d.getUTCMinutes(), p, 2);
+      return pad$1(d.getUTCMinutes(), p, 2);
     }
 
     function formatUTCSeconds(d, p) {
-      return pad(d.getUTCSeconds(), p, 2);
+      return pad$1(d.getUTCSeconds(), p, 2);
     }
 
     function formatUTCWeekdayNumberMonday(d) {
@@ -16375,7 +16375,7 @@
     }
 
     function formatUTCWeekNumberSunday(d, p) {
-      return pad(utcSunday.count(utcYear$1(d) - 1, d), p, 2);
+      return pad$1(utcSunday.count(utcYear$1(d) - 1, d), p, 2);
     }
 
     function UTCdISO(d) {
@@ -16385,7 +16385,7 @@
 
     function formatUTCWeekNumberISO(d, p) {
       d = UTCdISO(d);
-      return pad(utcThursday.count(utcYear$1(d), d) + (utcYear$1(d).getUTCDay() === 4), p, 2);
+      return pad$1(utcThursday.count(utcYear$1(d), d) + (utcYear$1(d).getUTCDay() === 4), p, 2);
     }
 
     function formatUTCWeekdayNumberSunday(d) {
@@ -16393,26 +16393,26 @@
     }
 
     function formatUTCWeekNumberMonday(d, p) {
-      return pad(utcMonday.count(utcYear$1(d) - 1, d), p, 2);
+      return pad$1(utcMonday.count(utcYear$1(d) - 1, d), p, 2);
     }
 
     function formatUTCYear(d, p) {
-      return pad(d.getUTCFullYear() % 100, p, 2);
+      return pad$1(d.getUTCFullYear() % 100, p, 2);
     }
 
     function formatUTCYearISO(d, p) {
       d = UTCdISO(d);
-      return pad(d.getUTCFullYear() % 100, p, 2);
+      return pad$1(d.getUTCFullYear() % 100, p, 2);
     }
 
     function formatUTCFullYear(d, p) {
-      return pad(d.getUTCFullYear() % 10000, p, 4);
+      return pad$1(d.getUTCFullYear() % 10000, p, 4);
     }
 
     function formatUTCFullYearISO(d, p) {
       var day = d.getUTCDay();
       d = (day >= 4 || day === 0) ? utcThursday(d) : utcThursday.ceil(d);
-      return pad(d.getUTCFullYear() % 10000, p, 4);
+      return pad$1(d.getUTCFullYear() % 10000, p, 4);
     }
 
     function formatUTCZone() {
@@ -16542,7 +16542,7 @@
       return scale;
     }
 
-    function time() {
+    function time$1() {
       return initRange.apply(calendar(timeTicks, timeTickInterval, timeYear, timeMonth, sunday, timeDay, timeHour, timeMinute, utcSecond, timeFormat).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]), arguments);
     }
 
@@ -17220,24 +17220,24 @@
       };
     }
 
-    const abs$2 = Math.abs;
-    const atan2$2 = Math.atan2;
-    const cos$2 = Math.cos;
-    const max$2 = Math.max;
-    const min$2 = Math.min;
-    const sin$2 = Math.sin;
-    const sqrt$2 = Math.sqrt;
+    const abs$3 = Math.abs;
+    const atan2$3 = Math.atan2;
+    const cos$3 = Math.cos;
+    const max$3 = Math.max;
+    const min$3 = Math.min;
+    const sin$3 = Math.sin;
+    const sqrt$3 = Math.sqrt;
 
     const epsilon$1 = 1e-12;
     const pi = Math.PI;
     const halfPi = pi / 2;
     const tau = 2 * pi;
 
-    function acos$2(x) {
+    function acos$3(x) {
       return x > 1 ? 0 : x < -1 ? pi : Math.acos(x);
     }
 
-    function asin$2(x) {
+    function asin$3(x) {
       return x >= 1 ? halfPi : x <= -1 ? -halfPi : Math.asin(x);
     }
 
@@ -17275,7 +17275,7 @@
     function cornerTangents(x0, y0, x1, y1, r1, rc, cw) {
       var x01 = x0 - x1,
           y01 = y0 - y1,
-          lo = (cw ? rc : -rc) / sqrt$2(x01 * x01 + y01 * y01),
+          lo = (cw ? rc : -rc) / sqrt$3(x01 * x01 + y01 * y01),
           ox = lo * y01,
           oy = -lo * x01,
           x11 = x0 + ox,
@@ -17289,7 +17289,7 @@
           d2 = dx * dx + dy * dy,
           r = r1 - rc,
           D = x11 * y10 - x10 * y11,
-          d = (dy < 0 ? -1 : 1) * sqrt$2(max$2(0, r * r * d2 - D * D)),
+          d = (dy < 0 ? -1 : 1) * sqrt$3(max$3(0, r * r * d2 - D * D)),
           cx0 = (D * dy - dx * d) / d2,
           cy0 = (-D * dx - dy * d) / d2,
           cx1 = (D * dy + dx * d) / d2,
@@ -17330,7 +17330,7 @@
             r1 = +outerRadius.apply(this, arguments),
             a0 = startAngle.apply(this, arguments) - halfPi,
             a1 = endAngle.apply(this, arguments) - halfPi,
-            da = abs$2(a1 - a0),
+            da = abs$3(a1 - a0),
             cw = a1 > a0;
 
         if (!context) context = buffer = path();
@@ -17343,10 +17343,10 @@
 
         // Or is it a circle or annulus?
         else if (da > tau - epsilon$1) {
-          context.moveTo(r1 * cos$2(a0), r1 * sin$2(a0));
+          context.moveTo(r1 * cos$3(a0), r1 * sin$3(a0));
           context.arc(0, 0, r1, a0, a1, !cw);
           if (r0 > epsilon$1) {
-            context.moveTo(r0 * cos$2(a1), r0 * sin$2(a1));
+            context.moveTo(r0 * cos$3(a1), r0 * sin$3(a1));
             context.arc(0, 0, r0, a1, a0, cw);
           }
         }
@@ -17360,8 +17360,8 @@
               da0 = da,
               da1 = da,
               ap = padAngle.apply(this, arguments) / 2,
-              rp = (ap > epsilon$1) && (padRadius ? +padRadius.apply(this, arguments) : sqrt$2(r0 * r0 + r1 * r1)),
-              rc = min$2(abs$2(r1 - r0) / 2, +cornerRadius.apply(this, arguments)),
+              rp = (ap > epsilon$1) && (padRadius ? +padRadius.apply(this, arguments) : sqrt$3(r0 * r0 + r1 * r1)),
+              rc = min$3(abs$3(r1 - r0) / 2, +cornerRadius.apply(this, arguments)),
               rc0 = rc,
               rc1 = rc,
               t0,
@@ -17369,25 +17369,25 @@
 
           // Apply padding? Note that since r1 ≥ r0, da1 ≥ da0.
           if (rp > epsilon$1) {
-            var p0 = asin$2(rp / r0 * sin$2(ap)),
-                p1 = asin$2(rp / r1 * sin$2(ap));
+            var p0 = asin$3(rp / r0 * sin$3(ap)),
+                p1 = asin$3(rp / r1 * sin$3(ap));
             if ((da0 -= p0 * 2) > epsilon$1) p0 *= (cw ? 1 : -1), a00 += p0, a10 -= p0;
             else da0 = 0, a00 = a10 = (a0 + a1) / 2;
             if ((da1 -= p1 * 2) > epsilon$1) p1 *= (cw ? 1 : -1), a01 += p1, a11 -= p1;
             else da1 = 0, a01 = a11 = (a0 + a1) / 2;
           }
 
-          var x01 = r1 * cos$2(a01),
-              y01 = r1 * sin$2(a01),
-              x10 = r0 * cos$2(a10),
-              y10 = r0 * sin$2(a10);
+          var x01 = r1 * cos$3(a01),
+              y01 = r1 * sin$3(a01),
+              x10 = r0 * cos$3(a10),
+              y10 = r0 * sin$3(a10);
 
           // Apply rounded corners?
           if (rc > epsilon$1) {
-            var x11 = r1 * cos$2(a11),
-                y11 = r1 * sin$2(a11),
-                x00 = r0 * cos$2(a00),
-                y00 = r0 * sin$2(a00),
+            var x11 = r1 * cos$3(a11),
+                y11 = r1 * sin$3(a11),
+                x00 = r0 * cos$3(a00),
+                y00 = r0 * sin$3(a00),
                 oc;
 
             // Restrict the corner radius according to the sector angle.
@@ -17396,10 +17396,10 @@
                   ay = y01 - oc[1],
                   bx = x11 - oc[0],
                   by = y11 - oc[1],
-                  kc = 1 / sin$2(acos$2((ax * bx + ay * by) / (sqrt$2(ax * ax + ay * ay) * sqrt$2(bx * bx + by * by))) / 2),
-                  lc = sqrt$2(oc[0] * oc[0] + oc[1] * oc[1]);
-              rc0 = min$2(rc, (r0 - lc) / (kc - 1));
-              rc1 = min$2(rc, (r1 - lc) / (kc + 1));
+                  kc = 1 / sin$3(acos$3((ax * bx + ay * by) / (sqrt$3(ax * ax + ay * ay) * sqrt$3(bx * bx + by * by))) / 2),
+                  lc = sqrt$3(oc[0] * oc[0] + oc[1] * oc[1]);
+              rc0 = min$3(rc, (r0 - lc) / (kc - 1));
+              rc1 = min$3(rc, (r1 - lc) / (kc + 1));
             }
           }
 
@@ -17414,13 +17414,13 @@
             context.moveTo(t0.cx + t0.x01, t0.cy + t0.y01);
 
             // Have the corners merged?
-            if (rc1 < rc) context.arc(t0.cx, t0.cy, rc1, atan2$2(t0.y01, t0.x01), atan2$2(t1.y01, t1.x01), !cw);
+            if (rc1 < rc) context.arc(t0.cx, t0.cy, rc1, atan2$3(t0.y01, t0.x01), atan2$3(t1.y01, t1.x01), !cw);
 
             // Otherwise, draw the two corners and the ring.
             else {
-              context.arc(t0.cx, t0.cy, rc1, atan2$2(t0.y01, t0.x01), atan2$2(t0.y11, t0.x11), !cw);
-              context.arc(0, 0, r1, atan2$2(t0.cy + t0.y11, t0.cx + t0.x11), atan2$2(t1.cy + t1.y11, t1.cx + t1.x11), !cw);
-              context.arc(t1.cx, t1.cy, rc1, atan2$2(t1.y11, t1.x11), atan2$2(t1.y01, t1.x01), !cw);
+              context.arc(t0.cx, t0.cy, rc1, atan2$3(t0.y01, t0.x01), atan2$3(t0.y11, t0.x11), !cw);
+              context.arc(0, 0, r1, atan2$3(t0.cy + t0.y11, t0.cx + t0.x11), atan2$3(t1.cy + t1.y11, t1.cx + t1.x11), !cw);
+              context.arc(t1.cx, t1.cy, rc1, atan2$3(t1.y11, t1.x11), atan2$3(t1.y01, t1.x01), !cw);
             }
           }
 
@@ -17439,13 +17439,13 @@
             context.lineTo(t0.cx + t0.x01, t0.cy + t0.y01);
 
             // Have the corners merged?
-            if (rc0 < rc) context.arc(t0.cx, t0.cy, rc0, atan2$2(t0.y01, t0.x01), atan2$2(t1.y01, t1.x01), !cw);
+            if (rc0 < rc) context.arc(t0.cx, t0.cy, rc0, atan2$3(t0.y01, t0.x01), atan2$3(t1.y01, t1.x01), !cw);
 
             // Otherwise, draw the two corners and the ring.
             else {
-              context.arc(t0.cx, t0.cy, rc0, atan2$2(t0.y01, t0.x01), atan2$2(t0.y11, t0.x11), !cw);
-              context.arc(0, 0, r0, atan2$2(t0.cy + t0.y11, t0.cx + t0.x11), atan2$2(t1.cy + t1.y11, t1.cx + t1.x11), cw);
-              context.arc(t1.cx, t1.cy, rc0, atan2$2(t1.y11, t1.x11), atan2$2(t1.y01, t1.x01), !cw);
+              context.arc(t0.cx, t0.cy, rc0, atan2$3(t0.y01, t0.x01), atan2$3(t0.y11, t0.x11), !cw);
+              context.arc(0, 0, r0, atan2$3(t0.cy + t0.y11, t0.cx + t0.x11), atan2$3(t1.cy + t1.y11, t1.cx + t1.x11), cw);
+              context.arc(t1.cx, t1.cy, rc0, atan2$3(t1.y11, t1.x11), atan2$3(t1.y01, t1.x01), !cw);
             }
           }
 
@@ -17461,7 +17461,7 @@
       arc.centroid = function() {
         var r = (+innerRadius.apply(this, arguments) + +outerRadius.apply(this, arguments)) / 2,
             a = (+startAngle.apply(this, arguments) + +endAngle.apply(this, arguments)) / 2 - pi / 2;
-        return [cos$2(a) * r, sin$2(a) * r];
+        return [cos$3(a) * r, sin$3(a) * r];
       };
 
       arc.innerRadius = function(_) {
@@ -17499,7 +17499,7 @@
       return arc;
     }
 
-    var slice$2 = Array.prototype.slice;
+    var slice$3 = Array.prototype.slice;
 
     function array(x) {
       return typeof x === "object" && "length" in x
@@ -17960,7 +17960,7 @@
 
       function link() {
         let buffer;
-        const argv = slice$2.call(arguments);
+        const argv = slice$3.call(arguments);
         const s = source.apply(this, argv);
         const t = target.apply(this, argv);
         if (context == null) output = curve(buffer = path());
@@ -18009,11 +18009,11 @@
       return l;
     }
 
-    const sqrt3$2 = sqrt$2(3);
+    const sqrt3$2 = sqrt$3(3);
 
     var asterisk = {
       draw(context, size) {
-        const r = sqrt$2(size + min$2(size / 28, 0.75)) * 0.59436;
+        const r = sqrt$3(size + min$3(size / 28, 0.75)) * 0.59436;
         const t = r / 2;
         const u = t * sqrt3$2;
         context.moveTo(0, r);
@@ -18027,7 +18027,7 @@
 
     var circle = {
       draw(context, size) {
-        const r = sqrt$2(size / pi);
+        const r = sqrt$3(size / pi);
         context.moveTo(r, 0);
         context.arc(0, 0, r, 0, tau);
       }
@@ -18035,7 +18035,7 @@
 
     var cross = {
       draw(context, size) {
-        const r = sqrt$2(size / 5) / 2;
+        const r = sqrt$3(size / 5) / 2;
         context.moveTo(-3 * r, -r);
         context.lineTo(-r, -r);
         context.lineTo(-r, -3 * r);
@@ -18052,12 +18052,12 @@
       }
     };
 
-    const tan30 = sqrt$2(1 / 3);
+    const tan30 = sqrt$3(1 / 3);
     const tan30_2 = tan30 * 2;
 
     var diamond = {
       draw(context, size) {
-        const y = sqrt$2(size / tan30_2);
+        const y = sqrt$3(size / tan30_2);
         const x = y * tan30;
         context.moveTo(0, -y);
         context.lineTo(x, 0);
@@ -18069,7 +18069,7 @@
 
     var diamond2 = {
       draw(context, size) {
-        const r = sqrt$2(size) * 0.62625;
+        const r = sqrt$3(size) * 0.62625;
         context.moveTo(0, -r);
         context.lineTo(r, 0);
         context.lineTo(0, r);
@@ -18080,7 +18080,7 @@
 
     var plus = {
       draw(context, size) {
-        const r = sqrt$2(size - min$2(size / 7, 2)) * 0.87559;
+        const r = sqrt$3(size - min$3(size / 7, 2)) * 0.87559;
         context.moveTo(-r, 0);
         context.lineTo(r, 0);
         context.moveTo(0, r);
@@ -18088,9 +18088,9 @@
       }
     };
 
-    var square$1 = {
+    var square$2 = {
       draw(context, size) {
-        const w = sqrt$2(size);
+        const w = sqrt$3(size);
         const x = -w / 2;
         context.rect(x, x, w, w);
       }
@@ -18098,7 +18098,7 @@
 
     var square2 = {
       draw(context, size) {
-        const r = sqrt$2(size) * 0.4431;
+        const r = sqrt$3(size) * 0.4431;
         context.moveTo(r, r);
         context.lineTo(r, -r);
         context.lineTo(-r, -r);
@@ -18108,21 +18108,21 @@
     };
 
     const ka = 0.89081309152928522810;
-    const kr = sin$2(pi / 10) / sin$2(7 * pi / 10);
-    const kx = sin$2(tau / 10) * kr;
-    const ky = -cos$2(tau / 10) * kr;
+    const kr = sin$3(pi / 10) / sin$3(7 * pi / 10);
+    const kx = sin$3(tau / 10) * kr;
+    const ky = -cos$3(tau / 10) * kr;
 
     var star = {
       draw(context, size) {
-        const r = sqrt$2(size * ka);
+        const r = sqrt$3(size * ka);
         const x = kx * r;
         const y = ky * r;
         context.moveTo(0, -r);
         context.lineTo(x, y);
         for (let i = 1; i < 5; ++i) {
           const a = tau * i / 5;
-          const c = cos$2(a);
-          const s = sin$2(a);
+          const c = cos$3(a);
+          const s = sin$3(a);
           context.lineTo(s * r, -c * r);
           context.lineTo(c * x - s * y, s * x + c * y);
         }
@@ -18130,11 +18130,11 @@
       }
     };
 
-    const sqrt3$1 = sqrt$2(3);
+    const sqrt3$1 = sqrt$3(3);
 
     var triangle = {
       draw(context, size) {
-        const y = -sqrt$2(size / (sqrt3$1 * 3));
+        const y = -sqrt$3(size / (sqrt3$1 * 3));
         context.moveTo(0, y * 2);
         context.lineTo(-sqrt3$1 * y, -y);
         context.lineTo(sqrt3$1 * y, -y);
@@ -18142,11 +18142,11 @@
       }
     };
 
-    const sqrt3 = sqrt$2(3);
+    const sqrt3 = sqrt$3(3);
 
     var triangle2 = {
       draw(context, size) {
-        const s = sqrt$2(size) * 0.6824;
+        const s = sqrt$3(size) * 0.6824;
         const t = s  / 2;
         const u = (s * sqrt3) / 2; // cos(Math.PI / 6)
         context.moveTo(0, -s);
@@ -18157,13 +18157,13 @@
     };
 
     const c = -0.5;
-    const s = sqrt$2(3) / 2;
-    const k = 1 / sqrt$2(12);
+    const s = sqrt$3(3) / 2;
+    const k = 1 / sqrt$3(12);
     const a = (k / 2 + 1) * 3;
 
     var wye = {
       draw(context, size) {
-        const r = sqrt$2(size / a);
+        const r = sqrt$3(size / a);
         const x0 = r / 2, y0 = r * k;
         const x1 = x0, y1 = r * k + r;
         const x2 = -x1, y2 = y1;
@@ -18182,7 +18182,7 @@
 
     var x = {
       draw(context, size) {
-        const r = sqrt$2(size - min$2(size / 6, 1.7)) * 0.6189;
+        const r = sqrt$3(size - min$3(size / 6, 1.7)) * 0.6189;
         context.moveTo(-r, -r);
         context.lineTo(r, r);
         context.moveTo(-r, r);
@@ -18195,7 +18195,7 @@
       circle,
       cross,
       diamond,
-      square$1,
+      square$2,
       star,
       triangle,
       wye
@@ -18847,7 +18847,7 @@
       return new LinearClosed(context);
     }
 
-    function sign$2(x) {
+    function sign$3(x) {
       return x < 0 ? -1 : 1;
     }
 
@@ -18861,7 +18861,7 @@
           s0 = (that._y1 - that._y0) / (h0 || h1 < 0 && -0),
           s1 = (y2 - that._y1) / (h1 || h0 < 0 && -0),
           p = (s0 * h1 + s1 * h0) / (h0 + h1);
-      return (sign$2(s0) + sign$2(s1)) * Math.min(Math.abs(s0), Math.abs(s1), 0.5 * Math.abs(p)) || 0;
+      return (sign$3(s0) + sign$3(s1)) * Math.min(Math.abs(s0), Math.abs(s1), 0.5 * Math.abs(p)) || 0;
     }
 
     // Calculate a one-sided slope.
@@ -19098,7 +19098,7 @@
       return series;
     }
 
-    function stack() {
+    function stack$1() {
       var keys = constant$1([]),
           order = none,
           offset = none$1,
@@ -19249,7 +19249,7 @@
       return bottoms.reverse().concat(tops);
     }
 
-    function reverse$2(series) {
+    function reverse$3(series) {
       return none(series).reverse();
     }
 
@@ -19315,9 +19315,9 @@
 
     var identity$2 = new Transform$1(1, 0, 0);
 
-    transform$2.prototype = Transform$1.prototype;
+    transform$3.prototype = Transform$1.prototype;
 
-    function transform$2(node) {
+    function transform$3(node) {
       while (!node.__zoom) if (!(node = node.parentNode)) return identity$2;
       return node.__zoom;
     }
@@ -19779,7 +19779,7 @@
         bisector: bisector,
         count: count$1,
         cross: cross$2,
-        cumsum: cumsum$2,
+        cumsum: cumsum$3,
         descending: descending$2,
         deviation: deviation,
         extent: extent$1,
@@ -19800,12 +19800,12 @@
         thresholdFreedmanDiaconis: thresholdFreedmanDiaconis,
         thresholdScott: thresholdScott,
         thresholdSturges: thresholdSturges,
-        max: max$5,
+        max: max$6,
         maxIndex: maxIndex,
-        mean: mean$1,
+        mean: mean$2,
         median: median,
         merge: merge,
-        min: min$4,
+        min: min$5,
         minIndex: minIndex,
         mode: mode,
         nice: nice$1,
@@ -19814,20 +19814,20 @@
         quantile: quantile$1,
         quantileSorted: quantileSorted,
         quickselect: quickselect,
-        range: range$4,
+        range: range$5,
         rank: rank,
         least: least,
         leastIndex: leastIndex,
         greatest: greatest,
         greatestIndex: greatestIndex,
         scan: scan,
-        shuffle: shuffle$1,
+        shuffle: shuffle$2,
         shuffler: shuffler,
         sum: sum$6,
         ticks: ticks,
         tickIncrement: tickIncrement,
         tickStep: tickStep,
-        transpose: transpose$2,
+        transpose: transpose$3,
         variance: variance,
         zip: zip,
         every: every,
@@ -19835,7 +19835,7 @@
         filter: filter$1,
         map: map$1,
         reduce: reduce$1,
-        reverse: reverse$3,
+        reverse: reverse$4,
         sort: sort,
         difference: difference,
         disjoint: disjoint,
@@ -19932,7 +19932,7 @@
         dsv: dsv,
         csv: csv,
         tsv: tsv,
-        image: image,
+        image: image$1,
         json: json,
         text: text,
         xml: xml,
@@ -20003,7 +20003,7 @@
         geoTransverseMercatorRaw: transverseMercatorRaw,
         geoRotation: rotation,
         geoStream: geoStream,
-        geoTransform: transform$3,
+        geoTransform: transform$4,
         cluster: cluster,
         hierarchy: hierarchy,
         Node: Node$1,
@@ -20076,17 +20076,17 @@
         scalePoint: point$4,
         scaleIdentity: identity$4,
         scaleLinear: linear,
-        scaleLog: log$3,
+        scaleLog: log$4,
         scaleSymlog: symlog,
         scaleOrdinal: ordinal,
         scaleImplicit: implicit,
-        scalePow: pow$2,
-        scaleSqrt: sqrt$3,
+        scalePow: pow$3,
+        scaleSqrt: sqrt$4,
         scaleRadial: radial,
         scaleQuantile: quantile,
         scaleQuantize: quantize,
-        scaleThreshold: threshold$1,
-        scaleTime: time,
+        scaleThreshold: threshold$2,
+        scaleTime: time$1,
         scaleUtc: utcTime,
         scaleSequential: sequential,
         scaleSequentialLog: sequentialLog,
@@ -20213,7 +20213,7 @@
         symbolDiamond: diamond,
         symbolDiamond2: diamond2,
         symbolPlus: plus,
-        symbolSquare: square$1,
+        symbolSquare: square$2,
         symbolSquare2: square2,
         symbolStar: star,
         symbolTriangle: triangle,
@@ -20240,7 +20240,7 @@
         curveStep: step$3,
         curveStepAfter: stepAfter,
         curveStepBefore: stepBefore,
-        stack: stack,
+        stack: stack$1,
         stackOffsetExpand: expand,
         stackOffsetDiverging: diverging,
         stackOffsetNone: none$1,
@@ -20251,7 +20251,7 @@
         stackOrderDescending: descending,
         stackOrderInsideOut: insideOut,
         stackOrderNone: none,
-        stackOrderReverse: reverse$2,
+        stackOrderReverse: reverse$3,
         timeInterval: newInterval,
         timeMillisecond: millisecond$1,
         timeMilliseconds: milliseconds,
@@ -20334,7 +20334,7 @@
         active: active,
         interrupt: interrupt,
         zoom: zoom,
-        zoomTransform: transform$2,
+        zoomTransform: transform$3,
         zoomIdentity: identity$2,
         ZoomTransform: Transform$1
     });
@@ -20462,6 +20462,72 @@
      * limitations under the License.
      * =============================================================================
      */
+    /**
+     * Shuffles the array in-place using Fisher-Yates algorithm.
+     *
+     * ```js
+     * const a = [1, 2, 3, 4, 5];
+     * tf.util.shuffle(a);
+     * console.log(a);
+     * ```
+     *
+     * @param array The array to shuffle in-place.
+     *
+     * @doc {heading: 'Util', namespace: 'util'}
+     */
+    // tslint:disable-next-line:no-any
+    function shuffle(array) {
+        let counter = array.length;
+        let index = 0;
+        // While there are elements in the array
+        while (counter > 0) {
+            // Pick a random index
+            index = (Math.random() * counter) | 0;
+            // Decrease counter by 1
+            counter--;
+            // And swap the last element with it
+            swap(array, counter, index);
+        }
+    }
+    /**
+     * Shuffles two arrays in-place the same way using Fisher-Yates algorithm.
+     *
+     * ```js
+     * const a = [1,2,3,4,5];
+     * const b = [11,22,33,44,55];
+     * tf.util.shuffleCombo(a, b);
+     * console.log(a, b);
+     * ```
+     *
+     * @param array The first array to shuffle in-place.
+     * @param array2 The second array to shuffle in-place with the same permutation
+     *     as the first array.
+     *
+     * @doc {heading: 'Util', namespace: 'util'}
+     */
+    function shuffleCombo(
+    // tslint:disable-next-line:no-any
+    array, 
+    // tslint:disable-next-line:no-any
+    array2) {
+        if (array.length !== array2.length) {
+            throw new Error(`Array sizes must match to be shuffled together ` +
+                `First array length was ${array.length}` +
+                `Second array length was ${array2.length}`);
+        }
+        let counter = array.length;
+        let index = 0;
+        // While there are elements in the array
+        while (counter > 0) {
+            // Pick a random index
+            index = (Math.random() * counter) | 0;
+            // Decrease counter by 1
+            counter--;
+            // And swap the last element of each array with it
+            swap(array, counter, index);
+            swap(array2, counter, index);
+        }
+    }
     /** Clamps a value to a specified range. */
     function clamp(min, x, max) {
         return Math.max(min, Math.min(x, max));
@@ -20480,6 +20546,26 @@
             sum += arr[i];
         }
         return sum;
+    }
+    /**
+     * Returns a sample from a uniform [a, b) distribution.
+     *
+     * @param a The minimum support (inclusive).
+     * @param b The maximum support (exclusive).
+     * @return A pseudorandom number on the half-open interval [a,b).
+     */
+    function randUniform(a, b) {
+        const r = Math.random();
+        return (b * r) + (1 - r) * a;
+    }
+    /** Returns the squared Euclidean distance between two vectors. */
+    function distSquared(a, b) {
+        let result = 0;
+        for (let i = 0; i < a.length; i++) {
+            const diff = Number(a[i]) - Number(b[i]);
+            result += diff * diff;
+        }
+        return result;
     }
     /**
      * Asserts that the expression is true. Otherwise throws an error with the
@@ -20503,6 +20589,9 @@
     }
     function assertShapesMatch(shapeA, shapeB, errorMessagePrefix = '') {
         assert(arraysEqual(shapeA, shapeB), () => errorMessagePrefix + ` Shapes ${shapeA} and ${shapeB} must match`);
+    }
+    function assertNonNull(a) {
+        assert(a != null, () => `The input to the tensor constructor must be a non-null value.`);
     }
     // NOTE: We explicitly type out what T extends instead of any so that
     // util.flatten on a nested array of number doesn't try to infer T as a
@@ -20559,6 +20648,9 @@
         }
         return size;
     }
+    function isScalarShape(shape) {
+        return shape.length === 0;
+    }
     function arraysEqual(n1, n2) {
         if (n1 === n2) {
             return true;
@@ -20579,9 +20671,46 @@
     function isInt(a) {
         return a % 1 === 0;
     }
+    function tanh$3(x) {
+        // tslint:disable-next-line:no-any
+        if (Math.tanh != null) {
+            // tslint:disable-next-line:no-any
+            return Math.tanh(x);
+        }
+        if (x === Infinity) {
+            return 1;
+        }
+        else if (x === -Infinity) {
+            return -1;
+        }
+        else {
+            const e2x = Math.exp(2 * x);
+            return (e2x - 1) / (e2x + 1);
+        }
+    }
     function sizeToSquarishShape(size) {
         const width = Math.ceil(Math.sqrt(size));
         return [width, Math.ceil(size / width)];
+    }
+    /**
+     * Creates a new array with randomized indicies to a given quantity.
+     *
+     * ```js
+     * const randomTen = tf.util.createShuffledIndices(10);
+     * console.log(randomTen);
+     * ```
+     *
+     * @param number Quantity of how many shuffled indicies to create.
+     *
+     * @doc {heading: 'Util', namespace: 'util'}
+     */
+    function createShuffledIndices(n) {
+        const shuffledIndices = new Uint32Array(n);
+        for (let i = 0; i < n; ++i) {
+            shuffledIndices[i] = i;
+        }
+        shuffle(shuffledIndices);
+        return shuffledIndices;
     }
     function rightPad(a, size) {
         if (size <= a.length) {
@@ -21251,6 +21380,7 @@
     const BatchMatMul = 'BatchMatMul';
     const BatchToSpaceND = 'BatchToSpaceND';
     const Bincount = 'Bincount';
+    const BroadcastTo = 'BroadcastTo';
     const BroadcastArgs = 'BroadcastArgs';
     const Cast = 'Cast';
     const Ceil = 'Ceil';
@@ -21311,6 +21441,7 @@
     const LogicalAnd = 'LogicalAnd';
     const LogicalNot = 'LogicalNot';
     const LogicalOr = 'LogicalOr';
+    const LogSoftmax = 'LogSoftmax';
     const LRN = 'LRN';
     const LRNGrad = 'LRNGrad';
     const Max = 'Max';
@@ -21336,6 +21467,7 @@
     const OneHot = 'OneHot';
     const Pack = 'Pack';
     const PadV2 = 'PadV2';
+    const Pool = 'Pool';
     const Pow = 'Pow';
     const Prelu = 'Prelu';
     const Prod = 'Prod';
@@ -21419,7 +21551,7 @@
             console.warn(...msg);
         }
     }
-    function log$2(...msg) {
+    function log$3(...msg) {
         if (!(env().getBool('IS_TEST') || env().getBool('PROD'))) {
             console.log(...msg);
         }
@@ -21495,6 +21627,60 @@
                 `'${backendName}' is already registered`);
         }
         kernelRegistry.set(key, config);
+    }
+    /**
+     * Registers a gradient function for a given kernel in the global registry,
+     * to be used during the back-propagation of that kernel.
+     *
+     * @param config An object with the following properties:
+     * - `kernelName` The name of the kernel that the gradient function is for.
+     * - `gradFunc` The function to run during back-propagation.
+     */
+    function registerGradient(config) {
+        const { kernelName } = config;
+        if (gradRegistry.has(kernelName)) {
+            // TODO (yassogba) after 3.0 assess whether we need to keep this gated
+            // to debug mode.
+            if (env().getBool('DEBUG')) {
+                warn(`Overriding the gradient for '${kernelName}'`);
+            }
+        }
+        gradRegistry.set(kernelName, config);
+    }
+    /**
+     * Removes the kernel function from the registry.
+     *
+     * @param kernelName The official name of the kernel.
+     * @param backendName The official name of the backend.
+     *
+     */
+    function unregisterKernel(kernelName, backendName) {
+        const key = makeKey(kernelName, backendName);
+        if (!kernelRegistry.has(key)) {
+            throw new Error(`The kernel '${kernelName}' for backend ` +
+                `'${backendName}' is not registered`);
+        }
+        kernelRegistry.delete(key);
+    }
+    /** Removes the registered gradient from the global registry. */
+    function unregisterGradient(kernelName) {
+        if (!gradRegistry.has(kernelName)) {
+            throw new Error(`The gradient '${kernelName}' for backend is not registered`);
+        }
+        gradRegistry.delete(kernelName);
+    }
+    /**
+     * Finds kernels that have already been registered to a backend and re-registers
+     * them for a new backend. Useful for registering custom backends.
+     * @param registeredBackendName Already registered backend.
+     * @param newBackendName New backend.
+     */
+    function copyRegisteredKernels(registeredBackendName, newBackendName) {
+        const kernels = getKernelsForBackend(registeredBackendName);
+        kernels.forEach(kernelConfig => {
+            const newKernelConfig = Object.assign({}, kernelConfig, { backendName: newBackendName });
+            registerKernel(newKernelConfig);
+        });
     }
     function makeKey(kernelName, backendName) {
         return `${backendName}_${kernelName}`;
@@ -22864,15 +23050,15 @@
     function shiftMix(val) {
         return val.xor(val.shru(47));
     }
-    function fetch$1(s, offset, numBytes) {
+    function fetch$2(s, offset, numBytes) {
         const bytes = s.slice(offset, offset + numBytes);
         return Long.fromBytes(Array.from(bytes), true, true);
     }
     function fetch64(s, offset) {
-        return fetch$1(s, offset, 8);
+        return fetch$2(s, offset, 8);
     }
     function fetch32(s, offset) {
-        return fetch$1(s, offset, 4);
+        return fetch$2(s, offset, 4);
     }
     function rotate64(val, shift) {
         // Avoid shifting by 64: doing so yields an undefined result.
@@ -23077,6 +23263,25 @@
         return env().platform.now();
     }
     /**
+     * Returns a platform-specific implementation of
+     * [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+     *
+     * If `fetch` is defined on the global object (`window`, `process`, etc.),
+     * `tf.util.fetch` returns that function.
+     *
+     * If not, `tf.util.fetch` returns a platform-specific solution.
+     *
+     * ```js
+     * const resource = await tf.util.fetch('https://unpkg.com/@tensorflow/tfjs');
+     * // handle response
+     * ```
+     *
+     * @doc {heading: 'Util'}
+     */
+    function fetch$1(path, requestInits) {
+        return env().platform.fetch(path, requestInits);
+    }
+    /**
      * Encodes the provided string into bytes using the provided encoding scheme.
      *
      * @param s The string to encode.
@@ -23100,6 +23305,65 @@
         encoding = encoding || 'utf-8';
         return env().platform.decode(bytes, encoding);
     }
+
+    var util = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        createScalarValue: createScalarValue,
+        toTypedArray: toTypedArray,
+        now: now,
+        fetch: fetch$1,
+        encodeString: encodeString,
+        decodeString: decodeString,
+        shuffle: shuffle,
+        shuffleCombo: shuffleCombo,
+        clamp: clamp,
+        nearestLargerEven: nearestLargerEven,
+        swap: swap,
+        sum: sum$3,
+        randUniform: randUniform,
+        distSquared: distSquared,
+        assert: assert,
+        assertShapesMatch: assertShapesMatch,
+        assertNonNull: assertNonNull,
+        flatten: flatten,
+        sizeFromShape: sizeFromShape,
+        isScalarShape: isScalarShape,
+        arraysEqual: arraysEqual,
+        isInt: isInt,
+        tanh: tanh$3,
+        sizeToSquarishShape: sizeToSquarishShape,
+        createShuffledIndices: createShuffledIndices,
+        rightPad: rightPad,
+        repeatedTry: repeatedTry,
+        inferFromImplicitShape: inferFromImplicitShape,
+        parseAxisParam: parseAxisParam,
+        squeezeShape: squeezeShape,
+        getTypedArrayFromDType: getTypedArrayFromDType,
+        getArrayFromDType: getArrayFromDType,
+        checkConversionForErrors: checkConversionForErrors,
+        isValidDtype: isValidDtype,
+        hasEncodingLoss: hasEncodingLoss,
+        isTypedArray: isTypedArray,
+        bytesPerElement: bytesPerElement,
+        bytesFromStringArray: bytesFromStringArray,
+        isString: isString,
+        isBoolean: isBoolean,
+        isNumber: isNumber,
+        inferDtype: inferDtype,
+        isFunction: isFunction,
+        nearestDivisor: nearestDivisor,
+        computeStrides: computeStrides,
+        toNestedArray: toNestedArray,
+        makeOnesTypedArray: makeOnesTypedArray,
+        makeZerosTypedArray: makeZerosTypedArray,
+        makeZerosNestedTypedArray: makeZerosNestedTypedArray,
+        assertNonNegativeIntegerDimensions: assertNonNegativeIntegerDimensions,
+        locToIndex: locToIndex,
+        indexToLoc: indexToLoc,
+        isPromise: isPromise,
+        hexToLong: hexToLong,
+        fingerPrint64: fingerPrint64
+    });
 
     /**
      * @license
@@ -24033,6 +24297,13 @@
         const dtype = upcastType(a.dtype, b.dtype);
         return [a.cast(dtype), b.cast(dtype)];
     }
+    function assertTypesMatch(a, b) {
+        assert(a.dtype === b.dtype, () => `The dtypes of the first(${a.dtype}) and` +
+            ` second(${b.dtype}) input must match`);
+    }
+    function isTensorInList(tensor, tensorList) {
+        return tensorList.some(x => x.id === tensor.id);
+    }
     /**
      * Extracts any `Tensor`s found within the provided object.
      *
@@ -24076,6 +24347,14 @@
     function isIterable(obj) {
         return Array.isArray(obj) || typeof obj === 'object';
     }
+
+    var tensor_util = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        makeTypesMatch: makeTypesMatch,
+        assertTypesMatch: assertTypesMatch,
+        isTensorInList: isTensorInList,
+        getTensorsInContainer: getTensorsInContainer
+    });
 
     /**
      * @license
@@ -24933,13 +25212,13 @@
             }
             return this.tidy('backward', () => {
                 const accumulatedGradientMap = {};
-                accumulatedGradientMap[y.id] = (dy == null) ? ones(y.shape) : dy;
+                accumulatedGradientMap[y.id] = (dy == null) ? ones$1(y.shape) : dy;
                 // Backprop gradients through the filtered nodes.
                 backpropagateGradients(accumulatedGradientMap, filteredTape, 
                 // Pass the tidy function to avoid circular dep with `tape.ts`.
                 f => this.tidy(f), 
                 // Pass an add function to avoide a circular dep with `tape.ts`.
-                add$1);
+                add$2);
                 const grads = xs.map(x => accumulatedGradientMap[x.id]);
                 if (this.state.gradientDepth === 0) {
                     // This means that we are not computing higher-order gradients
@@ -25053,7 +25332,7 @@
     }
     Engine.nextTensorId = 0;
     Engine.nextVariableId = 0;
-    function ones(shape) {
+    function ones$1(shape) {
         const values = makeOnesTypedArray(sizeFromShape(shape), 'float32');
         return ENGINE.makeTensor(values, shape, 'float32');
     }
@@ -25076,7 +25355,7 @@
      * This allows us to avoid a circular dependency between add.ts and engine.
      * It is exported to be available in tape tests.
      */
-    function add$1(a, b) {
+    function add$2(a, b) {
         // We duplicate Add here to avoid a circular dependency with add.ts.
         const inputs = { a, b };
         return ENGINE.runKernel(Add, inputs);
@@ -25102,7 +25381,14 @@
     function _isNavigatorDefined() {
         return typeof navigator !== 'undefined' && navigator != null;
     }
+    let isMobileMockValue;
+    function mockIsMobile(value) {
+        isMobileMockValue = value;
+    }
     function isMobile(nav) {
+        if (isMobileMockValue !== undefined) {
+            return isMobileMockValue;
+        }
         if (nav || _isNavigatorDefined()) {
             if (!nav) {
                 nav = navigator;
@@ -25133,6 +25419,13 @@
             //@ts-ignore
             (typeof WorkerGlobalScope !== 'undefined');
     }
+
+    var device_util = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        mockIsMobile: mockIsMobile,
+        isMobile: isMobile,
+        isBrowser: isBrowser
+    });
 
     /**
      * @license
@@ -25285,6 +25578,14 @@
             toTypedArray(x, inferredDtype) :
             flatten(x, [], skipTypedArray);
         return ENGINE.makeTensor(values, inferredShape, inferredDtype);
+    }
+    function convertToTensorArray(arg, argName, functionName, parseAsDtype = 'numeric') {
+        if (!Array.isArray(arg)) {
+            throw new Error(`Argument ${argName} passed to ${functionName} must be a ` +
+                '`Tensor[]` or `TensorLike[]`');
+        }
+        const tensors = arg;
+        return tensors.map((t, i) => convertToTensor(t, `${argName}[${i}]`, functionName, parseAsDtype));
     }
 
     /**
@@ -25513,6 +25814,270 @@
      * limitations under the License.
      * =============================================================================
      */
+    /* Type definitions for exporting and importing of models. */
+    /**
+     * A map from Tensor dtype to number of bytes per element of the Tensor.
+     */
+    const DTYPE_VALUE_SIZE_MAP = {
+        'float32': 4,
+        'float16': 2,
+        'int32': 4,
+        'uint16': 2,
+        'uint8': 1,
+        'bool': 1,
+        'complex64': 8
+    };
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /** Number of bytes reserved for the length of the string. (32bit integer). */
+    const NUM_BYTES_STRING_LENGTH = 4;
+    /**
+     * Encode a map from names to weight values as an ArrayBuffer, along with an
+     * `Array` of `WeightsManifestEntry` as specification of the encoded weights.
+     *
+     * This function does not perform sharding.
+     *
+     * This function is the reverse of `decodeWeights`.
+     *
+     * @param tensors A map ("dict") from names to tensors.
+     * @param group Group to which the weights belong (optional).
+     * @returns A `Promise` of
+     *   - A flat `ArrayBuffer` with all the binary values of the `Tensor`s
+     *     concatenated.
+     *   - An `Array` of `WeightManifestEntry`s, carrying information including
+     *     tensor names, `dtype`s and shapes.
+     * @throws Error: on unsupported tensor `dtype`.
+     */
+    async function encodeWeights(tensors, group) {
+        // TODO(adarob, cais): Support quantization.
+        const specs = [];
+        const dataPromises = [];
+        const names = Array.isArray(tensors) ?
+            tensors.map(tensor => tensor.name) :
+            Object.keys(tensors);
+        for (let i = 0; i < names.length; ++i) {
+            const name = names[i];
+            const t = Array.isArray(tensors) ? tensors[i].tensor : tensors[name];
+            if (t.dtype !== 'float32' && t.dtype !== 'int32' && t.dtype !== 'bool' &&
+                t.dtype !== 'string' && t.dtype !== 'complex64') {
+                throw new Error(`Unsupported dtype in weight '${name}': ${t.dtype}`);
+            }
+            const spec = { name, shape: t.shape, dtype: t.dtype };
+            if (t.dtype === 'string') {
+                const utf8bytes = new Promise(async (resolve) => {
+                    const vals = await t.bytes();
+                    const totalNumBytes = vals.reduce((p, c) => p + c.length, 0) +
+                        NUM_BYTES_STRING_LENGTH * vals.length;
+                    const bytes = new Uint8Array(totalNumBytes);
+                    let offset = 0;
+                    for (let i = 0; i < vals.length; i++) {
+                        const val = vals[i];
+                        const bytesOfLength = new Uint8Array(new Uint32Array([val.length]).buffer);
+                        bytes.set(bytesOfLength, offset);
+                        offset += NUM_BYTES_STRING_LENGTH;
+                        bytes.set(val, offset);
+                        offset += val.length;
+                    }
+                    resolve(bytes);
+                });
+                dataPromises.push(utf8bytes);
+            }
+            else {
+                dataPromises.push(t.data());
+            }
+            if (group != null) {
+                spec.group = group;
+            }
+            specs.push(spec);
+        }
+        const tensorValues = await Promise.all(dataPromises);
+        return { data: concatenateTypedArrays(tensorValues), specs };
+    }
+    /**
+     * Decode flat ArrayBuffer as weights.
+     *
+     * This function does not handle sharding.
+     *
+     * This function is the reverse of `encodeWeights`.
+     *
+     * @param buffer A flat ArrayBuffer carrying the binary values of the tensors
+     *   concatenated in the order specified in `specs`.
+     * @param specs Specifications of the names, dtypes and shapes of the tensors
+     *   whose value are encoded by `buffer`.
+     * @return A map from tensor name to tensor value, with the names corresponding
+     *   to names in `specs`.
+     * @throws Error, if any of the tensors has unsupported dtype.
+     */
+    function decodeWeights(buffer, specs) {
+        // TODO(adarob, cais): Support quantization.
+        const out = {};
+        let float16Decode;
+        let offset = 0;
+        for (const spec of specs) {
+            const name = spec.name;
+            const dtype = spec.dtype;
+            const shape = spec.shape;
+            const size = sizeFromShape(shape);
+            let values;
+            if ('quantization' in spec) {
+                const quantization = spec.quantization;
+                if (quantization.dtype === 'uint8' || quantization.dtype === 'uint16') {
+                    if (!('min' in quantization && 'scale' in quantization)) {
+                        throw new Error(`Weight ${spec.name} with quantization ${quantization.dtype} ` +
+                            `doesn't have corresponding metadata min and scale.`);
+                    }
+                }
+                else if (quantization.dtype === 'float16') {
+                    if (dtype !== 'float32') {
+                        throw new Error(`Weight ${spec.name} is quantized with ${quantization.dtype} ` +
+                            `which only supports weights of type float32 not ${dtype}.`);
+                    }
+                }
+                else {
+                    throw new Error(`Weight ${spec.name} has unknown ` +
+                        `quantization dtype ${quantization.dtype}. ` +
+                        `Supported quantization dtypes are: ` +
+                        `'uint8', 'uint16', and 'float16'.`);
+                }
+                const quantizationSizeFactor = DTYPE_VALUE_SIZE_MAP[quantization.dtype];
+                const byteBuffer = buffer.slice(offset, offset + size * quantizationSizeFactor);
+                const quantizedArray = (quantization.dtype === 'uint8') ?
+                    new Uint8Array(byteBuffer) :
+                    new Uint16Array(byteBuffer);
+                if (dtype === 'float32') {
+                    if (quantization.dtype === 'uint8' || quantization.dtype === 'uint16') {
+                        values = new Float32Array(quantizedArray.length);
+                        for (let i = 0; i < quantizedArray.length; i++) {
+                            const v = quantizedArray[i];
+                            values[i] = v * quantization.scale + quantization.min;
+                        }
+                    }
+                    else if (quantization.dtype === 'float16') {
+                        if (float16Decode === undefined) {
+                            float16Decode = getFloat16Decoder();
+                        }
+                        values = float16Decode(quantizedArray);
+                    }
+                    else {
+                        throw new Error(`Unsupported quantization type ${quantization.dtype} ` +
+                            `for weight type float32.`);
+                    }
+                }
+                else if (dtype === 'int32') {
+                    if (quantization.dtype !== 'uint8' && quantization.dtype !== 'uint16') {
+                        throw new Error(`Unsupported quantization type ${quantization.dtype} ` +
+                            `for weight type int32.`);
+                    }
+                    values = new Int32Array(quantizedArray.length);
+                    for (let i = 0; i < quantizedArray.length; i++) {
+                        const v = quantizedArray[i];
+                        values[i] = Math.round(v * quantization.scale + quantization.min);
+                    }
+                }
+                else {
+                    throw new Error(`Unsupported dtype in weight '${name}': ${dtype}`);
+                }
+                offset += size * quantizationSizeFactor;
+            }
+            else if (dtype === 'string') {
+                const size = sizeFromShape(spec.shape);
+                values = [];
+                for (let i = 0; i < size; i++) {
+                    const byteLength = new Uint32Array(buffer.slice(offset, offset + NUM_BYTES_STRING_LENGTH))[0];
+                    offset += NUM_BYTES_STRING_LENGTH;
+                    const bytes = new Uint8Array(buffer.slice(offset, offset + byteLength));
+                    values.push(bytes);
+                    offset += byteLength;
+                }
+            }
+            else {
+                const dtypeFactor = DTYPE_VALUE_SIZE_MAP[dtype];
+                const byteBuffer = buffer.slice(offset, offset + size * dtypeFactor);
+                if (dtype === 'float32') {
+                    values = new Float32Array(byteBuffer);
+                }
+                else if (dtype === 'int32') {
+                    values = new Int32Array(byteBuffer);
+                }
+                else if (dtype === 'bool') {
+                    values = new Uint8Array(byteBuffer);
+                }
+                else if (dtype === 'complex64') {
+                    values = new Float32Array(byteBuffer);
+                    const real = new Float32Array(values.length / 2);
+                    const image = new Float32Array(values.length / 2);
+                    for (let i = 0; i < real.length; i++) {
+                        real[i] = values[i * 2];
+                        image[i] = values[i * 2 + 1];
+                    }
+                    const realTensor = tensor(real, shape, 'float32');
+                    const imageTensor = tensor(image, shape, 'float32');
+                    out[name] = complex$2(realTensor, imageTensor);
+                    realTensor.dispose();
+                    imageTensor.dispose();
+                }
+                else {
+                    throw new Error(`Unsupported dtype in weight '${name}': ${dtype}`);
+                }
+                offset += size * dtypeFactor;
+            }
+            if (dtype !== 'complex64') {
+                out[name] = tensor(values, shape, dtype);
+            }
+        }
+        return out;
+    }
+    /**
+     * Concatenate TypedArrays into an ArrayBuffer.
+     */
+    function concatenateTypedArrays(xs) {
+        // TODO(adarob, cais): Support quantization.
+        if (xs === null) {
+            throw new Error(`Invalid input value: ${JSON.stringify(xs)}`);
+        }
+        let totalByteLength = 0;
+        // `normalizedXs` is here for this reason: a `TypedArray`'s `buffer'
+        // can have a different byte length from that of the `TypedArray` itself,
+        // for example, when the `TypedArray` is created from an offset in an
+        // `ArrayBuffer`. `normliazedXs` holds `TypedArray`s whose `buffer`s match
+        // the `TypedArray` in byte length. If an element of `xs` does not show
+        // this property, a new `TypedArray` that satisfy this property will be
+        // constructed and pushed into `normalizedXs`.
+        const normalizedXs = [];
+        xs.forEach((x) => {
+            totalByteLength += x.byteLength;
+            // tslint:disable:no-any
+            normalizedXs.push(x.byteLength === x.buffer.byteLength ? x :
+                new x.constructor(x));
+            if (!(x instanceof Float32Array || x instanceof Int32Array ||
+                x instanceof Uint8Array)) {
+                throw new Error(`Unsupported TypedArray subtype: ${x.constructor.name}`);
+            }
+            // tslint:enable:no-any
+        });
+        const y = new Uint8Array(totalByteLength);
+        let offset = 0;
+        normalizedXs.forEach((x) => {
+            y.set(new Uint8Array(x.buffer), offset);
+            offset += x.byteLength;
+        });
+        return y.buffer;
+    }
     // Use Buffer on Node.js instead of Blob/atob/btoa
     const useNodeBuffer = typeof Buffer !== 'undefined' &&
         (typeof Blob === 'undefined' || typeof atob === 'undefined' ||
@@ -25568,6 +26133,110 @@
         return buffer.buffer;
     }
     /**
+     * Concatenate a number of ArrayBuffers into one.
+     *
+     * @param buffers A number of array buffers to concatenate.
+     * @returns Result of concatenating `buffers` in order.
+     */
+    function concatenateArrayBuffers(buffers) {
+        if (buffers.length === 1) {
+            return buffers[0];
+        }
+        let totalByteLength = 0;
+        buffers.forEach((buffer) => {
+            totalByteLength += buffer.byteLength;
+        });
+        const temp = new Uint8Array(totalByteLength);
+        let offset = 0;
+        buffers.forEach((buffer) => {
+            temp.set(new Uint8Array(buffer), offset);
+            offset += buffer.byteLength;
+        });
+        return temp.buffer;
+    }
+    /**
+     * Get the basename of a path.
+     *
+     * Behaves in a way analogous to Linux's basename command.
+     *
+     * @param path
+     */
+    function basename(path) {
+        const SEPARATOR = '/';
+        path = path.trim();
+        while (path.endsWith(SEPARATOR)) {
+            path = path.slice(0, path.length - 1);
+        }
+        const items = path.split(SEPARATOR);
+        return items[items.length - 1];
+    }
+    /**
+     * Create `ModelJSON` from `ModelArtifacts`.
+     *
+     * @param artifacts Model artifacts, describing the model and its weights.
+     * @param manifest Weight manifest, describing where the weights of the
+     *     `ModelArtifacts` are stored, and some metadata about them.
+     * @returns Object representing the `model.json` file describing the model
+     *     artifacts and weights
+     */
+    function getModelJSONForModelArtifacts(artifacts, manifest) {
+        const result = {
+            modelTopology: artifacts.modelTopology,
+            format: artifacts.format,
+            generatedBy: artifacts.generatedBy,
+            convertedBy: artifacts.convertedBy,
+            weightsManifest: manifest
+        };
+        if (artifacts.signature != null) {
+            result.signature = artifacts.signature;
+        }
+        if (artifacts.userDefinedMetadata != null) {
+            result.userDefinedMetadata = artifacts.userDefinedMetadata;
+        }
+        if (artifacts.modelInitializer != null) {
+            result.modelInitializer = artifacts.modelInitializer;
+        }
+        if (artifacts.trainingConfig != null) {
+            result.trainingConfig = artifacts.trainingConfig;
+        }
+        return result;
+    }
+    /**
+     * Create `ModelArtifacts` from a JSON file.
+     *
+     * @param modelJSON Object containing the parsed JSON of `model.json`
+     * @param loadWeights Function that takes the JSON file's weights manifest,
+     *     reads weights from the listed path(s), and returns a Promise of the
+     *     weight manifest entries along with the weights data.
+     * @returns A Promise of the `ModelArtifacts`, as described by the JSON file.
+     */
+    async function getModelArtifactsForJSON(modelJSON, loadWeights) {
+        const modelArtifacts = {
+            modelTopology: modelJSON.modelTopology,
+            format: modelJSON.format,
+            generatedBy: modelJSON.generatedBy,
+            convertedBy: modelJSON.convertedBy
+        };
+        if (modelJSON.trainingConfig != null) {
+            modelArtifacts.trainingConfig = modelJSON.trainingConfig;
+        }
+        if (modelJSON.weightsManifest != null) {
+            const [weightSpecs, weightData] = await loadWeights(modelJSON.weightsManifest);
+            modelArtifacts.weightSpecs = weightSpecs;
+            modelArtifacts.weightData = weightData;
+        }
+        if (modelJSON.signature != null) {
+            modelArtifacts.signature = modelJSON.signature;
+        }
+        if (modelJSON.userDefinedMetadata != null) {
+            modelArtifacts.userDefinedMetadata = modelJSON.userDefinedMetadata;
+        }
+        if (modelJSON.modelInitializer != null) {
+            modelArtifacts.modelInitializer = modelJSON.modelInitializer;
+        }
+        return modelArtifacts;
+    }
+    /**
      * Populate ModelArtifactsInfo fields for a model with JSON topology.
      * @param modelArtifacts
      * @returns A ModelArtifactsInfo object.
@@ -25588,6 +26257,94 @@
             weightDataBytes: modelArtifacts.weightData == null ?
                 0 :
                 modelArtifacts.weightData.byteLength,
+        };
+    }
+    /**
+     * Computes mantisa table for casting Float16 to Float32
+     * See http://www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
+     *
+     * @returns Uint32Array, 2048 mantissa lookup values.
+     */
+    function computeFloat16MantisaTable() {
+        const convertMantissa = (i) => {
+            let m = i << 13;
+            let e = 0;
+            while ((m & 0x00800000) === 0) {
+                e -= 0x00800000;
+                m <<= 1;
+            }
+            m &= ~0x00800000;
+            e += 0x38800000;
+            return m | e;
+        };
+        const mantisaTable = new Uint32Array(2048);
+        mantisaTable[0] = 0;
+        for (let i = 1; i < 1024; i++) {
+            mantisaTable[i] = convertMantissa(i);
+        }
+        for (let i = 1024; i < 2048; i++) {
+            mantisaTable[i] = 0x38000000 + ((i - 1024) << 13);
+        }
+        return mantisaTable;
+    }
+    /**
+     * Computes exponent table for casting Float16 to Float32
+     * See http://www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
+     *
+     * @returns Uint32Array, 64 exponent lookup values.
+     */
+    function computeFloat16ExponentTable() {
+        const exponentTable = new Uint32Array(64);
+        exponentTable[0] = 0;
+        exponentTable[31] = 0x47800000;
+        exponentTable[32] = 0x80000000;
+        exponentTable[63] = 0xc7800000;
+        for (let i = 1; i < 31; i++) {
+            exponentTable[i] = i << 23;
+        }
+        for (let i = 33; i < 63; i++) {
+            exponentTable[i] = 0x80000000 + ((i - 32) << 23);
+        }
+        return exponentTable;
+    }
+    /**
+     * Computes offset table for casting Float16 to Float32
+     * See http://www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
+     *
+     * @returns Uint32Array, 6d offset values.
+     */
+    function computeFloat16OffsetTable() {
+        const offsetTable = new Uint32Array(64);
+        for (let i = 0; i < 64; i++) {
+            offsetTable[i] = 1024;
+        }
+        offsetTable[0] = offsetTable[32] = 0;
+        return offsetTable;
+    }
+    /**
+     * Retrieve a Float16 decoder which will decode a ByteArray of Float16 values
+     * to a Float32Array.
+     *
+     * @returns Function (buffer: Uint16Array) => Float32Array which decodes
+     *          the Uint16Array of Float16 bytes to a Float32Array.
+     */
+    function getFloat16Decoder() {
+        // Algorithm is based off of
+        // http://www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
+        // Cache lookup tables
+        const mantisaTable = computeFloat16MantisaTable();
+        const exponentTable = computeFloat16ExponentTable();
+        const offsetTable = computeFloat16OffsetTable();
+        return (quantizedArray) => {
+            const buffer = new ArrayBuffer(4 * quantizedArray.length);
+            const bufferUint32View = new Uint32Array(buffer);
+            for (let index = 0; index < quantizedArray.length; index++) {
+                const float16Bits = quantizedArray[index];
+                const float32Bits = mantisaTable[offsetTable[float16Bits >> 10] + (float16Bits & 0x3ff)] +
+                    exponentTable[float16Bits >> 10];
+                bufferUint32View[index] = float32Bits;
+            }
+            return new Float32Array(buffer);
         };
     }
 
@@ -25672,6 +26429,10 @@
             return validHandlers;
         }
     }
+    const registerSaveRouter = (loudRouter) => IORouterRegistry.registerSaveRouter(loudRouter);
+    const registerLoadRouter = (loudRouter) => IORouterRegistry.registerLoadRouter(loudRouter);
+    const getSaveHandlers = (url) => IORouterRegistry.getSaveHandlers(url);
+    const getLoadHandlers = (url, loadOptions) => IORouterRegistry.getLoadHandlers(url, loadOptions);
 
     /**
      * @license
@@ -26298,6 +27059,245 @@
             return Object.keys(this.getInstance().managers);
         }
     }
+    /**
+     * Helper method for parsing a URL string into a scheme and a path.
+     *
+     * @param url E.g., 'localstorage://my-model'
+     * @returns A dictionary with two fields: scheme and path.
+     *   Scheme: e.g., 'localstorage' in the example above.
+     *   Path: e.g., 'my-model' in the example above.
+     */
+    function parseURL(url) {
+        if (url.indexOf(URL_SCHEME_SUFFIX) === -1) {
+            throw new Error(`The url string provided does not contain a scheme. ` +
+                `Supported schemes are: ` +
+                `${ModelStoreManagerRegistry.getSchemes().join(',')}`);
+        }
+        return {
+            scheme: url.split(URL_SCHEME_SUFFIX)[0],
+            path: url.split(URL_SCHEME_SUFFIX)[1],
+        };
+    }
+    async function cloneModelInternal(sourceURL, destURL, deleteSource = false) {
+        assert(sourceURL !== destURL, () => `Old path and new path are the same: '${sourceURL}'`);
+        const loadHandlers = IORouterRegistry.getLoadHandlers(sourceURL);
+        assert(loadHandlers.length > 0, () => `Copying failed because no load handler is found for source URL ${sourceURL}.`);
+        assert(loadHandlers.length < 2, () => `Copying failed because more than one (${loadHandlers.length}) ` +
+            `load handlers for source URL ${sourceURL}.`);
+        const loadHandler = loadHandlers[0];
+        const saveHandlers = IORouterRegistry.getSaveHandlers(destURL);
+        assert(saveHandlers.length > 0, () => `Copying failed because no save handler is found for destination ` +
+            `URL ${destURL}.`);
+        assert(saveHandlers.length < 2, () => `Copying failed because more than one (${loadHandlers.length}) ` +
+            `save handlers for destination URL ${destURL}.`);
+        const saveHandler = saveHandlers[0];
+        const sourceScheme = parseURL(sourceURL).scheme;
+        const sourcePath = parseURL(sourceURL).path;
+        const sameMedium = sourceScheme === parseURL(sourceURL).scheme;
+        const modelArtifacts = await loadHandler.load();
+        // If moving within the same storage medium, remove the old model as soon as
+        // the loading is done. Without doing this, it is possible that the combined
+        // size of the two models will cause the cloning to fail.
+        if (deleteSource && sameMedium) {
+            await ModelStoreManagerRegistry.getManager(sourceScheme)
+                .removeModel(sourcePath);
+        }
+        const saveResult = await saveHandler.save(modelArtifacts);
+        // If moving between mediums, the deletion is done after the save succeeds.
+        // This guards against the case in which saving to the destination medium
+        // fails.
+        if (deleteSource && !sameMedium) {
+            await ModelStoreManagerRegistry.getManager(sourceScheme)
+                .removeModel(sourcePath);
+        }
+        return saveResult.modelArtifactsInfo;
+    }
+    /**
+     * List all models stored in registered storage mediums.
+     *
+     * For a web browser environment, the registered mediums are Local Storage and
+     * IndexedDB.
+     *
+     * ```js
+     * // First create and save a model.
+     * const model = tf.sequential();
+     * model.add(tf.layers.dense(
+     *     {units: 1, inputShape: [10], activation: 'sigmoid'}));
+     * await model.save('localstorage://demo/management/model1');
+     *
+     * // Then list existing models.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     *
+     * // Delete the model.
+     * await tf.io.removeModel('localstorage://demo/management/model1');
+     *
+     * // List models again.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     * ```
+     *
+     * @returns A `Promise` of a dictionary mapping URLs of existing models to
+     * their model artifacts info. URLs include medium-specific schemes, e.g.,
+     *   'indexeddb://my/model/1'. Model artifacts info include type of the
+     * model's topology, byte sizes of the topology, weights, etc.
+     *
+     * @doc {
+     *   heading: 'Models',
+     *   subheading: 'Management',
+     *   namespace: 'io',
+     *   ignoreCI: true
+     * }
+     */
+    async function listModels() {
+        const schemes = ModelStoreManagerRegistry.getSchemes();
+        const out = {};
+        for (const scheme of schemes) {
+            const schemeOut = await ModelStoreManagerRegistry.getManager(scheme).listModels();
+            for (const path in schemeOut) {
+                const url = scheme + URL_SCHEME_SUFFIX + path;
+                out[url] = schemeOut[path];
+            }
+        }
+        return out;
+    }
+    /**
+     * Remove a model specified by URL from a reigstered storage medium.
+     *
+     * ```js
+     * // First create and save a model.
+     * const model = tf.sequential();
+     * model.add(tf.layers.dense(
+     *     {units: 1, inputShape: [10], activation: 'sigmoid'}));
+     * await model.save('localstorage://demo/management/model1');
+     *
+     * // Then list existing models.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     *
+     * // Delete the model.
+     * await tf.io.removeModel('localstorage://demo/management/model1');
+     *
+     * // List models again.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     * ```
+     *
+     * @param url A URL to a stored model, with a scheme prefix, e.g.,
+     *   'localstorage://my-model-1', 'indexeddb://my/model/2'.
+     * @returns ModelArtifactsInfo of the deleted model (if and only if deletion
+     *   is successful).
+     * @throws Error if deletion fails, e.g., if no model exists at `path`.
+     *
+     * @doc {
+     *   heading: 'Models',
+     *   subheading: 'Management',
+     *   namespace: 'io',
+     *   ignoreCI: true
+     * }
+     */
+    async function removeModel(url) {
+        const schemeAndPath = parseURL(url);
+        const manager = ModelStoreManagerRegistry.getManager(schemeAndPath.scheme);
+        return manager.removeModel(schemeAndPath.path);
+    }
+    /**
+     * Copy a model from one URL to another.
+     *
+     * This function supports:
+     *
+     * 1. Copying within a storage medium, e.g.,
+     *    `tf.io.copyModel('localstorage://model-1', 'localstorage://model-2')`
+     * 2. Copying between two storage mediums, e.g.,
+     *    `tf.io.copyModel('localstorage://model-1', 'indexeddb://model-1')`
+     *
+     * ```js
+     * // First create and save a model.
+     * const model = tf.sequential();
+     * model.add(tf.layers.dense(
+     *     {units: 1, inputShape: [10], activation: 'sigmoid'}));
+     * await model.save('localstorage://demo/management/model1');
+     *
+     * // Then list existing models.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     *
+     * // Copy the model, from Local Storage to IndexedDB.
+     * await tf.io.copyModel(
+     *     'localstorage://demo/management/model1',
+     *     'indexeddb://demo/management/model1');
+     *
+     * // List models again.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     *
+     * // Remove both models.
+     * await tf.io.removeModel('localstorage://demo/management/model1');
+     * await tf.io.removeModel('indexeddb://demo/management/model1');
+     * ```
+     *
+     * @param sourceURL Source URL of copying.
+     * @param destURL Destination URL of copying.
+     * @returns ModelArtifactsInfo of the copied model (if and only if copying
+     *   is successful).
+     * @throws Error if copying fails, e.g., if no model exists at `sourceURL`, or
+     *   if `oldPath` and `newPath` are identical.
+     *
+     * @doc {
+     *   heading: 'Models',
+     *   subheading: 'Management',
+     *   namespace: 'io',
+     *   ignoreCI: true
+     * }
+     */
+    async function copyModel(sourceURL, destURL) {
+        const deleteSource = false;
+        return cloneModelInternal(sourceURL, destURL, deleteSource);
+    }
+    /**
+     * Move a model from one URL to another.
+     *
+     * This function supports:
+     *
+     * 1. Moving within a storage medium, e.g.,
+     *    `tf.io.moveModel('localstorage://model-1', 'localstorage://model-2')`
+     * 2. Moving between two storage mediums, e.g.,
+     *    `tf.io.moveModel('localstorage://model-1', 'indexeddb://model-1')`
+     *
+     * ```js
+     * // First create and save a model.
+     * const model = tf.sequential();
+     * model.add(tf.layers.dense(
+     *     {units: 1, inputShape: [10], activation: 'sigmoid'}));
+     * await model.save('localstorage://demo/management/model1');
+     *
+     * // Then list existing models.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     *
+     * // Move the model, from Local Storage to IndexedDB.
+     * await tf.io.moveModel(
+     *     'localstorage://demo/management/model1',
+     *     'indexeddb://demo/management/model1');
+     *
+     * // List models again.
+     * console.log(JSON.stringify(await tf.io.listModels()));
+     *
+     * // Remove the moved model.
+     * await tf.io.removeModel('indexeddb://demo/management/model1');
+     * ```
+     *
+     * @param sourceURL Source URL of moving.
+     * @param destURL Destination URL of moving.
+     * @returns ModelArtifactsInfo of the copied model (if and only if copying
+     *   is successful).
+     * @throws Error if moving fails, e.g., if no model exists at `sourceURL`, or
+     *   if `oldPath` and `newPath` are identical.
+     *
+     * @doc {
+     *   heading: 'Models',
+     *   subheading: 'Management',
+     *   namespace: 'io',
+     *   ignoreCI: true
+     * }
+     */
+    async function moveModel(sourceURL, destURL) {
+        const deleteSource = true;
+        return cloneModelInternal(sourceURL, destURL, deleteSource);
+    }
 
     /**
      * @license
@@ -26602,6 +27602,1183 @@
 
     /**
      * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    const DEFAULT_FILE_NAME_PREFIX = 'model';
+    const DEFAULT_JSON_EXTENSION_NAME = '.json';
+    const DEFAULT_WEIGHT_DATA_EXTENSION_NAME = '.weights.bin';
+    function defer(f) {
+        return new Promise(resolve => setTimeout(resolve)).then(f);
+    }
+    class BrowserDownloads {
+        constructor(fileNamePrefix) {
+            if (!env().getBool('IS_BROWSER')) {
+                // TODO(cais): Provide info on what IOHandlers are available under the
+                //   current environment.
+                throw new Error('browserDownloads() cannot proceed because the current environment ' +
+                    'is not a browser.');
+            }
+            if (fileNamePrefix.startsWith(BrowserDownloads.URL_SCHEME)) {
+                fileNamePrefix = fileNamePrefix.slice(BrowserDownloads.URL_SCHEME.length);
+            }
+            if (fileNamePrefix == null || fileNamePrefix.length === 0) {
+                fileNamePrefix = DEFAULT_FILE_NAME_PREFIX;
+            }
+            this.modelJsonFileName = fileNamePrefix + DEFAULT_JSON_EXTENSION_NAME;
+            this.weightDataFileName =
+                fileNamePrefix + DEFAULT_WEIGHT_DATA_EXTENSION_NAME;
+        }
+        async save(modelArtifacts) {
+            if (typeof (document) === 'undefined') {
+                throw new Error('Browser downloads are not supported in ' +
+                    'this environment since `document` is not present');
+            }
+            const weightsURL = window.URL.createObjectURL(new Blob([modelArtifacts.weightData], { type: 'application/octet-stream' }));
+            if (modelArtifacts.modelTopology instanceof ArrayBuffer) {
+                throw new Error('BrowserDownloads.save() does not support saving model topology ' +
+                    'in binary formats yet.');
+            }
+            else {
+                const weightsManifest = [{
+                        paths: ['./' + this.weightDataFileName],
+                        weights: modelArtifacts.weightSpecs
+                    }];
+                const modelJSON = getModelJSONForModelArtifacts(modelArtifacts, weightsManifest);
+                const modelJsonURL = window.URL.createObjectURL(new Blob([JSON.stringify(modelJSON)], { type: 'application/json' }));
+                // If anchor elements are not provided, create them without attaching them
+                // to parents, so that the downloaded file names can be controlled.
+                const jsonAnchor = this.modelJsonAnchor == null ?
+                    document.createElement('a') :
+                    this.modelJsonAnchor;
+                jsonAnchor.download = this.modelJsonFileName;
+                jsonAnchor.href = modelJsonURL;
+                // Trigger downloads by evoking a click event on the download anchors.
+                // When multiple downloads are started synchronously, Firefox will only
+                // save the last one.
+                await defer(() => jsonAnchor.dispatchEvent(new MouseEvent('click')));
+                if (modelArtifacts.weightData != null) {
+                    const weightDataAnchor = this.weightDataAnchor == null ?
+                        document.createElement('a') :
+                        this.weightDataAnchor;
+                    weightDataAnchor.download = this.weightDataFileName;
+                    weightDataAnchor.href = weightsURL;
+                    await defer(() => weightDataAnchor.dispatchEvent(new MouseEvent('click')));
+                }
+                return { modelArtifactsInfo: getModelArtifactsInfoForJSON(modelArtifacts) };
+            }
+        }
+    }
+    BrowserDownloads.URL_SCHEME = 'downloads://';
+    class BrowserFiles {
+        constructor(files) {
+            if (files == null || files.length < 1) {
+                throw new Error(`When calling browserFiles, at least 1 file is required, ` +
+                    `but received ${files}`);
+            }
+            this.jsonFile = files[0];
+            this.weightsFiles = files.slice(1);
+        }
+        async load() {
+            return new Promise((resolve, reject) => {
+                const jsonReader = new FileReader();
+                jsonReader.onload = (event) => {
+                    // tslint:disable-next-line:no-any
+                    const modelJSON = JSON.parse(event.target.result);
+                    const modelTopology = modelJSON.modelTopology;
+                    if (modelTopology == null) {
+                        reject(new Error(`modelTopology field is missing from file ${this.jsonFile.name}`));
+                        return;
+                    }
+                    const weightsManifest = modelJSON.weightsManifest;
+                    if (weightsManifest == null) {
+                        reject(new Error(`weightManifest field is missing from file ${this.jsonFile.name}`));
+                        return;
+                    }
+                    if (this.weightsFiles.length === 0) {
+                        resolve({ modelTopology });
+                        return;
+                    }
+                    const modelArtifactsPromise = getModelArtifactsForJSON(modelJSON, (weightsManifest) => this.loadWeights(weightsManifest));
+                    resolve(modelArtifactsPromise);
+                };
+                jsonReader.onerror = error => reject(`Failed to read model topology and weights manifest JSON ` +
+                    `from file '${this.jsonFile.name}'. BrowserFiles supports loading ` +
+                    `Keras-style tf.Model artifacts only.`);
+                jsonReader.readAsText(this.jsonFile);
+            });
+        }
+        loadWeights(weightsManifest) {
+            const weightSpecs = [];
+            const paths = [];
+            for (const entry of weightsManifest) {
+                weightSpecs.push(...entry.weights);
+                paths.push(...entry.paths);
+            }
+            const pathToFile = this.checkManifestAndWeightFiles(weightsManifest);
+            const promises = paths.map(path => this.loadWeightsFile(path, pathToFile[path]));
+            return Promise.all(promises).then(buffers => [weightSpecs, concatenateArrayBuffers(buffers)]);
+        }
+        loadWeightsFile(path, file) {
+            return new Promise((resolve, reject) => {
+                const weightFileReader = new FileReader();
+                weightFileReader.onload = (event) => {
+                    // tslint:disable-next-line:no-any
+                    const weightData = event.target.result;
+                    resolve(weightData);
+                };
+                weightFileReader.onerror = error => reject(`Failed to weights data from file of path '${path}'.`);
+                weightFileReader.readAsArrayBuffer(file);
+            });
+        }
+        /**
+         * Check the compatibility between weights manifest and weight files.
+         */
+        checkManifestAndWeightFiles(manifest) {
+            const basenames = [];
+            const fileNames = this.weightsFiles.map(file => basename(file.name));
+            const pathToFile = {};
+            for (const group of manifest) {
+                group.paths.forEach(path => {
+                    const pathBasename = basename(path);
+                    if (basenames.indexOf(pathBasename) !== -1) {
+                        throw new Error(`Duplicate file basename found in weights manifest: ` +
+                            `'${pathBasename}'`);
+                    }
+                    basenames.push(pathBasename);
+                    if (fileNames.indexOf(pathBasename) === -1) {
+                        throw new Error(`Weight file with basename '${pathBasename}' is not provided.`);
+                    }
+                    else {
+                        pathToFile[path] = this.weightsFiles[fileNames.indexOf(pathBasename)];
+                    }
+                });
+            }
+            if (basenames.length !== this.weightsFiles.length) {
+                throw new Error(`Mismatch in the number of files in weights manifest ` +
+                    `(${basenames.length}) and the number of weight files provided ` +
+                    `(${this.weightsFiles.length}).`);
+            }
+            return pathToFile;
+        }
+    }
+    const browserDownloadsRouter = (url) => {
+        if (!env().getBool('IS_BROWSER')) {
+            return null;
+        }
+        else {
+            if (!Array.isArray(url) && url.startsWith(BrowserDownloads.URL_SCHEME)) {
+                return browserDownloads(url.slice(BrowserDownloads.URL_SCHEME.length));
+            }
+            else {
+                return null;
+            }
+        }
+    };
+    IORouterRegistry.registerSaveRouter(browserDownloadsRouter);
+    /**
+     * Creates an IOHandler that triggers file downloads from the browser.
+     *
+     * The returned `IOHandler` instance can be used as model exporting methods such
+     * as `tf.Model.save` and supports only saving.
+     *
+     * ```js
+     * const model = tf.sequential();
+     * model.add(tf.layers.dense(
+     *     {units: 1, inputShape: [10], activation: 'sigmoid'}));
+     * const saveResult = await model.save('downloads://mymodel');
+     * // This will trigger downloading of two files:
+     * //   'mymodel.json' and 'mymodel.weights.bin'.
+     * console.log(saveResult);
+     * ```
+     *
+     * @param fileNamePrefix Prefix name of the files to be downloaded. For use with
+     *   `tf.Model`, `fileNamePrefix` should follow either of the following two
+     *   formats:
+     *   1. `null` or `undefined`, in which case the default file
+     *      names will be used:
+     *      - 'model.json' for the JSON file containing the model topology and
+     *        weights manifest.
+     *      - 'model.weights.bin' for the binary file containing the binary weight
+     *        values.
+     *   2. A single string or an Array of a single string, as the file name prefix.
+     *      For example, if `'foo'` is provided, the downloaded JSON
+     *      file and binary weights file will be named 'foo.json' and
+     *      'foo.weights.bin', respectively.
+     * @param config Additional configuration for triggering downloads.
+     * @returns An instance of `BrowserDownloads` `IOHandler`.
+     *
+     * @doc {
+     *   heading: 'Models',
+     *   subheading: 'Loading',
+     *   namespace: 'io',
+     *   ignoreCI: true
+     * }
+     */
+    function browserDownloads(fileNamePrefix = 'model') {
+        return new BrowserDownloads(fileNamePrefix);
+    }
+    /**
+     * Creates an IOHandler that loads model artifacts from user-selected files.
+     *
+     * This method can be used for loading from files such as user-selected files
+     * in the browser.
+     * When used in conjunction with `tf.loadLayersModel`, an instance of
+     * `tf.LayersModel` (Keras-style) can be constructed from the loaded artifacts.
+     *
+     * ```js
+     * // Note: This code snippet won't run properly without the actual file input
+     * //   elements in the HTML DOM.
+     *
+     * // Suppose there are two HTML file input (`<input type="file" ...>`)
+     * // elements.
+     * const uploadJSONInput = document.getElementById('upload-json');
+     * const uploadWeightsInput = document.getElementById('upload-weights');
+     * const model = await tf.loadLayersModel(tf.io.browserFiles(
+     *     [uploadJSONInput.files[0], uploadWeightsInput.files[0]]));
+     * ```
+     *
+     * @param files `File`s to load from. Currently, this function supports only
+     *   loading from files that contain Keras-style models (i.e., `tf.Model`s), for
+     *   which an `Array` of `File`s is expected (in that order):
+     *   - A JSON file containing the model topology and weight manifest.
+     *   - Optionally, One or more binary files containing the binary weights.
+     *     These files must have names that match the paths in the `weightsManifest`
+     *     contained by the aforementioned JSON file, or errors will be thrown
+     *     during loading. These weights files have the same format as the ones
+     *     generated by `tensorflowjs_converter` that comes with the `tensorflowjs`
+     *     Python PIP package. If no weights files are provided, only the model
+     *     topology will be loaded from the JSON file above.
+     * @returns An instance of `Files` `IOHandler`.
+     *
+     * @doc {
+     *   heading: 'Models',
+     *   subheading: 'Loading',
+     *   namespace: 'io',
+     *   ignoreCI: true
+     * }
+     */
+    function browserFiles(files) {
+        return new BrowserFiles(files);
+    }
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Monitor Promise.all progress, fire onProgress callback function.
+     *
+     * @param promises Promise list going to be monitored
+     * @param onProgress Callback function. Fired when a promise resolved.
+     * @param startFraction Optional fraction start. Default to 0.
+     * @param endFraction Optional fraction end. Default to 1.
+     */
+    function monitorPromisesProgress(promises, onProgress, startFraction, endFraction) {
+        checkPromises(promises);
+        startFraction = startFraction == null ? 0 : startFraction;
+        endFraction = endFraction == null ? 1 : endFraction;
+        checkFraction(startFraction, endFraction);
+        let resolvedPromise = 0;
+        const registerMonitor = (promise) => {
+            promise.then(value => {
+                const fraction = startFraction +
+                    ++resolvedPromise / promises.length * (endFraction - startFraction);
+                // pass fraction as parameter to callback function.
+                onProgress(fraction);
+                return value;
+            });
+            return promise;
+        };
+        function checkPromises(promises) {
+            assert(promises != null && Array.isArray(promises) && promises.length > 0, () => 'promises must be a none empty array');
+        }
+        function checkFraction(startFraction, endFraction) {
+            assert(startFraction >= 0 && startFraction <= 1, () => `Progress fraction must be in range [0, 1], but ` +
+                `got startFraction ${startFraction}`);
+            assert(endFraction >= 0 && endFraction <= 1, () => `Progress fraction must be in range [0, 1], but ` +
+                `got endFraction ${endFraction}`);
+            assert(endFraction >= startFraction, () => `startFraction must be no more than endFraction, but ` +
+                `got startFraction ${startFraction} and endFraction ` +
+                `${endFraction}`);
+        }
+        return Promise.all(promises.map(registerMonitor));
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Reads binary weights data from a number of URLs.
+     *
+     * @param fetchURLs URLs to send the HTTP requests at, using `fetch` calls.
+     * @param requestOptions RequestInit (options) for the HTTP requests.
+     * @param fetchFunc Optional overriding value for the `window.fetch` function.
+     * @param onProgress Optional, progress callback function, fired periodically
+     *   before the load is completed.
+     * @returns A `Promise` of an Array of `ArrayBuffer`. The Array has the same
+     *   length as `fetchURLs`.
+     */
+    async function loadWeightsAsArrayBuffer(fetchURLs, loadOptions) {
+        if (loadOptions == null) {
+            loadOptions = {};
+        }
+        const fetchFunc = loadOptions.fetchFunc == null ? env().platform.fetch :
+            loadOptions.fetchFunc;
+        // Create the requests for all of the weights in parallel.
+        const requests = fetchURLs.map(fetchURL => fetchFunc(fetchURL, loadOptions.requestInit, { isBinary: true }));
+        const fetchStartFraction = 0;
+        const fetchEndFraction = 0.5;
+        const responses = loadOptions.onProgress == null ?
+            await Promise.all(requests) :
+            await monitorPromisesProgress(requests, loadOptions.onProgress, fetchStartFraction, fetchEndFraction);
+        const bufferPromises = responses.map(response => response.arrayBuffer());
+        const bufferStartFraction = 0.5;
+        const bufferEndFraction = 1;
+        const buffers = loadOptions.onProgress == null ?
+            await Promise.all(bufferPromises) :
+            await monitorPromisesProgress(bufferPromises, loadOptions.onProgress, bufferStartFraction, bufferEndFraction);
+        return buffers;
+    }
+    /**
+     * Reads a weights manifest JSON configuration, fetches the weights and
+     * returns them as `Tensor`s.
+     *
+     * @param manifest The weights manifest JSON.
+     * @param filePathPrefix The path prefix for filenames given in the manifest.
+     *     Defaults to the empty string.
+     * @param weightNames The names of the weights to be fetched.
+     */
+    async function loadWeights(manifest, filePathPrefix = '', weightNames, requestInit) {
+        // TODO(nsthorat): Groups are currently fetched atomically. If you need a
+        // single weight from a group, the whole group will be fetched. At a future
+        // date, we should support fetching only the individual shards within a
+        // group that are needed to reconstruct the requested weight.
+        // TODO(cais): Use `decodeWeights` for implementation.
+        const fetchWeights = (fetchUrls) => loadWeightsAsArrayBuffer(fetchUrls, { requestInit });
+        const loadWeights = weightsLoaderFactory(fetchWeights);
+        return loadWeights(manifest, filePathPrefix, weightNames);
+    }
+    /**
+     * Creates a function, which reads a weights manifest JSON configuration,
+     * fetches the weight files using the specified function and returns them as
+     * `Tensor`s.
+     *
+     * ```js
+     * // example for creating a nodejs weight loader, which reads the weight files
+     * // from disk using fs.readFileSync
+     *
+     * import * as fs from 'fs'
+     *
+     * const fetchWeightsFromDisk = (filePaths: string[]) =>
+     *   filePaths.map(filePath => fs.readFileSync(filePath).buffer)
+     *
+     * const loadWeights = tf.io.weightsLoaderFactory(fetchWeightsFromDisk)
+     *
+     * const manifest = JSON.parse(
+     *   fs.readFileSync('./my_model-weights_manifest').toString()
+     * )
+     * const weightMap = await loadWeights(manifest, './')
+     * ```
+     * @param fetchWeightsFunction The function used for fetching the weight files.
+     * @returns Weight loading function.
+     */
+    function weightsLoaderFactory(fetchWeightsFunction) {
+        return async (manifest, filePathPrefix = '', weightNames) => {
+            // Collect all the groups, weights, and their relative offsets to be
+            // fetched.
+            const groupIndicesToFetchMap = manifest.map(() => false);
+            const groupWeightsToFetch = {};
+            const weightsFound = weightNames != null ? weightNames.map(() => false) : [];
+            const allManifestWeightNames = [];
+            manifest.forEach((manifestGroupConfig, groupIndex) => {
+                let groupOffset = 0;
+                manifestGroupConfig.weights.forEach(weightsEntry => {
+                    const rawDtype = ('quantization' in weightsEntry) ?
+                        weightsEntry.quantization.dtype :
+                        weightsEntry.dtype;
+                    const weightsBytes = DTYPE_VALUE_SIZE_MAP[rawDtype] *
+                        sizeFromShape(weightsEntry.shape);
+                    const enqueueWeightsForFetchingFn = () => {
+                        groupIndicesToFetchMap[groupIndex] = true;
+                        if (groupWeightsToFetch[groupIndex] == null) {
+                            groupWeightsToFetch[groupIndex] = [];
+                        }
+                        groupWeightsToFetch[groupIndex].push({
+                            manifestEntry: weightsEntry,
+                            groupOffset,
+                            sizeBytes: weightsBytes
+                        });
+                    };
+                    if (weightNames != null) {
+                        weightNames.forEach((weightName, weightIndex) => {
+                            if (weightName === weightsEntry.name) {
+                                enqueueWeightsForFetchingFn();
+                                weightsFound[weightIndex] = true;
+                            }
+                        });
+                    }
+                    else {
+                        enqueueWeightsForFetchingFn();
+                    }
+                    allManifestWeightNames.push(weightsEntry.name);
+                    groupOffset += weightsBytes;
+                });
+            });
+            if (!weightsFound.every(found => found)) {
+                const weightsNotFound = weightNames.filter((_, i) => !weightsFound[i]);
+                throw new Error(`Could not find weights in manifest with names: ` +
+                    `${weightsNotFound.join(', ')}. \n` +
+                    `Manifest JSON has weights with names: ` +
+                    `${allManifestWeightNames.join(', ')}.`);
+            }
+            // Convert the one-hot boolean groupId => shouldFetch map to a list of group
+            // IDs.
+            const groupIndicesToFetch = groupIndicesToFetchMap.reduce((accumulator, shouldFetch, i) => {
+                if (shouldFetch) {
+                    accumulator.push(i);
+                }
+                return accumulator;
+            }, []);
+            const fetchUrls = [];
+            groupIndicesToFetch.forEach(i => {
+                manifest[i].paths.forEach(filepath => {
+                    const fetchUrl = filePathPrefix +
+                        (!filePathPrefix.endsWith('/') ? '/' : '') + filepath;
+                    fetchUrls.push(fetchUrl);
+                });
+            });
+            const buffers = await fetchWeightsFunction(fetchUrls);
+            const weightsTensorMap = {};
+            let bufferIndexOffset = 0;
+            groupIndicesToFetch.forEach(i => {
+                const numBuffers = manifest[i].paths.length;
+                let groupBytes = 0;
+                for (let i = 0; i < numBuffers; i++) {
+                    groupBytes += buffers[bufferIndexOffset + i].byteLength;
+                }
+                // Create a buffer for the whole group.
+                const groupBuffer = new ArrayBuffer(groupBytes);
+                const groupByteBuffer = new Uint8Array(groupBuffer);
+                let groupBufferOffset = 0;
+                for (let i = 0; i < numBuffers; i++) {
+                    const buffer = new Uint8Array(buffers[bufferIndexOffset + i]);
+                    groupByteBuffer.set(buffer, groupBufferOffset);
+                    groupBufferOffset += buffer.byteLength;
+                }
+                const weightsEntries = groupWeightsToFetch[i];
+                weightsEntries.forEach(weightsEntry => {
+                    const byteBuffer = groupBuffer.slice(weightsEntry.groupOffset, weightsEntry.groupOffset + weightsEntry.sizeBytes);
+                    const nameToTensorMap = decodeWeights(byteBuffer, [weightsEntry.manifestEntry]);
+                    for (const name in nameToTensorMap) {
+                        weightsTensorMap[name] = nameToTensorMap[name];
+                    }
+                });
+                bufferIndexOffset += numBuffers;
+            });
+            return weightsTensorMap;
+        };
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    const OCTET_STREAM_MIME_TYPE = 'application/octet-stream';
+    const JSON_TYPE = 'application/json';
+    class HTTPRequest {
+        constructor(path, loadOptions) {
+            this.DEFAULT_METHOD = 'POST';
+            if (loadOptions == null) {
+                loadOptions = {};
+            }
+            this.weightPathPrefix = loadOptions.weightPathPrefix;
+            this.onProgress = loadOptions.onProgress;
+            this.weightUrlConverter = loadOptions.weightUrlConverter;
+            if (loadOptions.fetchFunc != null) {
+                assert(typeof loadOptions.fetchFunc === 'function', () => 'Must pass a function that matches the signature of ' +
+                    '`fetch` (see ' +
+                    'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)');
+                this.fetch = loadOptions.fetchFunc;
+            }
+            else {
+                this.fetch = env().platform.fetch;
+            }
+            assert(path != null && path.length > 0, () => 'URL path for http must not be null, undefined or ' +
+                'empty.');
+            if (Array.isArray(path)) {
+                assert(path.length === 2, () => 'URL paths for http must have a length of 2, ' +
+                    `(actual length is ${path.length}).`);
+            }
+            this.path = path;
+            if (loadOptions.requestInit != null &&
+                loadOptions.requestInit.body != null) {
+                throw new Error('requestInit is expected to have no pre-existing body, but has one.');
+            }
+            this.requestInit = loadOptions.requestInit || {};
+        }
+        async save(modelArtifacts) {
+            if (modelArtifacts.modelTopology instanceof ArrayBuffer) {
+                throw new Error('BrowserHTTPRequest.save() does not support saving model topology ' +
+                    'in binary formats yet.');
+            }
+            const init = Object.assign({ method: this.DEFAULT_METHOD }, this.requestInit);
+            init.body = new FormData();
+            const weightsManifest = [{
+                    paths: ['./model.weights.bin'],
+                    weights: modelArtifacts.weightSpecs,
+                }];
+            const modelTopologyAndWeightManifest = getModelJSONForModelArtifacts(modelArtifacts, weightsManifest);
+            init.body.append('model.json', new Blob([JSON.stringify(modelTopologyAndWeightManifest)], { type: JSON_TYPE }), 'model.json');
+            if (modelArtifacts.weightData != null) {
+                init.body.append('model.weights.bin', new Blob([modelArtifacts.weightData], { type: OCTET_STREAM_MIME_TYPE }), 'model.weights.bin');
+            }
+            const response = await this.fetch(this.path, init);
+            if (response.ok) {
+                return {
+                    modelArtifactsInfo: getModelArtifactsInfoForJSON(modelArtifacts),
+                    responses: [response],
+                };
+            }
+            else {
+                throw new Error(`BrowserHTTPRequest.save() failed due to HTTP response status ` +
+                    `${response.status}.`);
+            }
+        }
+        /**
+         * Load model artifacts via HTTP request(s).
+         *
+         * See the documentation to `tf.io.http` for details on the saved
+         * artifacts.
+         *
+         * @returns The loaded model artifacts (if loading succeeds).
+         */
+        async load() {
+            const modelConfigRequest = await this.fetch(this.path, this.requestInit);
+            if (!modelConfigRequest.ok) {
+                throw new Error(`Request to ${this.path} failed with status code ` +
+                    `${modelConfigRequest.status}. Please verify this URL points to ` +
+                    `the model JSON of the model to load.`);
+            }
+            let modelJSON;
+            try {
+                modelJSON = await modelConfigRequest.json();
+            }
+            catch (e) {
+                let message = `Failed to parse model JSON of response from ${this.path}.`;
+                // TODO(nsthorat): Remove this after some time when we're comfortable that
+                // .pb files are mostly gone.
+                if (this.path.endsWith('.pb')) {
+                    message += ' Your path contains a .pb file extension. ' +
+                        'Support for .pb models have been removed in TensorFlow.js 1.0 ' +
+                        'in favor of .json models. You can re-convert your Python ' +
+                        'TensorFlow model using the TensorFlow.js 1.0 conversion scripts ' +
+                        'or you can convert your.pb models with the \'pb2json\'' +
+                        'NPM script in the tensorflow/tfjs-converter repository.';
+                }
+                else {
+                    message += ' Please make sure the server is serving valid ' +
+                        'JSON for this request.';
+                }
+                throw new Error(message);
+            }
+            // We do not allow both modelTopology and weightsManifest to be missing.
+            const modelTopology = modelJSON.modelTopology;
+            const weightsManifest = modelJSON.weightsManifest;
+            if (modelTopology == null && weightsManifest == null) {
+                throw new Error(`The JSON from HTTP path ${this.path} contains neither model ` +
+                    `topology or manifest for weights.`);
+            }
+            return getModelArtifactsForJSON(modelJSON, (weightsManifest) => this.loadWeights(weightsManifest));
+        }
+        async loadWeights(weightsManifest) {
+            const weightPath = Array.isArray(this.path) ? this.path[1] : this.path;
+            const [prefix, suffix] = parseUrl(weightPath);
+            const pathPrefix = this.weightPathPrefix || prefix;
+            const weightSpecs = [];
+            for (const entry of weightsManifest) {
+                weightSpecs.push(...entry.weights);
+            }
+            const fetchURLs = [];
+            const urlPromises = [];
+            for (const weightsGroup of weightsManifest) {
+                for (const path of weightsGroup.paths) {
+                    if (this.weightUrlConverter != null) {
+                        urlPromises.push(this.weightUrlConverter(path));
+                    }
+                    else {
+                        fetchURLs.push(pathPrefix + path + suffix);
+                    }
+                }
+            }
+            if (this.weightUrlConverter) {
+                fetchURLs.push(...await Promise.all(urlPromises));
+            }
+            const buffers = await loadWeightsAsArrayBuffer(fetchURLs, {
+                requestInit: this.requestInit,
+                fetchFunc: this.fetch,
+                onProgress: this.onProgress
+            });
+            return [weightSpecs, concatenateArrayBuffers(buffers)];
+        }
+    }
+    HTTPRequest.URL_SCHEME_REGEX = /^https?:\/\//;
+    /**
+     * Extract the prefix and suffix of the url, where the prefix is the path before
+     * the last file, and suffix is the search params after the last file.
+     * ```
+     * const url = 'http://tfhub.dev/model/1/tensorflowjs_model.pb?tfjs-format=file'
+     * [prefix, suffix] = parseUrl(url)
+     * // prefix = 'http://tfhub.dev/model/1/'
+     * // suffix = '?tfjs-format=file'
+     * ```
+     * @param url the model url to be parsed.
+     */
+    function parseUrl(url) {
+        const lastSlash = url.lastIndexOf('/');
+        const lastSearchParam = url.lastIndexOf('?');
+        const prefix = url.substring(0, lastSlash);
+        const suffix = lastSearchParam > lastSlash ? url.substring(lastSearchParam) : '';
+        return [prefix + '/', suffix];
+    }
+    function isHTTPScheme(url) {
+        return url.match(HTTPRequest.URL_SCHEME_REGEX) != null;
+    }
+    const httpRouter = (url, loadOptions) => {
+        if (typeof fetch === 'undefined' &&
+            (loadOptions == null || loadOptions.fetchFunc == null)) {
+            // `http` uses `fetch` or `node-fetch`, if one wants to use it in
+            // an environment that is not the browser or node they have to setup a
+            // global fetch polyfill.
+            return null;
+        }
+        else {
+            let isHTTP = true;
+            if (Array.isArray(url)) {
+                isHTTP = url.every(urlItem => isHTTPScheme(urlItem));
+            }
+            else {
+                isHTTP = isHTTPScheme(url);
+            }
+            if (isHTTP) {
+                return http(url, loadOptions);
+            }
+        }
+        return null;
+    };
+    IORouterRegistry.registerSaveRouter(httpRouter);
+    IORouterRegistry.registerLoadRouter(httpRouter);
+    /**
+     * Creates an IOHandler subtype that sends model artifacts to HTTP server.
+     *
+     * An HTTP request of the `multipart/form-data` mime type will be sent to the
+     * `path` URL. The form data includes artifacts that represent the topology
+     * and/or weights of the model. In the case of Keras-style `tf.Model`, two
+     * blobs (files) exist in form-data:
+     *   - A JSON file consisting of `modelTopology` and `weightsManifest`.
+     *   - A binary weights file consisting of the concatenated weight values.
+     * These files are in the same format as the one generated by
+     * [tfjs_converter](https://js.tensorflow.org/tutorials/import-keras.html).
+     *
+     * The following code snippet exemplifies the client-side code that uses this
+     * function:
+     *
+     * ```js
+     * const model = tf.sequential();
+     * model.add(
+     *     tf.layers.dense({units: 1, inputShape: [100], activation: 'sigmoid'}));
+     *
+     * const saveResult = await model.save(tf.io.http(
+     *     'http://model-server:5000/upload', {requestInit: {method: 'PUT'}}));
+     * console.log(saveResult);
+     * ```
+     *
+     * If the default `POST` method is to be used, without any custom parameters
+     * such as headers, you can simply pass an HTTP or HTTPS URL to `model.save`:
+     *
+     * ```js
+     * const saveResult = await model.save('http://model-server:5000/upload');
+     * ```
+     *
+     * The following GitHub Gist
+     * https://gist.github.com/dsmilkov/1b6046fd6132d7408d5257b0976f7864
+     * implements a server based on [flask](https://github.com/pallets/flask) that
+     * can receive the request. Upon receiving the model artifacts via the requst,
+     * this particular server reconsistutes instances of [Keras
+     * Models](https://keras.io/models/model/) in memory.
+     *
+     *
+     * @param path A URL path to the model.
+     *   Can be an absolute HTTP path (e.g.,
+     *   'http://localhost:8000/model-upload)') or a relative path (e.g.,
+     *   './model-upload').
+     * @param requestInit Request configurations to be used when sending
+     *    HTTP request to server using `fetch`. It can contain fields such as
+     *    `method`, `credentials`, `headers`, `mode`, etc. See
+     *    https://developer.mozilla.org/en-US/docs/Web/API/Request/Request
+     *    for more information. `requestInit` must not have a body, because the
+     * body will be set by TensorFlow.js. File blobs representing the model
+     * topology (filename: 'model.json') and the weights of the model (filename:
+     * 'model.weights.bin') will be appended to the body. If `requestInit` has a
+     * `body`, an Error will be thrown.
+     * @param loadOptions Optional configuration for the loading. It includes the
+     *   following fields:
+     *   - weightPathPrefix Optional, this specifies the path prefix for weight
+     *     files, by default this is calculated from the path param.
+     *   - fetchFunc Optional, custom `fetch` function. E.g., in Node.js,
+     *     the `fetch` from node-fetch can be used here.
+     *   - onProgress Optional, progress callback function, fired periodically
+     *     before the load is completed.
+     * @returns An instance of `IOHandler`.
+     *
+     * @doc {
+     *   heading: 'Models',
+     *   subheading: 'Loading',
+     *   namespace: 'io',
+     *   ignoreCI: true
+     * }
+     */
+    function http(path, loadOptions) {
+        return new HTTPRequest(path, loadOptions);
+    }
+    /**
+     * Deprecated. Use `tf.io.http`.
+     * @param path
+     * @param loadOptions
+     */
+    function browserHTTPRequest(path, loadOptions) {
+        return http(path, loadOptions);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    class PassthroughLoader {
+        constructor(modelArtifacts) {
+            this.modelArtifacts = modelArtifacts;
+        }
+        async load() {
+            return this.modelArtifacts;
+        }
+    }
+    class PassthroughSaver {
+        constructor(saveHandler) {
+            this.saveHandler = saveHandler;
+        }
+        async save(modelArtifacts) {
+            return this.saveHandler(modelArtifacts);
+        }
+    }
+    /**
+     * Creates an IOHandler that loads model artifacts from memory.
+     *
+     * When used in conjunction with `tf.loadLayersModel`, an instance of
+     * `tf.LayersModel` (Keras-style) can be constructed from the loaded artifacts.
+     *
+     * ```js
+     * const model = await tf.loadLayersModel(tf.io.fromMemory(
+     *     modelTopology, weightSpecs, weightData));
+     * ```
+     *
+     * @param modelArtifacts a object containing model topology (i.e., parsed from
+     *   the JSON format).
+     * @param weightSpecs An array of `WeightsManifestEntry` objects describing the
+     *   names, shapes, types, and quantization of the weight data.
+     * @param weightData A single `ArrayBuffer` containing the weight data,
+     *   concatenated in the order described by the weightSpecs.
+     * @param trainingConfig Model training configuration. Optional.
+     *
+     * @returns A passthrough `IOHandler` that simply loads the provided data.
+     */
+    function fromMemory(modelArtifacts, weightSpecs, weightData, trainingConfig) {
+        if (arguments.length === 1) {
+            const isModelArtifacts = modelArtifacts.modelTopology != null ||
+                modelArtifacts.weightSpecs != null;
+            if (isModelArtifacts) {
+                return new PassthroughLoader(modelArtifacts);
+            }
+            else {
+                // Legacy support: with only modelTopology.
+                // TODO(cais): Remove this deprecated API.
+                console.warn('Please call tf.io.fromMemory() with only one argument. ' +
+                    'The argument should be of type ModelArtifacts. ' +
+                    'The multi-argument signature of tf.io.fromMemory() has been ' +
+                    'deprecated and will be removed in a future release.');
+                return new PassthroughLoader({ modelTopology: modelArtifacts });
+            }
+        }
+        else {
+            // Legacy support.
+            // TODO(cais): Remove this deprecated API.
+            console.warn('Please call tf.io.fromMemory() with only one argument. ' +
+                'The argument should be of type ModelArtifacts. ' +
+                'The multi-argument signature of tf.io.fromMemory() has been ' +
+                'deprecated and will be removed in a future release.');
+            return new PassthroughLoader({
+                modelTopology: modelArtifacts,
+                weightSpecs,
+                weightData,
+                trainingConfig
+            });
+        }
+    }
+    /**
+     * Creates an IOHandler that passes saved model artifacts to a callback.
+     *
+     * ```js
+     * function handleSave(artifacts) {
+     *   // ... do something with the artifacts ...
+     *   return {modelArtifactsInfo: {...}, ...};
+     * }
+     *
+     * const saveResult = model.save(tf.io.withSaveHandler(handleSave));
+     * ```
+     *
+     * @param saveHandler A function that accepts a `ModelArtifacts` and returns a
+     *     `SaveResult`.
+     */
+    function withSaveHandler(saveHandler) {
+        return new PassthroughSaver(saveHandler);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+
+    var io = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        browserFiles: browserFiles,
+        browserHTTPRequest: browserHTTPRequest,
+        concatenateArrayBuffers: concatenateArrayBuffers,
+        decodeWeights: decodeWeights,
+        encodeWeights: encodeWeights,
+        fromMemory: fromMemory,
+        getLoadHandlers: getLoadHandlers,
+        getModelArtifactsForJSON: getModelArtifactsForJSON,
+        getModelArtifactsInfoForJSON: getModelArtifactsInfoForJSON,
+        getSaveHandlers: getSaveHandlers,
+        http: http,
+        isHTTPScheme: isHTTPScheme,
+        loadWeights: loadWeights,
+        registerLoadRouter: registerLoadRouter,
+        registerSaveRouter: registerSaveRouter,
+        weightsLoaderFactory: weightsLoaderFactory,
+        withSaveHandler: withSaveHandler,
+        copyModel: copyModel,
+        listModels: listModels,
+        moveModel: moveModel,
+        removeModel: removeModel
+    });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the dot product of two matrices, A * B. These must be matrices.
+     *
+     * ```js
+     * const a = tf.tensor2d([1, 2], [1, 2]);
+     * const b = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * a.matMul(b).print();  // or tf.matMul(a, b)
+     * ```
+     * @param a First matrix in dot product operation.
+     * @param b Second matrix in dot product operation.
+     * @param transposeA If true, `a` is transposed before multiplication.
+     * @param transposeB If true, `b` is transposed before multiplication.
+     *
+     * @doc {heading: 'Operations', subheading: 'Matrices'}
+     */
+    function matMul_(a, b, transposeA = false, transposeB = false) {
+        let $a = convertToTensor(a, 'a', 'matMul');
+        let $b = convertToTensor(b, 'b', 'matMul');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const inputs = { a: $a, b: $b };
+        const attrs = { transposeA, transposeB };
+        return ENGINE.runKernel(BatchMatMul, inputs, attrs);
+    }
+    const matMul$1 = op({ matMul_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a one-hot `tf.Tensor`. The locations represented by `indices` take
+     * value `onValue` (defaults to 1), while all other locations take value
+     * `offValue` (defaults to 0). If `indices` is rank `R`, the output has rank
+     * `R+1` with the last axis of size `depth`.
+     *
+     * ```js
+     * tf.oneHot(tf.tensor1d([0, 1], 'int32'), 3).print();
+     * ```
+     *
+     * @param indices `tf.Tensor` of indices with dtype `int32`.
+     * @param depth The depth of the one hot dimension.
+     * @param onValue A number used to fill in the output when the index matches
+     * the location.
+     * @param offValue A number used to fill in the output when the index does
+     *     not match the location.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function oneHot_(indices, depth, onValue = 1, offValue = 0) {
+        if (depth < 2) {
+            throw new Error(`Error in oneHot: depth must be >=2, but it is ${depth}`);
+        }
+        const $indices = convertToTensor(indices, 'indices', 'oneHot', 'int32');
+        const inputs = { indices: $indices };
+        const attrs = { depth, onValue, offValue };
+        return ENGINE.runKernel(OneHot, inputs, attrs);
+    }
+    const oneHot$2 = op({ oneHot_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Transposes the `tf.Tensor`. Permutes the dimensions according to `perm`.
+     *
+     * The returned `tf.Tensor`'s dimension `i` will correspond to the input
+     * dimension `perm[i]`. If `perm` is not given, it is set to `[n-1...0]`,
+     * where `n` is the rank of the input `tf.Tensor`. Hence by default, this
+     * operation performs a regular matrix transpose on 2-D input `tf.Tensor`s.
+     *
+     * ```js
+     * const a = tf.tensor2d([1, 2, 3, 4, 5, 6], [2, 3]);
+     *
+     * a.transpose().print();  // or tf.transpose(a)
+     * ```
+     *
+     * @param x The tensor to transpose.
+     * @param perm The permutation of the dimensions of a.
+     *
+     * @doc {heading: 'Operations', subheading: 'Matrices'}
+     */
+    function transpose_(x, perm) {
+        const $x = convertToTensor(x, 'x', 'transpose');
+        if (perm == null) {
+            perm = $x.shape.map((s, i) => i).reverse();
+        }
+        assert($x.rank === perm.length, () => `Error in transpose: rank of input ${$x.rank} ` +
+            `must match length of perm ${perm}.`);
+        perm.forEach(axis => {
+            assert(axis >= 0 && axis < $x.rank, () => `All entries in 'perm' must be between 0 and ${$x.rank - 1}` +
+                ` but got ${perm}`);
+        });
+        if ($x.rank <= 1) {
+            return $x.clone();
+        }
+        const inputs = { x: $x };
+        const attrs = { perm };
+        return ENGINE.runKernel(Transpose, inputs, attrs);
+    }
+    const transpose$2 = op({ transpose_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the confusion matrix from true labels and predicted labels.
+     *
+     * ```js
+     * const labels = tf.tensor1d([0, 1, 2, 1, 0], 'int32');
+     * const predictions = tf.tensor1d([0, 2, 2, 1, 0], 'int32');
+     * const numClasses = 3;
+     * const out = tf.math.confusionMatrix(labels, predictions, numClasses);
+     * out.print();
+     * // Expected output matrix:
+     * // [[2, 0, 0],
+     * //  [0, 1, 1],
+     * //  [0, 0, 1]]
+     * ```
+     *
+     * @param labels The target labels, assumed to be 0-based integers
+     *   for the classes. The shape is `[numExamples]`, where
+     *   `numExamples` is the number of examples included.
+     * @param predictions The predicted classes, assumed to be
+     *   0-based integers for the classes. Must have the same shape as `labels`.
+     * @param numClasses Number of all classes, as an integer.
+     *   Its value must be larger than the largest element in `labels` and
+     *   `predictions`.
+     * @returns The confusion matrix as a int32-type 2D tensor. The value at
+     *   row `r` and column `c` is the number of times examples of actual class
+     *   `r` were predicted as class `c`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Evaluation'}
+     */
+    function confusionMatrix_(labels, predictions, numClasses) {
+        const $labels = convertToTensor(labels, 'labels', 'confusionMatrix');
+        const $predictions = convertToTensor(predictions, 'predictions', 'confusionMatrix');
+        assert(numClasses == null || numClasses > 0 && Number.isInteger(numClasses), () => `If provided, numClasses must be a positive integer, ` +
+            `but got ${numClasses}`);
+        assert($labels.rank === 1, () => `Expected the rank of labels to be 1, but got ${$labels.rank}`);
+        assert($predictions.rank === 1, () => `Expected the rank of predictions to be 1, ` +
+            `but got ${$predictions.rank}`);
+        assert($labels.shape[0] === $predictions.shape[0], () => `Mismatch in the number of examples: ` +
+            `${$labels.shape[0]} vs. ${$predictions.shape[0]}. ` +
+            `Labels and predictions should have the same number of elements.`);
+        assert(numClasses > 0 && Number.isInteger(numClasses), () => `numClasses is required to be a positive integer, but got ` +
+            `${numClasses}`);
+        // TODO(cais): In the future, if oneHot supports tensors inputs for
+        //   `numClasses`, `confusionMatrix` can make `numClasses` optional.
+        const oneHotLabels = oneHot$2(cast$2($labels, 'int32'), numClasses);
+        const oneHotPredictions = oneHot$2(cast$2($predictions, 'int32'), numClasses);
+        const oneHotLabelsT = transpose$2(oneHotLabels);
+        const product = matMul$1(oneHotLabelsT, oneHotPredictions);
+        return cast$2(product, 'int32');
+    }
+    const confusionMatrix = op({ confusionMatrix_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+
+    var math = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        confusionMatrix: confusionMatrix
+    });
+
+    /**
+     * @license
      * Copyright 2017 Google LLC. All Rights Reserved.
      * Licensed under the Apache License, Version 2.0 (the "License");
      * you may not use this file except in compliance with the License.
@@ -26684,6 +28861,406 @@
         return result;
     }
 
+    var broadcast_util = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        getBroadcastDims: getBroadcastDims$1,
+        getReductionAxes: getReductionAxes,
+        assertAndGetBroadcastShape: assertAndGetBroadcastShape
+    });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates rank-3 `tf.Tensor` with the provided values, shape and dtype.
+     *
+     * The same functionality can be achieved with `tf.tensor`, but in general
+     * we recommend using `tf.tensor3d` as it makes the code more readable.
+     *
+     *  ```js
+     * // Pass a nested array.
+     * tf.tensor3d([[[1], [2]], [[3], [4]]]).print();
+     * ```
+     * ```js
+     * // Pass a flat array and specify a shape.
+     * tf.tensor3d([1, 2, 3, 4], [2, 2, 1]).print();
+     * ```
+     *
+     * @param values The values of the tensor. Can be nested array of numbers,
+     *     or a flat array, or a `TypedArray`.
+     * @param shape The shape of the tensor. If not provided,  it is inferred from
+     *     `values`.
+     * @param dtype The data type.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function tensor3d(values, shape, dtype) {
+        assertNonNull(values);
+        if (shape != null && shape.length !== 3) {
+            throw new Error('tensor3d() requires shape to have three numbers');
+        }
+        const inferredShape = inferShape(values, dtype);
+        if (inferredShape.length !== 3 && inferredShape.length !== 1) {
+            throw new Error('tensor3d() requires values to be number[][][] or flat/TypedArray');
+        }
+        if (inferredShape.length === 1 && shape == null) {
+            throw new Error('tensor3d() requires shape to be provided when `values` ' +
+                'are a flat array');
+        }
+        return makeTensor(values, shape, inferredShape, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    let fromPixels2DContext$1;
+    /**
+     * Creates a `tf.Tensor` from an image.
+     *
+     * ```js
+     * const image = new ImageData(1, 1);
+     * image.data[0] = 100;
+     * image.data[1] = 150;
+     * image.data[2] = 200;
+     * image.data[3] = 255;
+     *
+     * tf.browser.fromPixels(image).print();
+     * ```
+     *
+     * @param pixels The input image to construct the tensor from. The
+     * supported image types are all 4-channel. You can also pass in an image
+     * object with following attributes:
+     * `{data: Uint8Array; width: number; height: number}`
+     * @param numChannels The number of channels of the output tensor. A
+     * numChannels value less than 4 allows you to ignore channels. Defaults to
+     * 3 (ignores alpha channel of input image).
+     *
+     * @returns A Tensor3D with the shape `[height, width, numChannels]`.
+     *
+     * Note: fromPixels can be lossy in some cases, same image may result in
+     * slightly different tensor values, if rendered by different rendering
+     * engines. This means that results from different browsers, or even same
+     * browser with CPU and GPU rendering engines can be different. See discussion
+     * in details:
+     * https://github.com/tensorflow/tfjs/issues/5482
+     *
+     * @doc {heading: 'Browser', namespace: 'browser', ignoreCI: true}
+     */
+    function fromPixels_(pixels, numChannels = 3) {
+        // Sanity checks.
+        if (numChannels > 4) {
+            throw new Error('Cannot construct Tensor with more than 4 channels from pixels.');
+        }
+        if (pixels == null) {
+            throw new Error('pixels passed to tf.browser.fromPixels() can not be null');
+        }
+        let isPixelData = false;
+        let isImageData = false;
+        let isVideo = false;
+        let isImage = false;
+        let isCanvasLike = false;
+        let isImageBitmap = false;
+        if (pixels.data instanceof Uint8Array) {
+            isPixelData = true;
+        }
+        else if (typeof (ImageData) !== 'undefined' && pixels instanceof ImageData) {
+            isImageData = true;
+        }
+        else if (typeof (HTMLVideoElement) !== 'undefined' &&
+            pixels instanceof HTMLVideoElement) {
+            isVideo = true;
+        }
+        else if (typeof (HTMLImageElement) !== 'undefined' &&
+            pixels instanceof HTMLImageElement) {
+            isImage = true;
+            // tslint:disable-next-line: no-any
+        }
+        else if (pixels.getContext != null) {
+            isCanvasLike = true;
+        }
+        else if (typeof (ImageBitmap) !== 'undefined' && pixels instanceof ImageBitmap) {
+            isImageBitmap = true;
+        }
+        else {
+            throw new Error('pixels passed to tf.browser.fromPixels() must be either an ' +
+                `HTMLVideoElement, HTMLImageElement, HTMLCanvasElement, ImageData ` +
+                `in browser, or OffscreenCanvas, ImageData in webworker` +
+                ` or {data: Uint32Array, width: number, height: number}, ` +
+                `but was ${pixels.constructor.name}`);
+        }
+        if (isVideo) {
+            const HAVE_CURRENT_DATA_READY_STATE = 2;
+            if (isVideo &&
+                pixels.readyState <
+                    HAVE_CURRENT_DATA_READY_STATE) {
+                throw new Error('The video element has not loaded data yet. Please wait for ' +
+                    '`loadeddata` event on the <video> element.');
+            }
+        }
+        // If the current backend has 'FromPixels' registered, it has a more
+        // efficient way of handling pixel uploads, so we call that.
+        const kernel = getKernel(FromPixels, ENGINE.backendName);
+        if (kernel != null) {
+            const inputs = { pixels };
+            const attrs = { numChannels };
+            return ENGINE.runKernel(FromPixels, inputs, attrs);
+        }
+        const [width, height] = isVideo ?
+            [
+                pixels.videoWidth,
+                pixels.videoHeight
+            ] :
+            [pixels.width, pixels.height];
+        let vals;
+        if (isCanvasLike) {
+            vals =
+                // tslint:disable-next-line:no-any
+                pixels.getContext('2d').getImageData(0, 0, width, height).data;
+        }
+        else if (isImageData || isPixelData) {
+            vals = pixels.data;
+        }
+        else if (isImage || isVideo || isImageBitmap) {
+            if (fromPixels2DContext$1 == null) {
+                if (typeof document === 'undefined') {
+                    if (typeof OffscreenCanvas !== 'undefined' &&
+                        typeof OffscreenCanvasRenderingContext2D !== 'undefined') {
+                        // @ts-ignore
+                        fromPixels2DContext$1 = new OffscreenCanvas(1, 1).getContext('2d');
+                    }
+                    else {
+                        throw new Error('Cannot parse input in current context. ' +
+                            'Reason: OffscreenCanvas Context2D rendering is not supported.');
+                    }
+                }
+                else {
+                    fromPixels2DContext$1 = document.createElement('canvas').getContext('2d');
+                }
+            }
+            fromPixels2DContext$1.canvas.width = width;
+            fromPixels2DContext$1.canvas.height = height;
+            fromPixels2DContext$1.drawImage(pixels, 0, 0, width, height);
+            vals = fromPixels2DContext$1.getImageData(0, 0, width, height).data;
+        }
+        let values;
+        if (numChannels === 4) {
+            values = new Int32Array(vals);
+        }
+        else {
+            const numPixels = width * height;
+            values = new Int32Array(numPixels * numChannels);
+            for (let i = 0; i < numPixels; i++) {
+                for (let channel = 0; channel < numChannels; ++channel) {
+                    values[i * numChannels + channel] = vals[i * 4 + channel];
+                }
+            }
+        }
+        const outShape = [height, width, numChannels];
+        return tensor3d(values, outShape, 'int32');
+    }
+    // Helper functions for |fromPixelsAsync| to check whether the input can
+    // be wrapped into imageBitmap.
+    function isPixelData(pixels) {
+        return (pixels != null) && (pixels.data instanceof Uint8Array);
+    }
+    function isImageBitmapFullySupported() {
+        return typeof window !== 'undefined' &&
+            typeof (ImageBitmap) !== 'undefined' &&
+            window.hasOwnProperty('createImageBitmap');
+    }
+    function isNonEmptyPixels(pixels) {
+        return pixels != null && pixels.width !== 0 && pixels.height !== 0;
+    }
+    function canWrapPixelsToImageBitmap(pixels) {
+        return isImageBitmapFullySupported() && !(pixels instanceof ImageBitmap) &&
+            isNonEmptyPixels(pixels) && !isPixelData(pixels);
+    }
+    /**
+     * Creates a `tf.Tensor` from an image in async way.
+     *
+     * ```js
+     * const image = new ImageData(1, 1);
+     * image.data[0] = 100;
+     * image.data[1] = 150;
+     * image.data[2] = 200;
+     * image.data[3] = 255;
+     *
+     * (await tf.browser.fromPixelsAsync(image)).print();
+     * ```
+     * This API is the async version of fromPixels. The API will first
+     * check |WRAP_TO_IMAGEBITMAP| flag, and try to wrap the input to
+     * imageBitmap if the flag is set to true.
+     *
+     * @param pixels The input image to construct the tensor from. The
+     * supported image types are all 4-channel. You can also pass in an image
+     * object with following attributes:
+     * `{data: Uint8Array; width: number; height: number}`
+     * @param numChannels The number of channels of the output tensor. A
+     * numChannels value less than 4 allows you to ignore channels. Defaults to
+     * 3 (ignores alpha channel of input image).
+     *
+     * @doc {heading: 'Browser', namespace: 'browser', ignoreCI: true}
+     */
+    async function fromPixelsAsync(pixels, numChannels = 3) {
+        let inputs = null;
+        // Check whether the backend needs to wrap |pixels| to imageBitmap and
+        // whether |pixels| can be wrapped to imageBitmap.
+        if (env().getBool('WRAP_TO_IMAGEBITMAP') &&
+            canWrapPixelsToImageBitmap(pixels)) {
+            // Force the imageBitmap creation to not do any premultiply alpha
+            // ops.
+            let imageBitmap;
+            try {
+                // wrap in try-catch block, because createImageBitmap may not work
+                // properly in some browsers, e.g.
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=1335594
+                // tslint:disable-next-line: no-any
+                imageBitmap = await createImageBitmap(pixels, { premultiplyAlpha: 'none' });
+            }
+            catch (e) {
+                imageBitmap = null;
+            }
+            // createImageBitmap will clip the source size.
+            // In some cases, the input will have larger size than its content.
+            // E.g. new Image(10, 10) but with 1 x 1 content. Using
+            // createImageBitmap will clip the size from 10 x 10 to 1 x 1, which
+            // is not correct. We should avoid wrapping such resouce to
+            // imageBitmap.
+            if (imageBitmap != null && imageBitmap.width === pixels.width &&
+                imageBitmap.height === pixels.height) {
+                inputs = imageBitmap;
+            }
+            else {
+                inputs = pixels;
+            }
+        }
+        else {
+            inputs = pixels;
+        }
+        return fromPixels_(inputs, numChannels);
+    }
+    /**
+     * Draws a `tf.Tensor` of pixel values to a byte array or optionally a
+     * canvas.
+     *
+     * When the dtype of the input is 'float32', we assume values in the range
+     * [0-1]. Otherwise, when input is 'int32', we assume values in the range
+     * [0-255].
+     *
+     * Returns a promise that resolves when the canvas has been drawn to.
+     *
+     * @param img A rank-2 tensor with shape `[height, width]`, or a rank-3 tensor
+     * of shape `[height, width, numChannels]`. If rank-2, draws grayscale. If
+     * rank-3, must have depth of 1, 3 or 4. When depth of 1, draws
+     * grayscale. When depth of 3, we draw with the first three components of
+     * the depth dimension corresponding to r, g, b and alpha = 1. When depth of
+     * 4, all four components of the depth dimension correspond to r, g, b, a.
+     * @param canvas The canvas to draw to.
+     *
+     * @doc {heading: 'Browser', namespace: 'browser'}
+     */
+    async function toPixels(img, canvas) {
+        let $img = convertToTensor(img, 'img', 'toPixels');
+        if (!(img instanceof Tensor)) {
+            // Assume int32 if user passed a native array.
+            const originalImgTensor = $img;
+            $img = cast$2(originalImgTensor, 'int32');
+            originalImgTensor.dispose();
+        }
+        if ($img.rank !== 2 && $img.rank !== 3) {
+            throw new Error(`toPixels only supports rank 2 or 3 tensors, got rank ${$img.rank}.`);
+        }
+        const [height, width] = $img.shape.slice(0, 2);
+        const depth = $img.rank === 2 ? 1 : $img.shape[2];
+        if (depth > 4 || depth === 2) {
+            throw new Error(`toPixels only supports depth of size ` +
+                `1, 3 or 4 but got ${depth}`);
+        }
+        if ($img.dtype !== 'float32' && $img.dtype !== 'int32') {
+            throw new Error(`Unsupported type for toPixels: ${$img.dtype}.` +
+                ` Please use float32 or int32 tensors.`);
+        }
+        const data = await $img.data();
+        const multiplier = $img.dtype === 'float32' ? 255 : 1;
+        const bytes = new Uint8ClampedArray(width * height * 4);
+        for (let i = 0; i < height * width; ++i) {
+            const rgba = [0, 0, 0, 255];
+            for (let d = 0; d < depth; d++) {
+                const value = data[i * depth + d];
+                if ($img.dtype === 'float32') {
+                    if (value < 0 || value > 1) {
+                        throw new Error(`Tensor values for a float32 Tensor must be in the ` +
+                            `range [0 - 1] but encountered ${value}.`);
+                    }
+                }
+                else if ($img.dtype === 'int32') {
+                    if (value < 0 || value > 255) {
+                        throw new Error(`Tensor values for a int32 Tensor must be in the ` +
+                            `range [0 - 255] but encountered ${value}.`);
+                    }
+                }
+                if (depth === 1) {
+                    rgba[0] = value * multiplier;
+                    rgba[1] = value * multiplier;
+                    rgba[2] = value * multiplier;
+                }
+                else {
+                    rgba[d] = value * multiplier;
+                }
+            }
+            const j = i * 4;
+            bytes[j + 0] = Math.round(rgba[0]);
+            bytes[j + 1] = Math.round(rgba[1]);
+            bytes[j + 2] = Math.round(rgba[2]);
+            bytes[j + 3] = Math.round(rgba[3]);
+        }
+        if (canvas != null) {
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            const imageData = new ImageData(bytes, width, height);
+            ctx.putImageData(imageData, 0, 0);
+        }
+        if ($img !== img) {
+            $img.dispose();
+        }
+        return bytes;
+    }
+    const fromPixels$1 = op({ fromPixels_ });
+
+    var browser = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        fromPixelsAsync: fromPixelsAsync,
+        toPixels: toPixels,
+        fromPixels: fromPixels$1
+    });
+
     /**
      * Validate gather nd inputs.
      *
@@ -26736,6 +29313,11 @@
         return [resultShape, nResult, sliceSize, strides];
     }
 
+    var gather_nd_util = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        prepareAndValidate: prepareAndValidate
+    });
+
     /**
      * Check whether updates.shape = indices.shape[:batchDim] +
      * shape[sliceDim:]
@@ -26779,7 +29361,7 @@
      * @param indices The tensor contains the indices for the update values.
      * @param shape The shape of the output tensor.
      */
-    function validateInput(updates, indices, shape) {
+    function validateInput$1(updates, indices, shape) {
         if (indices.rank < 1) {
             throw new Error('tf.scatterND() expects the indices to be rank 1 or higher,' +
                 ` but the rank was ${indices.rank}.`);
@@ -26831,6 +29413,13 @@
         const outputSize = sizeFromShape(shape);
         return { sliceRank, numUpdates, sliceSize, strides, outputSize };
     }
+
+    var scatter_nd_util = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        validateUpdateShape: validateUpdateShape,
+        validateInput: validateInput$1,
+        calculateShapes: calculateShapes
+    });
 
     /**
      * @license
@@ -27438,12 +30027,394 @@
      * =============================================================================
      */
     /**
+     * Serializable defines the serialization contract.
+     *
+     * TFJS requires serializable classes to return their className when asked
+     * to avoid issues with minification.
+     */
+    class Serializable {
+        /**
+         * Return the class name for this class to use in serialization contexts.
+         *
+         * Generally speaking this will be the same thing that constructor.name
+         * would have returned.  However, the class name needs to be robust
+         * against minification for serialization/deserialization to work properly.
+         *
+         * There's also places such as initializers.VarianceScaling, where
+         * implementation details between different languages led to different
+         * class hierarchies and a non-leaf node is used for serialization purposes.
+         */
+        getClassName() {
+            return this.constructor
+                .className;
+        }
+        /**
+         * Creates an instance of T from a ConfigDict.
+         *
+         * This works for most descendants of serializable.  A few need to
+         * provide special handling.
+         * @param cls A Constructor for the class to instantiate.
+         * @param config The Configuration for the object.
+         */
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config);
+        }
+    }
+    /**
+     * Maps string keys to class constructors.
+     *
+     * Used during (de)serialization from the cross-language JSON format, which
+     * requires the class name in the serialization format matches the class
+     * names as used in Python, should it exist.
+     */
+    class SerializationMap {
+        constructor() {
+            this.classNameMap = {};
+        }
+        /**
+         * Returns the singleton instance of the map.
+         */
+        static getMap() {
+            if (SerializationMap.instance == null) {
+                SerializationMap.instance = new SerializationMap();
+            }
+            return SerializationMap.instance;
+        }
+        /**
+         * Registers the class as serializable.
+         */
+        static register(cls) {
+            SerializationMap.getMap().classNameMap[cls.className] =
+                [cls, cls.fromConfig];
+        }
+    }
+    /**
+     * Register a class with the serialization map of TensorFlow.js.
+     *
+     * This is often used for registering custom Layers, so they can be
+     * serialized and deserialized.
+     *
+     * Example:
+     *
+     * ```js
+     * class MyCustomLayer extends tf.layers.Layer {
+     *   static className = 'MyCustomLayer';
+     *
+     *   constructor(config) {
+     *     super(config);
+     *   }
+     * }
+     * tf.serialization.registerClass(MyCustomLayer);
+     * ```
+     *
+     * @param cls The class to be registered. It must have a public static member
+     *   called `className` defined and the value must be a non-empty string.
+     *
+     * @doc {heading: 'Models', subheading: 'Serialization', ignoreCI: true}
+     */
+    function registerClass(cls) {
+        assert(cls.className != null, () => `Class being registered does not have the static className ` +
+            `property defined.`);
+        assert(typeof cls.className === 'string', () => `className is required to be a string, but got type ` +
+            typeof cls.className);
+        assert(cls.className.length > 0, () => `Class being registered has an empty-string as its className, ` +
+            `which is disallowed.`);
+        SerializationMap.register(cls);
+    }
+
+    var serialization = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        Serializable: Serializable,
+        SerializationMap: SerializationMap,
+        registerClass: registerClass
+    });
+
+    /**
+     * @license
+     * Copyright 2017 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    const TEST_EPSILON_FLOAT32 = 1e-3;
+    const TEST_EPSILON_FLOAT16 = 1e-1;
+    function expectArraysClose(actual, expected, epsilon) {
+        if (epsilon == null) {
+            epsilon = testEpsilon();
+        }
+        return expectArraysPredicate(actual, expected, (a, b) => areClose(a, b, epsilon));
+    }
+    function testEpsilon() {
+        return ENGINE.backend.floatPrecision() === 32 ? TEST_EPSILON_FLOAT32 :
+            TEST_EPSILON_FLOAT16;
+    }
+    function expectArraysPredicate(actual, expected, predicate) {
+        let checkClassType = true;
+        if (isTypedArray(actual) || isTypedArray(expected)) {
+            checkClassType = false;
+        }
+        if (isTypedArray(actual) && isTypedArray(expected)) {
+            checkClassType = true;
+        }
+        if (checkClassType) {
+            const aType = actual.constructor.name;
+            const bType = expected.constructor.name;
+            if (aType !== bType) {
+                throw new Error(`Arrays are of different type. Actual: ${aType}. ` +
+                    `Expected: ${bType}`);
+            }
+        }
+        if (Array.isArray(actual) && Array.isArray(expected)) {
+            const actualShape = inferShape(actual);
+            const expectedShape = inferShape(expected);
+            if (!arraysEqual(actualShape, expectedShape)) {
+                throw new Error(`Arrays have different shapes. ` +
+                    `Actual: [${actualShape}]. Expected: [${expectedShape}]`);
+            }
+        }
+        const actualFlat = isTypedArray(actual) ? actual : flatten(actual);
+        const expectedFlat = isTypedArray(expected) ?
+            expected :
+            flatten(expected);
+        if (actualFlat.length !== expectedFlat.length) {
+            throw new Error(`Arrays have different lengths actual: ${actualFlat.length} vs ` +
+                `expected: ${expectedFlat.length}.\n` +
+                `Actual:   ${actualFlat}.\n` +
+                `Expected: ${expectedFlat}.`);
+        }
+        for (let i = 0; i < expectedFlat.length; ++i) {
+            const a = actualFlat[i];
+            const e = expectedFlat[i];
+            if (!predicate(a, e)) {
+                throw new Error(`Arrays differ: actual[${i}] = ${a}, expected[${i}] = ${e}.\n` +
+                    `Actual:   ${actualFlat}.\n` +
+                    `Expected: ${expectedFlat}.`);
+            }
+        }
+    }
+    function expectPromiseToFail(fn, done) {
+        fn().then(() => done.fail(), () => done());
+    }
+    function expectArraysEqual(actual, expected) {
+        const exp = typeof expected === 'string' || typeof expected === 'number' ||
+            typeof expected === 'boolean' ?
+            [expected] :
+            expected;
+        if (isString(actual) || isString(actual[0]) ||
+            isString(expected) || isString(expected[0])) {
+            // tslint:disable-next-line: triple-equals
+            return expectArraysPredicate(actual, exp, (a, b) => a == b);
+        }
+        return expectArraysPredicate(actual, expected, (a, b) => areClose(a, b, 0));
+    }
+    function expectNumbersClose(a, e, epsilon) {
+        if (epsilon == null) {
+            epsilon = testEpsilon();
+        }
+        if (!areClose(a, e, epsilon)) {
+            throw new Error(`Numbers differ: actual === ${a}, expected === ${e}`);
+        }
+    }
+    function areClose(a, e, epsilon) {
+        if (!isFinite(a) && !isFinite(e)) {
+            return true;
+        }
+        if (isNaN(a) || isNaN(e) || Math.abs(a - e) > epsilon) {
+            return false;
+        }
+        return true;
+    }
+    function expectValuesInRange(actual, low, high) {
+        for (let i = 0; i < actual.length; i++) {
+            if (actual[i] < low || actual[i] > high) {
+                throw new Error(`Value out of range:${actual[i]} low: ${low}, high: ${high}`);
+            }
+        }
+    }
+    function expectArrayBuffersEqual(actual, expected) {
+        // Safari does not like comparing ArrayBuffers directly. Wrapping in
+        // a Float32Array solves this issue.
+        const actualArray = new Float32Array(actual);
+        const expectedArray = new Float32Array(expected);
+        if (actualArray.length !== expectedArray.length) {
+            throw new Error('Expected ArrayBuffer to be of length ' +
+                `${expectedArray.length}, but it was ${actualArray.length}`);
+        }
+        for (let i = 0; i < expectedArray.length; i++) {
+            if (actualArray[i] !== expectedArray[i]) {
+                throw new Error(`Expected ArrayBuffer value at ${i} to be ` +
+                    `${expectedArray[i]} but got ${actualArray[i]} instead`);
+            }
+        }
+    }
+    /** Encodes strings into utf-8 bytes. */
+    function encodeStrings(a) {
+        for (let i = 0; i < a.length; i++) {
+            const val = a[i];
+            if (Array.isArray(val)) {
+                encodeStrings(val);
+            }
+            else {
+                a[i] = encodeString(val);
+            }
+        }
+        return a;
+    }
+
+    var test_util = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        TEST_EPSILON_FLOAT16: TEST_EPSILON_FLOAT16,
+        expectArraysClose: expectArraysClose,
+        testEpsilon: testEpsilon,
+        expectPromiseToFail: expectPromiseToFail,
+        expectArraysEqual: expectArraysEqual,
+        expectNumbersClose: expectNumbersClose,
+        expectValuesInRange: expectValuesInRange,
+        expectArrayBuffersEqual: expectArrayBuffersEqual,
+        encodeStrings: encodeStrings
+    });
+
+    /** @license See the LICENSE file. */
+    // This code is auto-generated, do not modify this file!
+    const version = '3.13.0';
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Enables production mode which disables correctness checks in favor of
+     * performance.
+     *
+     * @doc {heading: 'Environment'}
+     */
+    function enableProdMode() {
+        env().set('PROD', true);
+    }
+    /**
+     * Enables debug mode which will log information about all executed kernels:
+     * the elapsed time of the kernel execution, as well as the rank, shape, and
+     * size of the output tensor.
+     *
+     * Debug mode will significantly slow down your application as it will
+     * download the result of every operation to the CPU. This should not be used in
+     * production. Debug mode does not affect the timing information of the kernel
+     * execution as we do not measure download time in the kernel execution time.
+     *
+     * See also: `tf.profile`, `tf.memory`.
+     *
+     * @doc {heading: 'Environment'}
+     */
+    function enableDebugMode() {
+        env().set('DEBUG', true);
+    }
+    /** Globally disables deprecation warnings */
+    function disableDeprecationWarnings() {
+        env().set('DEPRECATION_WARNINGS_ENABLED', false);
+        console.warn(`TensorFlow.js deprecation warnings have been disabled.`);
+    }
+    /** Warn users about deprecated functionality. */
+    function deprecationWarn(msg) {
+        if (env().getBool('DEPRECATION_WARNINGS_ENABLED')) {
+            console.warn(msg + ' You can disable deprecation warnings with ' +
+                'tf.disableDeprecationWarnings().');
+        }
+    }
+    /**
+     * Dispose all variables kept in backend engine.
+     *
+     * @doc {heading: 'Environment'}
+     */
+    function disposeVariables() {
+        ENGINE.disposeVariables();
+    }
+    /**
      * It returns the global engine that keeps track of all tensors and backends.
      *
      * @doc {heading: 'Environment'}
      */
     function engine() {
         return ENGINE;
+    }
+    /**
+     * Returns memory info at the current time in the program. The result is an
+     * object with the following properties:
+     *
+     * - `numBytes`: Number of bytes allocated (undisposed) at this time.
+     * - `numTensors`: Number of unique tensors allocated.
+     * - `numDataBuffers`: Number of unique data buffers allocated
+     *   (undisposed) at this time, which is ≤ the number of tensors
+     *   (e.g. `a.reshape(newShape)` makes a new Tensor that shares the same
+     *   data buffer with `a`).
+     * - `unreliable`: True if the memory usage is unreliable. See `reasons` when
+     *    `unreliable` is true.
+     * - `reasons`: `string[]`, reasons why the memory is unreliable, present if
+     *    `unreliable` is true.
+     *
+     * WebGL Properties:
+     * - `numBytesInGPU`: Number of bytes allocated (undisposed) in the GPU only at
+     *     this time.
+     *
+     * @doc {heading: 'Performance', subheading: 'Memory'}
+     */
+    function memory() {
+        return ENGINE.memory();
+    }
+    /**
+     * Executes the provided function `f()` and returns a promise that resolves
+     * with information about the function's memory use:
+     * - `newBytes`: the number of new bytes allocated
+     * - `newTensors`: the number of new tensors created
+     * - `peakBytes`: the peak number of bytes allocated
+     * - `kernels`: an array of objects for each kernel involved that reports
+     * their input and output shapes, number of bytes used, and number of new
+     * tensors created.
+     * - `kernelNames`: an array of unique strings with just the names of the
+     * kernels in the `kernels` array.
+     *
+     * ```js
+     * const profile = await tf.profile(() => {
+     *   const x = tf.tensor1d([1, 2, 3]);
+     *   let x2 = x.square();
+     *   x2.dispose();
+     *   x2 = x.square();
+     *   x2.dispose();
+     *   return x;
+     * });
+     *
+     * console.log(`newBytes: ${profile.newBytes}`);
+     * console.log(`newTensors: ${profile.newTensors}`);
+     * console.log(`byte usage over all kernels: ${profile.kernels.map(k =>
+     * k.totalBytesSnapshot)}`);
+     * ```
+     *
+     *
+     * @doc {heading: 'Performance', subheading: 'Profile'}
+     */
+    function profile(f) {
+        return ENGINE.profile(f);
     }
     /**
      * Executes the provided function `fn` and after it is executed, cleans up all
@@ -27489,6 +30460,144 @@
         return ENGINE.tidy(nameOrFn, fn);
     }
     /**
+     * Disposes any `tf.Tensor`s found within the provided object.
+     *
+     * @param container an object that may be a `tf.Tensor` or may directly
+     *     contain `tf.Tensor`s, such as a `Tensor[]` or `{key: Tensor, ...}`. If
+     *     the object is not a `tf.Tensor` or does not contain `Tensors`, nothing
+     *     happens. In general it is safe to pass any object here, except that
+     *     `Promise`s are not supported.
+     *
+     * @doc {heading: 'Performance', subheading: 'Memory'}
+     */
+    function dispose(container) {
+        const tensors = getTensorsInContainer(container);
+        tensors.forEach(tensor => tensor.dispose());
+    }
+    /**
+     * Keeps a `tf.Tensor` generated inside a `tf.tidy` from being disposed
+     * automatically.
+     *
+     * ```js
+     * let b;
+     * const y = tf.tidy(() => {
+     *   const one = tf.scalar(1);
+     *   const a = tf.scalar(2);
+     *
+     *   // b will not be cleaned up by the tidy. a and one will be cleaned up
+     *   // when the tidy ends.
+     *   b = tf.keep(a.square());
+     *
+     *   console.log('numTensors (in tidy): ' + tf.memory().numTensors);
+     *
+     *   // The value returned inside the tidy function will return
+     *   // through the tidy, in this case to the variable y.
+     *   return b.add(one);
+     * });
+     *
+     * console.log('numTensors (outside tidy): ' + tf.memory().numTensors);
+     * console.log('y:');
+     * y.print();
+     * console.log('b:');
+     * b.print();
+     * ```
+     *
+     * @param result The tensor to keep from being disposed.
+     *
+     * @doc {heading: 'Performance', subheading: 'Memory'}
+     */
+    function keep(result) {
+        return ENGINE.keep(result);
+    }
+    /**
+     * Executes `f()` and returns a promise that resolves with timing
+     * information.
+     *
+     * The result is an object with the following properties:
+     *
+     * - `wallMs`: Wall execution time.
+     * - `kernelMs`: Kernel execution time, ignoring data transfer. If using the
+     * WebGL backend and the query timer extension is not available, this will
+     * return an error object.
+     * - On `WebGL` The following additional properties exist:
+     *   - `uploadWaitMs`: CPU blocking time on texture uploads.
+     *   - `downloadWaitMs`: CPU blocking time on texture downloads (readPixels).
+     *
+     * ```js
+     * const x = tf.randomNormal([20, 20]);
+     * const time = await tf.time(() => x.matMul(x));
+     *
+     * console.log(`kernelMs: ${time.kernelMs}, wallTimeMs: ${time.wallMs}`);
+     * ```
+     *
+     * @param f The function to execute and time.
+     *
+     * @doc {heading: 'Performance', subheading: 'Timing'}
+     */
+    function time(f) {
+        return ENGINE.time(f);
+    }
+    /**
+     * Sets the backend (cpu, webgl, wasm, etc) responsible for creating tensors and
+     * executing operations on those tensors. Returns a promise that resolves
+     * to a boolean if the backend initialization was successful.
+     *
+     * Note this disposes the current backend, if any, as well as any tensors
+     * associated with it. A new backend is initialized, even if it is of the
+     * same type as the previous one.
+     *
+     * @param backendName The name of the backend. Currently supports
+     *     `'webgl'|'cpu'` in the browser, `'tensorflow'` under node.js
+     *     (requires tfjs-node), and `'wasm'` (requires tfjs-backend-wasm).
+     *
+     * @doc {heading: 'Backends'}
+     */
+    function setBackend(backendName) {
+        return ENGINE.setBackend(backendName);
+    }
+    /**
+     * Returns a promise that resolves when the currently selected backend (or the
+     * highest priority one) has initialized. Await this promise when you are using
+     * a backend that has async initialization.
+     *
+     * @doc {heading: 'Backends'}
+     */
+    function ready() {
+        return ENGINE.ready();
+    }
+    /**
+     * Returns the current backend name (cpu, webgl, etc). The backend is
+     * responsible for creating tensors and executing operations on those tensors.
+     *
+     * @doc {heading: 'Backends'}
+     */
+    function getBackend() {
+        return ENGINE.backendName;
+    }
+    /**
+     * Removes a backend and the registered factory.
+     *
+     * @doc {heading: 'Backends'}
+     */
+    function removeBackend(name) {
+        ENGINE.removeBackend(name);
+    }
+    /**
+     * Finds the backend registered under the provided name. Returns null if the
+     * name is not in the registry, or the registration hasn't finished yet.
+     */
+    function findBackend(name) {
+        return ENGINE.findBackend(name);
+    }
+    /**
+     * Finds the backend factory registered under the provided name. Returns a
+     * function that produces a new backend when called. Returns null if the name
+     * is not in the registry.
+     */
+    function findBackendFactory(name) {
+        return ENGINE.findBackendFactory(name);
+    }
+    /**
      * Registers a global backend. The registration should happen when importing
      * a module file (e.g. when importing `backend_webgl.ts`), and is used for
      * modular builds (e.g. custom tfjs bundle with only webgl support).
@@ -27506,6 +30615,179 @@
     function registerBackend(name, factory, priority = 1) {
         return ENGINE.registerBackend(name, factory, priority);
     }
+    /**
+     * Gets the current backend. If no backends have been initialized, this will
+     * attempt to initialize the best backend. Will throw an error if the highest
+     * priority backend has async initialization, in which case, you should call
+     * 'await tf.ready()' before running other code.
+     *
+     * @doc {heading: 'Backends'}
+     */
+    function backend() {
+        return ENGINE.backend;
+    }
+    /**
+     * Sets the global platform.
+     *
+     * @param platformName The name of this platform.
+     * @param platform A platform implementation.
+     */
+    function setPlatform(platformName, platform) {
+        env().setPlatform(platformName, platform);
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Adds two `tf.Tensor`s element-wise, A + B. Supports broadcasting.
+     *
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3, 4]);
+     * const b = tf.tensor1d([10, 20, 30, 40]);
+     *
+     * a.add(b).print();  // or tf.add(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast add a with b.
+     * const a = tf.scalar(5);
+     * const b = tf.tensor1d([10, 20, 30, 40]);
+     *
+     * a.add(b).print();  // or tf.add(a, b)
+     * ```
+     * @param a The first `tf.Tensor` to add.
+     * @param b The second `tf.Tensor` to add. Must have the same type as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function add_(a, b) {
+        let $a = convertToTensor(a, 'a', 'add');
+        let $b = convertToTensor(b, 'b', 'add');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Add, inputs);
+    }
+    const add$1 = op({ add_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Divides two `tf.Tensor`s element-wise, A / B. Supports broadcasting.
+     * The result is rounded with floor function.
+     *
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 4, 9, 16]);
+     * const b = tf.tensor1d([1, 2, 3, 4]);
+     *
+     * a.floorDiv(b).print();  // or tf.div(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast div a with b.
+     * const a = tf.tensor1d([2, 4, 6, 8]);
+     * const b = tf.scalar(2);
+     *
+     * a.floorDiv(b).print();  // or tf.floorDiv(a, b)
+     * ```
+     *
+     * @param a The first tensor as the numerator.
+     * @param b The second tensor as the denominator. Must have the same dtype as
+     * `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function floorDiv_(a, b) {
+        let $a = convertToTensor(a, 'a', 'floorDiv');
+        let $b = convertToTensor(b, 'b', 'floorDiv');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(FloorDiv, inputs);
+    }
+    const floorDiv$2 = op({ floorDiv_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Divides two `tf.Tensor`s element-wise, A / B. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 4, 9, 16]);
+     * const b = tf.tensor1d([1, 2, 3, 4]);
+     *
+     * a.div(b).print();  // or tf.div(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast div a with b.
+     * const a = tf.tensor1d([2, 4, 6, 8]);
+     * const b = tf.scalar(2);
+     *
+     * a.div(b).print();  // or tf.div(a, b)
+     * ```
+     *
+     * @param a The first tensor as the numerator.
+     * @param b The second tensor as the denominator. Must have the same dtype as
+     * `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function div_(a, b) {
+        let $a = convertToTensor(a, 'a', 'div');
+        let $b = convertToTensor(b, 'b', 'div');
+        [$a, $b] = makeTypesMatch($a, $b);
+        if ($a.dtype === 'int32' && $b.dtype === 'int32') {
+            return floorDiv$2($a, $b);
+        }
+        const inputs = { a: $a, b: $b };
+        const attrs = {};
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        return ENGINE.runKernel(RealDiv, inputs, attrs);
+    }
+    const div$1 = op({ div_ });
 
     /**
      * @license
@@ -27556,6 +30838,552 @@
         return ENGINE.runKernel(Multiply, inputs);
     }
     const mul = op({ mul_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes absolute value element-wise: `abs(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([-1, 2, -3, 4]);
+     *
+     * x.abs().print();  // or tf.abs(x)
+     * ```
+     * @param x The input `tf.Tensor`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function abs_(x) {
+        const $x = convertToTensor(x, 'x', 'abs');
+        if ($x.dtype === 'complex64') {
+            const inputs = { x: $x };
+            return ENGINE.runKernel(ComplexAbs, inputs);
+        }
+        else {
+            const inputs = { x: $x };
+            return ENGINE.runKernel(Abs, inputs);
+        }
+    }
+    const abs$2 = op({ abs_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes acos of the input `tf.Tensor` element-wise: `acos(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.acos().print();  // or tf.acos(x)
+     * ```
+     * @param x The input tensor.
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function acos_(x) {
+        const $x = convertToTensor(x, 'x', 'acos');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Acos, inputs);
+    }
+    const acos$2 = op({ acos_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the inverse hyperbolic cos of the input `tf.Tensor` element-wise:
+     * `acosh(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([10, 1, 3, 5.7]);
+     *
+     * x.acosh().print();  // or tf.acosh(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function acosh_(x) {
+        const $x = convertToTensor(x, 'x', 'acosh');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Acosh, inputs);
+    }
+    const acosh$2 = op({ acosh_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Adds a list of `tf.Tensor`s element-wise, each with the same shape and dtype.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2]);
+     * const b = tf.tensor1d([3, 4]);
+     * const c = tf.tensor1d([5, 6]);
+     *
+     * tf.addN([a, b, c]).print();
+     * ```
+     * @param tensors A list of tensors with the same shape and dtype.
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function addN_(tensors) {
+        assert(Array.isArray(tensors), () => 'The argument passed to tf.addN() must be a list of tensors');
+        assert(tensors.length >= 1, () => `Must pass at least one tensor to tf.addN(), but got ` +
+            `${tensors.length}`);
+        const $tensors = tensors.map((t, i) => convertToTensor(t, `tensors${i}`, 'addN'));
+        const firstTensor = $tensors[0];
+        $tensors.forEach(t => {
+            if (t.dtype !== firstTensor.dtype) {
+                throw new Error('All tensors passed to tf.addN() must have the same dtype');
+            }
+        });
+        $tensors.forEach(t => {
+            if (!arraysEqual(t.shape, firstTensor.shape)) {
+                throw new Error('All tensors passed to tf.addN() must have the same shape');
+            }
+        });
+        const inputs = $tensors;
+        return ENGINE.runKernel(AddN, inputs);
+    }
+    const addN$2 = op({ addN_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the logical and of elements across dimensions of a `tf.Tensor`.
+     *
+     * Reduces the input along the dimensions given in `axes`. Unless `keepDims`
+     * is true, the rank of the `tf.Tensor` is reduced by 1 for each entry in
+     * `axes`. If `keepDims` is true, the reduced dimensions are retained with
+     * length 1. If `axes` has no entries, all dimensions are reduced, and an
+     * `tf.Tensor` with a single element is returned.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 1, 1], 'bool');
+     *
+     * x.all().print();  // or tf.all(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 1, 0, 0], [2, 2], 'bool');
+     *
+     * const axis = 1;
+     * x.all(axis).print();  // or tf.all(x, axis)
+     * ```
+     *
+     * @param x The input tensor. Must be of dtype bool.
+     * @param axis The dimension(s) to reduce. By default it reduces
+     *     all dimensions.
+     * @param keepDims If true, retains reduced dimensions with size 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function all_(x, axis = null, keepDims = false) {
+        const $x = convertToTensor(x, 'x', 'all', 'bool');
+        const inputs = { x: $x };
+        const attrs = { axis, keepDims };
+        return ENGINE.runKernel(All, inputs, attrs);
+    }
+    const all$2 = op({ all_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the logical or of elements across dimensions of a `tf.Tensor`.
+     *
+     * Reduces the input along the dimensions given in `axes`. Unless `keepDims`
+     * is true, the rank of the `tf.Tensor` is reduced by 1 for each entry in
+     * `axes`. If `keepDims` is true, the reduced dimensions are retained with
+     * length 1. If `axes` has no entries, all dimensions are reduced, and an
+     * `tf.Tensor` with a single element is returned.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 1, 1], 'bool');
+     *
+     * x.any().print();  // or tf.any(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 1, 0, 0], [2, 2], 'bool');
+     *
+     * const axis = 1;
+     * x.any(axis).print();  // or tf.any(x, axis)
+     * ```
+     *
+     * @param x The input tensor. Must be of dtype bool.
+     * @param axis The dimension(s) to reduce. By default it reduces
+     *     all dimensions.
+     * @param keepDims If true, retains reduced dimensions with size 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function any_(x, axis = null, keepDims = false) {
+        const $x = convertToTensor(x, 'x', 'any', 'bool');
+        const inputs = { x: $x };
+        const attrs = { axis, keepDims };
+        return ENGINE.runKernel(Any, inputs, attrs);
+    }
+    // tslint:disable-next-line:variable-name
+    const any$2 = op({ any_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google Inc. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the indices of the maximum values along an `axis`.
+     *
+     * The result has the same shape as `input` with the dimension along `axis`
+     * removed.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     *
+     * x.argMax().print();  // or tf.argMax(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 4, 3], [2, 2]);
+     *
+     * const axis = 1;
+     * x.argMax(axis).print();  // or tf.argMax(x, axis)
+     * ```
+     *
+     * @param x The input tensor.
+     * @param axis The dimension to reduce. Defaults to 0 (outer-most dimension).
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function argMax_(x, axis = 0) {
+        const $x = convertToTensor(x, 'x', 'argMax');
+        const inputs = { x: $x };
+        const attrs = { axis };
+        return ENGINE.runKernel(ArgMax, inputs, attrs);
+    }
+    const argMax$2 = op({ argMax_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google Inc. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the indices of the minimum values along an `axis`.
+     *
+     * The result has the same shape as `input` with the dimension along `axis`
+     * removed.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     *
+     * x.argMin().print();  // or tf.argMin(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 4, 3], [2, 2]);
+     *
+     * const axis = 1;
+     * x.argMin(axis).print();  // or tf.argMin(x, axis)
+     * ```
+     *
+     * @param x The input tensor.
+     * @param axis The dimension to reduce. Defaults to 0 (outer-most dimension).
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function argMin_(x, axis = 0) {
+        const $x = convertToTensor(x, 'x', 'argMin');
+        const inputs = { x: $x };
+        const attrs = { axis };
+        return ENGINE.runKernel(ArgMin, inputs, attrs);
+    }
+    const argMin$2 = op({ argMin_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes asin of the input `tf.Tensor` element-wise: `asin(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.asin().print();  // or tf.asin(x)
+     * ```
+     * @param x The input tensor.
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function asin_(x) {
+        const $x = convertToTensor(x, 'x', 'asin');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Asin, inputs);
+    }
+    const asin$2 = op({ asin_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes inverse hyperbolic sin of the input `tf.Tensor` element-wise:
+     * `asinh(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.asinh().print();  // or tf.asinh(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function asinh_(x) {
+        const $x = convertToTensor(x, 'x', 'asinh');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Asinh, inputs);
+    }
+    const asinh$2 = op({ asinh_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes atan of the input `tf.Tensor` element-wise: `atan(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.atan().print();  // or tf.atan(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function atan_(x) {
+        const $x = convertToTensor(x, 'x', 'atan');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Atan, inputs);
+    }
+    const atan$2 = op({ atan_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes arctangent of `tf.Tensor`s a / b element-wise: `atan2(a, b)`.
+     * Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1.0, 1.0, -1.0, .7]);
+     * const b = tf.tensor1d([2.0, 13.0, 3.5, .21]);
+     *
+     * tf.atan2(a, b).print()
+     * ```
+     *
+     * @param a The first tensor.
+     * @param b The second tensor. Must have the same dtype as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function atan2_(a, b) {
+        let $a = convertToTensor(a, 'a', 'atan2');
+        let $b = convertToTensor(b, 'b', 'atan2');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Atan2, inputs);
+    }
+    const atan2$2 = op({ atan2_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes inverse hyperbolic tan of the input `tf.Tensor` element-wise:
+     * `atanh(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, .1, -.1, .7]);
+     *
+     * x.atanh().print();  // or tf.atanh(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function atanh_(x) {
+        const $x = convertToTensor(x, 'x', 'atanh');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Atanh, inputs);
+    }
+    const atanh$2 = op({ atanh_ });
 
     /**
      * @license
@@ -27760,8 +31588,8 @@
         }
         const inputRows = inShape[0];
         const inputCols = inShape[1];
-        const outputRows = round$2((inputRows - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
-        const outputCols = round$2((inputCols - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
+        const outputRows = round$3((inputRows - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
+        const outputCols = round$3((inputCols - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
         return [outputRows, outputCols];
     }
     function computeOutputShape4D(inShape, fieldSize, outChannels, stride, zeroPad, roundingMode) {
@@ -27771,9 +31599,9 @@
         const inputDepth = inShape[0];
         const inputRows = inShape[1];
         const inputCols = inShape[2];
-        const outputDepths = round$2((inputDepth - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
-        const outputRows = round$2((inputRows - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
-        const outputCols = round$2((inputCols - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
+        const outputDepths = round$3((inputDepth - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
+        const outputRows = round$3((inputRows - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
+        const outputCols = round$3((inputCols - fieldSize + 2 * zeroPad) / stride + 1, roundingMode);
         return [outputDepths, outputRows, outputCols, outChannels];
     }
     function computeDefaultPad(inputShape, fieldSize, stride, dilation = 1) {
@@ -27845,8 +31673,8 @@
                 'VALID' :
                 'EXPLICIT';
             padInfo = { top, bottom, left, right, type: padType };
-            outHeight = round$2((inHeight - filterHeight + top + bottom) / strideHeight + 1, roundingMode);
-            outWidth = round$2((inWidth - filterWidth + left + right) / strideWidth + 1, roundingMode);
+            outHeight = round$3((inHeight - filterHeight + top + bottom) / strideHeight + 1, roundingMode);
+            outWidth = round$3((inWidth - filterWidth + left + right) / strideWidth + 1, roundingMode);
         }
         else {
             throw Error(`Unknown padding parameter: ${pad}`);
@@ -27914,7 +31742,7 @@
      * @param roundingMode A string from: 'ceil', 'round', 'floor'. If none is
      *     provided, it will default to truncate.
      */
-    function round$2(value, roundingMode) {
+    function round$3(value, roundingMode) {
         if (!roundingMode) {
             return Math.trunc(value);
         }
@@ -28047,6 +31875,219 @@
 
     /**
      * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the 2D average pooling of an image.
+     *
+     * @param x The input tensor, of rank 4 or rank 3 of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is assumed.
+     * @param filterSize The filter size: `[filterHeight, filterWidth]`. If
+     *     `filterSize` is a single number, then `filterHeight == filterWidth`.
+     * @param strides The strides of the pooling: `[strideHeight, strideWidth]`. If
+     *     `strides` is a single number, then `strideHeight == strideWidth`.
+     * @param pad The type of padding algorithm:
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *    - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *         https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     */
+    function avgPool_(x, filterSize, strides, pad, dimRoundingMode) {
+        const $x = convertToTensor(x, 'x', 'avgPool', 'float32');
+        const dilations = 1;
+        assert(eitherStridesOrDilationsAreOne(strides, dilations), () => 'Error in avgPool: Either strides or dilations must be 1. ' +
+            `Got strides ${strides} and dilations '${dilations}'`);
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        assert(x4D.rank === 4, () => `Error in avgPool: x must be rank 4 but got rank ${x4D.rank}.`);
+        checkPadOnDimRoundingMode('avgPool', pad, dimRoundingMode);
+        const inputs = { x: x4D };
+        const attrs = { filterSize, strides, pad, dimRoundingMode };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        let res = ENGINE.runKernel(AvgPool, inputs, attrs);
+        res = cast$2(res, $x.dtype);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const avgPool$2 = op({ avgPool_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the 3D average pooling.
+     *
+     * ```js
+     * const x = tf.tensor5d([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 2, 2, 1]);
+     * const result = tf.avgPool3d(x, 2, 1, 'valid');
+     * result.print();
+     * ```
+     *
+     * @param x The input tensor, of rank 5 or rank 4 of shape
+     *     `[batch, depth, height, width, inChannels]`.
+     * @param filterSize The filter size:
+     *     `[filterDepth, filterHeight, filterWidth]`.
+     *     If `filterSize` is a single number,
+     *     then `filterDepth == filterHeight == filterWidth`.
+     * @param strides The strides of the pooling:
+     *     `[strideDepth, strideHeight, strideWidth]`.
+     *     If `strides` is a single number,
+     *     then `strideDepth == strideHeight == strideWidth`.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1*1x1.
+     *    - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     * @param dataFormat An optional string from: "NDHWC", "NCDHW". Defaults to
+     *     "NDHWC". Specify the data format of the input and output data. With the
+     *     default format "NDHWC", the data is stored in the order of: [batch,
+     *     depth, height, width, channels]. Only "NDHWC" is currently supported.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function avgPool3d_(x, filterSize, strides, pad, dimRoundingMode, dataFormat = 'NDHWC') {
+        const $x = convertToTensor(x, 'x', 'avgPool3d', 'float32');
+        let x5D = $x;
+        let reshapedTo5D = false;
+        if ($x.rank === 4) {
+            reshapedTo5D = true;
+            x5D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2], $x.shape[3]]);
+        }
+        assert(x5D.rank === 5, () => `Error in avgPool3d: x must be rank 5 but got rank ${x5D.rank}.`);
+        assert(dataFormat === 'NDHWC', () => `Error in avgPool3d: Only NDHWC is currently supported, ` +
+            `but got dataFormat of ${dataFormat}`);
+        checkPadOnDimRoundingMode('avgPool3d', pad, dimRoundingMode);
+        const inputs = { x: x5D };
+        const attrs = { filterSize, strides, pad, dimRoundingMode, dataFormat };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        let res = ENGINE.runKernel(AvgPool3D, inputs, attrs);
+        res = cast$2(res, x5D.dtype);
+        if (reshapedTo5D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3], res.shape[4]]);
+        }
+        return res;
+    }
+    const avgPool3d = op({ avgPool3d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Concatenates a list of `tf.Tensor`s along a given axis.
+     *
+     * The tensors ranks and types must match, and their sizes must match in all
+     * dimensions except `axis`.
+     *
+     * Also available are stricter rank-specific methods that assert that
+     * `tensors` are of the given rank:
+     *   - `tf.concat1d`
+     *   - `tf.concat2d`
+     *   - `tf.concat3d`
+     *   - `tf.concat4d`
+     *
+     * Except `tf.concat1d` (which does not have axis param), all methods have
+     * same signature as this method.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2]);
+     * const b = tf.tensor1d([3, 4]);
+     * a.concat(b).print();  // or a.concat(b)
+     * ```
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2]);
+     * const b = tf.tensor1d([3, 4]);
+     * const c = tf.tensor1d([5, 6]);
+     * tf.concat([a, b, c]).print();
+     * ```
+     *
+     * ```js
+     * const a = tf.tensor2d([[1, 2], [10, 20]]);
+     * const b = tf.tensor2d([[3, 4], [30, 40]]);
+     * const axis = 1;
+     * tf.concat([a, b], axis).print();
+     * ```
+     * @param tensors A list of tensors to concatenate.
+     * @param axis The axis to concate along. Defaults to 0 (the first dim).
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function concat_(tensors, axis = 0) {
+        assert(tensors.length >= 1, () => 'Pass at least one tensor to concat');
+        const $tensors = convertToTensorArray(tensors, 'tensors', 'concat', 'string_or_numeric');
+        if ($tensors[0].dtype === 'complex64') {
+            $tensors.forEach(tensor => {
+                if (tensor.dtype !== 'complex64') {
+                    throw new Error(`Cannot concatenate complex64 tensors with a tensor
+          with dtype ${tensor.dtype}. `);
+                }
+            });
+        }
+        if ($tensors.length === 1) {
+            return clone($tensors[0]);
+        }
+        const inputs = $tensors;
+        const attr = { axis };
+        return ENGINE.runKernel(Concat, inputs, attr);
+    }
+    const concat$2 = op({ concat_ });
+
+    /**
+     * @license
      * Copyright 2018 Google LLC. All Rights Reserved.
      * Licensed under the Apache License, Version 2.0 (the "License");
      * you may not use this file except in compliance with the License.
@@ -28082,6 +32123,2003 @@
 
     /**
      * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Extracts a slice from a `tf.Tensor` starting at coordinates `begin`
+     * and is of size `size`.
+     *
+     * Also available are stricter rank-specific methods with the same signature
+     * as this method that assert that `x` is of the given rank:
+     *   - `tf.slice1d`
+     *   - `tf.slice2d`
+     *   - `tf.slice3d`
+     *   - `tf.slice4d`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     *
+     * x.slice([1], [2]).print();
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * x.slice([1, 0], [1, 2]).print();
+     * ```
+     * @param x The input `tf.Tensor` to slice from.
+     * @param begin The coordinates to start the slice from. The length can be
+     *     less than the rank of x - the rest of the axes will have implicit 0 as
+     *     start. Can also be a single number, in which case it specifies the
+     *     first axis.
+     * @param size The size of the slice. The length can be less than the rank of
+     *     x - the rest of the axes will have implicit -1. A value of -1 requests
+     *     the rest of the dimensions in the axis. Can also be a single number,
+     *     in which case it specifies the size of the first axis.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function slice_(x, begin, size) {
+        const $x = convertToTensor(x, 'x', 'slice', 'string_or_numeric');
+        if ($x.rank === 0) {
+            throw new Error('Slicing scalar is not possible');
+        }
+        const inputs = { x: $x };
+        const attrs = { begin, size };
+        return ENGINE.runKernel(Slice, inputs, attrs);
+    }
+    const slice$2 = op({ slice_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes hyperbolic tangent of the input `tf.Tensor` element-wise: `tanh(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, 70]);
+     *
+     * x.tanh().print();  // or tf.tanh(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function tanh_(x) {
+        const $x = convertToTensor(x, 'x', 'tanh', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Tanh, inputs);
+    }
+    const tanh$2 = op({ tanh_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the next state and output of a BasicLSTMCell.
+     *
+     * Returns `[newC, newH]`.
+     *
+     * Derived from tf.contrib.rnn.BasicLSTMCell.
+     *
+     * @param forgetBias Forget bias for the cell.
+     * @param lstmKernel The weights for the cell.
+     * @param lstmBias The bias for the cell.
+     * @param data The input to the cell.
+     * @param c Previous cell state.
+     * @param h Previous cell output.
+     *
+     * @doc {heading: 'Operations', subheading: 'RNN'}
+     */
+    function basicLSTMCell_(forgetBias, lstmKernel, lstmBias, data, c, h) {
+        const $forgetBias = convertToTensor(forgetBias, 'forgetBias', 'basicLSTMCell');
+        const $lstmKernel = convertToTensor(lstmKernel, 'lstmKernel', 'basicLSTMCell');
+        const $lstmBias = convertToTensor(lstmBias, 'lstmBias', 'basicLSTMCell');
+        const $data = convertToTensor(data, 'data', 'basicLSTMCell');
+        const $c = convertToTensor(c, 'c', 'basicLSTMCell');
+        const $h = convertToTensor(h, 'h', 'basicLSTMCell');
+        const combined = concat$2([$data, $h], 1);
+        const weighted = matMul$1(combined, $lstmKernel);
+        const res = add$1(weighted, $lstmBias);
+        // i = input_gate, j = new_input, f = forget_gate, o = output_gate
+        const batchSize = res.shape[0];
+        const sliceCols = res.shape[1] / 4;
+        const sliceSize = [batchSize, sliceCols];
+        const i = slice$2(res, [0, 0], sliceSize);
+        const j = slice$2(res, [0, sliceCols], sliceSize);
+        const f = slice$2(res, [0, sliceCols * 2], sliceSize);
+        const o = slice$2(res, [0, sliceCols * 3], sliceSize);
+        const newC = add$1(mul(sigmoid$2(i), tanh$2(j)), mul($c, sigmoid$2(add$1($forgetBias, f))));
+        const newH = mul(tanh$2(newC), sigmoid$2(o));
+        return [newC, newH];
+    }
+    const basicLSTMCell = op({ basicLSTMCell_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * This operation reshapes the "batch" dimension 0 into `M + 1` dimensions of
+     * shape `blockShape + [batch]`, interleaves these blocks back into the grid
+     * defined by the spatial dimensions `[1, ..., M]`, to obtain a result with
+     * the same rank as the input. The spatial dimensions of this intermediate
+     * result are then optionally cropped according to `crops` to produce the
+     * output. This is the reverse of `tf.spaceToBatchND`. See below for a precise
+     * description.
+     *
+     * ```js
+     * const x = tf.tensor4d([1, 2, 3, 4], [4, 1, 1, 1]);
+     * const blockShape = [2, 2];
+     * const crops = [[0, 0], [0, 0]];
+     *
+     * x.batchToSpaceND(blockShape, crops).print();
+     * ```
+     *
+     * @param x A `tf.Tensor`. N-D with `x.shape` = `[batch] + spatialShape +
+     * remainingShape`, where spatialShape has `M` dimensions.
+     * @param blockShape A 1-D array. Must have shape `[M]`, all values must
+     * be >= 1.
+     * @param crops A 2-D array.  Must have shape `[M, 2]`, all values must be >= 0.
+     * `crops[i] = [cropStart, cropEnd]` specifies the amount to crop from input
+     * dimension `i + 1`, which corresponds to spatial dimension `i`. It is required
+     * that `cropStart[i] + cropEnd[i] <= blockShape[i] * inputShape[i + 1]`
+     *
+     * This operation is equivalent to the following steps:
+     *
+     * 1. Reshape `x` to `reshaped` of shape: `[blockShape[0], ...,
+     * blockShape[M-1], batch / prod(blockShape), x.shape[1], ...,
+     * x.shape[N-1]]`
+     *
+     * 2. Permute dimensions of `reshaped`to produce `permuted` of shape `[batch /
+     * prod(blockShape),x.shape[1], blockShape[0], ..., x.shape[M],
+     * blockShape[M-1],x.shape[M+1], ..., x.shape[N-1]]`
+     *
+     * 3. Reshape `permuted` to produce `reshapedPermuted` of shape `[batch /
+     * prod(blockShape),x.shape[1] * blockShape[0], ..., x.shape[M] *
+     * blockShape[M-1],x.shape[M+1], ..., x.shape[N-1]]`
+     *
+     * 4. Crop the start and end of dimensions `[1, ..., M]` of `reshapedPermuted`
+     * according to `crops` to produce the output of shape: `[batch /
+     * prod(blockShape),x.shape[1] * blockShape[0] - crops[0,0] - crops[0,1],
+     * ..., x.shape[M] * blockShape[M-1] - crops[M-1,0] -
+     * crops[M-1,1],x.shape[M+1], ..., x.shape[N-1]]`
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function batchToSpaceND_(x, blockShape, crops) {
+        const $x = convertToTensor(x, 'x', 'batchToSpaceND');
+        const prod = blockShape.reduce((a, b) => a * b);
+        assert($x.rank >= 1 + blockShape.length, () => `input rank is ${$x.rank} but should be > than blockShape.length ${blockShape.length}`);
+        assert(crops.length === blockShape.length, () => `crops.length is ${crops.length} but should be equal to blockShape.length  ${blockShape.length}`);
+        assert($x.shape[0] % prod === 0, () => `input tensor batch is ${$x.shape[0]} but is not divisible by the product of ` +
+            `the elements of blockShape ${blockShape.join(' * ')} === ${prod}`);
+        const inputs = { x: $x };
+        const attrs = { blockShape, crops };
+        return ENGINE.runKernel(BatchToSpaceND, inputs, attrs);
+    }
+    const batchToSpaceND$2 = op({ batchToSpaceND_ });
+
+    function xAs4D(x) {
+        let x4D;
+        if (x.rank === 0 || x.rank === 1) {
+            x4D = reshape$2(x, [1, 1, 1, x.size]);
+        }
+        else if (x.rank === 2) {
+            x4D = reshape$2(x, [1, 1, x.shape[0], x.shape[1]]);
+        }
+        else if (x.rank === 3) {
+            x4D = reshape$2(x, [1, x.shape[0], x.shape[1], x.shape[2]]);
+        }
+        else {
+            x4D = x;
+        }
+        return x4D;
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Batch normalization.
+     *
+     * As described in
+     * [http://arxiv.org/abs/1502.03167](http://arxiv.org/abs/1502.03167).
+     *
+     * Mean, variance, scale, and offset can be of two shapes:
+     *   - The same shape as the input.
+     *   - In the common case, the depth dimension is the last dimension of x, so
+     *     the values would be an `tf.Tensor1D` of shape [depth].
+     *
+     * Also available are stricter rank-specific methods with the same signature
+     * as this method that assert that parameters passed are of given rank
+     *   - `tf.batchNorm2d`
+     *   - `tf.batchNorm3d`
+     *   - `tf.batchNorm4d`
+     *
+     * @param x The input Tensor.
+     * @param mean A mean Tensor.
+     * @param variance A variance Tensor.
+     * @param offset An offset Tensor.
+     * @param scale A scale Tensor.
+     * @param varianceEpsilon A small float number to avoid dividing by 0.
+     *
+     * @doc {heading: 'Operations', subheading: 'Normalization'}
+     */
+    function batchNorm_(x, mean, variance, offset, scale, varianceEpsilon) {
+        if (varianceEpsilon == null) {
+            varianceEpsilon = 0.001;
+        }
+        const $x = convertToTensor(x, 'x', 'batchNorm');
+        const $mean = convertToTensor(mean, 'mean', 'batchNorm');
+        const $variance = convertToTensor(variance, 'variance', 'batchNorm');
+        let $scale;
+        if (scale != null) {
+            $scale = convertToTensor(scale, 'scale', 'batchNorm');
+        }
+        let $offset;
+        if (offset != null) {
+            $offset = convertToTensor(offset, 'offset', 'batchNorm');
+        }
+        assert($mean.rank === $variance.rank, () => 'Batch normalization gradient requires mean and variance to have ' +
+            'equal ranks.');
+        assert($offset == null || $mean.rank === $offset.rank, () => 'Batch normalization gradient requires mean and offset to have ' +
+            'equal ranks.');
+        assert($scale == null || $mean.rank === $scale.rank, () => 'Batch normalization gradient requires mean and scale to have ' +
+            'equal ranks.');
+        const x4D = xAs4D($x);
+        const inputs = {
+            x: x4D,
+            scale: $scale,
+            offset: $offset,
+            mean: $mean,
+            variance: $variance
+        };
+        const attrs = { varianceEpsilon };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(FusedBatchNorm, inputs, attrs);
+        return reshape$2(res, $x.shape);
+    }
+    const batchNorm$2 = op({ batchNorm_ });
+
+    /**
+     * Batch normalization, strictly for 2D. For the more relaxed version, see
+     * `tf.batchNorm`.
+     *
+     * @param x The input Tensor.
+     * @param mean A mean Tensor.
+     * @param variance A variance Tensor.
+     * @param offset An offset Tensor.
+     * @param scale A scale Tensor.
+     * @param varianceEpsilon A small float number to avoid dividing by 0.
+     */
+    function batchNorm2d_(x, mean, variance, offset, scale, varianceEpsilon) {
+        const $x = convertToTensor(x, 'x', 'batchNorm');
+        const $mean = convertToTensor(mean, 'mean', 'batchNorm');
+        const $variance = convertToTensor(variance, 'variance', 'batchNorm');
+        let $scale;
+        if (scale != null) {
+            $scale = convertToTensor(scale, 'scale', 'batchNorm');
+        }
+        let $offset;
+        if (offset != null) {
+            $offset = convertToTensor(offset, 'offset', 'batchNorm');
+        }
+        assert($x.rank === 2, () => `Error in batchNorm2D: x must be rank 2 but got rank ` +
+            `${$x.rank}.`);
+        assert($mean.rank === 2 || $mean.rank === 1, () => `Error in batchNorm2D: mean must be rank 2 or rank 1 but ` +
+            `got rank ${$mean.rank}.`);
+        assert($variance.rank === 2 || $variance.rank === 1, () => `Error in batchNorm2D: variance must be rank 2 or rank 1 ` +
+            `but got rank ${$variance.rank}.`);
+        if ($scale != null) {
+            assert($scale.rank === 2 || $scale.rank === 1, () => `Error in batchNorm2D: scale must be rank 2 or rank 1 ` +
+                `but got rank ${$scale.rank}.`);
+        }
+        if ($offset != null) {
+            assert($offset.rank === 2 || $offset.rank === 1, () => `Error in batchNorm2D: offset must be rank 2 or rank 1 ` +
+                `but got rank ${$offset.rank}.`);
+        }
+        return batchNorm$2($x, $mean, $variance, $offset, $scale, varianceEpsilon);
+    }
+    const batchNorm2d = op({ batchNorm2d_ });
+
+    /**
+     * Batch normalization, strictly for 3D. For the more relaxed version, see
+     * `tf.batchNorm`.
+     *
+     * @param x The input Tensor.
+     * @param mean A mean Tensor.
+     * @param variance A variance Tensor.
+     * @param offset An offset Tensor.
+     * @param scale A scale Tensor.
+     * @param varianceEpsilon A small float number to avoid dividing by 0.
+     */
+    function batchNorm3d_(x, mean, variance, offset, scale, varianceEpsilon) {
+        const $x = convertToTensor(x, 'x', 'batchNorm');
+        const $mean = convertToTensor(mean, 'mean', 'batchNorm');
+        const $variance = convertToTensor(variance, 'variance', 'batchNorm');
+        let $scale;
+        if (scale != null) {
+            $scale = convertToTensor(scale, 'scale', 'batchNorm');
+        }
+        let $offset;
+        if (offset != null) {
+            $offset = convertToTensor(offset, 'offset', 'batchNorm');
+        }
+        assert($x.rank === 3, () => `Error in batchNorm3D: x must be rank 3 but got rank ` +
+            `${$x.rank}.`);
+        assert($mean.rank === 3 || $mean.rank === 1, () => `Error in batchNorm3D: mean must be rank 3 or rank 1 but ` +
+            `got rank ${$mean.rank}.`);
+        assert($variance.rank === 3 || $variance.rank === 1, () => `Error in batchNorm3D: variance must be rank 3 or rank 1 ` +
+            `but got rank ${$variance.rank}.`);
+        if ($scale != null) {
+            assert($scale.rank === 3 || $scale.rank === 1, () => `Error in batchNorm3D: scale must be rank 3 or rank 1 ` +
+                `but got rank ${$scale.rank}.`);
+        }
+        if ($offset != null) {
+            assert($offset.rank === 3 || $offset.rank === 1, () => `Error in batchNorm3D: offset must be rank 3 or rank 1 ` +
+                `but got rank ${$offset.rank}.`);
+        }
+        return batchNorm$2($x, $mean, $variance, $offset, $scale, varianceEpsilon);
+    }
+    const batchNorm3d = op({ batchNorm3d_ });
+
+    /**
+     * Batch normalization, strictly for 4D. For the more relaxed version, see
+     * `tf.batchNorm`.
+     *
+     * @param x The input Tensor.
+     * @param mean A mean Tensor.
+     * @param variance A variance Tensor.
+     * @param offset An offset Tensor.
+     * @param scale A scale Tensor.
+     * @param varianceEpsilon A small float number to avoid dividing by 0.
+     */
+    function batchNorm4d_(x, mean, variance, offset, scale, varianceEpsilon) {
+        const $x = convertToTensor(x, 'x', 'batchNorm');
+        const $mean = convertToTensor(mean, 'mean', 'batchNorm');
+        const $variance = convertToTensor(variance, 'variance', 'batchNorm');
+        let $scale;
+        if (scale != null) {
+            $scale = convertToTensor(scale, 'scale', 'batchNorm');
+        }
+        let $offset;
+        if (offset != null) {
+            $offset = convertToTensor(offset, 'offset', 'batchNorm');
+        }
+        assert($x.rank === 4, () => `Error in batchNorm4D: x must be rank 4 but got rank ` +
+            `${$x.rank}.`);
+        assert($mean.rank === 4 || $mean.rank === 1, () => `Error in batchNorm4D: mean must be rank 4 or rank 1 but ` +
+            `got rank ${$mean.rank}.`);
+        assert($variance.rank === 4 || $variance.rank === 1, () => `Error in batchNorm4D: variance must be rank 4 or rank 1 ` +
+            `but got rank ${$variance.rank}.`);
+        if ($scale != null) {
+            assert($scale.rank === 4 || $scale.rank === 1, () => `Error in batchNorm4D: scale must be rank 4 or rank 1 ` +
+                `but got rank ${$scale.rank}.`);
+        }
+        if ($offset != null) {
+            assert($offset.rank === 4 || $offset.rank === 1, () => `Error in batchNorm4D: offset must be rank 4 or rank 1 ` +
+                `but got rank ${$offset.rank}.`);
+        }
+        return batchNorm$2($x, $mean, $variance, $offset, $scale, varianceEpsilon);
+    }
+    const batchNorm4d = op({ batchNorm4d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Outputs a vector with length `size` and the same dtype as `weights`.
+     *
+     * If `weights` are empty, then index `i` stores the number of times the value
+     * `i` is counted in `x`. If `weights` are non-empty, then index `i` stores the
+     * sum of the value in `weights` at each index where the corresponding value in
+     * `x` is `i`.
+     *
+     * Values in `x` outside of the range [0, size) are ignored.
+     *
+     * @param x The input int tensor, rank 1.
+     * @param weights The weights tensor, must have the same shape as x, or a
+     *     length-0 Tensor, in which case it acts as all weights equal to 1.
+     * @param size Non-negative integer.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function bincount_(x, weights, size) {
+        const $x = convertToTensor(x, 'x', 'bincount');
+        const $weights = convertToTensor(weights, 'weights', 'bincount');
+        assert($x.dtype === 'int32', () => `Error in bincount: input ` +
+            `dtype must be int32, but got ${$x.dtype}`);
+        assert(size >= 0, () => `size must be non-negative, but got ${size}.`);
+        assert($weights.size === $x.size || $weights.size === 0, () => `Error in bincount: weights must have the same size as input or` +
+            `0-length, but got input shape: ${$x.shape}, weights shape: ` +
+            `${$weights.shape}.`);
+        const inputs = { x: $x, weights: $weights };
+        const attrs = { size };
+        return ENGINE.runKernel(Bincount, inputs, attrs);
+    }
+    const bincount$2 = op({ bincount_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Return the shape of s0 op s1 with broadcast.
+     *
+     * compute r0, the broadcasted shape as a tensor.
+     * s0, s1 and r0 are all integer vectors.
+     *
+     * This function returns the shape of the result of an operation between
+     * two tensors of size s0 and s1 performed with broadcast.
+     *
+     * @param s0 A tensor representing a shape
+     * @param s1 A tensor representing a shape
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function broadcastArgs_(s0, s1) {
+        const shape1Input = convertToTensor(s0, 's0', 'broadcastArgs', 'int32');
+        const shape2Input = convertToTensor(s1, 's1', 'broadcastArgs', 'int32');
+        if (shape1Input.rank !== 1) {
+            throw new Error('broadcastArgs(): first input must be a vector (rank=1). ' +
+                `Has rank ${shape1Input.rank}`);
+        }
+        if (shape2Input.rank !== 1) {
+            throw new Error('broadcastArgs(): second input must be a vector (rank=1). ' +
+                `Has rank ${shape2Input.rank}`);
+        }
+        const inputs = { s0: shape1Input, s1: shape2Input };
+        return ENGINE.runKernel(BroadcastArgs, inputs);
+    }
+    const broadcastArgs$2 = op({ broadcastArgs_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Broadcast an array to a compatible shape NumPy-style.
+     *
+     * The tensor's shape is compared to the broadcast shape from end to beginning.
+     * Ones are prepended to the tensor's shape until is has the same length as
+     * the broadcast shape. If input.shape[i]==shape[i], the (i+1)-th axis is
+     * already broadcast-compatible. If input.shape[i]==1 and shape[i]==N, then
+     * the input tensor is tiled N times along that axis (using tf.tile).
+     *
+     * @param input The tensor that is to be broadcasted.
+     * @param shape The input is to be broadcast to this shape.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function broadcastTo_(x, shape) {
+        let input = convertToTensor(x, 'broadcastTo', 'x');
+        const xShape = input.shape;
+        if (shape.some(d => !(d > 0) || d % 1 !== 0)) {
+            throw new Error(`broadcastTo(): Invalid broadcast shape [${shape}].`);
+        }
+        if (shape.length < input.rank) {
+            throw new Error(`broadcastTo(): shape.length=${shape.length} < input.rank=${input.rank}.`);
+        }
+        if (shape.length > input.rank) {
+            const newShape = input.shape.slice();
+            while (newShape.length < shape.length) {
+                newShape.unshift(1);
+            }
+            input = reshape$2(input, newShape);
+        }
+        const inputShape = input.shape;
+        const reps = Array.from(shape);
+        for (let i = shape.length - 1; i >= 0; i--) {
+            if (inputShape[i] === shape[i]) {
+                reps[i] = 1;
+            }
+            else if (input.shape[i] !== 1) {
+                throw new Error(`broadcastTo(): [${xShape}] cannot be broadcast to [${shape}].`);
+            }
+        }
+        const axes = reps.map((n, i) => n > 1 ? i : -1).filter(i => i >= 0);
+        if (axes.length === 0) {
+            return clone(input);
+        }
+        // TODO call broadcastTo kernel directly once backends implement broadcstTo
+        const inputs = { x: input };
+        const attrs = { reps };
+        return ENGINE.runKernel(Tile, inputs, attrs);
+    }
+    const broadcastTo = op({ broadcastTo_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes ceiling of input `tf.Tensor` element-wise: `ceil(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([.6, 1.1, -3.3]);
+     *
+     * x.ceil().print();  // or tf.ceil(x)
+     * ```
+     * @param x The input Tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function ceil_(x) {
+        const $x = convertToTensor(x, 'x', 'ceil', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Ceil, inputs);
+    }
+    const ceil$2 = op({ ceil_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Clips values element-wise. `max(min(x, clipValueMax), clipValueMin)`
+     *
+     * ```js
+     * const x = tf.tensor1d([-1, 2, -3, 4]);
+     *
+     * x.clipByValue(-2, 3).print();  // or tf.clipByValue(x, -2, 3)
+     * ```
+     * @param x The input tensor.
+     * @param clipValueMin Lower-bound of range to be clipped to.
+     * @param clipValueMax Upper-bound of range to be clipped to.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function clipByValue_(x, clipValueMin, clipValueMax) {
+        const $x = convertToTensor(x, 'x', 'clipByValue');
+        assert((clipValueMin <= clipValueMax), () => `Error in clip: min (${clipValueMin}) must be ` +
+            `less than or equal to max (${clipValueMax}).`);
+        const inputs = { x: $x };
+        const attrs = { clipValueMin, clipValueMax };
+        return ENGINE.runKernel(ClipByValue, inputs, attrs);
+    }
+    const clipByValue$2 = op({ clipByValue_ });
+
+    /**
+     * Concatenates a list of`tf.Tensor1D`s along an axis. See `concat` for details.
+     *
+     * For example, if:
+     * A: shape(3) = |r1, g1, b1|
+     * B: shape(2) = |r2, g2|
+     * C = tf.concat1d([A, B]) == |r1, g1, b1, r2, g2|
+     *
+     * @param tensors A list of`tf.Tensor`s to concatenate.
+     * @return The concatenated array.
+     */
+    function concat1d_(tensors) {
+        return concat$2(tensors, 0 /* axis */);
+    }
+    const concat1d = op({ concat1d_ });
+
+    /**
+     * Concatenates a list of`tf.Tensor2D`s along an axis. See `concat` for details.
+     *
+     * For example, if:
+     * A: shape(2, 3) = | r1, g1, b1 |
+     *                  | r2, g2, b2 |
+     *
+     * B: shape(2, 3) = | r3, g3, b3 |
+     *                  | r4, g4, b4 |
+     *
+     * C = tf.concat2d([A, B], axis)
+     *
+     * if axis = 0:
+     * C: shape(4, 3) = | r1, g1, b1 |
+     *                  | r2, g2, b2 |
+     *                  | r3, g3, b3 |
+     *                  | r4, g4, b4 |
+     *
+     * if axis = 1:
+     * C = shape(2, 6) = | r1, g1, b1, r3, g3, b3 |
+     *                   | r2, g2, b2, r4, g4, b4 |
+     *
+     *
+     * @param tensors A list of `tf.Tensor`s to concatenate.
+     * @param axis The axis to concatenate along.
+     * @return The concatenated array.
+     */
+    function concat2d_(tensors, axis) {
+        return concat$2(tensors, axis);
+    }
+    const concat2d = op({ concat2d_ });
+
+    /**
+     * Concatenates a list of `tf.Tensor3D`s along an axis.
+     * See `concat` for details.
+     *
+     * For example, if:
+     * A: shape(2, 1, 3) = | r1, g1, b1 |
+     *                     | r2, g2, b2 |
+     *
+     * B: shape(2, 1, 3) = | r3, g3, b3 |
+     *                     | r4, g4, b4 |
+     *
+     * C = tf.concat3d([A, B], axis)
+     *
+     * if axis = 0:
+     * C: shape(4, 1, 3) = | r1, g1, b1 |
+     *                     | r2, g2, b2 |
+     *                     | r3, g3, b3 |
+     *                     | r4, g4, b4 |
+     *
+     * if axis = 1:
+     * C: shape(2, 2, 3) = | r1, g1, b1, r3, g3, b3 |
+     *                     | r2, g2, b2, r4, g4, b4 |
+     *
+     * if axis = 2:
+     * C = shape(2, 1, 6) = | r1, g1, b1, r3, g3, b3 |
+     *                      | r2, g2, b2, r4, g4, b4 |
+     *
+     * @param tensors A list of`tf.Tensor`s to concatenate.
+     * @param axis The axis to concate along.
+     * @return The concatenated array.
+     */
+    function concat3d_(tensors, axis) {
+        return concat$2(tensors, axis);
+    }
+    const concat3d = op({ concat3d_ });
+
+    /**
+     * Concatenates a list of `tf.Tensor4D`s along an axis.
+     * See `concat` for details.
+     *
+     * @param tensors A list of `tf.Tensor`s to concatenate.
+     * @param axis The axis to concate along.
+     * @return The concatenated array.
+     */
+    function concat4d_(tensors, axis) {
+        return concat$2(tensors, axis);
+    }
+    const concat4d = op({ concat4d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes a 2D convolution over the input x.
+     *
+     * @param x The input tensor, of rank 4 or rank 3, of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is
+     * assumed.
+     * @param filter The filter, rank 4, of shape
+     *     `[filterHeight, filterWidth, inDepth, outDepth]`.
+     * @param strides The strides of the convolution: `[strideHeight,
+     * strideWidth]`.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *   - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dataFormat: An optional string from: "NHWC", "NCHW". Defaults to
+     *     "NHWC". Specify the data format of the input and output data. With the
+     *     default format "NHWC", the data is stored in the order of: [batch,
+     *     height, width, channels].
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     in atrous convolution. Defaults to `[1, 1]`. If `dilations` is a single
+     *     number, then `dilationHeight == dilationWidth`. If it is greater than
+     *     1, then all values of `strides` must be 1.
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function conv2d_(x, filter, strides, pad, dataFormat = 'NHWC', dilations = [1, 1], dimRoundingMode) {
+        const $x = convertToTensor(x, 'x', 'conv2d', 'float32');
+        const $filter = convertToTensor(filter, 'filter', 'conv2d', 'float32');
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        assert(x4D.rank === 4, () => `Error in conv2d: input must be rank 4, but got rank ${x4D.rank}.`);
+        assert($filter.rank === 4, () => `Error in conv2d: filter must be rank 4, but got rank ` +
+            `${$filter.rank}.`);
+        checkPadOnDimRoundingMode('conv2d', pad, dimRoundingMode);
+        const inDepth = dataFormat === 'NHWC' ? x4D.shape[3] : x4D.shape[1];
+        assert(inDepth === $filter.shape[2], () => `Error in conv2d: depth of input (${inDepth}) must match ` +
+            `input depth for filter ${$filter.shape[2]}.`);
+        assert(eitherStridesOrDilationsAreOne(strides, dilations), () => 'Error in conv2D: Either strides or dilations must be 1. ' +
+            `Got strides ${strides} and dilations '${dilations}'`);
+        const inputs = { x: x4D, filter: $filter };
+        const attrs = { strides, pad, dataFormat, dilations, dimRoundingMode };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(Conv2D, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const conv2d$2 = op({ conv2d_ });
+
+    /**
+     * Computes a 1D convolution over the input x.
+     *
+     * @param x The input tensor, of rank 3 or rank 2, of shape
+     *     `[batch, width, inChannels]`. If rank 2, batch of 1 is assumed.
+     * @param filter The filter, rank 3, of shape
+     *     `[filterWidth, inDepth, outDepth]`.
+     * @param stride The number of entries by which the filter is moved right at
+     *     each step.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *   - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dataFormat An optional string from "NWC", "NCW". Defaults to "NWC",
+     *     the data is stored in the order of [batch, in_width, in_channels]. Only
+     *     "NWC" is currently supported.
+     * @param dilation The dilation rate in which we sample input values in
+     *     atrous convolution. Defaults to `1`. If it is greater than 1, then
+     *     stride must be `1`.
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function conv1d_(x, filter, stride, pad, dataFormat = 'NWC', dilation = 1, dimRoundingMode) {
+        const $x = convertToTensor(x, 'x', 'conv1d');
+        const $filter = convertToTensor(filter, 'filter', 'conv1d');
+        let x3D = $x;
+        let reshapedTo3D = false;
+        if ($x.rank === 2) {
+            reshapedTo3D = true;
+            x3D = reshape$2($x, [1, $x.shape[0], $x.shape[1]]);
+        }
+        assert(x3D.rank === 3, () => `Error in conv1d: input must be rank 3, but got rank ${x3D.rank}.`);
+        assert($filter.rank === 3, () => `Error in conv1d: filter must be rank 3, but got rank ` +
+            `${$filter.rank}.`);
+        checkPadOnDimRoundingMode('conv1d', pad, dimRoundingMode);
+        assert(x3D.shape[2] === $filter.shape[1], () => `Error in conv1d: depth of input (${x3D.shape[2]}) must match ` +
+            `input depth for filter ${$filter.shape[1]}.`);
+        assert(eitherStridesOrDilationsAreOne(stride, dilation), () => 'Error in conv1D: Either stride or dilation must be 1. ' +
+            `Got stride ${stride} and dilation '${dilation}'`);
+        assert(dataFormat === 'NWC', () => `Error in conv1d: got dataFormat of ${dataFormat} but only NWC is currently supported.`);
+        const filter4D = reshape$2($filter, [1, $filter.shape[0], $filter.shape[1], $filter.shape[2]]);
+        const input4D = reshape$2(x3D, [x3D.shape[0], 1, x3D.shape[1], x3D.shape[2]]);
+        const strides = [1, stride];
+        const dilations = [1, dilation];
+        const conv2dDataFormat = 'NHWC';
+        const res = conv2d$2(input4D, filter4D, strides, pad, conv2dDataFormat, dilations, dimRoundingMode);
+        if (reshapedTo3D) {
+            return reshape$2(res, [res.shape[2], res.shape[3]]);
+        }
+        return reshape$2(res, [res.shape[0], res.shape[2], res.shape[3]]);
+    }
+    const conv1d = op({ conv1d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the derivative of the input of a 2D convolution.
+     *
+     * @param xShape The shape of the input: [batch, height, width, inDepth].
+     * If length of 3, batch of 1 is assumed.
+     * @param dy The derivative of the output, of rank 4 or rank 3 of shape
+     *   `[batch, outHeight, outWidth, outDepth]`. If rank 3, batch of 1 is
+     * assumed.
+     * @param filter The filter, rank 4, of shape
+     *     `[filterHeight, filterWidth, inDepth, outDepth]`.
+     * @param strides The strides of the convolution: `[strideHeight,
+     * strideWidth]`.
+     * @param pad The type of padding algorithm used:
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     * @param dataFormat: An optional string from: "NHWC", "NCHW". Defaults to
+     *     "NHWC". Specify the data format of the input and output data. With the
+     *     default format "NHWC", the data is stored in the order of: [batch,
+     *     height, width, channels].
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     */
+    function conv2DBackpropInput_(xShape, dy, filter, strides, pad, dataFormat = 'NHWC', dimRoundingMode) {
+        assert(xShape.length === dy.rank, () => `Length of inShape ` +
+            `(${xShape.length}) and rank of dy (${dy.rank}) must match`);
+        let xShape4D = xShape;
+        let dy4D = dy;
+        let reshapedTo4D = false;
+        if (dy.rank === 3) {
+            reshapedTo4D = true;
+            dy4D = reshape$2(dy, [1, dy.shape[0], dy.shape[1], dy.shape[2]]);
+            xShape4D = [1, xShape[0], xShape[1], xShape[2]];
+        }
+        assert(xShape4D.length === 4, () => `Error in conv2dDerInput: inShape must be length 4, but got length ` +
+            `${xShape4D.length}.`);
+        assert(dy4D.rank === 4, () => `Error in conv2dDerInput: dy must be rank 4, but got ` +
+            `rank ${dy4D.rank}`);
+        assert(filter.rank === 4, () => `Error in conv2dDerInput: filter must be rank 4, but got ` +
+            `rank ${filter.rank}`);
+        const inDepth = dataFormat === 'NHWC' ? xShape4D[3] : xShape4D[1];
+        const outDepth = dataFormat === 'NHWC' ? dy4D.shape[3] : dy4D.shape[1];
+        assert(inDepth === filter.shape[2], () => `Error in conv2dDerInput: depth of input (${inDepth}) must ` +
+            `match input depth for filter ${filter.shape[2]}.`);
+        assert(outDepth === filter.shape[3], () => `Error in conv2dDerInput: depth of output (${outDepth}) must ` +
+            `match output depth for filter ${filter.shape[3]}.`);
+        checkPadOnDimRoundingMode('conv2dDerInput', pad, dimRoundingMode);
+        const inputs = { dy: dy4D, filter };
+        const attrs = { strides, pad, dataFormat, dimRoundingMode, inputShape: xShape4D };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(Conv2DBackpropInput, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const conv2DBackpropInput$2 = op({ conv2DBackpropInput_ });
+
+    /**
+     * Computes the transposed 2D convolution of an image, also known as a
+     * deconvolution.
+     *
+     * @param x The input image, of rank 4 or rank 3, of shape
+     *   `[batch, height, width, inDepth]`. If rank 3, batch of 1 is assumed.
+     * @param filter The filter, rank 4, of shape
+     *     `[filterHeight, filterWidth, outDepth, inDepth]`.
+     *     `inDepth` must match `inDepth` in `x`.
+     * @param outputShape Output shape, of rank 4 or rank 3:
+     *     `[batch, height, width, outDepth]`. If rank 3, batch of 1 is assumed.
+     * @param strides The strides of the original convolution:
+     *     `[strideHeight, strideWidth]`.
+     * @param pad  The type of padding algorithm used in the non-transpose version
+     *    of the op.
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function conv2dTranspose_(x, filter, outputShape, strides, pad, dimRoundingMode) {
+        const $x = convertToTensor(x, 'x', 'conv2dTranspose');
+        const $filter = convertToTensor(filter, 'filter', 'conv2dTranspose');
+        return conv2DBackpropInput$2(outputShape, $x, $filter, strides, pad, 'NHWC', dimRoundingMode);
+    }
+    const conv2dTranspose = op({ conv2dTranspose_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes a 3D convolution over the input x.
+     *
+     * @param x The input tensor, of rank 5 or rank 4, of shape
+     *     `[batch, depth, height, width, channels]`. If rank 4,
+     * batch of 1 is assumed.
+     * @param filter The filter, rank 5, of shape
+     *     `[filterDepth, filterHeight, filterWidth, inChannels, outChannels]`.
+     *      inChannels must match between input and filter.
+     * @param strides The strides of the convolution: `[strideDepth, strideHeight,
+     * strideWidth]`.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *   - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dataFormat: An optional string from: "NDHWC", "NCDHW". Defaults to
+     *     "NDHWC". Specify the data format of the input and output data. With the
+     *     default format "NDHWC", the data is stored in the order of: [batch,
+     *     depth, height, width, channels]. Only "NDHWC" is currently supported.
+     * @param dilations The dilation rates: `[dilationDepth, dilationHeight,
+     *     dilationWidth]` in which we sample input values across the height
+     *     and width dimensions in atrous convolution. Defaults to `[1, 1, 1]`.
+     *     If `dilations` is a single number, then
+     *     `dilationDepth == dilationHeight == dilationWidth`. If it is greater
+     *     than 1, then all values of `strides` must be 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function conv3d_(x, filter, strides, pad, dataFormat = 'NDHWC', dilations = [1, 1, 1]) {
+        const $x = convertToTensor(x, 'x', 'conv3d');
+        const $filter = convertToTensor(filter, 'filter', 'conv3d');
+        let x5D = $x;
+        let reshapedTo5D = false;
+        if ($x.rank === 4) {
+            reshapedTo5D = true;
+            x5D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2], $x.shape[3]]);
+        }
+        assert(x5D.rank === 5, () => `Error in conv3d: input must be rank 5, but got rank ${x5D.rank}.`);
+        assert($filter.rank === 5, () => `Error in conv3d: filter must be rank 5, but got rank ` +
+            `${$filter.rank}.`);
+        assert(x5D.shape[4] === $filter.shape[3], () => `Error in conv3d: depth of input (${x5D.shape[4]}) must match ` +
+            `input depth for filter ${$filter.shape[3]}.`);
+        assert(eitherStridesOrDilationsAreOne(strides, dilations), () => 'Error in conv3D: Either strides or dilations must be 1. ' +
+            `Got strides ${strides} and dilations '${dilations}'`);
+        assert(dataFormat === 'NDHWC', () => `Error in conv3d: got dataFormat of ${dataFormat} but only NDHWC is currently supported.`);
+        const inputs = { x: x5D, filter: $filter };
+        const attrs = { strides, pad, dataFormat, dilations };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(Conv3D, inputs, attrs);
+        if (reshapedTo5D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3], res.shape[4]]);
+        }
+        return res;
+    }
+    const conv3d = op({ conv3d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the derivative of the input of a 3D convolution.
+     *
+     * @param xShape The shape of the input: [batch, depth, height, width,
+     * in_channels]. If length of 4, batch of 1 is assumed.
+     * @param dy The derivative of the output, of rank 5 or rank 4 of shape
+     *   `[batch, outDepth, outHeight, outWidth, in_channels]`.
+     * If rank 4, batch of 1 is assumed.
+     * @param filter The filter, rank 5, of shape
+     *     `[filterDepth, filterHeight, filterWidth, inDepth, outDepth]`.
+     * @param strides The strides of the convolution: `[strideDepth, strideHeight,
+     * strideWidth]`.
+     * @param pad The type of padding algorithm used:
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     */
+    function conv3DBackpropInput_(xShape, dy, filter, strides, pad) {
+        assert(xShape.length === dy.rank, () => `Length of inShape ` +
+            `(${xShape.length}) and rank of dy (${dy.rank}) must match`);
+        let xShape5D = xShape;
+        let dy5D = dy;
+        let reshapedTo5D = false;
+        if (dy.rank === 4) {
+            reshapedTo5D = true;
+            dy5D = reshape$2(dy, [1, dy.shape[0], dy.shape[1], dy.shape[2], dy.shape[3]]);
+            xShape5D = [1, xShape[0], xShape[1], xShape[2], xShape[3]];
+        }
+        const inDepth = xShape5D[4];
+        const outDepth = dy5D.shape[4];
+        assert(xShape5D.length === 5, () => `Error in conv3dDerInput: inShape must be length 5, but got length ` +
+            `${xShape5D.length}.`);
+        assert(dy5D.rank === 5, () => `Error in conv3dDerInput: dy must be rank 5, but got ` +
+            `rank ${dy5D.rank}`);
+        assert(filter.rank === 5, () => `Error in conv3dDerInput: filter must be rank 5, but got ` +
+            `rank ${filter.rank}`);
+        assert(inDepth === filter.shape[3], () => `Error in conv3dDerInput: depth of input (${inDepth}) must ` +
+            `match input depth for filter ${filter.shape[3]}.`);
+        assert(outDepth === filter.shape[4], () => `Error in conv3dDerInput: depth of output (${outDepth}) must ` +
+            `match output depth for filter ${filter.shape[4]}.`);
+        const inputs = { dy: dy5D, filter };
+        const attrs = { pad, strides, inputShape: xShape5D };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(Conv3DBackpropInputV2, inputs, attrs);
+        if (reshapedTo5D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3], res.shape[4]]);
+        }
+        return res;
+    }
+    const conv3DBackpropInput$1 = op({ conv3DBackpropInput_ });
+
+    /**
+     * Computes the transposed 3D convolution of a volume, also known as a
+     * deconvolution.
+     *
+     * @param x The input image, of rank 5 or rank 4, of shape
+     *   `[batch, depth, height, width, inDepth]`. If rank 4, batch of 1 is assumed.
+     * @param filter The filter, rank 4, of shape
+     *     `[depth, filterHeight, filterWidth, outDepth, inDepth]`.
+     *     `inDepth` must match `inDepth` in `x`.
+     * @param outputShape Output shape, of rank 5 or rank 4:
+     *     `[batch, depth, height, width, outDepth]`. If rank 3, batch of 1 is
+     *    assumed.
+     * @param strides The strides of the original convolution:
+     *     `[strideDepth, strideHeight, strideWidth]`.
+     * @param pad  The type of padding algorithm used in the non-transpose version
+     *    of the op.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function conv3dTranspose_(x, filter, outputShape, strides, pad) {
+        const $x = convertToTensor(x, 'x', 'conv3dTranspose');
+        const $filter = convertToTensor(filter, 'filter', 'conv3dTranspose');
+        return conv3DBackpropInput$1(outputShape, $x, $filter, strides, pad);
+    }
+    const conv3dTranspose = op({ conv3dTranspose_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes cos of the input `tf.Tensor` element-wise: `cos(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, Math.PI / 2, Math.PI * 3 / 4]);
+     *
+     * x.cos().print();  // or tf.cos(x)
+     * ```
+     * @param x The input tensor. Must be float32 type.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function cos_(x) {
+        const $x = convertToTensor(x, 'x', 'cos', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Cos, inputs);
+    }
+    const cos$2 = op({ cos_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes hyperbolic cos of the input `tf.Tensor` element-wise: `cosh(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.cosh().print();  // or tf.cosh(x)
+     * ```
+     * @param x The input tensor. Must be float32 type.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function cosh_(x) {
+        const $x = convertToTensor(x, 'x', 'cosh', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Cosh, inputs);
+    }
+    const cosh$2 = op({ cosh_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the cumulative sum of a `tf.Tensor` along `axis`.
+     *
+     * ```js
+     * const x = tf.tensor([1, 2, 3, 4]);
+     * x.cumsum().print();
+     * ```
+     * ```js
+     * const x = tf.tensor([[1, 2], [3, 4]]);
+     * x.cumsum().print();
+     * ```
+     *
+     * @param x The input tensor to be summed.
+     * @param axis The axis along which to sum. Optional. Defaults to 0.
+     * @param exclusive Whether to perform exclusive cumulative sum. Optional.
+     *     Defaults to false. If set to true then the sum of each tensor entry
+     *     does not include its own value, but only the values previous to it
+     *     along the specified axis.
+     * @param reverse Whether to sum in the opposite direction. Optional.
+     *     Defaults to false.
+     *
+     * @doc {heading: 'Operations', subheading: 'Scan'}
+     */
+    function cumsum_(x, axis = 0, exclusive = false, reverse = false) {
+        const $x = convertToTensor(x, 'x', 'cumsum');
+        const inputs = { x: $x };
+        const attrs = { axis, exclusive, reverse };
+        return ENGINE.runKernel(Cumsum, inputs, attrs);
+    }
+    const cumsum$2 = op({ cumsum_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Outputs a vector with length `size` and the same dtype as `weights`.
+     *
+     * If `weights` are empty, then index `i` stores the number of times the value
+     * `i` is counted in `x`. If `weights` are non-empty, then index `i` stores the
+     * sum of the value in `weights` at each index where the corresponding value in
+     * `x` is `i`.
+     *
+     * Values in `x` outside of the range [0, size) are ignored.
+     *
+     * @param x The input int tensor, rank 1 or rank 2.
+     * @param weights The weights tensor, must have the same shape as x, or a
+     *     length-0 Tensor, in which case it acts as all weights equal to 1.
+     * @param size Non-negative integer.
+     * @param binaryOutput Optional. Whether the kernel should count the appearance
+     *     or number of occurrences. Defaults to False.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function denseBincount_(x, weights, size, binaryOutput = false) {
+        const $x = convertToTensor(x, 'x', 'denseBincount');
+        const $weights = convertToTensor(weights, 'weights', 'denseBincount');
+        assert($x.dtype === 'int32', () => `Error in denseBincount: input ` +
+            `dtype must be int32, but got ${$x.dtype}`);
+        assert($x.rank <= 2, () => `Error in denseBincount: input must be at most rank 2, but got ` +
+            `rank ${$x.rank}.`);
+        assert(size >= 0, () => `size must be non-negative, but got ${size}.`);
+        assert($weights.size === $x.size || $weights.size === 0, () => `Error in denseBincount: weights must have the same shape as x or ` +
+            `0-length, but got x shape: ${$x.shape}, weights shape: ` +
+            `${$weights.shape}.`);
+        const inputs = { x: $x, weights: $weights };
+        const attrs = { size, binaryOutput };
+        return ENGINE.runKernel(DenseBincount, inputs, attrs);
+    }
+    const denseBincount$2 = op({ denseBincount_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Rearranges data from depth into blocks of spatial data. More specifically,
+     * this op outputs a copy of the input tensor where values from the `depth`
+     * dimension are moved in spatial blocks to the `height` and `width` dimensions.
+     * The attr `blockSize` indicates the input block size and how the data is
+     * moved.
+     *
+     *  - Chunks of data of size `blockSize * blockSize` from depth are rearranged
+     * into non-overlapping blocks of size `blockSize x blockSize`
+     *
+     *  - The width the output tensor is `inputWidth * blockSize`, whereas the
+     * height is `inputHeight * blockSize`
+     *
+     *  - The Y, X coordinates within each block of the output image are determined
+     * by the high order component of the input channel index
+     *
+     *  - The depth of the input tensor must be divisible by `blockSize *
+     * blockSize`
+     *
+     * The `dataFormat` attr specifies the layout of the input and output tensors
+     * with the following options: "NHWC": [ `batch, height, width, channels` ]
+     * "NCHW": [ `batch, channels, height, width` ]
+     *
+     * ```js
+     * const x = tf.tensor4d([1, 2, 3, 4], [1, 1, 1, 4]);
+     * const blockSize = 2;
+     * const dataFormat = "NHWC";
+     *
+     * tf.depthToSpace(x, blockSize, dataFormat).print();
+     * ```
+     *
+     * @param x The input tensor of rank 4
+     * @param blockSIze  An `int` that is `>= 2`. The size of the spatial block
+     * @param dataFormat An optional string from: "NHWC", "NCHW". Defaults to "NHWC"
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function depthToSpace_(x, blockSize, dataFormat = 'NHWC') {
+        const $x = convertToTensor(x, 'x', 'depthToSpace', 'float32');
+        const inputHeight = (dataFormat === 'NHWC') ? $x.shape[1] : $x.shape[2];
+        const inputWidth = (dataFormat === 'NHWC') ? $x.shape[2] : $x.shape[3];
+        const inputDepth = (dataFormat === 'NHWC') ? $x.shape[3] : $x.shape[1];
+        assert(blockSize > 1, () => `blockSize should be > 1 for depthToSpace, but was: ${blockSize}`);
+        assert(inputHeight * blockSize >= 0, () => `Negative dimension size caused by overflow when multiplying
+    ${inputHeight} and ${blockSize}  for depthToSpace with input shape
+    ${$x.shape}`);
+        assert(inputWidth * blockSize >= 0, () => `Negative dimension size caused by overflow when multiplying
+    ${inputWidth} and ${blockSize} for depthToSpace with input shape
+        ${$x.shape}`);
+        assert((inputDepth % (blockSize * blockSize) === 0), () => `Dimension size must be evenly divisible by ${blockSize * blockSize} but is ${inputDepth} for depthToSpace with input shape ${$x.shape}`);
+        const inputs = { x: $x };
+        const attrs = { blockSize, dataFormat };
+        return ENGINE.runKernel(DepthToSpace, inputs, attrs);
+    }
+    const depthToSpace$2 = op({ depthToSpace_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Depthwise 2D convolution.
+     *
+     * Given a 4D `input` array and a `filter` array of shape
+     * `[filterHeight, filterWidth, inChannels, channelMultiplier]` containing
+     * `inChannels` convolutional filters of depth 1, this op applies a
+     * different filter to each input channel (expanding from 1 channel to
+     * `channelMultiplier` channels for each), then concatenates the results
+     * together. The output has `inChannels * channelMultiplier` channels.
+     *
+     * See
+     * [https://www.tensorflow.org/api_docs/python/tf/nn/depthwise_conv2d](
+     *     https://www.tensorflow.org/api_docs/python/tf/nn/depthwise_conv2d)
+     * for more details.
+     *
+     * @param x The input tensor, of rank 4 or rank 3, of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is
+     * assumed.
+     * @param filter The filter tensor, rank 4, of shape
+     *     `[filterHeight, filterWidth, inChannels, channelMultiplier]`.
+     * @param strides The strides of the convolution: `[strideHeight,
+     * strideWidth]`. If strides is a single number, then `strideHeight ==
+     * strideWidth`.
+     * @param pad The type of padding algorithm.
+     *   - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *   - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *   - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     in atrous convolution. Defaults to `[1, 1]`. If `rate` is a single
+     *     number, then `dilationHeight == dilationWidth`. If it is greater than
+     *     1, then all values of `strides` must be 1.
+     * @param dataFormat: An optional string from: "NHWC", "NCHW". Defaults to
+     *     "NHWC". Specify the data format of the input and output data. With the
+     *     default format "NHWC", the data is stored in the order of: [batch,
+     *     height, width, channels]. Only "NHWC" is currently supported.
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function depthwiseConv2d_(x, filter, strides, pad, dataFormat = 'NHWC', dilations = [1, 1], dimRoundingMode) {
+        const $x = convertToTensor(x, 'x', 'depthwiseConv2d', 'float32');
+        const $filter = convertToTensor(filter, 'filter', 'depthwiseConv2d', 'float32');
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        assert(x4D.rank === 4, () => `Error in depthwiseConv2d: input must be rank 4, but got ` +
+            `rank ${x4D.rank}.`);
+        assert($filter.rank === 4, () => `Error in depthwiseConv2d: filter must be rank 4, but got rank ` +
+            `${$filter.rank}.`);
+        assert(x4D.shape[3] === $filter.shape[2], () => `Error in depthwiseConv2d: number of input channels ` +
+            `(${x4D.shape[3]}) must match the inChannels dimension in ` +
+            `filter ${$filter.shape[2]}.`);
+        checkPadOnDimRoundingMode('depthwiseConv2d', pad, dimRoundingMode);
+        const inputs = { x: x4D, filter: $filter };
+        const attrs = { strides, pad, dataFormat, dilations, dimRoundingMode };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(DepthwiseConv2dNative, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const depthwiseConv2d$1 = op({ depthwiseConv2d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns a diagonal tensor with a given diagonal values.
+     *
+     * Given a diagonal, this operation returns a tensor with the diagonal and
+     * everything else padded with zeros.
+     *
+     * Assume the input has dimensions `[D1,..., Dk]`, then the output is a tensor
+     * of rank 2k with dimensions `[D1,..., Dk, D1,..., Dk]`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     *
+     * tf.diag(x).print()
+     * ```
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4, 5, 6, 6, 8], [4, 2])
+     *
+     * tf.diag(x).print()
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function diag_(x) {
+        const $x = convertToTensor(x, 'x', 'diag');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Diag, inputs);
+    }
+    const diag$2 = op({ diag_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the grayscale dilation over the input `x`.
+     *
+     * @param x The input tensor, rank 3 or rank 4 of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is assumed.
+     * @param filter The filter tensor, rank 3, of shape
+     *     `[filterHeight, filterWidth, depth]`.
+     * @param strides The strides of the sliding window for each dimension of the
+     *     input tensor: `[strideHeight, strideWidth]`.
+     *     If `strides` is a single number,
+     *     then `strideHeight == strideWidth`.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1*1x1.
+     *    - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dataFormat Specify the data format of the input and output data.
+     *      Defaults to 'NHWC'. Only 'NHWC' is currently supported. With the
+     *      default format "NHWC", the data is stored in the order of: [batch,
+     *      height, width, channels].
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     for atrous morphological dilation. Defaults to `[1, 1]`. If `dilations`
+     *     is a single number, then `dilationHeight == dilationWidth`. If it is
+     *     greater than 1, then all values of `strides` must be 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function dilation2d_(x, filter, strides, pad, dilations = [1, 1], dataFormat = 'NHWC') {
+        const $x = convertToTensor(x, 'x', 'dilation2d');
+        const $filter = convertToTensor(filter, 'filter', 'dilation2d');
+        assert($x.rank === 3 || $x.rank === 4, () => `Error in dilation2d: input must be rank 3 or 4, but got rank ` +
+            `${$x.rank}.`);
+        assert($filter.rank === 3, () => `Error in dilation2d: filter must be rank 3, but got rank ` +
+            `${$filter.rank}.`);
+        assert(dataFormat === 'NHWC', () => `Error in dilation2d: Only NHWC is currently supported, ` +
+            `but got dataFormat of ${dataFormat}`);
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+            reshapedTo4D = true;
+        }
+        const inputs = { x: x4D, filter: $filter };
+        const attrs = { strides, pad, dilations };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(Dilation2D, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const dilation2d = op({ dilation2d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of (a == b) element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     * const b = tf.tensor1d([2, 2, 2]);
+     *
+     * a.equal(b).print();
+     * ```
+     *
+     * @param a The first input tensor.
+     * @param b The second input tensor. Must have the same dtype as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function equal_(a, b) {
+        let $a = convertToTensor(a, 'a', 'equal', 'string_or_numeric');
+        let $b = convertToTensor(b, 'b', 'equal', 'string_or_numeric');
+        [$a, $b] = makeTypesMatch($a, $b);
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Equal, inputs);
+    }
+    const equal$2 = op({ equal_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the elements, either `a` or `b` depending on the `condition`.
+     *
+     * If the condition is true, select from `a`, otherwise select from `b`.
+     *
+     * ```js
+     * const cond = tf.tensor1d([false, false, true], 'bool');
+     * const a = tf.tensor1d([1 , 2, 3]);
+     * const b = tf.tensor1d([-1, -2, -3]);
+     *
+     * a.where(cond, b).print();
+     * ```
+     *
+     * @param condition The input condition. Must be of dtype bool.
+     * @param a If `condition` is rank 1, `a` may have a higher rank but
+     *     its first dimension must match the size of `condition`.
+     * @param b A tensor with the same dtype as `a` and with shape that is
+     *     compatible with `a`.
+     * @return A tensor with same dtype as `a` and `b`, and shape that is
+     *     broadcastable from `a` and `b`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function where_(condition, a, b) {
+        const $a = convertToTensor(a, 'a', 'where');
+        const $b = convertToTensor(b, 'b', 'where');
+        const $condition = convertToTensor(condition, 'condition', 'where', 'bool');
+        // TODO: move this logic to forward function when the broadcastTo op is
+        // implemented in WASM.
+        // Find the broadcastable shape for $condition, $a, and $b.
+        const broadcastShape = assertAndGetBroadcastShape(assertAndGetBroadcastShape($condition.shape, $a.shape), $b.shape);
+        const $broadcastedCondition = broadcastTo($condition, broadcastShape);
+        const $broadcastedA = broadcastTo($a, broadcastShape);
+        const $broadcastedB = broadcastTo($b, broadcastShape);
+        const inputs = {
+            condition: $broadcastedCondition,
+            t: $broadcastedA,
+            e: $broadcastedB
+        };
+        return ENGINE.runKernel(Select, inputs);
+    }
+    const where = op({ where_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with all elements set to 0 with the same shape as the
+     * given tensor.
+     *
+     * ```js
+     * const x = tf.tensor([1, 2]);
+     * tf.zerosLike(x).print();
+     * ```
+     *
+     * @param x The tensor of required shape.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function zerosLike_(x) {
+        const $x = convertToTensor(x, 'x', 'zerosLike');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(ZerosLike, inputs);
+    }
+    const zerosLike$2 = op({ zerosLike_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Divides two `tf.Tensor`s element-wise, A / B. Supports broadcasting. Return 0
+     * if denominator is 0.
+     *
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 4, 9, 16]);
+     * const b = tf.tensor1d([1, 2, 3, 4]);
+     * const c = tf.tensor1d([0, 0, 0, 0]);
+     *
+     * a.divNoNan(b).print();  // or tf.divNoNan(a, b)
+     * a.divNoNan(c).print();  // or tf.divNoNan(a, c)
+     * ```
+     *
+     * ```js
+     * // Broadcast div a with b.
+     * const a = tf.tensor1d([2, 4, 6, 8]);
+     * const b = tf.scalar(2);
+     * const c = tf.scalar(0);
+     *
+     * a.divNoNan(b).print();  // or tf.divNoNan(a, b)
+     * a.divNoNan(c).print();  // or tf.divNoNan(a, c)
+     * ```
+     *
+     * @param a The first tensor as the numerator.
+     * @param b The second tensor as the denominator. Must have the same dtype as
+     * `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function divNoNan_(a, b) {
+        // TODO: Make this into its own kernel.
+        let $a = convertToTensor(a, 'a', 'div');
+        let $b = convertToTensor(b, 'b', 'div');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const divResult = div$1($a, $b);
+        const zeros = zerosLike$2(divResult);
+        const bEqualsZero = equal$2($b, zeros);
+        return where(bEqualsZero, zeros, divResult);
+    }
+    const divNoNan = op({ divNoNan_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the dot product of two matrices and/or vectors, `t1` and `t2`.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2]);
+     * const b = tf.tensor2d([[1, 2], [3, 4]]);
+     * const c = tf.tensor2d([[1, 2, 3], [4, 5, 6]]);
+     *
+     * a.dot(b).print();  // or tf.dot(a, b)
+     * b.dot(a).print();
+     * b.dot(c).print();
+     * ```
+     * @param t1 The first tensor in the dot operation.
+     * @param t2 The second tensor in the dot operation.
+     *
+     * @doc {heading: 'Operations', subheading: 'Matrices'}
+     */
+    function dot_(t1, t2) {
+        const $t1 = convertToTensor(t1, 't1', 'dot');
+        const $t2 = convertToTensor(t2, 't2', 'dot');
+        assert(($t1.rank === 1 || $t1.rank === 2) && ($t2.rank === 1 || $t2.rank === 2), () => `Error in dot: inputs must all be rank 1 or 2, but got ranks ` +
+            `${$t1.rank} and ${$t2.rank}.`);
+        const t1Inner = ($t1.rank === 1 ? $t1.size : $t1.shape[1]);
+        const t2Inner = ($t2.rank === 1 ? $t2.size : $t2.shape[0]);
+        assert(t1Inner === t2Inner, () => `Error in dot: inner dimensions of inputs must match, but got ` +
+            `${t1Inner} and ${t2Inner}.`);
+        if ($t1.rank === 1 && $t2.rank === 1) {
+            const t12D = reshape$2($t1, [1, -1]);
+            const t22D = reshape$2($t2, [-1, 1]);
+            const t1t2 = matMul$1(t12D, t22D);
+            return reshape$2(t1t2, []);
+        }
+        else if ($t1.rank === 1 && $t2.rank === 2) {
+            const t12D = reshape$2($t1, [1, -1]);
+            const t22D = reshape$2($t2, [$t2.shape[0], $t2.shape[1]]);
+            const t1t2 = matMul$1(t12D, t22D);
+            return reshape$2(t1t2, [t1t2.size]);
+        }
+        else if ($t1.rank === 2 && $t2.rank === 1) {
+            const t22D = reshape$2($t2, [-1, 1]);
+            const t1t2 = matMul$1($t1, t22D);
+            return reshape$2(t1t2, [t1t2.size]);
+        }
+        else {
+            const t22D = reshape$2($t2, [$t2.shape[0], $t2.shape[1]]);
+            const t1t2 = matMul$1($t1, t22D);
+            return t1t2;
+        }
+    }
+    const dot = op({ dot_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Tensor contraction over specified indices and outer product.
+     *
+     * `einsum` allows defining Tensors by defining their element-wise computation.
+     * This computation is based on
+     * [Einstein summation](https://en.wikipedia.org/wiki/Einstein_notation).
+     *
+     * Some special cases include:
+     *
+     * Matrix multiplication:
+     * ```js
+     * const x = tf.tensor2d([[1, 2, 3], [4, 5, 6]]);
+     * const y = tf.tensor2d([[0, 1], [2, 3], [4, 5]]);
+     * x.print();
+     * y.print();
+     * tf.einsum('ij,jk->ik', x, y).print();
+     * ```
+     *
+     * Dot product:
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     * const y = tf.tensor1d([0, 1, 2]);
+     * x.print();
+     * y.print();
+     * tf.einsum('i,i->', x, y).print();
+     * ```
+     *
+     * Batch dot product:
+     * ```js
+     * const x = tf.tensor2d([[1, 2, 3], [4, 5, 6]]);
+     * const y = tf.tensor2d([[0, 1, 2], [3, 4, 5]]);
+     * x.print();
+     * y.print();
+     * tf.einsum('bi,bi->b', x, y).print();
+     * ```
+     *
+     * Outer prouduct:
+     * ```js
+     * const x = tf.tensor1d([1, 3, 5]);
+     * const y = tf.tensor1d([2, 4, 6]);
+     * x.print();
+     * y.print();
+     * tf.einsum('i,j->ij', x, y).print();
+     * ```
+     *
+     * Matrix transpose:
+     * ```js
+     * const x = tf.tensor2d([[1, 2], [3, 4]]);
+     * x.print();
+     * tf.einsum('ij->ji', x).print();
+     * ```
+     *
+     * Batch matrix transpose:
+     * ```js
+     * const x = tf.tensor3d([[[1, 2], [3, 4]], [[-1, -2], [-3, -4]]]);
+     * x.print();
+     * tf.einsum('bij->bji', x).print();
+     * ```
+     *
+     * Limitations:
+     *
+     * This implementation of einsum has the following limitations:
+     *
+     * - Does not support >2 input tensors.
+     * - Does not support duplicate axes for any given input tensor. E.g., equation
+     *   'ii->' is not suppoted.
+     * - The `...` notation is not supported.
+     *
+     * @param equation a string describing the contraction, in the same format as
+     * [numpy.einsum](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html).
+     * @param tensors the input(s) to contract (each one a Tensor), whose shapes
+     *     should be consistent with equation.
+     * @returns The output tensor.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Matrices'}
+     */
+    function einsum_(equation, ...tensors) {
+        const $tensors = tensors.map((t, i) => convertToTensor(t, `tensors${i}`, 'einsum'));
+        const attrs = { equation };
+        return ENGINE.runKernel(Einsum, $tensors, attrs);
+    }
+    const einsum$2 = op({ einsum_ });
+
+    /**
+     * @license
      * Copyright 2020 Google LLC. All Rights Reserved.
      * Licensed under the Apache License, Version 2.0 (the "License");
      * you may not use this file except in compliance with the License.
@@ -28114,6 +34152,620 @@
         return ENGINE.runKernel(Elu, inputs);
     }
     const elu$2 = op({ elu_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes gause error function of the input `tf.Tensor` element-wise:
+     * `erf(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, .1, -.1, .7]);
+     *
+     * x.erf().print(); // or tf.erf(x);
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function erf_(x) {
+        let $x = convertToTensor(x, 'x', 'erf');
+        assert($x.dtype === 'int32' || $x.dtype === 'float32', () => 'Input dtype must be `int32` or `float32`.');
+        if ($x.dtype === 'int32') {
+            $x = cast$2($x, 'float32');
+        }
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Erf, inputs);
+    }
+    const erf$2 = op({ erf_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes exponential of the input `tf.Tensor` element-wise. `e ^ x`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, -3]);
+     *
+     * x.exp().print();  // or tf.exp(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function exp_(x) {
+        const $x = convertToTensor(x, 'x', 'exp');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Exp, inputs);
+    }
+    const exp$2 = op({ exp_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns a `tf.Tensor` that has expanded rank, by inserting a dimension
+     * into the tensor's shape.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     * const axis = 1;
+     * x.expandDims(axis).print();
+     * ```
+     *
+     * @param x The input tensor whose dimensions to be expanded.
+     * @param axis The dimension index at which to insert shape of `1`. Defaults
+     *     to 0 (the first dimension).
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function expandDims_(x, axis = 0) {
+        const $x = convertToTensor(x, 'x', 'expandDims', 'string_or_numeric');
+        assert(axis <= $x.rank, () => 'Axis must be <= rank of the tensor');
+        const inputs = { input: $x };
+        const attrs = { dim: axis };
+        return ENGINE.runKernel(ExpandDims, inputs, attrs);
+    }
+    const expandDims$2 = op({ expandDims_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes exponential of the input `tf.Tensor` minus one element-wise.
+     * `e ^ x - 1`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, -3]);
+     *
+     * x.expm1().print();  // or tf.expm1(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function expm1_(x) {
+        const $x = convertToTensor(x, 'x', 'expm1');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Expm1, inputs);
+    }
+    const expm1$2 = op({ expm1_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Construct a tensor by repeating it the number of times given by reps.
+     *
+     * This operation creates a new tensor by replicating `input` `reps`
+     * times. The output tensor's i'th dimension has `input.shape[i] *
+     * reps[i]` elements, and the values of `input` are replicated
+     * `reps[i]` times along the i'th dimension. For example, tiling
+     * `[a, b, c, d]` by `[2]` produces `[a, b, c, d, a, b, c, d]`.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2]);
+     *
+     * a.tile([2]).print();    // or a.tile([2])
+     * ```
+     *
+     * ```js
+     * const a = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * a.tile([1, 2]).print();  // or a.tile([1, 2])
+     * ```
+     * @param x The tensor to tile.
+     * @param reps Determines the number of replications per dimension.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function tile_(x, reps) {
+        const $x = convertToTensor(x, 'x', 'tile', 'string_or_numeric');
+        assert($x.rank === reps.length, () => `Error in transpose: rank of input ${$x.rank} ` +
+            `must match length of reps ${reps}.`);
+        const inputs = { x: $x };
+        const attrs = { reps };
+        return ENGINE.runKernel(Tile, inputs, attrs);
+    }
+    const tile$2 = op({ tile_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Create an identity matrix.
+     *
+     * @param numRows Number of rows.
+     * @param numColumns Number of columns. Defaults to `numRows`.
+     * @param batchShape If provided, will add the batch shape to the beginning
+     *   of the shape of the returned `tf.Tensor` by repeating the identity
+     *   matrix.
+     * @param dtype Data type.
+     * @returns Identity matrix of the specified size and data type, possibly
+     *   with batch repetition if `batchShape` is specified.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function eye_(numRows, numColumns, batchShape, dtype = 'float32') {
+        if (numColumns == null) {
+            numColumns = numRows;
+        }
+        const buff = buffer([numRows, numColumns], dtype);
+        const n = numRows <= numColumns ? numRows : numColumns;
+        for (let i = 0; i < n; ++i) {
+            buff.set(1, i, i);
+        }
+        const out = reshape$2(buff.toTensor(), [numRows, numColumns]);
+        if (batchShape == null) {
+            return out;
+        }
+        else {
+            if (batchShape.length === 1) {
+                return tile$2(expandDims$2(out, 0), [batchShape[0], 1, 1]);
+            }
+            else if (batchShape.length === 2) {
+                // tslint:disable-next-line:no-unnecessary-type-assertion
+                return tile$2(expandDims$2(expandDims$2(out, 0), 0), [batchShape[0], batchShape[1], 1, 1]);
+            }
+            else if (batchShape.length === 3) {
+                // tslint:disable-next-line:no-unnecessary-type-assertion
+                return tile$2(expandDims$2(expandDims$2(expandDims$2(out, 0), 0), 0), [
+                    batchShape[0], batchShape[1], batchShape[2], 1, 1
+                ]);
+            }
+            else {
+                throw new Error(`eye() currently supports only 1D and 2D ` +
+                    // tslint:disable-next-line:no-any
+                    `batchShapes, but received ${batchShape.length}D.`);
+            }
+        }
+    }
+    const eye = op({ eye_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` filled with a scalar value.
+     *
+     * ```js
+     * tf.fill([2, 2], 4).print();
+     * ```
+     *
+     * @param shape An array of integers defining the output tensor shape.
+     * @param value The scalar value to fill the tensor with.
+     * @param dtype The type of an element in the resulting tensor. Defaults to
+     * 'float'.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function fill$2(shape, value, dtype) {
+        const attrs = { shape, value, dtype };
+        return ENGINE.runKernel(Fill, {}, attrs);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes floor of input `tf.Tensor` element-wise: `floor(x)`.
+     *
+     * ```js
+     * const x = tf.tensor1d([.6, 1.1, -3.3]);
+     *
+     * x.floor().print();  // or tf.floor(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function floor_(x) {
+        const $x = convertToTensor(x, 'x', 'floor', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Floor, inputs);
+    }
+    const floor$2 = op({ floor_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Gather slices from tensor `x`'s axis `axis` according to `indices`.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     * const indices = tf.tensor1d([1, 3, 3], 'int32');
+     *
+     * x.gather(indices).print();
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     * const indices = tf.tensor1d([1, 1, 0], 'int32');
+     *
+     * x.gather(indices).print();
+     * ```
+     * @param x The input tensor whose slices to be gathered.
+     * @param indices The indices of the values to extract.
+     * @param axis The axis over which to select values. Defaults to 0.
+     * @param batchDims Optional. The number of batch dimensions. It must be less
+     *     than or equal to rank(indices). Defaults to 0.
+     *     The output tensor will have shape of
+     *     `x.shape[:axis] + indices.shape[batchDims:] + x.shape[axis + 1:]`
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function gather_(x, indices, axis = 0, batchDims = 0) {
+        const $x = convertToTensor(x, 'x', 'gather');
+        const $indices = convertToTensor(indices, 'indices', 'gather', 'int32');
+        const inputs = { x: $x, indices: $indices };
+        const attrs = { axis, batchDims };
+        return ENGINE.runKernel(GatherV2, inputs, attrs);
+    }
+    const gather = op({ gather_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of (a > b) element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     * const b = tf.tensor1d([2, 2, 2]);
+     *
+     * a.greater(b).print();
+     * ```
+     *
+     * @param a The first input tensor.
+     * @param b The second input tensor. Must have the same dtype as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function greater_(a, b) {
+        let $a = convertToTensor(a, 'a', 'greater', 'string_or_numeric');
+        let $b = convertToTensor(b, 'b', 'greater', 'string_or_numeric');
+        [$a, $b] = makeTypesMatch($a, $b);
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Greater, inputs);
+    }
+    const greater$2 = op({ greater_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of (a >= b) element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     * const b = tf.tensor1d([2, 2, 2]);
+     *
+     * a.greaterEqual(b).print();
+     * ```
+     *
+     * @param a The first input tensor.
+     * @param b The second input tensor. Must have the same dtype as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function greaterEqual_(a, b) {
+        let $a = convertToTensor(a, 'a', 'greaterEqual', 'string_or_numeric');
+        let $b = convertToTensor(b, 'b', 'greaterEqual', 'string_or_numeric');
+        [$a, $b] = makeTypesMatch($a, $b);
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(GreaterEqual, inputs);
+    }
+    const greaterEqual$2 = op({ greaterEqual_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the imaginary part of a complex (or real) tensor.
+     *
+     * Given a tensor input, this operation returns a tensor of type float that is
+     * the imaginary part of each element in input considered as a complex number.
+     * If input is real, a tensor of all zeros is returned.
+     *
+     * ```js
+     * const x = tf.complex([-2.25, 3.25], [4.75, 5.75]);
+     * tf.imag(x).print();
+     * ```
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function imag_(input) {
+        const $input = convertToTensor(input, 'input', 'imag');
+        const inputs = { input: $input };
+        return ENGINE.runKernel(Imag, inputs);
+    }
+    const imag$2 = op({ imag_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns which elements of x are finite.
+     *
+     * ```js
+     * const x = tf.tensor1d([NaN, Infinity, -Infinity, 0, 1]);
+     *
+     * x.isFinite().print();  // or tf.isNaN(x)
+     * ```
+     * @param x The input Tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function isFinite_(x) {
+        const $x = convertToTensor(x, 'x', 'isFinite');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(IsFinite, inputs);
+    }
+    const isFinite$3 = op({ isFinite_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns which elements of x are Infinity or -Infinity.
+     *
+     * ```js
+     * const x = tf.tensor1d([NaN, Infinity, -Infinity, 0, 1]);
+     *
+     * x.isInf().print();  // or tf.isNaN(x)
+     * ```
+     * @param x The input Tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function isInf_(x) {
+        const $x = convertToTensor(x, 'x', 'isInf');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(IsInf, inputs);
+    }
+    const isInf$2 = op({ isInf_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * RReturns which elements of x are NaN.
+     *
+     * ```js
+     * const x = tf.tensor1d([NaN, Infinity, -Infinity, 0, 1]);
+     *
+     * x.isNaN().print();  // or tf.isNaN(x)
+     * ```
+     * @param x The input Tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function isNaN_(x) {
+        const $x = convertToTensor(x, 'x', 'isNaN');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(IsNan, inputs);
+    }
+    const isNaN$3 = op({ isNaN_ });
 
     /**
      * @license
@@ -28155,6 +34807,788 @@
         return ENGINE.runKernel(LeakyRelu, inputs, attrs);
     }
     const leakyRelu$2 = op({ leakyRelu_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of (a < b) element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     * const b = tf.tensor1d([2, 2, 2]);
+     *
+     * a.less(b).print();
+     * ```
+     * @param a The first input tensor.
+     * @param b The second input tensor. Must have the same dtype as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function less_(a, b) {
+        let $a = convertToTensor(a, 'a', 'less', 'string_or_numeric');
+        let $b = convertToTensor(b, 'b', 'less', 'string_or_numeric');
+        [$a, $b] = makeTypesMatch($a, $b);
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Less, inputs);
+    }
+    const less$2 = op({ less_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of (a <= b) element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     * const b = tf.tensor1d([2, 2, 2]);
+     *
+     * a.lessEqual(b).print();
+     * ```
+     *
+     * @param a The first input tensor.
+     * @param b The second input tensor. Must have the same dtype as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function lessEqual_(a, b) {
+        let $a = convertToTensor(a, 'a', 'lessEqual', 'string_or_numeric');
+        let $b = convertToTensor(b, 'b', 'lessEqual', 'string_or_numeric');
+        [$a, $b] = makeTypesMatch($a, $b);
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(LessEqual, inputs);
+    }
+    const lessEqual$2 = op({ lessEqual_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Return an evenly spaced sequence of numbers over the given interval.
+     *
+     * ```js
+     * tf.linspace(0, 9, 10).print();
+     * ```
+     * @param start The start value of the sequence.
+     * @param stop The end value of the sequence.
+     * @param num The number of values to generate.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function linspace(start, stop, num) {
+        if (num <= 0) {
+            throw new Error('The number of values should be positive.');
+        }
+        const attrs = { start, stop, num };
+        return ENGINE.runKernel(LinSpace, {}, attrs);
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Normalizes the activation of a local neighborhood across or within
+     * channels.
+     *
+     * @param x The input tensor. The 4-D input tensor is treated as a 3-D array
+     *     of 1D vectors (along the last dimension), and each vector is
+     *     normalized independently.
+     * @param depthRadius The number of adjacent channels in the 1D normalization
+     *     window.
+     * @param bias A constant bias term for the basis.
+     * @param alpha A scale factor, usually positive.
+     * @param beta An exponent.
+     *
+     * @doc {heading: 'Operations', subheading: 'Normalization'}
+     */
+    function localResponseNormalization_(x, depthRadius = 5, bias = 1, alpha = 1, beta = 0.5) {
+        const $x = convertToTensor(x, 'x', 'localResponseNormalization');
+        assert($x.rank === 4 || $x.rank === 3, () => `Error in localResponseNormalization: x must be rank 3 or 4 but got
+               rank ${$x.rank}.`);
+        assert(isInt(depthRadius), () => `Error in localResponseNormalization: depthRadius must be an ` +
+            `integer but got depthRadius ${depthRadius}.`);
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        const inputs = { x: x4D };
+        const attrs = { depthRadius, bias, alpha, beta };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(LRN, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        else {
+            return res;
+        }
+    }
+    const localResponseNormalization = op({ localResponseNormalization_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes natural logarithm of the input `tf.Tensor` element-wise: `ln(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, Math.E]);
+     *
+     * x.log().print();  // or tf.log(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function log_(x) {
+        const $x = convertToTensor(x, 'x', 'log', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Log, inputs);
+    }
+    const log$2 = op({ log_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes natural logarithm of the input `tf.Tensor` plus one
+     * element-wise: `ln(1 + x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, Math.E - 1]);
+     *
+     * x.log1p().print();  // or tf.log1p(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function log1p_(x) {
+        const $x = convertToTensor(x, 'x', 'log1p');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Log1p, inputs);
+    }
+    const log1p$2 = op({ log1p_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Provided `f(x)`, returns another function `g(x, dy?)`, which gives the
+     * gradient of `f(x)` with respect to `x`.
+     *
+     * If `dy` is provided, the gradient of `f(x).mul(dy).sum()` with respect to
+     * `x` is computed instead. `f(x)` must take a single tensor `x` and return a
+     * single tensor `y`. If `f()` takes multiple inputs, use `tf.grads` instead.
+     *
+     * ```js
+     * // f(x) = x ^ 2
+     * const f = x => x.square();
+     * // f'(x) = 2x
+     * const g = tf.grad(f);
+     *
+     * const x = tf.tensor1d([2, 3]);
+     * g(x).print();
+     * ```
+     *
+     * ```js
+     * // f(x) = x ^ 3
+     * const f = x => x.pow(tf.scalar(3, 'int32'));
+     * // f'(x) = 3x ^ 2
+     * const g = tf.grad(f);
+     * // f''(x) = 6x
+     * const gg = tf.grad(g);
+     *
+     * const x = tf.tensor1d([2, 3]);
+     * gg(x).print();
+     * ```
+     *
+     * @param f The function f(x), to compute gradient for.
+     *
+     * @doc {heading: 'Training', subheading: 'Gradients'}
+     */
+    function grad(f) {
+        assert(isFunction(f), () => 'The f passed in grad(f) must be a function');
+        return (x, dy) => {
+            // x can be of any dtype, thus null as the last argument.
+            const $x = convertToTensor(x, 'x', 'tf.grad', 'string_or_numeric');
+            const $dy = (dy != null) ? convertToTensor(dy, 'dy', 'tf.grad') : null;
+            return ENGINE.tidy(() => {
+                const { value, grads } = ENGINE.gradients(() => f($x), [$x], $dy);
+                if ($dy != null) {
+                    assertShapesMatch(value.shape, $dy.shape, 'The shape of dy passed in grad(f)(x, dy) must match the shape ' +
+                        'returned by f(x)');
+                }
+                checkGrads(grads);
+                return grads[0];
+            });
+        };
+    }
+    /**
+     * Provided `f(x1, x2,...)`, returns another function `g([x1, x2,...], dy?)`,
+     * which gives an array of gradients of `f()` with respect to each input
+     * [`x1`,`x2`,...].
+     *
+     * If `dy` is passed when calling `g()`, the gradient of
+     * `f(x1,...).mul(dy).sum()` with respect to each input is computed instead.
+     * The provided `f` must take one or more tensors and return a single tensor
+     * `y`. If `f()` takes a single input, we recommend using `tf.grad` instead.
+     *
+     * ```js
+     * // f(a, b) = a * b
+     * const f = (a, b) => a.mul(b);
+     * // df / da = b, df / db = a
+     * const g = tf.grads(f);
+     *
+     * const a = tf.tensor1d([2, 3]);
+     * const b = tf.tensor1d([-2, -3]);
+     * const [da, db] = g([a, b]);
+     * console.log('da');
+     * da.print();
+     * console.log('db');
+     * db.print();
+     * ```
+     *
+     * @param f The function `f(x1, x2,...)` to compute gradients for.
+     *
+     * @doc {heading: 'Training', subheading: 'Gradients'}
+     */
+    function grads(f) {
+        assert(isFunction(f), () => 'The f passed in grads(f) must be a function');
+        return (args, dy) => {
+            assert(Array.isArray(args), () => 'The args passed in grads(f)(args) must be an array ' +
+                'of `Tensor`s or `TensorLike`s');
+            // args can be of any dtype, thus null as the last argument.
+            const $args = convertToTensorArray(args, 'args', 'tf.grads', 'string_or_numeric');
+            const $dy = (dy != null) ? convertToTensor(dy, 'dy', 'tf.grads') : null;
+            return ENGINE.tidy(() => {
+                const { value, grads } = ENGINE.gradients(() => f(...$args), $args, $dy);
+                if ($dy != null) {
+                    assertShapesMatch(value.shape, $dy.shape, 'The shape of dy passed in grads(f)([x1,...], dy) must ' +
+                        'match the shape returned by f([x1,...])');
+                }
+                checkGrads(grads);
+                return grads;
+            });
+        };
+    }
+    /**
+     * Like `tf.grad`, but also returns the value of `f()`. Useful when `f()`
+     * returns a metric you want to show.
+     *
+     * The result is a rich object with the following properties:
+     * - grad: The gradient of `f(x)` w.r.t `x` (result of `tf.grad`).
+     * - value: The value returned by `f(x)`.
+     *
+     * ```js
+     * // f(x) = x ^ 2
+     * const f = x => x.square();
+     * // f'(x) = 2x
+     * const g = tf.valueAndGrad(f);
+     *
+     * const x = tf.tensor1d([2, 3]);
+     * const {value, grad} = g(x);
+     *
+     * console.log('value');
+     * value.print();
+     * console.log('grad');
+     * grad.print();
+     * ```
+     *
+     * @doc {heading: 'Training', subheading: 'Gradients'}
+     */
+    function valueAndGrad(f) {
+        assert(isFunction(f), () => 'The f passed in valueAndGrad(f) must be a function');
+        return (x, dy) => {
+            assert(x instanceof Tensor, () => 'The x passed in valueAndGrad(f)(x) must be a tensor');
+            assert(dy == null || dy instanceof Tensor, () => 'The dy passed in valueAndGrad(f)(x, dy) must be a tensor');
+            const { grads, value } = ENGINE.gradients(() => f(x), [x], dy);
+            checkGrads(grads);
+            return { grad: grads[0], value };
+        };
+    }
+    /**
+     * Like `tf.grads`, but returns also the value of `f()`. Useful when `f()`
+     * returns a metric you want to show.
+     *
+     * The result is a rich object with the following properties:
+     * - grads: The gradients of `f()` w.r.t each input (result of `tf.grads`).
+     * - value: The value returned by `f(x)`.
+     *
+     * ```js
+     * // f(a, b) = a * b
+     * const f = (a, b) => a.mul(b);
+     * // df/da = b, df/db = a
+     * const g = tf.valueAndGrads(f);
+     *
+     * const a = tf.tensor1d([2, 3]);
+     * const b = tf.tensor1d([-2, -3]);
+     * const {value, grads} = g([a, b]);
+     *
+     * const [da, db] = grads;
+     *
+     * console.log('value');
+     * value.print();
+     *
+     * console.log('da');
+     * da.print();
+     * console.log('db');
+     * db.print();
+     * ```
+     *
+     * @doc {heading: 'Training', subheading: 'Gradients'}
+     */
+    function valueAndGrads(f) {
+        assert(isFunction(f), () => 'The f passed in valueAndGrads(f) must be a function');
+        return (args, dy) => {
+            assert(Array.isArray(args) && args.every(arg => arg instanceof Tensor), () => 'The args passed in valueAndGrads(f)(args) must be array of ' +
+                'tensors');
+            assert(dy == null || dy instanceof Tensor, () => 'The dy passed in valueAndGrads(f)(args, dy) must be a tensor');
+            const res = ENGINE.gradients(() => f(...args), args, dy);
+            if (dy != null) {
+                assertShapesMatch(res.value.shape, dy.shape, 'The shape of dy passed in valueAndGrads(f)([x1,...], dy) must ' +
+                    'match the shape returned by f([x1,...])');
+            }
+            checkGrads(res.grads);
+            return res;
+        };
+    }
+    /**
+     * Computes and returns the gradient of f(x) with respect to the list of
+     * trainable variables provided by `varList`. If no list is provided, it
+     * defaults to all trainable variables.
+     *
+     * ```js
+     * const a = tf.variable(tf.tensor1d([3, 4]));
+     * const b = tf.variable(tf.tensor1d([5, 6]));
+     * const x = tf.tensor1d([1, 2]);
+     *
+     * // f(a, b) = a * x ^ 2 + b * x
+     * const f = () => a.mul(x.square()).add(b.mul(x)).sum();
+     * // df/da = x ^ 2, df/db = x
+     * const {value, grads} = tf.variableGrads(f);
+     *
+     * Object.keys(grads).forEach(varName => grads[varName].print());
+     * ```
+     *
+     * @param f The function to execute. f() should return a scalar.
+     * @param varList The list of variables to compute the gradients with respect
+     *     to. Defaults to all trainable variables.
+     * @returns An object with the following keys and values:
+     *   - `value`: The value of the function `f`.
+     *   - `grads`: A map from the names of the variables to the gradients.
+     *     If the `varList` argument is provided explicitly and contains a subset of
+     *     non-trainable variables, this map in the return value will contain keys
+     *     that map the names of the non-trainable variables to `null`.
+     *
+     * @doc {heading: 'Training', subheading: 'Gradients'}
+     */
+    function variableGrads(f, varList) {
+        assert(isFunction(f), () => 'The f passed in variableGrads(f) must be a function');
+        assert(varList == null ||
+            Array.isArray(varList) && varList.every(v => v instanceof Variable), () => 'The varList passed in variableGrads(f, varList) must be an array ' +
+            'of variables');
+        const specifiedVarList = varList != null;
+        if (!specifiedVarList) {
+            // Get all of the trainable variables.
+            varList = [];
+            for (const varName in ENGINE.registeredVariables) {
+                varList.push(ENGINE.registeredVariables[varName]);
+            }
+        }
+        const specifiedNonTrainable = specifiedVarList ? varList.filter(variable => !variable.trainable) : null;
+        // Prune non-trainable variables.
+        const originalVarCount = varList.length;
+        varList = varList.filter(variable => variable.trainable);
+        assert(varList.length > 0, () => `variableGrads() expects at least one of the input variables to ` +
+            `be trainable, but none of the ${originalVarCount} variables is ` +
+            `trainable.`);
+        const allowNoGradients = true;
+        const { value, grads } = ENGINE.gradients(f, varList, null, allowNoGradients);
+        assert(grads.some(g => g != null), () => 'Cannot find a connection between any variable and the result of ' +
+            'the loss function y=f(x). Please make sure the operations that ' +
+            'use variables are inside the function f passed to minimize().');
+        assert(value.rank === 0, () => `The f passed in variableGrads(f) must return a scalar, but it ` +
+            `returned a rank-${value.rank} tensor`);
+        const namedGrads = {};
+        varList.forEach((v, i) => {
+            if (grads[i] != null) {
+                namedGrads[v.name] = grads[i];
+            }
+        });
+        if (specifiedNonTrainable != null) {
+            // If varList is explicitly provided and contains non-trainable values,
+            // add them to the returned gradients with `null` values.
+            specifiedNonTrainable.forEach(v => namedGrads[v.name] = null);
+        }
+        return { value, grads: namedGrads };
+    }
+    /**
+     * Overrides the gradient computation of a function `f`.
+     *
+     * Takes a function
+     * `f(...inputs, save) => {value: Tensor, gradFunc: (dy, saved) => Tensor[]}`
+     * and returns another function `g(...inputs)` which takes the same inputs as
+     * `f`. When called, `g` returns `f().value`. In backward mode, custom gradients
+     * with respect to each input of `f` are computed using `f().gradFunc`.
+     *
+     * The `save` function passsed to `f` should be used for saving tensors needed
+     * in the gradient. And the `saved` passed to the `gradFunc` is a
+     * `NamedTensorMap`, which contains those saved tensor.
+     *
+     * ```js
+     * const customOp = tf.customGrad((x, save) => {
+     *   // Save x to make sure it's available later for the gradient.
+     *   save([x]);
+     *   // Override gradient of our custom x ^ 2 op to be dy * abs(x);
+     *   return {
+     *     value: x.square(),
+     *     // Note `saved.x` which points to the `x` we saved earlier.
+     *     gradFunc: (dy, saved) => [dy.mul(saved[0].abs())]
+     *   };
+     * });
+     *
+     * const x = tf.tensor1d([-1, -2, 3]);
+     * const dx = tf.grad(x => customOp(x));
+     *
+     * console.log(`f(x):`);
+     * customOp(x).print();
+     * console.log(`f'(x):`);
+     * dx(x).print();
+     * ```
+     *
+     * @param f The function to evaluate in forward mode, which should return
+     *     `{value: Tensor, gradFunc: (dy, saved) => Tensor[]}`, where `gradFunc`
+     *     returns the custom gradients of `f` with respect to its inputs.
+     *
+     * @doc {heading: 'Training', subheading: 'Gradients'}
+     */
+    function customGrad(f) {
+        return ENGINE.customGrad(f);
+    }
+    function checkGrads(grads) {
+        const numNullGradients = grads.filter(g => g == null).length;
+        if (numNullGradients > 0) {
+            throw new Error(`Cannot compute gradient of y=f(x) with respect to x. Make sure that
+    the f you passed encloses all operations that lead from x to y.`);
+        }
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes `-1 * x` element-wise.
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, -2, 0], [2, 2]);
+     *
+     * x.neg().print();  // or tf.neg(x)
+     * ```
+     *
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function neg_(x) {
+        const $x = convertToTensor(x, 'x', 'neg');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Neg, inputs);
+    }
+    const neg$2 = op({ neg_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes softplus of the input `tf.Tensor` element-wise: `log(exp(x) + 1)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.softplus().print();  // or tf.softplus(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function softplus_(x) {
+        const $x = convertToTensor(x, 'x', 'softplus');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Softplus, inputs);
+    }
+    const softplus$2 = op({ softplus_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes log sigmoid of the input `tf.Tensor` element-wise:
+     * `logSigmoid(x)`. For numerical stability, we use `-tf.softplus(-x)`.
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.logSigmoid().print();  // or tf.logSigmoid(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function logSigmoid_(x) {
+        const $x = convertToTensor(x, 'x', 'logSigmoid');
+        // Use a custom gradient to maintain previous implementation.
+        // There is no LogSigmoid kernel in TF so we can't use engine.runKernel
+        // directly
+        const customOp = customGrad((x) => {
+            // TODO(yassogba) we can remove the chained softplus call here only
+            // after backends have modualrized softplus at which point we can call
+            // engine runKernel(..., Sotfplus, ...) directly.
+            const value = neg$2(softplus$2(neg$2(x)));
+            const gradFunc = (dy) => {
+                const derX = mul(dy, sigmoid$2(neg$2(x)));
+                return derX;
+            };
+            return { value, gradFunc };
+        });
+        return customOp($x);
+    }
+    const logSigmoid = op({ logSigmoid_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the maximum of elements across dimensions of a `tf.Tensor`.
+     *
+     * Reduces the input along the dimensions given in `axes`. Unless `keepDims`
+     * is true, the rank of the `tf.Tensor` is reduced by 1 for each entry in
+     * `axes`. If `keepDims` is true, the reduced dimensions are retained with
+     * length 1. If `axes` has no entries, all dimensions are reduced, and an
+     * `tf.Tensor` with a single element is returned.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     *
+     * x.max().print();  // or tf.max(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * const axis = 1;
+     * x.max(axis).print();  // or tf.max(x, axis)
+     * ```
+     *
+     * @param x The input tensor.
+     * @param axis The dimension(s) to reduce. By default it reduces
+     *     all dimensions.
+     * @param keepDims If true, retains reduced dimensions with size 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function max_(x, axis = null, keepDims = false) {
+        const $x = convertToTensor(x, 'x', 'max');
+        const inputs = { x: $x };
+        const attrs = { reductionIndices: axis, keepDims };
+        return ENGINE.runKernel(Max, inputs, attrs);
+    }
+    const max$2 = op({ max_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Subtracts two `tf.Tensor`s element-wise, A - B. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([10, 20, 30, 40]);
+     * const b = tf.tensor1d([1, 2, 3, 4]);
+     *
+     * a.sub(b).print();  // or tf.sub(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast subtract a with b.
+     * const a = tf.tensor1d([10, 20, 30, 40]);
+     * const b = tf.scalar(5);
+     *
+     * a.sub(b).print();  // or tf.sub(a, b)
+     * ```
+     * @param a The first `tf.Tensor` to subtract from.
+     * @param b The second `tf.Tensor` to be subtracted. Must have the same dtype as
+     * `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function sub_(a, b) {
+        let $a = convertToTensor(a, 'a', 'sub');
+        let $b = convertToTensor(b, 'b', 'sub');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Sub, inputs);
+    }
+    const sub$2 = op({ sub_ });
 
     /**
      * @license
@@ -28212,6 +35646,87 @@
         return ENGINE.runKernel(Sum, inputs, attrs);
     }
     const sum$2 = op({ sum_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google Inc. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the log softmax.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     *
+     * a.logSoftmax().print();  // or tf.logSoftmax(a)
+     * ```
+     *
+     * ```js
+     * const a = tf.tensor2d([2, 4, 6, 1, 2, 3], [2, 3]);
+     *
+     * a.logSoftmax().print();  // or tf.logSoftmax(a)
+     * ```
+     *
+     * @param logits The logits array.
+     * @param axis The dimension softmax would be performed on. Defaults to `-1`
+     *     which indicates the last dimension.
+     *
+     * @doc {heading: 'Operations', subheading: 'Normalization'}
+     */
+    function logSoftmax_(logits, axis = -1) {
+        const $logits = convertToTensor(logits, 'logits', 'logSoftmax');
+        if (axis === -1) {
+            axis = $logits.rank - 1;
+        }
+        if (axis !== $logits.rank - 1) {
+            throw Error('Log Softmax along a non-last dimension is not yet supported. ' +
+                `Logits was rank ${$logits.rank} and axis was ${axis}`);
+        }
+        // const forward: ForwardFunc<Tensor> = (backend, save) => {
+        //   const keepDims = true;
+        //   const xMax = max(logits, axis, true);
+        //   const shifted = sub(logits, xMax);
+        //   const value =
+        //       sub(cast(shifted, 'float32'), log(sum(exp(shifted), axis,
+        //       keepDims)));
+        //   save([value]);
+        //   return value;
+        // };
+        // Use a custom gradient for numerical stability.
+        const customOp = customGrad((logits, save) => {
+            const keepDims = true;
+            const xMax = max$2(logits, axis, true);
+            const shifted = sub$2(logits, xMax);
+            const value = sub$2(cast$2(shifted, 'float32'), log$2(sum$2(exp$2(shifted), axis, keepDims)));
+            save([value]);
+            const gradFunc = (dy, saved) => {
+                const [value] = saved;
+                const keepDims = true;
+                const softmax = exp$2(value);
+                return sub$2(dy, mul(sum$2(dy, axis, keepDims), softmax));
+            };
+            return { value, gradFunc };
+        });
+        return customOp($logits);
+        // TODO Use Engine.runKernel when CPU/WebGL/WASM backends implement this.
+        // const inputs: LogSoftmaxInputs = {logits: $logits};
+        // const attrs: LogSoftmaxAttrs = {axis};
+        // return ENGINE.runKernel(
+        //            LogSoftmax, inputs as {} as NamedTensorMap,
+        //            attrs as {} as NamedAttrMap);
+    }
+    const logSoftmax = op({ logSoftmax_ });
 
     /**
      * @license
@@ -28309,6 +35824,531 @@
 
     /**
      * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the log(sum(exp(elements across the reduction dimensions)).
+     *
+     * Reduces the input along the dimensions given in `axis`. Unless `keepDims`
+     * is true, the rank of the array is reduced by 1 for each entry in `axis`.
+     * If `keepDims` is true, the reduced dimensions are retained with length 1.
+     * If `axis` has no entries, all dimensions are reduced, and an array with a
+     * single element is returned.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     *
+     * x.logSumExp().print();  // or tf.logSumExp(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * const axis = 1;
+     * x.logSumExp(axis).print();  // or tf.logSumExp(a, axis)
+     * ```
+     * @param x The input tensor.
+     * @param axis The dimension(s) to reduce. If null (the default),
+     *     reduces all dimensions.
+     * @param keepDims If true, retains reduced dimensions with length
+     *     of 1. Defaults to false.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function logSumExp_(x, axis = null, keepDims = false) {
+        const $x = convertToTensor(x, 'x', 'logSumExp');
+        const axes = parseAxisParam(axis, $x.shape);
+        const xMax = max$2($x, axes, true /* keepDims */);
+        const a = sub$2($x, xMax);
+        const b = exp$2(a);
+        const c = sum$2(b, axes);
+        const d = log$2(c);
+        const res = add$1(reshape$2(xMax, d.shape), d);
+        if (keepDims) {
+            const newShape = expandShapeToKeepDim(res.shape, axes);
+            return reshape$2(res, newShape);
+        }
+        return res;
+    }
+    const logSumExp = op({ logSumExp_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of `a AND b` element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([false, false, true, true], 'bool');
+     * const b = tf.tensor1d([false, true, false, true], 'bool');
+     *
+     * a.logicalAnd(b).print();
+     * ```
+     *
+     * @param a The first input tensor. Must be of dtype bool.
+     * @param b The second input tensor. Must be of dtype bool.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function logicalAnd_(a, b) {
+        const $a = convertToTensor(a, 'a', 'logicalAnd', 'bool');
+        const $b = convertToTensor(b, 'b', 'logicalAnd', 'bool');
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(LogicalAnd, inputs);
+    }
+    const logicalAnd$2 = op({ logicalAnd_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of `NOT x` element-wise.
+     *
+     * ```js
+     * const a = tf.tensor1d([false, true], 'bool');
+     *
+     * a.logicalNot().print();
+     * ```
+     *
+     * @param x The input tensor. Must be of dtype 'bool'.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function logicalNot_(x) {
+        const $x = convertToTensor(x, 'x', 'logicalNot', 'bool');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(LogicalNot, inputs);
+    }
+    const logicalNot$2 = op({ logicalNot_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of `a OR b` element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([false, false, true, true], 'bool');
+     * const b = tf.tensor1d([false, true, false, true], 'bool');
+     *
+     * a.logicalOr(b).print();
+     * ```
+     * @param a The first input tensor. Must be of dtype bool.
+     * @param b The second input tensor. Must be of dtype bool.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function logicalOr_(a, b) {
+        const $a = convertToTensor(a, 'a', 'logicalOr', 'bool');
+        const $b = convertToTensor(b, 'b', 'logicalOr', 'bool');
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(LogicalOr, inputs);
+    }
+    const logicalOr$2 = op({ logicalOr_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of `a XOR b` element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([false, false, true, true], 'bool');
+     * const b = tf.tensor1d([false, true, false, true], 'bool');
+     *
+     * a.logicalXor(b).print();
+     * ```
+     *
+     * @param a The first input tensor. Must be of dtype bool.
+     * @param b The second input tensor. Must be of dtype bool.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function logicalXor_(a, b) {
+        const $a = convertToTensor(a, 'a', 'logicalXor', 'bool');
+        const $b = convertToTensor(b, 'b', 'logicalXor', 'bool');
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        // x ^ y = (x | y) & ~(x & y)
+        return logicalAnd$2(logicalOr$2(a, b), logicalNot$2(logicalAnd$2(a, b)));
+    }
+    const logicalXor = op({ logicalXor_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the 2D max pooling of an image.
+     *
+     * @param x The input tensor, of rank 4 or rank 3 of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is assumed.
+     * @param filterSize The filter size: `[filterHeight, filterWidth]`. If
+     *     `filterSize` is a single number, then `filterHeight == filterWidth`.
+     * @param strides The strides of the pooling: `[strideHeight, strideWidth]`. If
+     *     `strides` is a single number, then `strideHeight == strideWidth`.
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     in dilated pooling. Defaults to `[1, 1]`. If `dilations` is a single
+     *     number, then `dilationHeight == dilationWidth`. If it is greater than
+     *     1, then all values of `strides` must be 1.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *    - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     */
+    function maxPool_(x, filterSize, strides, pad, dimRoundingMode) {
+        const $x = convertToTensor(x, 'x', 'maxPool');
+        const dilations = 1;
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        assert(x4D.rank === 4, () => `Error in maxPool: input must be rank 4 but got rank ${x4D.rank}.`);
+        assert(eitherStridesOrDilationsAreOne(strides, dilations), () => 'Error in maxPool: Either strides or dilations must be 1. ' +
+            `Got strides ${strides} and dilations '${dilations}'`);
+        checkPadOnDimRoundingMode('maxPool', pad, dimRoundingMode);
+        const inputs = { x: x4D };
+        const attrs = { filterSize, strides, pad, dimRoundingMode };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(MaxPool, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const maxPool$2 = op({ maxPool_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the 3D max pooling.
+     *
+     * ```js
+     * const x = tf.tensor5d([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 2, 2, 1]);
+     * const result = tf.maxPool3d(x, 2, 1, 'valid');
+     * result.print();
+     * ```
+     *
+     * @param x The input tensor, of rank 5 or rank 4 of shape
+     *     `[batch, depth, height, width, inChannels]`.
+     * @param filterSize The filter size:
+     *     `[filterDepth, filterHeight, filterWidth]`.
+     *     If `filterSize` is a single number,
+     *     then `filterDepth == filterHeight == filterWidth`.
+     * @param strides The strides of the pooling:
+     *     `[strideDepth, strideHeight, strideWidth]`.
+     *     If `strides` is a single number,
+     *     then `strideDepth == strideHeight == strideWidth`.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1*1x1.
+     *    - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     * @param dataFormat An optional string from: "NDHWC", "NCDHW". Defaults to
+     *     "NDHWC". Specify the data format of the input and output data. With the
+     *     default format "NDHWC", the data is stored in the order of: [batch,
+     *     depth, height, width, channels]. Only "NDHWC" is currently supported.
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function maxPool3d_(x, filterSize = [1, 1, 1], strides, pad, dimRoundingMode, dataFormat = 'NDHWC') {
+        const $x = convertToTensor(x, 'x', 'maxPool3d');
+        let x5D = $x;
+        let reshapedTo5D = false;
+        if ($x.rank === 4) {
+            reshapedTo5D = true;
+            x5D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2], $x.shape[3]]);
+        }
+        assert(x5D.rank === 5, () => `Error in maxPool3d: x must be rank 5 but got rank ${x5D.rank}.`);
+        assert(dataFormat === 'NDHWC', () => `Error in maxPool3d: Only NDHWC is currently supported, ` +
+            `but got dataFormat of ${dataFormat}`);
+        checkPadOnDimRoundingMode('maxPool3d', pad, dimRoundingMode);
+        const inputs = { x: x5D };
+        const attrs = { filterSize, strides, pad, dimRoundingMode, dataFormat };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(MaxPool3D, inputs, attrs);
+        if (reshapedTo5D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3], res.shape[4]]);
+        }
+        return res;
+    }
+    const maxPool3d$1 = op({ maxPool3d_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the 2D max pooling of an image with Argmax index.
+     * The indices in argmax are flattened, so that a maximum value at position `[b,
+     * y, x, c]` becomes flattened index: `(y * width + x) * channels + c` if
+     * include_batch_in_index is False; `((b * height + y) * width + x) * channels
+     * +c` if include_batch_in_index is True.
+     *
+     * The indices returned are always in `[0, height) x [0, width)` before
+     * flattening.
+     *
+     * @param x The input tensor, of rank 4 or rank 3 of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is assumed.
+     * @param filterSize The filter size: `[filterHeight, filterWidth]`. If
+     *     `filterSize` is a single number, then `filterHeight == filterWidth`.
+     * @param strides The strides of the pooling: `[strideHeight, strideWidth]`. If
+     *     `strides` is a single number, then `strideHeight == strideWidth`.
+     * @param dataFormat An optional string from: "NDHWC", "NCDHW". Defaults to
+     *     "NDHWC". Specify the data format of the input and output data. With the
+     *     default format "NDHWC", the data is stored in the order of: [batch,
+     *     depth, height, width, channels]. Only "NDHWC" is currently supported.
+     * @param pad The type of padding algorithm.
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *    - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param includeBatchIndex Defaults to False. Whether to include batch
+     *    dimension in flattened index of argmax.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function maxPoolWithArgmax_(x, filterSize, strides, pad, includeBatchInIndex = false) {
+        const $x = convertToTensor(x, 'x', 'maxPoolWithArgmax');
+        const inputs = { x: $x };
+        const attrs = { filterSize, strides, pad, includeBatchInIndex };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const result = ENGINE.runKernel(MaxPoolWithArgmax, inputs, attrs);
+        return { result: result[0], indexes: result[1] };
+    }
+    const maxPoolWithArgmax = op({ maxPoolWithArgmax_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the max of a and b (`a > b ? a : b`) element-wise.
+     * Supports broadcasting.
+     *
+     * We also expose `tf.maximumStrict` which has the same signature as this op and
+     * asserts that `a` and `b` are the same shape (does not broadcast).
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 4, 3, 16]);
+     * const b = tf.tensor1d([1, 2, 9, 4]);
+     *
+     * a.maximum(b).print();  // or tf.maximum(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast maximum a with b.
+     * const a = tf.tensor1d([2, 4, 6, 8]);
+     * const b = tf.scalar(5);
+     *
+     * a.maximum(b).print();  // or tf.maximum(a, b)
+     * ```
+     *
+     * @param a The first tensor.
+     * @param b The second tensor. Must have the same type as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function maximum_(a, b) {
+        let $a = convertToTensor(a, 'a', 'maximum');
+        let $b = convertToTensor(b, 'b', 'maximum');
+        [$a, $b] = makeTypesMatch($a, $b);
+        if ($a.dtype === 'bool') {
+            $a = cast$2($a, 'int32');
+            $b = cast$2($b, 'int32');
+        }
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Maximum, inputs);
+    }
+    const maximum$2 = op({ maximum_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google Inc. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the mean of elements across dimensions of a `tf.Tensor`.
+     *
+     * Reduces `x` along the dimensions given in `axis`. Unless `keepDims` is
+     * true, the rank of the `tf.Tensor` is reduced by 1 for each entry in `axis`.
+     * If `keepDims` is true, the reduced dimensions are retained with length 1.
+     * If `axis` has no entries, all dimensions are reduced, and a `tf.Tensor` with
+     * a single element is returned.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     *
+     * x.mean().print();  // or tf.mean(a)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * const axis = 1;
+     * x.mean(axis).print();  // or tf.mean(x, axis)
+     * ```
+     *
+     * @param x The input tensor.
+     * @param axis The dimension(s) to reduce. By default it reduces
+     *     all dimensions.
+     * @param keepDims If true, retains reduced dimensions with size 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function mean_(x, axis = null, keepDims = false) {
+        const $x = convertToTensor(x, 'x', 'mean');
+        const inputs = { x: $x };
+        const attrs = { axis, keepDims };
+        return ENGINE.runKernel(Mean, inputs, attrs);
+    }
+    const mean$1 = op({ mean_ });
+
+    /**
+     * @license
      * Copyright 2018 Google LLC. All Rights Reserved.
      * Licensed under the Apache License, Version 2.0 (the "License");
      * you may not use this file except in compliance with the License.
@@ -28345,6 +36385,980 @@
         const values = makeZerosTypedArray(sizeFromShape(shape), dtype);
         return ENGINE.makeTensor(values, shape, dtype);
     }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with all elements set to 1.
+     *
+     * ```js
+     * tf.ones([2, 2]).print();
+     * ```
+     *
+     * @param shape An array of integers defining the output tensor shape.
+     * @param dtype The type of an element in the resulting tensor. Defaults to
+     *     'float'.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function ones(shape, dtype = 'float32') {
+        if (dtype === 'complex64') {
+            const real = ones(shape, 'float32');
+            const imag = zeros$1(shape, 'float32');
+            return complex$2(real, imag);
+        }
+        const values = makeOnesTypedArray(sizeFromShape(shape), dtype);
+        return ENGINE.makeTensor(values, shape, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Broadcasts parameters for evaluation on an N-D grid.
+     *
+     * Given N one-dimensional coordinate arrays `*args`, returns a list `outputs`
+     * of N-D coordinate arrays for evaluating expressions on an N-D grid.
+     *
+     * Notes:
+     * `meshgrid` supports cartesian ('xy') and matrix ('ij') indexing conventions.
+     * When the `indexing` argument is set to 'xy' (the default), the broadcasting
+     * instructions for the first two dimensions are swapped.
+     * Examples:
+     * Calling `const [X, Y] = meshgrid(x, y)` with the tensors
+     *
+     * ```javascript
+     * const x = [1, 2, 3];
+     * const y = [4, 5, 6];
+     * const [X, Y] = tf.meshgrid(x, y);
+     * // X = [[1, 2, 3],
+     * //      [1, 2, 3],
+     * //      [1, 2, 3]]
+     * // Y = [[4, 4, 4],
+     * //      [5, 5, 5],
+     * //      [6, 6, 6]]
+     * ```
+     *
+     * @param x Tensor with rank geq 1.
+     * @param y Tensor with rank geq 1.
+     * @param indexing
+     *
+     * @doc {heading: 'Operations', subheading: 'Slicing and Joining'}
+     */
+    function meshgrid(x, y, { indexing = 'xy' } = {}) {
+        if (indexing !== 'xy' && indexing !== 'ij') {
+            throw new TypeError(`${indexing} is not a valid third argument to meshgrid`);
+        }
+        if (x === undefined) {
+            return [];
+        }
+        let $x = convertToTensor(x, 'x', 'meshgrid', x instanceof Tensor ? x.dtype : 'float32');
+        if (y === undefined) {
+            return [$x];
+        }
+        let $y = convertToTensor(y, 'y', 'meshgrid', y instanceof Tensor ? y.dtype : 'float32');
+        const w = sizeFromShape($x.shape);
+        const h = sizeFromShape($y.shape);
+        if (indexing === 'xy') {
+            $x = reshape$2($x, [1, -1]);
+            $y = reshape$2($y, [-1, 1]);
+            return [
+                matMul$1(ones([h, 1], $x.dtype), $x),
+                matMul$1($y, ones([1, w], $y.dtype)),
+            ];
+        }
+        $x = reshape$2($x, [-1, 1]);
+        $y = reshape$2($y, [1, -1]);
+        return [
+            matMul$1($x, ones([1, h], $x.dtype)),
+            matMul$1(ones([w, 1], $y.dtype), $y),
+        ];
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google Inc. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the minimum value from the input.
+     *
+     * Reduces the input along the dimensions given in `axes`. Unless `keepDims`
+     * is true, the rank of the array is reduced by 1 for each entry in `axes`.
+     * If `keepDims` is true, the reduced dimensions are retained with length 1.
+     * If `axes` has no entries, all dimensions are reduced, and an array with a
+     * single element is returned.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     *
+     * x.min().print();  // or tf.min(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * const axis = 1;
+     * x.min(axis).print();  // or tf.min(x, axis)
+     * ```
+     *
+     * @param x The input Tensor.
+     * @param axis The dimension(s) to reduce. By default it reduces
+     *     all dimensions.
+     * @param keepDims If true, retains reduced dimensions with size 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function min_(x, axis = null, keepDims = false) {
+        const $x = convertToTensor(x, 'x', 'min');
+        const inputs = { x: $x };
+        const attrs = { axis, keepDims };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        return ENGINE.runKernel(Min, inputs, attrs);
+    }
+    const min$2 = op({ min_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the min of a and b (`a < b ? a : b`) element-wise.
+     * Supports broadcasting.
+     *
+     * We also expose `minimumStrict` which has the same signature as this op and
+     * asserts that `a` and `b` are the same shape (does not broadcast).
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 4, 3, 16]);
+     * const b = tf.tensor1d([1, 2, 9, 4]);
+     *
+     * a.minimum(b).print();  // or tf.minimum(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast minimum a with b.
+     * const a = tf.tensor1d([2, 4, 6, 8]);
+     * const b = tf.scalar(5);
+     *
+     * a.minimum(b).print();  // or tf.minimum(a, b)
+     * ```
+     *
+     * @param a The first tensor.
+     * @param b The second tensor. Must have the same type as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function minimum_(a, b) {
+        let $a = convertToTensor(a, 'a', 'minimum');
+        let $b = convertToTensor(b, 'b', 'minimum');
+        [$a, $b] = makeTypesMatch($a, $b);
+        if ($a.dtype === 'bool') {
+            $a = cast$2($a, 'int32');
+            $b = cast$2($b, 'int32');
+        }
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Minimum, inputs);
+    }
+    const minimum$2 = op({ minimum_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Pads a `tf.Tensor` using mirror padding.
+     *
+     * This operation implements the `REFLECT` and `SYMMETRIC` modes of pad.
+     *
+     * ```js
+     * const x = tf.range(0, 9).reshape([1, 1, 3, 3]);
+     * x.mirrorPad([[0, 0], [0, 0], [2, 2], [2, 2]], 'reflect').print();
+     * ```
+     * @param x The tensor to pad.
+     * @param paddings An array of length `R` (the rank of the tensor), where
+     * each element is a length-2 tuple of ints `[padBefore, padAfter]`,
+     * specifying how much to pad along each dimension of the tensor.
+     * In "reflect" mode, the padded regions do not include the borders,
+     * while in "symmetric" mode the padded regions do include the borders.
+     * For example, if the input is `[1, 2, 3]` and paddings is `[0, 2]`,
+     * then the output is `[1, 2, 3, 2, 1]` in "reflect" mode, and
+     * `[1, 2, 3, 3, 2]` in "symmetric" mode.
+     * If `mode` is "reflect" then both `paddings[D, 0]` and `paddings[D, 1]`
+     * must be no greater than `x.shape[D] - 1`. If mode is "symmetric"
+     * then both `paddings[D, 0]` and `paddings[D, 1]` must be no greater than
+     * `x.shape[D]`
+     * @param mode String to specify padding mode. Can be `'reflect' | 'symmetric'`
+     */
+    /** @doc {heading: 'Tensors', subheading: 'Transformations'} */
+    function mirrorPad_(x, paddings, mode) {
+        assert(mode === 'reflect' || mode === 'symmetric', () => `Invalid mode. Mode must be either reflect or symmetric. ` +
+            `Got ${mode}.`);
+        const $x = convertToTensor(x, 'x', 'mirrorPad');
+        if ($x.rank === 0) {
+            throw new Error('mirrorPad(scalar) is not defined. ' +
+                'Pass non-scalar to mirrorPad');
+        }
+        assert(paddings.length === $x.rank, () => `Padding doesn't match input. Must be ${$x.rank}. ` +
+            `Got ${paddings.length}.`);
+        const shapeOffset = mode === 'reflect' ? 1 : 0;
+        for (let i = 0; i < $x.rank; i++) {
+            assert(paddings[i].length === 2, () => `Invalid number of paddings. Must be length of 2 each.`);
+            assert(paddings[i][0] >= 0 && paddings[i][0] <= $x.shape[i] - shapeOffset &&
+                paddings[i][1] >= 0 && paddings[i][1] <= $x.shape[i] - shapeOffset, () => `Padding in dimension ${i} cannot be greater than or equal ` +
+                `to ${$x.shape[i] - shapeOffset} or less than 0 for input of ` +
+                `shape ${$x.shape}`);
+        }
+        const attrs = { paddings, mode };
+        const inputs = { x: $x };
+        return ENGINE.runKernel(MirrorPad, inputs, attrs);
+    }
+    const mirrorPad$1 = op({ mirrorPad_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the mod of a and b element-wise.
+     * `floor(x / y) * y + mod(x, y) = x`
+     * Supports broadcasting.
+     *
+     * We also expose `tf.modStrict` which has the same signature as this op and
+     * asserts that `a` and `b` are the same shape (does not broadcast).
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 4, 3, 16]);
+     * const b = tf.tensor1d([1, 2, 9, 4]);
+     *
+     * a.mod(b).print();  // or tf.mod(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast a mod b.
+     * const a = tf.tensor1d([2, 4, 6, 8]);
+     * const b = tf.scalar(5);
+     *
+     * a.mod(b).print();  // or tf.mod(a, b)
+     * ```
+     *
+     * @param a The first tensor.
+     * @param b The second tensor. Must have the same type as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function mod_(a, b) {
+        let $a = convertToTensor(a, 'a', 'mod');
+        let $b = convertToTensor(b, 'b', 'mod');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(Mod, inputs);
+    }
+    const mod$2 = op({ mod_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes square of `x` element-wise: `x ^ 2`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, Math.sqrt(2), -1]);
+     *
+     * x.square().print();  // or tf.square(x)
+     * ```
+     * @param x The input Tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function square_(x) {
+        const $x = convertToTensor(x, 'x', 'square');
+        const attrs = {};
+        return ENGINE.runKernel('Square', { x: $x }, attrs);
+    }
+    const square$1 = op({ square_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Calculates the mean and variance of `x`. The mean and variance are
+     * calculated by aggregating the contents of `x` across `axes`. If `x` is
+     * 1-D and `axes = [0]` this is just the mean and variance of a vector.
+     *
+     * @param x The input tensor.
+     * @param axis The dimension(s) along with to compute mean and
+     *     variance. By default it reduces all dimensions.
+     * @param keepDims If true, the moments have the same dimensionality as the
+     *     input.
+     * @return An object with two keys: `mean` and `variance`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Normalization'}
+     */
+    function moments_(x, axis = null, keepDims = false) {
+        x = convertToTensor(x, 'x', 'moments');
+        const axes = parseAxisParam(axis, x.shape);
+        const xMean = mean$1(x, axes, keepDims);
+        let keepDimsShape = xMean.shape;
+        if (!keepDims) {
+            keepDimsShape = expandShapeToKeepDim(xMean.shape, axes);
+        }
+        const devSquared = square$1(sub$2(cast$2(x, 'float32'), reshape$2(xMean, keepDimsShape)));
+        const variance = mean$1(devSquared, axes, keepDims);
+        return { mean: xMean, variance };
+    }
+    const moments = op({ moments_ });
+
+    /**
+     * Computes the next states and outputs of a stack of LSTMCells.
+     *
+     * Each cell output is used as input to the next cell.
+     *
+     * Returns `[cellState, cellOutput]`.
+     *
+     * Derived from tf.contrib.rn.MultiRNNCell.
+     *
+     * @param lstmCells Array of LSTMCell functions.
+     * @param data The input to the cell.
+     * @param c Array of previous cell states.
+     * @param h Array of previous cell outputs.
+     *
+     * @doc {heading: 'Operations', subheading: 'RNN'}
+     */
+    function multiRNNCell_(lstmCells, data, c, h) {
+        const $data = convertToTensor(data, 'data', 'multiRNNCell');
+        const $c = convertToTensorArray(c, 'c', 'multiRNNCell');
+        const $h = convertToTensorArray(h, 'h', 'multiRNNCell');
+        let input = $data;
+        const newStates = [];
+        for (let i = 0; i < lstmCells.length; i++) {
+            const output = lstmCells[i](input, $c[i], $h[i]);
+            newStates.push(output[0]);
+            newStates.push(output[1]);
+            input = output[1];
+        }
+        const newC = [];
+        const newH = [];
+        for (let i = 0; i < newStates.length; i += 2) {
+            newC.push(newStates[i]);
+            newH.push(newStates[i + 1]);
+        }
+        return [newC, newH];
+    }
+    const multiRNNCell = op({ multiRNNCell_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with values drawn from a multinomial distribution.
+     *
+     * ```js
+     * const probs = tf.tensor([.75, .25]);
+     * tf.multinomial(probs, 3).print();
+     * ```
+     *
+     * @param logits 1D array with unnormalized log-probabilities, or
+     *     2D array of shape `[batchSize, numOutcomes]`. See the `normalized`
+     *     parameter.
+     * @param numSamples Number of samples to draw for each row slice.
+     * @param seed The seed number.
+     * @param normalized Whether the provided `logits` are normalized true
+     *     probabilities (sum to 1). Defaults to false.
+     * @return 1D array of shape `[numSamples]`, or 2D array of shape
+     *     `[batchSize, numSamples]`, depending on the rank of the input.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Random'}
+     */
+    function multinomial_(logits, numSamples, seed, normalized = false) {
+        const $logits = convertToTensor(logits, 'logits', 'multinomial');
+        const numOutcomes = $logits.size;
+        const origRank = $logits.rank;
+        if (numOutcomes < 2) {
+            throw new Error(`Error in multinomial: you need at least 2 outcomes, but got ` +
+                `${numOutcomes}.`);
+        }
+        if (origRank > 2) {
+            throw new Error(`Rank of probabilities must be 1 or 2, but is ${origRank}`);
+        }
+        // TODO(lina128): Investigate correct seed behavior. The code seems not allow
+        // setting see to 0.
+        seed = seed || Math.random();
+        // The kernel only accepts (and returns) rank 2 tensors.
+        const logits2D = origRank === 1 ? reshape$2($logits, [1, -1]) : $logits;
+        const inputs = { logits: logits2D };
+        const attrs = { numSamples, seed, normalized };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(Multinomial, inputs, attrs);
+        // tslint:disable-next-line:no-unnecessary-type-assertion
+        return origRank === 1 ? reshape$2(res, [res.size]) : res;
+    }
+    const multinomial$2 = op({ multinomial_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the truth value of (a != b) element-wise. Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     * const b = tf.tensor1d([0, 2, 3]);
+     *
+     * a.notEqual(b).print();
+     * ```
+     * @param a The first input tensor.
+     * @param b The second input tensor. Must have the same dtype as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    function notEqual_(a, b) {
+        let $a = convertToTensor(a, 'a', 'notEqual', 'string_or_numeric');
+        let $b = convertToTensor(b, 'b', 'notEqual', 'string_or_numeric');
+        [$a, $b] = makeTypesMatch($a, $b);
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        return ENGINE.runKernel(NotEqual, inputs);
+    }
+    const notEqual$2 = op({ notEqual_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with all elements set to 1 with the same shape as the
+     * given tensor.
+     *
+     * ```js
+     * const x = tf.tensor([1, 2]);
+     * tf.onesLike(x).print();
+     * ```
+     * @param x A tensor.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function onesLike_(x) {
+        const $x = convertToTensor(x, 'x', 'onesLike');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(OnesLike, inputs);
+    }
+    const onesLike$2 = op({ onesLike_ });
+
+    /**
+     * Computes the outer product of two vectors, `v1` and `v2`.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     * const b = tf.tensor1d([3, 4, 5]);
+     *
+     * tf.outerProduct(a, b).print();
+     * ```
+     * @param v1 The first vector in the outer product operation.
+     * @param v2 The second vector in the outer product operation.
+     *
+     * @doc {heading: 'Operations', subheading: 'Matrices'}
+     */
+    function outerProduct_(v1, v2) {
+        const $v1 = convertToTensor(v1, 'v1', 'outerProduct');
+        const $v2 = convertToTensor(v2, 'v2', 'outerProduct');
+        assert($v1.rank === 1 && $v2.rank === 1, () => `Error in outerProduct: inputs must be rank 1, but got ranks ` +
+            `${$v1.rank} and ${$v2.rank}.`);
+        const v12D = reshape$2($v1, [-1, 1]);
+        const v22D = reshape$2($v2, [1, -1]);
+        return matMul$1(v12D, v22D);
+    }
+    const outerProduct = op({ outerProduct_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Pads a `tf.Tensor` with a given value and paddings.
+     *
+     * This operation implements `CONSTANT` mode. For `REFLECT` and `SYMMETRIC`,
+     * refer to `tf.mirrorPad`
+     *
+     * Also available are stricter rank-specific methods with the same signature
+     * as this method that assert that `paddings` is of given length.
+     *   - `tf.pad1d`
+     *   - `tf.pad2d`
+     *   - `tf.pad3d`
+     *   - `tf.pad4d`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     * x.pad([[1, 2]]).print();
+     * ```
+     * @param x The tensor to pad.
+     * @param paddings An array of length `R` (the rank of the tensor), where
+     * each element is a length-2 tuple of ints `[padBefore, padAfter]`,
+     * specifying how much to pad along each dimension of the tensor.
+     * @param constantValue The pad value to use. Defaults to 0.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function pad_(x, paddings, constantValue = 0) {
+        const $x = convertToTensor(x, 'x', 'pad');
+        if ($x.rank === 0) {
+            throw new Error('pad(scalar) is not defined. Pass non-scalar to pad');
+        }
+        const attrs = { paddings, constantValue };
+        const inputs = { x: $x };
+        return ENGINE.runKernel(PadV2, inputs, attrs);
+    }
+    const pad = op({ pad_ });
+
+    /**
+     * Pads a `tf.Tensor1D` with a given value and paddings. See `pad` for details.
+     */
+    function pad1d_(x, paddings, constantValue = 0) {
+        assert(paddings.length === 2, () => 'Invalid number of paddings. Must be length of 2.');
+        return pad(x, [paddings], constantValue);
+    }
+    const pad1d = op({ pad1d_ });
+
+    /**
+     * Pads a `tf.Tensor2D` with a given value and paddings. See `pad` for details.
+     */
+    function pad2d_(x, paddings, constantValue = 0) {
+        assert(paddings.length === 2 && paddings[0].length === 2 &&
+            paddings[1].length === 2, () => 'Invalid number of paddings. Must be length of 2 each.');
+        return pad(x, paddings, constantValue);
+    }
+    const pad2d = op({ pad2d_ });
+
+    /**
+     * Pads a `tf.Tensor3D` with a given value and paddings. See `pad` for details.
+     */
+    function pad3d_(x, paddings, constantValue = 0) {
+        assert(paddings.length === 3 && paddings[0].length === 2 &&
+            paddings[1].length === 2 && paddings[2].length === 2, () => 'Invalid number of paddings. Must be length of 2 each.');
+        return pad(x, paddings, constantValue);
+    }
+    const pad3d = op({ pad3d_ });
+
+    /**
+     * Pads a `tf.Tensor4D` with a given value and paddings. See `pad` for details.
+     */
+    function pad4d_(x, paddings, constantValue = 0) {
+        assert(paddings.length === 4 && paddings[0].length === 2 &&
+            paddings[1].length === 2 && paddings[2].length === 2 &&
+            paddings[3].length === 2, () => 'Invalid number of paddings. Must be length of 2 each.');
+        return pad(x, paddings, constantValue);
+    }
+    const pad4d = op({ pad4d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * This operation divides "spatial" dimensions `[1, ..., M]` of the input into
+     * a grid of blocks of shape `blockShape`, and interleaves these blocks with
+     * the "batch" dimension (0) such that in the output, the spatial
+     * dimensions `[1, ..., M]` correspond to the position within the grid,
+     * and the batch dimension combines both the position within a spatial block
+     * and the original batch position. Prior to division into blocks,
+     * the spatial dimensions of the input are optionally zero padded
+     * according to `paddings`. See below for a precise description.
+     *
+     * ```js
+     * const x = tf.tensor4d([1, 2, 3, 4], [1, 2, 2, 1]);
+     * const blockShape = [2, 2];
+     * const paddings = [[0, 0], [0, 0]];
+     *
+     * x.spaceToBatchND(blockShape, paddings).print();
+     * ```
+     *
+     * @param x A `tf.Tensor`. N-D with `x.shape` = `[batch] + spatialShape +
+     * remainingShape`, where spatialShape has `M` dimensions.
+     * @param blockShape A 1-D array. Must have shape `[M]`, all values must
+     * be >= 1.
+     * @param paddings A 2-D array. Must have shape `[M, 2]`, all values must be >=
+     *     0. `paddings[i] = [padStart, padEnd]` specifies the amount to zero-pad
+     * from input dimension `i + 1`, which corresponds to spatial dimension `i`. It
+     * is required that
+     * `(inputShape[i + 1] + padStart + padEnd) % blockShape[i] === 0`
+     *
+     * This operation is equivalent to the following steps:
+     *
+     * 1. Zero-pad the start and end of dimensions `[1, ..., M]` of the input
+     * according to `paddings` to produce `padded` of shape paddedShape.
+     *
+     * 2. Reshape `padded` to `reshapedPadded` of shape:
+     * `[batch] + [paddedShape[1] / blockShape[0], blockShape[0], ...,
+     * paddedShape[M] / blockShape[M-1], blockShape[M-1]] + remainingShape`
+     *
+     * 3. Permute dimensions of `reshapedPadded` to produce `permutedReshapedPadded`
+     * of shape: `blockShape + [batch] + [paddedShape[1] / blockShape[0], ...,
+     * paddedShape[M] / blockShape[M-1]] + remainingShape`
+     *
+     * 4. Reshape `permutedReshapedPadded` to flatten `blockShape` into the
+     * batch dimension, producing an output tensor of shape:
+     * `[batch * prod(blockShape)] + [paddedShape[1] / blockShape[0], ...,
+     * paddedShape[M] / blockShape[M-1]] + remainingShape`
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function spaceToBatchND_(x, blockShape, paddings) {
+        const $x = convertToTensor(x, 'x', 'spaceToBatchND');
+        assert($x.rank >= 1 + blockShape.length, () => `input rank ${$x.rank} should be > than [blockShape] ${blockShape.length}`);
+        assert(paddings.length === blockShape.length, () => `paddings.shape[0] ${paddings.length} must be equal to [blockShape] ${blockShape.length}`);
+        assert($x.shape.reduce((a, b, i) => {
+            if (i > 0 && i <= blockShape.length) {
+                return a &&
+                    ((b + paddings[i - 1][0] + paddings[i - 1][1]) %
+                        blockShape[i - 1] ===
+                        0);
+            }
+            return a;
+        }, true), () => `input spatial dimensions ${$x.shape.slice(1)} with paddings ${paddings.toString()} must be divisible by blockShapes ${blockShape.toString()}`);
+        const inputs = { x: $x };
+        const attrs = { blockShape, paddings };
+        return ENGINE.runKernel(SpaceToBatchND, inputs, attrs);
+    }
+    const spaceToBatchND$2 = op({ spaceToBatchND_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Performs an N-D pooling operation
+     *
+     * @param input The input tensor, of rank 4 or rank 3 of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is assumed.
+     * @param windowShape The filter size: `[filterHeight, filterWidth]`. If
+     *     `filterSize` is a single number, then `filterHeight == filterWidth`.
+     * @param poolingType The type of pooling, either 'max' or 'avg'.
+     * @param pad The type of padding algorithm:
+     *    - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *    - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *    - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_guides/python/nn#Convolution](
+     *         https://www.tensorflow.org/api_guides/python/nn#Convolution)
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     in dilated pooling. Defaults to `[1, 1]`. If `dilationRate` is a single
+     *     number, then `dilationHeight == dilationWidth`. If it is greater than
+     *     1, then all values of `strides` must be 1.
+     * @param strides The strides of the pooling: `[strideHeight, strideWidth]`. If
+     *     `strides` is a single number, then `strideHeight == strideWidth`.
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function pool_(input, windowShape, poolingType, pad, dilations, strides, dimRoundingMode) {
+        if (dilations == null) {
+            dilations = [1, 1];
+        }
+        if (strides == null) {
+            strides = 1;
+        }
+        if (pad === 0) {
+            pad = 'valid';
+        }
+        const $x = convertToTensor(input, 'x', 'maxPool');
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        assert(eitherStridesOrDilationsAreOne(strides, dilations), () => 'Error in pool: Either strides or dilations must be 1. ' +
+            `Got strides ${strides} and dilations '${dilations}'`);
+        const convInfo = computePool2DInfo(x4D.shape, windowShape, strides, dilations, pad);
+        const dilation = [convInfo.dilationHeight, convInfo.dilationWidth];
+        // The following implementation does batchToSpace(pool(spaceToBatch(x)))
+        // whenever dilation > 1 since the TF kernels do not support dilation > 1.
+        // tslint:disable-next-line:max-line-length
+        // https://github.com/tensorflow/tensorflow/blob/50f6bb67dc98c9b74630b6047aae7a4f8a40fd02/tensorflow/python/ops/nn_ops.py#L1037
+        let basePadding;
+        if (pad === 'same') {
+            basePadding = withSpaceToBatchBasePaddings([convInfo.filterHeight, convInfo.filterWidth], dilation);
+        }
+        else {
+            basePadding = [[0, 0], [0, 0]];
+        }
+        const isDilationOne = dilation[0] === 1 && dilation[1] === 1;
+        const [adjustedPadding, adjustedCrops] = requiredSpaceToBatchPaddings([convInfo.inHeight, convInfo.inWidth], dilation, basePadding);
+        const convertedPad = isDilationOne ? pad : 'valid';
+        const convertedX = isDilationOne ? x4D : spaceToBatchND$2(x4D, dilation, adjustedPadding);
+        const forwardOp = poolingType === 'avg' ?
+            () => avgPool$2(convertedX, windowShape, strides, convertedPad, dimRoundingMode) :
+            () => maxPool$2(convertedX, windowShape, strides, convertedPad, dimRoundingMode);
+        const y = forwardOp();
+        const res = isDilationOne ? y : batchToSpaceND$2(y, dilation, adjustedCrops);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    // Helper function to compute crops and paddings for pool with dilation > 1.
+    // tslint:disable-next-line:max-line-length
+    // https://github.com/tensorflow/tensorflow/blob/50f6bb67dc98c9b74630b6047aae7a4f8a40fd02/tensorflow/python/ops/array_ops.py#L2184
+    function requiredSpaceToBatchPaddings(inputShape, blockShape, basePadding) {
+        const padStart = basePadding.map(b => b[0]);
+        const origPadEnd = basePadding.map(b => b[1]);
+        const fullInputShape = inputShape.concat(padStart, origPadEnd);
+        const padEndExtra = blockShape.map((b, i) => (b - fullInputShape[i] % b) % b);
+        const padEnd = origPadEnd.map((s, i) => s + padEndExtra[i]);
+        const paddings = blockShape.map((_, i) => [padStart[i], padEnd[i]]);
+        const crops = blockShape.map((_, i) => [0, padEndExtra[i]]);
+        return [paddings, crops];
+    }
+    // Helper function to compute base paddings for pool with dilation > 1.
+    // tslint:disable-next-line:max-line-length
+    // https://github.com/tensorflow/tensorflow/blob/50f6bb67dc98c9b74630b6047aae7a4f8a40fd02/tensorflow/python/ops/nn_ops.py#L524
+    function withSpaceToBatchBasePaddings(filterShape, dilation) {
+        // Spatial dimensions of the filters and the upsampled filters in which we
+        // introduce (rate - 1) zeros between consecutive filter values.
+        const dilatedFilterShape = filterShape.map((s, i) => {
+            return s + (s - 1) * (dilation[i] - 1);
+        });
+        const padExtraShape = dilatedFilterShape.map(s => s - 1);
+        // When padding is odd, we pad more at end, following the same
+        // convention as conv2d.
+        const padExtraStart = padExtraShape.map(s => Math.floor(s / 2));
+        const padExtraEnd = padExtraShape.map((s, i) => s - padExtraStart[i]);
+        return padExtraShape.map((_, i) => {
+            return [padExtraStart[i], padExtraEnd[i]];
+        });
+    }
+    const pool$1 = op({ pool_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the power of one `tf.Tensor` to another. Supports broadcasting.
+     *
+     * Given a `tf.Tensor` x and a `tf.Tensor` y, this operation computes x^y for
+     * corresponding elements in x and y. The result's dtype will be the upcasted
+     * type of the `base` and `exp` dtypes.
+     *
+     * ```js
+     * const a = tf.tensor([[2, 3], [4, 5]])
+     * const b = tf.tensor([[1, 2], [3, 0]]).toInt();
+     *
+     * a.pow(b).print();  // or tf.pow(a, b)
+     * ```
+     *
+     * ```js
+     * const a = tf.tensor([[1, 2], [3, 4]])
+     * const b = tf.tensor(2).toInt();
+     *
+     * a.pow(b).print();  // or tf.pow(a, b)
+     * ```
+     * We also expose `powStrict` which has the same signature as this op and
+     * asserts that `base` and `exp` are the same shape (does not broadcast).
+     *
+     * @param base The base `tf.Tensor` to pow element-wise.
+     * @param exp The exponent `tf.Tensor` to pow element-wise.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function pow_(base, exp) {
+        let $base = convertToTensor(base, 'base', 'pow');
+        let $exp = convertToTensor(exp, 'exp', 'pow');
+        [$base, $exp] = makeTypesMatch($base, $exp);
+        const inputs = { a: $base, b: $exp };
+        return ENGINE.runKernel(Pow, inputs);
+    }
+    const pow$2 = op({ pow_ });
 
     /**
      * @license
@@ -28385,6 +37399,1475 @@
         return ENGINE.runKernel(Prelu, inputs);
     }
     const prelu$2 = op({ prelu_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the product of elements across dimensions of a `tf.Tensor`.
+     *
+     * Reduces the input along the dimensions given in `axes`. Unless `keepDims`
+     * is true, the rank of the `tf.Tensor` is reduced by 1 for each entry in
+     * `axes`. If `keepDims` is true, the reduced dimensions are retained with
+     * length 1. If `axes` has no entries, all dimensions are reduced, and a
+     * `tf.Tensor` with a single element is returned.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3]);
+     *
+     * x.prod().print();  // or tf.prod(x)
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * const axis = 1;
+     * x.prod(axis).print();  // or tf.prod(x, axis)
+     * ```
+     *
+     * @param x The input tensor to compute the product over. If the dtype is `bool`
+     *   it will be converted to `int32` and the output dtype will be `int32`.
+     * @param axis The dimension(s) to reduce. By default it reduces
+     *     all dimensions.
+     * @param keepDims If true, retains reduced dimensions with size 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Reduction'}
+     */
+    function prod_(x, axis = null, keepDims = false) {
+        let $x = convertToTensor(x, 'x', 'prod');
+        if ($x.dtype === 'bool') {
+            // bool is not an allowed type for the underlying kernel.
+            $x = cast$2($x, 'int32');
+        }
+        const inputs = { x: $x };
+        const attrs = { axis, keepDims };
+        return ENGINE.runKernel(Prod, inputs, attrs);
+    }
+    const prod$2 = op({ prod_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with values sampled from a random number generator
+     * function defined by the user.
+     *
+     * @param shape An array of integers defining the output tensor shape.
+     * @param randFunction A random number generator function which is called
+     * for each element in the output tensor.
+     * @param dtype The data type of the output tensor. Defaults to 'float32'.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Random'}
+     */
+    function rand_(shape, randFunction, dtype) {
+        const size = sizeFromShape(shape);
+        let values = null;
+        if (dtype == null || dtype === 'float32') {
+            values = new Float32Array(size);
+        }
+        else if (dtype === 'int32') {
+            values = new Int32Array(size);
+        }
+        else if (dtype === 'bool') {
+            values = new Uint8Array(size);
+        }
+        else {
+            throw new Error(`Unknown data type ${dtype}`);
+        }
+        for (let i = 0; i < size; i++) {
+            values[i] = randFunction();
+        }
+        return ENGINE.makeTensor(values, shape, dtype);
+    }
+    const rand = op({ rand_ });
+
+    var alea$3 = {exports: {}};
+
+    (function (module) {
+    // A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
+    // http://baagoe.com/en/RandomMusings/javascript/
+    // https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
+    // Original work is under MIT license -
+
+    // Copyright (C) 2010 by Johannes Baagøe <baagoe@baagoe.org>
+    //
+    // Permission is hereby granted, free of charge, to any person obtaining a copy
+    // of this software and associated documentation files (the "Software"), to deal
+    // in the Software without restriction, including without limitation the rights
+    // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    // copies of the Software, and to permit persons to whom the Software is
+    // furnished to do so, subject to the following conditions:
+    // 
+    // The above copyright notice and this permission notice shall be included in
+    // all copies or substantial portions of the Software.
+    // 
+    // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    // THE SOFTWARE.
+
+
+
+    (function(global, module, define) {
+
+    function Alea(seed) {
+      var me = this, mash = Mash();
+
+      me.next = function() {
+        var t = 2091639 * me.s0 + me.c * 2.3283064365386963e-10; // 2^-32
+        me.s0 = me.s1;
+        me.s1 = me.s2;
+        return me.s2 = t - (me.c = t | 0);
+      };
+
+      // Apply the seeding algorithm from Baagoe.
+      me.c = 1;
+      me.s0 = mash(' ');
+      me.s1 = mash(' ');
+      me.s2 = mash(' ');
+      me.s0 -= mash(seed);
+      if (me.s0 < 0) { me.s0 += 1; }
+      me.s1 -= mash(seed);
+      if (me.s1 < 0) { me.s1 += 1; }
+      me.s2 -= mash(seed);
+      if (me.s2 < 0) { me.s2 += 1; }
+      mash = null;
+    }
+
+    function copy(f, t) {
+      t.c = f.c;
+      t.s0 = f.s0;
+      t.s1 = f.s1;
+      t.s2 = f.s2;
+      return t;
+    }
+
+    function impl(seed, opts) {
+      var xg = new Alea(seed),
+          state = opts && opts.state,
+          prng = xg.next;
+      prng.int32 = function() { return (xg.next() * 0x100000000) | 0; };
+      prng.double = function() {
+        return prng() + (prng() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
+      };
+      prng.quick = prng;
+      if (state) {
+        if (typeof(state) == 'object') copy(state, xg);
+        prng.state = function() { return copy(xg, {}); };
+      }
+      return prng;
+    }
+
+    function Mash() {
+      var n = 0xefc8249d;
+
+      var mash = function(data) {
+        data = data.toString();
+        for (var i = 0; i < data.length; i++) {
+          n += data.charCodeAt(i);
+          var h = 0.02519603282416938 * n;
+          n = h >>> 0;
+          h -= n;
+          h *= n;
+          n = h >>> 0;
+          h -= n;
+          n += h * 0x100000000; // 2^32
+        }
+        return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
+      };
+
+      return mash;
+    }
+
+
+    if (module && module.exports) {
+      module.exports = impl;
+    } else if (define && define.amd) {
+      define(function() { return impl; });
+    } else {
+      this.alea = impl;
+    }
+
+    })(
+      commonjsGlobal,
+      module,    // present in node.js
+      (typeof undefined) == 'function'    // present with an AMD loader
+    );
+    }(alea$3));
+
+    var xor128$3 = {exports: {}};
+
+    (function (module) {
+    // A Javascript implementaion of the "xor128" prng algorithm by
+    // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
+
+    (function(global, module, define) {
+
+    function XorGen(seed) {
+      var me = this, strseed = '';
+
+      me.x = 0;
+      me.y = 0;
+      me.z = 0;
+      me.w = 0;
+
+      // Set up generator function.
+      me.next = function() {
+        var t = me.x ^ (me.x << 11);
+        me.x = me.y;
+        me.y = me.z;
+        me.z = me.w;
+        return me.w ^= (me.w >>> 19) ^ t ^ (t >>> 8);
+      };
+
+      if (seed === (seed | 0)) {
+        // Integer seed.
+        me.x = seed;
+      } else {
+        // String seed.
+        strseed += seed;
+      }
+
+      // Mix in string seed, then discard an initial batch of 64 values.
+      for (var k = 0; k < strseed.length + 64; k++) {
+        me.x ^= strseed.charCodeAt(k) | 0;
+        me.next();
+      }
+    }
+
+    function copy(f, t) {
+      t.x = f.x;
+      t.y = f.y;
+      t.z = f.z;
+      t.w = f.w;
+      return t;
+    }
+
+    function impl(seed, opts) {
+      var xg = new XorGen(seed),
+          state = opts && opts.state,
+          prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11,
+              bot = (xg.next() >>> 0) / 0x100000000,
+              result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (typeof(state) == 'object') copy(state, xg);
+        prng.state = function() { return copy(xg, {}); };
+      }
+      return prng;
+    }
+
+    if (module && module.exports) {
+      module.exports = impl;
+    } else if (define && define.amd) {
+      define(function() { return impl; });
+    } else {
+      this.xor128 = impl;
+    }
+
+    })(
+      commonjsGlobal,
+      module,    // present in node.js
+      (typeof undefined) == 'function'    // present with an AMD loader
+    );
+    }(xor128$3));
+
+    var xorwow$3 = {exports: {}};
+
+    (function (module) {
+    // A Javascript implementaion of the "xorwow" prng algorithm by
+    // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
+
+    (function(global, module, define) {
+
+    function XorGen(seed) {
+      var me = this, strseed = '';
+
+      // Set up generator function.
+      me.next = function() {
+        var t = (me.x ^ (me.x >>> 2));
+        me.x = me.y; me.y = me.z; me.z = me.w; me.w = me.v;
+        return (me.d = (me.d + 362437 | 0)) +
+           (me.v = (me.v ^ (me.v << 4)) ^ (t ^ (t << 1))) | 0;
+      };
+
+      me.x = 0;
+      me.y = 0;
+      me.z = 0;
+      me.w = 0;
+      me.v = 0;
+
+      if (seed === (seed | 0)) {
+        // Integer seed.
+        me.x = seed;
+      } else {
+        // String seed.
+        strseed += seed;
+      }
+
+      // Mix in string seed, then discard an initial batch of 64 values.
+      for (var k = 0; k < strseed.length + 64; k++) {
+        me.x ^= strseed.charCodeAt(k) | 0;
+        if (k == strseed.length) {
+          me.d = me.x << 10 ^ me.x >>> 4;
+        }
+        me.next();
+      }
+    }
+
+    function copy(f, t) {
+      t.x = f.x;
+      t.y = f.y;
+      t.z = f.z;
+      t.w = f.w;
+      t.v = f.v;
+      t.d = f.d;
+      return t;
+    }
+
+    function impl(seed, opts) {
+      var xg = new XorGen(seed),
+          state = opts && opts.state,
+          prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11,
+              bot = (xg.next() >>> 0) / 0x100000000,
+              result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (typeof(state) == 'object') copy(state, xg);
+        prng.state = function() { return copy(xg, {}); };
+      }
+      return prng;
+    }
+
+    if (module && module.exports) {
+      module.exports = impl;
+    } else if (define && define.amd) {
+      define(function() { return impl; });
+    } else {
+      this.xorwow = impl;
+    }
+
+    })(
+      commonjsGlobal,
+      module,    // present in node.js
+      (typeof undefined) == 'function'    // present with an AMD loader
+    );
+    }(xorwow$3));
+
+    var xorshift7$3 = {exports: {}};
+
+    (function (module) {
+    // A Javascript implementaion of the "xorshift7" algorithm by
+    // François Panneton and Pierre L'ecuyer:
+    // "On the Xorgshift Random Number Generators"
+    // http://saluc.engr.uconn.edu/refs/crypto/rng/panneton05onthexorshift.pdf
+
+    (function(global, module, define) {
+
+    function XorGen(seed) {
+      var me = this;
+
+      // Set up generator function.
+      me.next = function() {
+        // Update xor generator.
+        var X = me.x, i = me.i, t, v;
+        t = X[i]; t ^= (t >>> 7); v = t ^ (t << 24);
+        t = X[(i + 1) & 7]; v ^= t ^ (t >>> 10);
+        t = X[(i + 3) & 7]; v ^= t ^ (t >>> 3);
+        t = X[(i + 4) & 7]; v ^= t ^ (t << 7);
+        t = X[(i + 7) & 7]; t = t ^ (t << 13); v ^= t ^ (t << 9);
+        X[i] = v;
+        me.i = (i + 1) & 7;
+        return v;
+      };
+
+      function init(me, seed) {
+        var j, X = [];
+
+        if (seed === (seed | 0)) {
+          // Seed state array using a 32-bit integer.
+          X[0] = seed;
+        } else {
+          // Seed state using a string.
+          seed = '' + seed;
+          for (j = 0; j < seed.length; ++j) {
+            X[j & 7] = (X[j & 7] << 15) ^
+                (seed.charCodeAt(j) + X[(j + 1) & 7] << 13);
+          }
+        }
+        // Enforce an array length of 8, not all zeroes.
+        while (X.length < 8) X.push(0);
+        for (j = 0; j < 8 && X[j] === 0; ++j);
+        if (j == 8) X[7] = -1;
+
+        me.x = X;
+        me.i = 0;
+
+        // Discard an initial 256 values.
+        for (j = 256; j > 0; --j) {
+          me.next();
+        }
+      }
+
+      init(me, seed);
+    }
+
+    function copy(f, t) {
+      t.x = f.x.slice();
+      t.i = f.i;
+      return t;
+    }
+
+    function impl(seed, opts) {
+      if (seed == null) seed = +(new Date);
+      var xg = new XorGen(seed),
+          state = opts && opts.state,
+          prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11,
+              bot = (xg.next() >>> 0) / 0x100000000,
+              result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (state.x) copy(state, xg);
+        prng.state = function() { return copy(xg, {}); };
+      }
+      return prng;
+    }
+
+    if (module && module.exports) {
+      module.exports = impl;
+    } else if (define && define.amd) {
+      define(function() { return impl; });
+    } else {
+      this.xorshift7 = impl;
+    }
+
+    })(
+      commonjsGlobal,
+      module,    // present in node.js
+      (typeof undefined) == 'function'    // present with an AMD loader
+    );
+    }(xorshift7$3));
+
+    var xor4096$3 = {exports: {}};
+
+    (function (module) {
+    // A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
+    //
+    // This fast non-cryptographic random number generator is designed for
+    // use in Monte-Carlo algorithms. It combines a long-period xorshift
+    // generator with a Weyl generator, and it passes all common batteries
+    // of stasticial tests for randomness while consuming only a few nanoseconds
+    // for each prng generated.  For background on the generator, see Brent's
+    // paper: "Some long-period random number generators using shifts and xors."
+    // http://arxiv.org/pdf/1004.3115v1.pdf
+    //
+    // Usage:
+    //
+    // var xor4096 = require('xor4096');
+    // random = xor4096(1);                        // Seed with int32 or string.
+    // assert.equal(random(), 0.1520436450538547); // (0, 1) range, 53 bits.
+    // assert.equal(random.int32(), 1806534897);   // signed int32, 32 bits.
+    //
+    // For nonzero numeric keys, this impelementation provides a sequence
+    // identical to that by Brent's xorgens 3 implementaion in C.  This
+    // implementation also provides for initalizing the generator with
+    // string seeds, or for saving and restoring the state of the generator.
+    //
+    // On Chrome, this prng benchmarks about 2.1 times slower than
+    // Javascript's built-in Math.random().
+
+    (function(global, module, define) {
+
+    function XorGen(seed) {
+      var me = this;
+
+      // Set up generator function.
+      me.next = function() {
+        var w = me.w,
+            X = me.X, i = me.i, t, v;
+        // Update Weyl generator.
+        me.w = w = (w + 0x61c88647) | 0;
+        // Update xor generator.
+        v = X[(i + 34) & 127];
+        t = X[i = ((i + 1) & 127)];
+        v ^= v << 13;
+        t ^= t << 17;
+        v ^= v >>> 15;
+        t ^= t >>> 12;
+        // Update Xor generator array state.
+        v = X[i] = v ^ t;
+        me.i = i;
+        // Result is the combination.
+        return (v + (w ^ (w >>> 16))) | 0;
+      };
+
+      function init(me, seed) {
+        var t, v, i, j, w, X = [], limit = 128;
+        if (seed === (seed | 0)) {
+          // Numeric seeds initialize v, which is used to generates X.
+          v = seed;
+          seed = null;
+        } else {
+          // String seeds are mixed into v and X one character at a time.
+          seed = seed + '\0';
+          v = 0;
+          limit = Math.max(limit, seed.length);
+        }
+        // Initialize circular array and weyl value.
+        for (i = 0, j = -32; j < limit; ++j) {
+          // Put the unicode characters into the array, and shuffle them.
+          if (seed) v ^= seed.charCodeAt((j + 32) % seed.length);
+          // After 32 shuffles, take v as the starting w value.
+          if (j === 0) w = v;
+          v ^= v << 10;
+          v ^= v >>> 15;
+          v ^= v << 4;
+          v ^= v >>> 13;
+          if (j >= 0) {
+            w = (w + 0x61c88647) | 0;     // Weyl.
+            t = (X[j & 127] ^= (v + w));  // Combine xor and weyl to init array.
+            i = (0 == t) ? i + 1 : 0;     // Count zeroes.
+          }
+        }
+        // We have detected all zeroes; make the key nonzero.
+        if (i >= 128) {
+          X[(seed && seed.length || 0) & 127] = -1;
+        }
+        // Run the generator 512 times to further mix the state before using it.
+        // Factoring this as a function slows the main generator, so it is just
+        // unrolled here.  The weyl generator is not advanced while warming up.
+        i = 127;
+        for (j = 4 * 128; j > 0; --j) {
+          v = X[(i + 34) & 127];
+          t = X[i = ((i + 1) & 127)];
+          v ^= v << 13;
+          t ^= t << 17;
+          v ^= v >>> 15;
+          t ^= t >>> 12;
+          X[i] = v ^ t;
+        }
+        // Storing state as object members is faster than using closure variables.
+        me.w = w;
+        me.X = X;
+        me.i = i;
+      }
+
+      init(me, seed);
+    }
+
+    function copy(f, t) {
+      t.i = f.i;
+      t.w = f.w;
+      t.X = f.X.slice();
+      return t;
+    }
+    function impl(seed, opts) {
+      if (seed == null) seed = +(new Date);
+      var xg = new XorGen(seed),
+          state = opts && opts.state,
+          prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11,
+              bot = (xg.next() >>> 0) / 0x100000000,
+              result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (state.X) copy(state, xg);
+        prng.state = function() { return copy(xg, {}); };
+      }
+      return prng;
+    }
+
+    if (module && module.exports) {
+      module.exports = impl;
+    } else if (define && define.amd) {
+      define(function() { return impl; });
+    } else {
+      this.xor4096 = impl;
+    }
+
+    })(
+      commonjsGlobal,                                     // window object or global
+      module,    // present in node.js
+      (typeof undefined) == 'function'    // present with an AMD loader
+    );
+    }(xor4096$3));
+
+    var tychei$3 = {exports: {}};
+
+    (function (module) {
+    // A Javascript implementaion of the "Tyche-i" prng algorithm by
+    // Samuel Neves and Filipe Araujo.
+    // See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
+
+    (function(global, module, define) {
+
+    function XorGen(seed) {
+      var me = this, strseed = '';
+
+      // Set up generator function.
+      me.next = function() {
+        var b = me.b, c = me.c, d = me.d, a = me.a;
+        b = (b << 25) ^ (b >>> 7) ^ c;
+        c = (c - d) | 0;
+        d = (d << 24) ^ (d >>> 8) ^ a;
+        a = (a - b) | 0;
+        me.b = b = (b << 20) ^ (b >>> 12) ^ c;
+        me.c = c = (c - d) | 0;
+        me.d = (d << 16) ^ (c >>> 16) ^ a;
+        return me.a = (a - b) | 0;
+      };
+
+      /* The following is non-inverted tyche, which has better internal
+       * bit diffusion, but which is about 25% slower than tyche-i in JS.
+      me.next = function() {
+        var a = me.a, b = me.b, c = me.c, d = me.d;
+        a = (me.a + me.b | 0) >>> 0;
+        d = me.d ^ a; d = d << 16 ^ d >>> 16;
+        c = me.c + d | 0;
+        b = me.b ^ c; b = b << 12 ^ d >>> 20;
+        me.a = a = a + b | 0;
+        d = d ^ a; me.d = d = d << 8 ^ d >>> 24;
+        me.c = c = c + d | 0;
+        b = b ^ c;
+        return me.b = (b << 7 ^ b >>> 25);
+      }
+      */
+
+      me.a = 0;
+      me.b = 0;
+      me.c = 2654435769 | 0;
+      me.d = 1367130551;
+
+      if (seed === Math.floor(seed)) {
+        // Integer seed.
+        me.a = (seed / 0x100000000) | 0;
+        me.b = seed | 0;
+      } else {
+        // String seed.
+        strseed += seed;
+      }
+
+      // Mix in string seed, then discard an initial batch of 64 values.
+      for (var k = 0; k < strseed.length + 20; k++) {
+        me.b ^= strseed.charCodeAt(k) | 0;
+        me.next();
+      }
+    }
+
+    function copy(f, t) {
+      t.a = f.a;
+      t.b = f.b;
+      t.c = f.c;
+      t.d = f.d;
+      return t;
+    }
+    function impl(seed, opts) {
+      var xg = new XorGen(seed),
+          state = opts && opts.state,
+          prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11,
+              bot = (xg.next() >>> 0) / 0x100000000,
+              result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (typeof(state) == 'object') copy(state, xg);
+        prng.state = function() { return copy(xg, {}); };
+      }
+      return prng;
+    }
+
+    if (module && module.exports) {
+      module.exports = impl;
+    } else if (define && define.amd) {
+      define(function() { return impl; });
+    } else {
+      this.tychei = impl;
+    }
+
+    })(
+      commonjsGlobal,
+      module,    // present in node.js
+      (typeof undefined) == 'function'    // present with an AMD loader
+    );
+    }(tychei$3));
+
+    var seedrandom$3 = {exports: {}};
+
+    /*
+    Copyright 2014 David Bau.
+
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+    */
+
+    (function (module) {
+    (function (pool, math) {
+    //
+    // The following constants are related to IEEE 754 limits.
+    //
+    var global = this,
+        width = 256,        // each RC4 output is 0 <= x < 256
+        chunks = 6,         // at least six RC4 outputs for each double
+        digits = 52,        // there are 52 significant digits in a double
+        rngname = 'random', // rngname: name for Math.random and Math.seedrandom
+        startdenom = math.pow(width, chunks),
+        significance = math.pow(2, digits),
+        overflow = significance * 2,
+        mask = width - 1,
+        nodecrypto;         // node.js crypto module, initialized at the bottom.
+
+    //
+    // seedrandom()
+    // This is the seedrandom function described above.
+    //
+    function seedrandom(seed, options, callback) {
+      var key = [];
+      options = (options == true) ? { entropy: true } : (options || {});
+
+      // Flatten the seed string or build one from local entropy if needed.
+      var shortseed = mixkey(flatten(
+        options.entropy ? [seed, tostring(pool)] :
+        (seed == null) ? autoseed() : seed, 3), key);
+
+      // Use the seed to initialize an ARC4 generator.
+      var arc4 = new ARC4(key);
+
+      // This function returns a random double in [0, 1) that contains
+      // randomness in every bit of the mantissa of the IEEE 754 value.
+      var prng = function() {
+        var n = arc4.g(chunks),             // Start with a numerator n < 2 ^ 48
+            d = startdenom,                 //   and denominator d = 2 ^ 48.
+            x = 0;                          //   and no 'extra last byte'.
+        while (n < significance) {          // Fill up all significant digits by
+          n = (n + x) * width;              //   shifting numerator and
+          d *= width;                       //   denominator and generating a
+          x = arc4.g(1);                    //   new least-significant-byte.
+        }
+        while (n >= overflow) {             // To avoid rounding up, before adding
+          n /= 2;                           //   last byte, shift everything
+          d /= 2;                           //   right using integer math until
+          x >>>= 1;                         //   we have exactly the desired bits.
+        }
+        return (n + x) / d;                 // Form the number within [0, 1).
+      };
+
+      prng.int32 = function() { return arc4.g(4) | 0; };
+      prng.quick = function() { return arc4.g(4) / 0x100000000; };
+      prng.double = prng;
+
+      // Mix the randomness into accumulated entropy.
+      mixkey(tostring(arc4.S), pool);
+
+      // Calling convention: what to return as a function of prng, seed, is_math.
+      return (options.pass || callback ||
+          function(prng, seed, is_math_call, state) {
+            if (state) {
+              // Load the arc4 state from the given state if it has an S array.
+              if (state.S) { copy(state, arc4); }
+              // Only provide the .state method if requested via options.state.
+              prng.state = function() { return copy(arc4, {}); };
+            }
+
+            // If called as a method of Math (Math.seedrandom()), mutate
+            // Math.random because that is how seedrandom.js has worked since v1.0.
+            if (is_math_call) { math[rngname] = prng; return seed; }
+
+            // Otherwise, it is a newer calling convention, so return the
+            // prng directly.
+            else return prng;
+          })(
+      prng,
+      shortseed,
+      'global' in options ? options.global : (this == math),
+      options.state);
+    }
+    math['seed' + rngname] = seedrandom;
+
+    //
+    // ARC4
+    //
+    // An ARC4 implementation.  The constructor takes a key in the form of
+    // an array of at most (width) integers that should be 0 <= x < (width).
+    //
+    // The g(count) method returns a pseudorandom integer that concatenates
+    // the next (count) outputs from ARC4.  Its return value is a number x
+    // that is in the range 0 <= x < (width ^ count).
+    //
+    function ARC4(key) {
+      var t, keylen = key.length,
+          me = this, i = 0, j = me.i = me.j = 0, s = me.S = [];
+
+      // The empty key [] is treated as [0].
+      if (!keylen) { key = [keylen++]; }
+
+      // Set up S using the standard key scheduling algorithm.
+      while (i < width) {
+        s[i] = i++;
+      }
+      for (i = 0; i < width; i++) {
+        s[i] = s[j = mask & (j + key[i % keylen] + (t = s[i]))];
+        s[j] = t;
+      }
+
+      // The "g" method returns the next (count) outputs as one number.
+      (me.g = function(count) {
+        // Using instance members instead of closure state nearly doubles speed.
+        var t, r = 0,
+            i = me.i, j = me.j, s = me.S;
+        while (count--) {
+          t = s[i = mask & (i + 1)];
+          r = r * width + s[mask & ((s[i] = s[j = mask & (j + t)]) + (s[j] = t))];
+        }
+        me.i = i; me.j = j;
+        return r;
+        // For robust unpredictability, the function call below automatically
+        // discards an initial batch of values.  This is called RC4-drop[256].
+        // See http://google.com/search?q=rsa+fluhrer+response&btnI
+      })(width);
+    }
+
+    //
+    // copy()
+    // Copies internal state of ARC4 to or from a plain object.
+    //
+    function copy(f, t) {
+      t.i = f.i;
+      t.j = f.j;
+      t.S = f.S.slice();
+      return t;
+    }
+    //
+    // flatten()
+    // Converts an object tree to nested arrays of strings.
+    //
+    function flatten(obj, depth) {
+      var result = [], typ = (typeof obj), prop;
+      if (depth && typ == 'object') {
+        for (prop in obj) {
+          try { result.push(flatten(obj[prop], depth - 1)); } catch (e) {}
+        }
+      }
+      return (result.length ? result : typ == 'string' ? obj : obj + '\0');
+    }
+
+    //
+    // mixkey()
+    // Mixes a string seed into a key that is an array of integers, and
+    // returns a shortened string seed that is equivalent to the result key.
+    //
+    function mixkey(seed, key) {
+      var stringseed = seed + '', smear, j = 0;
+      while (j < stringseed.length) {
+        key[mask & j] =
+          mask & ((smear ^= key[mask & j] * 19) + stringseed.charCodeAt(j++));
+      }
+      return tostring(key);
+    }
+
+    //
+    // autoseed()
+    // Returns an object for autoseeding, using window.crypto and Node crypto
+    // module if available.
+    //
+    function autoseed() {
+      try {
+        var out;
+        if (nodecrypto && (out = nodecrypto.randomBytes)) {
+          // The use of 'out' to remember randomBytes makes tight minified code.
+          out = out(width);
+        } else {
+          out = new Uint8Array(width);
+          (global.crypto || global.msCrypto).getRandomValues(out);
+        }
+        return tostring(out);
+      } catch (e) {
+        var browser = global.navigator,
+            plugins = browser && browser.plugins;
+        return [+new Date, global, plugins, global.screen, tostring(pool)];
+      }
+    }
+
+    //
+    // tostring()
+    // Converts an array of charcodes to a string
+    //
+    function tostring(a) {
+      return String.fromCharCode.apply(0, a);
+    }
+
+    //
+    // When seedrandom.js is loaded, we immediately mix a few bits
+    // from the built-in RNG into the entropy pool.  Because we do
+    // not want to interfere with deterministic PRNG state later,
+    // seedrandom will not call math.random on its own again after
+    // initialization.
+    //
+    mixkey(math.random(), pool);
+
+    //
+    // Nodejs and AMD support: export the implementation as a module using
+    // either convention.
+    //
+    if (module.exports) {
+      module.exports = seedrandom;
+      // When in node.js, try using crypto package for autoseeding.
+      try {
+        nodecrypto = require('crypto');
+      } catch (ex) {}
+    }
+
+    // End anonymous scope, and pass initial values.
+    })(
+      [],     // pool: entropy pool starts empty
+      Math    // math: package containing random, pow, and seedrandom
+    );
+    }(seedrandom$3));
+
+    // A library of seedable RNGs implemented in Javascript.
+    //
+    // Usage:
+    //
+    // var seedrandom = require('seedrandom');
+    // var random = seedrandom(1); // or any seed.
+    // var x = random();       // 0 <= x < 1.  Every bit is random.
+    // var x = random.quick(); // 0 <= x < 1.  32 bits of randomness.
+
+    // alea, a 53-bit multiply-with-carry generator by Johannes Baagøe.
+    // Period: ~2^116
+    // Reported to pass all BigCrush tests.
+    var alea$2 = alea$3.exports;
+
+    // xor128, a pure xor-shift generator by George Marsaglia.
+    // Period: 2^128-1.
+    // Reported to fail: MatrixRank and LinearComp.
+    var xor128$2 = xor128$3.exports;
+
+    // xorwow, George Marsaglia's 160-bit xor-shift combined plus weyl.
+    // Period: 2^192-2^32
+    // Reported to fail: CollisionOver, SimpPoker, and LinearComp.
+    var xorwow$2 = xorwow$3.exports;
+
+    // xorshift7, by François Panneton and Pierre L'ecuyer, takes
+    // a different approach: it adds robustness by allowing more shifts
+    // than Marsaglia's original three.  It is a 7-shift generator
+    // with 256 bits, that passes BigCrush with no systmatic failures.
+    // Period 2^256-1.
+    // No systematic BigCrush failures reported.
+    var xorshift7$2 = xorshift7$3.exports;
+
+    // xor4096, by Richard Brent, is a 4096-bit xor-shift with a
+    // very long period that also adds a Weyl generator. It also passes
+    // BigCrush with no systematic failures.  Its long period may
+    // be useful if you have many generators and need to avoid
+    // collisions.
+    // Period: 2^4128-2^32.
+    // No systematic BigCrush failures reported.
+    var xor4096$2 = xor4096$3.exports;
+
+    // Tyche-i, by Samuel Neves and Filipe Araujo, is a bit-shifting random
+    // number generator derived from ChaCha, a modern stream cipher.
+    // https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
+    // Period: ~2^127
+    // No systematic BigCrush failures reported.
+    var tychei$2 = tychei$3.exports;
+
+    // The original ARC4-based prng included in this library.
+    // Period: ~2^1600
+    var sr$1 = seedrandom$3.exports;
+
+    sr$1.alea = alea$2;
+    sr$1.xor128 = xor128$2;
+    sr$1.xorwow = xorwow$2;
+    sr$1.xorshift7 = xorshift7$2;
+    sr$1.xor4096 = xor4096$2;
+    sr$1.tychei = tychei$2;
+
+    var seedrandom$2 = sr$1;
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    // https://en.wikipedia.org/wiki/Marsaglia_polar_method
+    class MPRandGauss {
+        constructor(mean, stdDeviation, dtype, truncated, seed) {
+            this.mean = mean;
+            this.stdDev = stdDeviation;
+            this.dtype = dtype;
+            this.nextVal = NaN;
+            this.truncated = truncated;
+            if (this.truncated) {
+                this.upper = this.mean + this.stdDev * 2;
+                this.lower = this.mean - this.stdDev * 2;
+            }
+            const seedValue = seed ? seed : Math.random();
+            this.random = seedrandom$2.alea(seedValue.toString());
+        }
+        /** Returns next sample from a Gaussian distribution. */
+        nextValue() {
+            if (!isNaN(this.nextVal)) {
+                const value = this.nextVal;
+                this.nextVal = NaN;
+                return value;
+            }
+            let resultX, resultY;
+            let isValid = false;
+            while (!isValid) {
+                let v1, v2, s;
+                do {
+                    v1 = 2 * this.random() - 1;
+                    v2 = 2 * this.random() - 1;
+                    s = v1 * v1 + v2 * v2;
+                } while (s >= 1 || s === 0);
+                const mul = Math.sqrt(-2.0 * Math.log(s) / s);
+                resultX = this.mean + this.stdDev * v1 * mul;
+                resultY = this.mean + this.stdDev * v2 * mul;
+                if (!this.truncated || this.isValidTruncated(resultX)) {
+                    isValid = true;
+                }
+            }
+            if (!this.truncated || this.isValidTruncated(resultY)) {
+                this.nextVal = this.convertValue(resultY);
+            }
+            return this.convertValue(resultX);
+        }
+        /** Handles proper rounding for non-floating-point numbers. */
+        convertValue(value) {
+            if (this.dtype == null || this.dtype === 'float32') {
+                return value;
+            }
+            return Math.round(value);
+        }
+        /** Returns true if less than 2-standard-deviations from the mean. */
+        isValidTruncated(value) {
+            return value <= this.upper && value >= this.lower;
+        }
+    }
+    // Marsaglia, George, and Wai Wan Tsang. 2000. "A Simple Method for Generating
+    // Gamma Variables."
+    class RandGamma {
+        constructor(alpha, beta, dtype, seed) {
+            this.alpha = alpha;
+            this.beta = 1 / beta; // convert rate to scale parameter
+            this.dtype = dtype;
+            const seedValue = seed ? seed : Math.random();
+            this.randu = seedrandom$2.alea(seedValue.toString());
+            this.randn = new MPRandGauss(0, 1, dtype, false, this.randu());
+            if (alpha < 1) {
+                this.d = alpha + (2 / 3);
+            }
+            else {
+                this.d = alpha - (1 / 3);
+            }
+            this.c = 1 / Math.sqrt(9 * this.d);
+        }
+        /** Returns next sample from a gamma distribution. */
+        nextValue() {
+            let x2, v0, v1, x, u, v;
+            while (true) {
+                do {
+                    x = this.randn.nextValue();
+                    v = 1 + (this.c * x);
+                } while (v <= 0);
+                v *= v * v;
+                x2 = x * x;
+                v0 = 1 - (0.331 * x2 * x2);
+                v1 = (0.5 * x2) + (this.d * (1 - v + Math.log(v)));
+                u = this.randu();
+                if (u < v0 || Math.log(u) < v1) {
+                    break;
+                }
+            }
+            v = (1 / this.beta) * this.d * v;
+            if (this.alpha < 1) {
+                v *= Math.pow(this.randu(), 1 / this.alpha);
+            }
+            return this.convertValue(v);
+        }
+        /** Handles proper rounding for non-floating-point numbers. */
+        convertValue(value) {
+            if (this.dtype === 'float32') {
+                return value;
+            }
+            return Math.round(value);
+        }
+    }
+    class UniformRandom {
+        constructor(min = 0, max = 1, dtype, seed) {
+            /** Handles proper rounding for non floating point numbers. */
+            this.canReturnFloat = () => (this.dtype == null || this.dtype === 'float32');
+            this.min = min;
+            this.range = max - min;
+            this.dtype = dtype;
+            if (seed == null) {
+                seed = Math.random();
+            }
+            if (typeof seed === 'number') {
+                seed = seed.toString();
+            }
+            if (!this.canReturnFloat() && this.range <= 1) {
+                throw new Error(`The difference between ${min} - ${max} <= 1 and dtype is not float`);
+            }
+            this.random = seedrandom$2.alea(seed);
+        }
+        convertValue(value) {
+            if (this.canReturnFloat()) {
+                return value;
+            }
+            return Math.round(value);
+        }
+        nextValue() {
+            return this.convertValue(this.min + this.range * this.random());
+        }
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with values sampled from a gamma distribution.
+     *
+     * ```js
+     * tf.randomGamma([2, 2], 1).print();
+     * ```
+     *
+     * @param shape An array of integers defining the output tensor shape.
+     * @param alpha The shape parameter of the gamma distribution.
+     * @param beta The inverse scale parameter of the gamma distribution. Defaults
+     *     to 1.
+     * @param dtype The data type of the output. Defaults to float32.
+     * @param seed The seed for the random number generator.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Random'}
+     */
+    function randomGamma_(shape, alpha, beta = 1, dtype = 'float32', seed) {
+        if (beta == null) {
+            beta = 1;
+        }
+        if (dtype == null) {
+            dtype = 'float32';
+        }
+        if (dtype !== 'float32' && dtype !== 'int32') {
+            throw new Error(`Unsupported data type ${dtype}`);
+        }
+        const rgamma = new RandGamma(alpha, beta, dtype, seed);
+        const res = buffer(shape, dtype);
+        for (let i = 0; i < res.values.length; i++) {
+            res.values[i] = rgamma.nextValue();
+        }
+        return res.toTensor();
+    }
+    const randomGamma = op({ randomGamma_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with values sampled from a normal distribution.
+     *
+     * ```js
+     * tf.randomNormal([2, 2]).print();
+     * ```
+     *
+     * @param shape An array of integers defining the output tensor shape.
+     * @param mean The mean of the normal distribution.
+     * @param stdDev The standard deviation of the normal distribution.
+     * @param dtype The data type of the output.
+     * @param seed The seed for the random number generator.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Random'}
+     */
+    function randomNormal_(shape, mean = 0, stdDev = 1, dtype, seed) {
+        if (dtype != null && dtype === 'bool') {
+            throw new Error(`Unsupported data type ${dtype}`);
+        }
+        const randGauss = new MPRandGauss(mean, stdDev, dtype, false /* truncated */, seed);
+        const res = buffer(shape, dtype);
+        for (let i = 0; i < res.values.length; i++) {
+            res.values[i] = randGauss.nextValue();
+        }
+        return res.toTensor();
+    }
+    const randomNormal = op({ randomNormal_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with values sampled from a uniform distribution.
+     *
+     * The generated values follow a uniform distribution in the range [minval,
+     * maxval). The lower bound minval is included in the range, while the upper
+     * bound maxval is excluded.
+     *
+     * ```js
+     * tf.randomUniform([2, 2]).print();
+     * ```
+     *
+     * @param shape An array of integers defining the output tensor shape.
+     * @param minval The lower bound on the range of random values to generate.
+     *   Defaults to 0.
+     * @param maxval The upper bound on the range of random values to generate.
+     *   Defaults to 1.
+     * @param dtype The data type of the output tensor. Defaults to 'float32'.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Random'}
+     */
+    function randomUniform_(shape, minval = 0, maxval = 1, dtype = 'float32', seed) {
+        const res = buffer(shape, dtype);
+        const random = new UniformRandom(minval, maxval, null, seed);
+        for (let i = 0; i < res.values.length; i++) {
+            res.values[i] = random.nextValue();
+        }
+        return res.toTensor();
+    }
+    const randomUniform = op({ randomUniform_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a new `tf.Tensor1D` filled with the numbers in the range provided.
+     *
+     * The tensor is a is half-open interval meaning it includes start, but
+     * excludes stop. Decrementing ranges and negative step values are also
+     * supported.sv
+     *
+     *
+     * ```js
+     * tf.range(0, 9, 2).print();
+     * ```
+     *
+     * @param start An integer start value
+     * @param stop An integer stop value
+     * @param step An integer increment (will default to 1 or -1)
+     * @param dtype The data type of the output tensor. Defaults to 'float32'.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function range$2(start, stop, step = 1, dtype = 'float32') {
+        if (step === 0) {
+            throw new Error('Cannot have a step of zero');
+        }
+        const attrs = { start, stop, step, dtype };
+        return ENGINE.runKernel(Range, {} /* inputs */, attrs);
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the real part of a complex (or real) tensor.
+     *
+     * Given a tensor input, this operation returns a tensor of type float that is
+     * the real part of each element in input considered as a complex number.
+     *
+     * If the input is real, it simply makes a clone.
+     *
+     * ```js
+     * const x = tf.complex([-2.25, 3.25], [4.75, 5.75]);
+     * tf.real(x).print();
+     * ```
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function real_(input) {
+        const $input = convertToTensor(input, 'input', 'real');
+        const inputs = { input: $input };
+        return ENGINE.runKernel(Real, inputs);
+    }
+    const real$2 = op({ real_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes reciprocal of x element-wise: `1 / x`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, 2]);
+     *
+     * x.reciprocal().print();  // or tf.reciprocal(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function reciprocal_(x) {
+        const $x = convertToTensor(x, 'x', 'reciprocal');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Reciprocal, inputs);
+    }
+    const reciprocal$2 = op({ reciprocal_ });
 
     /**
      * @license
@@ -28475,6 +38958,251 @@
      * =============================================================================
      */
     /**
+     * Reverses a `tf.Tensor` along a specified axis.
+     *
+     * Also available are stricter rank-specific methods that assert that `x` is
+     * of the given rank:
+     *   - `tf.reverse1d`
+     *   - `tf.reverse2d`
+     *   - `tf.reverse3d`
+     *   - `tf.reverse4d`
+     *
+     * Except `tf.reverse1d` (which does not have axis param), all methods have
+     * same signature as this method.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     *
+     * x.reverse().print();
+     * ```
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * const axis = 1;
+     * x.reverse(axis).print();
+     * ```
+     * @param x The input tensor to be reversed.
+     * @param axis The set of dimensions to reverse. Must be in the
+     *     range [-rank(x), rank(x)). Defaults to all axes.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function reverse_(x, axis) {
+        const $x = convertToTensor(x, 'x', 'reverse');
+        const inputs = { x: $x };
+        const attrs = { dims: axis };
+        return ENGINE.runKernel(Reverse, inputs, attrs);
+    }
+    const reverse$2 = op({ reverse_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Reverses a `tf.Tensor1D`.
+     *
+     * @param x The input tensor.
+     */
+    function reverse1d_(x) {
+        const $x = convertToTensor(x, 'x', 'reverse');
+        assert($x.rank === 1, () => `Error in reverse1D: x must be rank 1 but got rank ${$x.rank}.`);
+        return reverse$2($x, 0);
+    }
+    const reverse1d = op({ reverse1d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Reverses a `tf.Tensor2D` along a specified axis.
+     *
+     * @param x The input tensor.
+     * @param axis The set of dimensions to reverse. Must be in the
+     *     range [-rank(x), rank(x)). Defaults to all axes.
+     */
+    function reverse2d_(x, axis) {
+        const $x = convertToTensor(x, 'x', 'reverse');
+        assert($x.rank === 2, () => `Error in reverse2D: x must be rank 2 but got rank ${$x.rank}.`);
+        return reverse$2($x, axis);
+    }
+    const reverse2d = op({ reverse2d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Reverses a `tf.Tensor3D` along a specified axis.
+     *
+     * @param x The input tensor.
+     * @param axis The set of dimensions to reverse. Must be in the
+     *     range [-rank(x), rank(x)). Defaults to all axes.
+     */
+    function reverse3d_(x, axis) {
+        const $x = convertToTensor(x, 'x', 'reverse');
+        assert($x.rank === 3, () => `Error in reverse3D: x must be rank 3 but got rank ${$x.rank}.`);
+        return reverse$2($x, axis);
+    }
+    const reverse3d = op({ reverse3d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Reverses a `tf.Tensor4D` along a specified axis.
+     *
+     * @param x The input tensor.
+     * @param axis The set of dimensions to reverse. Must be in the
+     *     range [-rank(x), rank(x)). Defaults to all axes.
+     */
+    function reverse4d_(x, axis) {
+        const $x = convertToTensor(x, 'x', 'reverse');
+        assert($x.rank === 4, () => `Error in reverse4D: x must be rank 4 but got rank ${$x.rank}.`);
+        return reverse$2($x, axis);
+    }
+    const reverse4d = op({ reverse4d_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes round of input `tf.Tensor` element-wise: `round(x)`.
+     * It implements banker's rounding.
+     *
+     * ```js
+     * const x = tf.tensor1d([.6, 1.1, -3.3]);
+     *
+     * x.round().print();  // or tf.round(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function round_(x) {
+        const $x = convertToTensor(x, 'x', 'round');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Round, inputs);
+    }
+    const round$2 = op({ round_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes reciprocal of square root of the input `tf.Tensor` element-wise:
+     * `y = 1 / sqrt(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 4, -1]);
+     *
+     * x.rsqrt().print();  // or tf.rsqrt(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function rsqrt_(x) {
+        const $x = convertToTensor(x, 'x', 'rsqrt', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Rsqrt, inputs);
+    }
+    const rsqrt$2 = op({ rsqrt_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
      * Creates rank-0 `tf.Tensor` (scalar) with the provided value and dtype.
      *
      * The same functionality can be achieved with `tf.tensor`, but in general
@@ -28504,6 +39232,908 @@
         const inferredShape = [];
         return makeTensor(value, shape, inferredShape, dtype);
     }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes scaled exponential linear element-wise.
+     *
+     * `x < 0 ? scale * alpha * (exp(x) - 1) : x`
+     *
+     * ```js
+     * const x = tf.tensor1d([-1, 2, -3, 4]);
+     *
+     * x.selu().print();  // or tf.selu(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function selu_(x) {
+        const $x = convertToTensor(x, 'x', 'selu');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Selu, inputs);
+    }
+    const selu$2 = op({ selu_ });
+
+    /**
+     * 2-D convolution with separable filters.
+     *
+     * Performs a depthwise convolution that acts separately on channels followed
+     * by a pointwise convolution that mixes channels. Note that this is
+     * separability between dimensions [1, 2] and 3, not spatial separability
+     * between dimensions 1 and 2.
+     *
+     * See
+     * [https://www.tensorflow.org/api_docs/python/tf/nn/separable_conv2d](
+     *     https://www.tensorflow.org/api_docs/python/tf/nn/separable_conv2d)
+     * for more details.
+     *
+     * @param x The input tensor, of rank 4 or rank 3, of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is
+     * assumed.
+     * @param depthwiseFilter The depthwise filter tensor, rank 4, of shape
+     *     `[filterHeight, filterWidth, inChannels, channelMultiplier]`. This is
+     *     the filter used in the first step.
+     * @param pointwiseFilter The pointwise filter tensor, rank 4, of shape
+     *     `[1, 1, inChannels * channelMultiplier, outChannels]`. This is
+     *     the filter used in the second step.
+     * @param strides The strides of the convolution: `[strideHeight,
+     * strideWidth]`. If strides is a single number, then `strideHeight ==
+     * strideWidth`.
+     * @param pad The type of padding algorithm.
+     *   - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *   - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *   - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     in atrous convolution. Defaults to `[1, 1]`. If `rate` is a single
+     *     number, then `dilationHeight == dilationWidth`. If it is greater than
+     *     1, then all values of `strides` must be 1.
+     * @param dataFormat: An optional string from: "NHWC", "NCHW". Defaults to
+     *     "NHWC". Specify the data format of the input and output data. With the
+     *     default format "NHWC", the data is stored in the order of: [batch,
+     *     height, width, channels]. Only "NHWC" is currently supported.
+     *
+     * @doc {heading: 'Operations', subheading: 'Convolution'}
+     */
+    function separableConv2d_(x, depthwiseFilter, pointwiseFilter, strides, pad, dilation = [1, 1], dataFormat = 'NHWC') {
+        const $x = convertToTensor(x, 'x', 'separableConv2d');
+        const $depthwiseFilter = convertToTensor(depthwiseFilter, 'depthwiseFilter', 'separableConv2d');
+        const $pointwiseFilter = convertToTensor(pointwiseFilter, 'pointwiseFilter', 'separableConv2d');
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        if (dataFormat === 'NCHW') {
+            throw new Error('separableConv2d currently does not support dataFormat NCHW; only ' +
+                'NHWC is supported');
+        }
+        assert(x4D.rank === 4, () => `Error in separableConv2d: input must be rank 4, but got ` +
+            `rank ${x4D.rank}.`);
+        assert($depthwiseFilter.rank === 4, () => `Error in separableConv2d: depthwise filter must be rank 4, but ` +
+            `got rank ${$depthwiseFilter.rank}.`);
+        assert($pointwiseFilter.rank === 4, () => `Error in separableConv2d: pointwise filter must be rank 4, but ` +
+            `got rank ${$depthwiseFilter.rank}.`);
+        assert($pointwiseFilter.shape[0] === 1, () => `Error in separableConv2d: the first dimension of pointwise filter ` +
+            ` must be 1, but got ${$pointwiseFilter.shape[0]}.`);
+        assert($pointwiseFilter.shape[1] === 1, () => `Error in separableConv2d: the second dimension of pointwise ` +
+            `filter must be 1, but got ${$pointwiseFilter.shape[1]}.`);
+        const inChannels = $depthwiseFilter.shape[2];
+        const channelMultiplier = $depthwiseFilter.shape[3];
+        assert($pointwiseFilter.shape[2] === inChannels * channelMultiplier, () => `Error in separableConv2d: the third dimension of pointwise filter ` +
+            `must be ${inChannels * channelMultiplier}, ` +
+            `but got ${$pointwiseFilter.shape[2]}.`);
+        const depthwise = depthwiseConv2d$1(x4D, $depthwiseFilter, strides, pad, dataFormat, dilation);
+        const pointwiseStride = 1;
+        const res = conv2d$2(depthwise, $pointwiseFilter, pointwiseStride, 'valid', dataFormat);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const separableConv2d = op({ separableConv2d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google Inc. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the difference between two lists of numbers.
+     *
+     * Given a Tensor `x` and a Tensor `y`, this operation returns a Tensor `out`
+     * that represents all values that are in `x` but not in `y`. The returned
+     * Tensor `out` is sorted in the same order that the numbers appear in `x`
+     * (duplicates are preserved). This operation also returns a Tensor indices that
+     * represents the position of each out element in `x`. In other words:
+     *
+     * `out[i] = x[idx[i]] for i in [0, 1, ..., out.length - 1]`
+     *
+     * ```js
+     * const x = [1, 2, 3, 4, 5, 6];
+     * const y = [1, 3, 5];
+     *
+     * const [out, indices] = await tf.setdiff1dAsync(x, y);
+     * out.print(); // [2, 4, 6]
+     * indices.print(); // [1, 3, 5]
+     * ```
+     *
+     * @param x 1-D Tensor. Values to keep.
+     * @param y 1-D Tensor. Must have the same type as x. Values to exclude in the
+     *     output.
+     * @returns Promise of Tensor tuple [out, indices].
+     *  out: Tensor with the same type as x.
+     *  indices: A Tensor of type int32.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    async function setdiff1dAsync_(x, y) {
+        const $x = convertToTensor(x, 'x', 'setdiff1d');
+        const $y = convertToTensor(y, 'y', 'setdiff1d');
+        assert($x.dtype === $y.dtype, () => `x and y should have the same dtype, but got x (${$x.dtype}) and y (${$y.dtype}).`);
+        assert($x.rank === 1, () => `x should be 1D tensor, but got x (${$x.shape}).`);
+        assert($y.rank === 1, () => `y should be 1D tensor, but got y (${$y.shape}).`);
+        const xVals = await $x.data();
+        const yVals = await $y.data();
+        const ySet = new Set(yVals);
+        let outputSize = 0;
+        for (let i = 0; i < xVals.length; i++) {
+            if (!ySet.has(xVals[i])) {
+                outputSize++;
+            }
+        }
+        const buffer = new TensorBuffer([outputSize], $x.dtype);
+        const indices = new TensorBuffer([outputSize], 'int32');
+        for (let i = 0, p = 0; i < xVals.length; i++) {
+            if (!ySet.has(xVals[i])) {
+                buffer.values[p] = xVals[i];
+                indices.values[p] = i;
+                p++;
+            }
+        }
+        return [buffer.toTensor(), indices.toTensor()];
+    }
+    const setdiff1dAsync = setdiff1dAsync_;
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns an element-wise indication of the sign of a number.
+     *
+     * ```js
+     * const x = tf.tensor1d([.6, 1.1, -3.3, NaN, 0]);
+     *
+     * x.sign().print();  // or tf.sign(x)
+     * ```
+     * @param x The input Tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function sign_(x) {
+        const $x = convertToTensor(x, 'x', 'sign');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Sign, inputs);
+    }
+    const sign$2 = op({ sign_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes sin of the input Tensor element-wise: `sin(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, Math.PI / 2, Math.PI * 3 / 4]);
+     *
+     * x.sin().print();  // or tf.sin(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function sin_(x) {
+        const $x = convertToTensor(x, 'x', 'sin', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Sin, inputs);
+    }
+    const sin$2 = op({ sin_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes hyperbolic sin of the input `tf.Tensor` element-wise: `sinh(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, 1, -1, .7]);
+     *
+     * x.sinh().print();  // or tf.sinh(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function sinh_(x) {
+        const $x = convertToTensor(x, 'x', 'sinh');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Sinh, inputs);
+    }
+    const sinh$2 = op({ sinh_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Extracts a 1D slice from 1D array starting at coordinates `begin` and is
+     * of length `size`. See `slice` for details.
+     */
+    function slice1d_(x, begin, size) {
+        const $x = convertToTensor(x, 'x', 'slice1d');
+        assert($x.rank === 1, () => `slice1d expects a rank-1 tensor, but got a rank-${$x.rank} tensor`);
+        return slice$2($x, [begin], [size]);
+    }
+    const slice1d = op({ slice1d_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Extracts a 2D slice from a 2D array starting at coordinates `begin` and
+     * is of size `size`. See `slice` for details.
+     */
+    function slice2d_(x, begin, size) {
+        const $x = convertToTensor(x, 'x', 'slice2d');
+        assert($x.rank === 2, () => `slice2d expects a rank-2 tensor, but got a rank-${$x.rank} tensor`);
+        return slice$2($x, begin, size);
+    }
+    const slice2d = op({ slice2d_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Extracts a 3D slice from a 3D array starting at coordinates `begin` and
+     * is of size `size`. See `slice` for details.
+     */
+    function slice3d_(x, begin, size) {
+        const $x = convertToTensor(x, 'x', 'slice3d');
+        assert($x.rank === 3, () => `slice3d expects a rank-3 tensor, but got a rank-${$x.rank} tensor`);
+        return slice$2($x, begin, size);
+    }
+    const slice3d = op({ slice3d_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Extracts a 4D slice from a 4D array starting at coordinates `begin` and
+     * is of size `size`. See `slice` for details.
+     */
+    function slice4d_(x, begin, size) {
+        const $x = convertToTensor(x, 'x', 'slice4d');
+        assert($x.rank === 4, () => `slice4d expects a rank-4 tensor, but got a rank-${$x.rank} tensor`);
+        return slice$2($x, begin, size);
+    }
+    const slice4d = op({ slice4d_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the softmax normalized vector given the logits.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2, 3]);
+     *
+     * a.softmax().print();  // or tf.softmax(a)
+     * ```
+     *
+     * ```js
+     * const a = tf.tensor2d([2, 4, 6, 1, 2, 3], [2, 3]);
+     *
+     * a.softmax().print();  // or tf.softmax(a)
+     * ```
+     *
+     * @param logits The logits array.
+     * @param dim The dimension softmax would be performed on. Defaults to `-1`
+     *     which indicates the last dimension.
+     *
+     * @doc {heading: 'Operations', subheading: 'Normalization'}
+     */
+    function softmax_(logits, dim = -1) {
+        const $logits = convertToTensor(logits, 'logits', 'softmax', 'float32');
+        if (dim === -1) {
+            dim = $logits.rank - 1;
+        }
+        if (dim !== $logits.rank - 1) {
+            throw Error('Softmax along a non-last dimension is not yet supported. ' +
+                `Logits was rank ${$logits.rank} and dim was ${dim}`);
+        }
+        const inputs = { logits: $logits };
+        const attrs = { dim };
+        return ENGINE.runKernel(Softmax, inputs, attrs);
+    }
+    const softmax$2 = op({ softmax_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Fast Fourier transform.
+     *
+     * Computes the 1-dimensional discrete Fourier transform over the inner-most
+     * dimension of input.
+     *
+     * ```js
+     * const real = tf.tensor1d([1, 2, 3]);
+     * const imag = tf.tensor1d([1, 2, 3]);
+     * const x = tf.complex(real, imag);
+     *
+     * x.fft().print();  // tf.spectral.fft(x).print();
+     * ```
+     * @param input The complex input to compute an fft over.
+     *
+     * @doc {heading: 'Operations', subheading: 'Spectral', namespace: 'spectral'}
+     */
+    function fft_(input) {
+        assert(input.dtype === 'complex64', () => `The dtype for tf.spectral.fft() must be complex64 ` +
+            `but got ${input.dtype}.`);
+        const inputs = { input };
+        return ENGINE.runKernel(FFT, inputs);
+    }
+    const fft$2 = op({ fft_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Inverse fast Fourier transform.
+     *
+     * Computes the inverse 1-dimensional discrete Fourier transform over the
+     * inner-most dimension of input.
+     *
+     * ```js
+     * const real = tf.tensor1d([1, 2, 3]);
+     * const imag = tf.tensor1d([1, 2, 3]);
+     * const x = tf.complex(real, imag);
+     *
+     * x.ifft().print();  // tf.spectral.ifft(x).print();
+     * ```
+     * @param input The complex input to compute an ifft over.
+     *
+     * @doc {heading: 'Operations', subheading: 'Spectral', namespace: 'spectral'}
+     */
+    function ifft_(input) {
+        assert(input.dtype === 'complex64', () => `The dtype for tf.spectral.ifft() must be complex64 ` +
+            `but got ${input.dtype}.`);
+        const inputs = { input };
+        return ENGINE.runKernel(IFFT, inputs);
+    }
+    const ifft$2 = op({ ifft_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Inversed real value input fast Fourier transform.
+     *
+     * Computes the 1-dimensional inversed discrete Fourier transform over the
+     * inner-most dimension of the real input.
+     *
+     * ```js
+     * const real = tf.tensor1d([1, 2, 3]);
+     * const imag = tf.tensor1d([0, 0, 0]);
+     * const x = tf.complex(real, imag);
+     *
+     * x.irfft().print();
+     * ```
+     * @param input The real value input to compute an irfft over.
+     *
+     * @doc {heading: 'Operations', subheading: 'Spectral', namespace: 'spectral'}
+     */
+    function irfft_(input) {
+        const innerDimensionSize = input.shape[input.shape.length - 1];
+        const batch = input.size / innerDimensionSize;
+        let ret;
+        if (innerDimensionSize <= 2) {
+            const complexInput = reshape$2(input, [batch, innerDimensionSize]);
+            ret = ifft$2(complexInput);
+        }
+        else {
+            // The length of unique components of the DFT of a real-valued signal
+            // is 2 * (input_len - 1)
+            const outputShape = [batch, 2 * (innerDimensionSize - 1)];
+            const realInput = reshape$2(real$2(input), [batch, innerDimensionSize]);
+            const imagInput = reshape$2(imag$2(input), [batch, innerDimensionSize]);
+            const realConjugate = reverse$2(slice$2(realInput, [0, 1], [batch, innerDimensionSize - 2]), 1);
+            const imagConjugate = mul(reverse$2(slice$2(imagInput, [0, 1], [batch, innerDimensionSize - 2]), 1), scalar(-1));
+            const r = concat$2([realInput, realConjugate], 1);
+            const i = concat$2([imagInput, imagConjugate], 1);
+            const complexInput = reshape$2(complex$2(r, i), [outputShape[0], outputShape[1]]);
+            ret = ifft$2(complexInput);
+        }
+        ret = real$2(ret);
+        // reshape the result if the input is 3D tensor.
+        if (input.rank === 3 && input.shape[0] !== 0) {
+            const temp = ret;
+            const batch = input.shape[0];
+            ret = reshape$2(ret, [batch, ret.shape[0] / batch, ret.shape[1]]);
+            temp.dispose();
+        }
+        return ret;
+    }
+    const irfft = op({ irfft_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Splits a `tf.Tensor` into sub tensors.
+     *
+     * If `numOrSizeSplits` is a number, splits `x` along dimension `axis`
+     * into `numOrSizeSplits` smaller tensors.
+     * Requires that `numOrSizeSplits` evenly divides `x.shape[axis]`.
+     *
+     * If `numOrSizeSplits` is a number array, splits `x` into
+     * `numOrSizeSplits.length` pieces. The shape of the `i`-th piece has the
+     * same size as `x` except along dimension `axis` where the size is
+     * `numOrSizeSplits[i]`.
+     *
+     * ```js
+     * const x = tf.tensor2d([1, 2, 3, 4, 5, 6, 7, 8], [2, 4]);
+     * const [a, b] = tf.split(x, 2, 1);
+     * a.print();
+     * b.print();
+     *
+     * const [c, d, e] = tf.split(x, [1, 2, 1], 1);
+     * c.print();
+     * d.print();
+     * e.print();
+     * ```
+     *
+     * @param x The input tensor to split.
+     * @param numOrSizeSplits Either an integer indicating the number of
+     * splits along the axis or an array of integers containing the sizes of
+     * each output tensor along the axis. If a number then it must evenly divide
+     * `x.shape[axis]`; otherwise the sum of sizes must match `x.shape[axis]`.
+     * Can contain one -1 indicating that dimension is to be inferred.
+     * @param axis The dimension along which to split. Defaults to 0 (the first
+     * dim).
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function split_(x, numOrSizeSplits, axis = 0) {
+        const $x = convertToTensor(x, 'x', 'split');
+        const inputs = { x: $x };
+        const attr = { numOrSizeSplits, axis };
+        return ENGINE.runKernel(SplitV, inputs, attr);
+    }
+    const split$1 = op({ split_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Real value input fast Fourier transform.
+     *
+     * Computes the 1-dimensional discrete Fourier transform over the
+     * inner-most dimension of the real input.
+     *
+     * ```js
+     * const real = tf.tensor1d([1, 2, 3]);
+     *
+     * real.rfft().print();
+     * ```
+     * @param input The real value input to compute an rfft over.
+     *
+     * @doc {heading: 'Operations', subheading: 'Spectral', namespace: 'spectral'}
+     */
+    function rfft_(input, fftLength) {
+        assert(input.dtype === 'float32', () => `The dtype for rfft() must be real value but got ${input.dtype}`);
+        let innerDimensionSize = input.shape[input.shape.length - 1];
+        const batch = input.size / innerDimensionSize;
+        let adjustedInput;
+        if (fftLength != null && fftLength < innerDimensionSize) {
+            // Need to crop
+            const begin = input.shape.map(v => 0);
+            const size = input.shape.map(v => v);
+            size[input.shape.length - 1] = fftLength;
+            adjustedInput = slice$2(input, begin, size);
+            innerDimensionSize = fftLength;
+        }
+        else if (fftLength != null && fftLength > innerDimensionSize) {
+            // Need to pad with zeros
+            const zerosShape = input.shape.map(v => v);
+            zerosShape[input.shape.length - 1] = fftLength - innerDimensionSize;
+            adjustedInput = concat$2([input, zeros$1(zerosShape)], input.shape.length - 1);
+            innerDimensionSize = fftLength;
+        }
+        else {
+            adjustedInput = input;
+        }
+        // Complement the input with zero imaginary numbers.
+        const zerosInput = zerosLike$2(adjustedInput);
+        const complexInput = reshape$2(complex$2(adjustedInput, zerosInput), [batch, innerDimensionSize]);
+        const ret = fft$2(complexInput);
+        // Exclude complex conjugations. These conjugations are put symmetrically.
+        const half = Math.floor(innerDimensionSize / 2) + 1;
+        const realValues = real$2(ret);
+        const imagValues = imag$2(ret);
+        const realComplexConjugate = split$1(realValues, [half, innerDimensionSize - half], realValues.shape.length - 1);
+        const imagComplexConjugate = split$1(imagValues, [half, innerDimensionSize - half], imagValues.shape.length - 1);
+        const outputShape = adjustedInput.shape.slice();
+        outputShape[adjustedInput.shape.length - 1] = half;
+        return reshape$2(complex$2(realComplexConjugate[0], imagComplexConjugate[0]), outputShape);
+    }
+    const rfft = op({ rfft_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes square root of the input `tf.Tensor` element-wise: `y = sqrt(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 4, -1]);
+     *
+     * x.sqrt().print();  // or tf.sqrt(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function sqrt_(x) {
+        const $x = convertToTensor(x, 'x', 'sqrt', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Sqrt, inputs);
+    }
+    const sqrt$2 = op({ sqrt_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns (a - b) * (a - b) element-wise.
+     * Supports broadcasting.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 4, 3, 16]);
+     * const b = tf.tensor1d([1, 2, 9, 4]);
+     *
+     * a.squaredDifference(b).print();  // or tf.squaredDifference(a, b)
+     * ```
+     *
+     * ```js
+     * // Broadcast squared difference  a with b.
+     * const a = tf.tensor1d([2, 4, 6, 8]);
+     * const b = tf.scalar(5);
+     *
+     * a.squaredDifference(b).print();  // or tf.squaredDifference(a, b)
+     * ```
+     *
+     * @param a The first tensor.
+     * @param b The second tensor. Must have the same type as `a`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Arithmetic'}
+     */
+    function squaredDifference_(a, b) {
+        let $a = convertToTensor(a, 'a', 'squaredDifference');
+        let $b = convertToTensor(b, 'b', 'squaredDifference');
+        [$a, $b] = makeTypesMatch($a, $b);
+        assertAndGetBroadcastShape($a.shape, $b.shape);
+        const inputs = { a: $a, b: $b };
+        const attrs = {};
+        return ENGINE.runKernel(SquaredDifference, inputs, attrs);
+    }
+    const squaredDifference$2 = op({ squaredDifference_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Removes dimensions of size 1 from the shape of a `tf.Tensor`.
+     *
+     * ```js
+     * const x = tf.tensor([1, 2, 3, 4], [1, 1, 4]);
+     * x.squeeze().print();
+     * ```
+     *
+     * @param x The input tensor to be squeezed.
+     * @param axis An optional list of numbers. If specified, only
+     *     squeezes the dimensions listed. The dimension index starts at 0. It
+     * is an error to squeeze a dimension that is not 1.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Transformations'}
+     */
+    function squeeze_(x, axis) {
+        const $x = convertToTensor(x, 'x', 'squeeze');
+        return reshape$2($x, squeezeShape($x.shape, axis).newShape);
+    }
+    const squeeze = op({ squeeze_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Stacks a list of rank-`R` `tf.Tensor`s into one rank-`(R+1)` `tf.Tensor`.
+     *
+     * ```js
+     * const a = tf.tensor1d([1, 2]);
+     * const b = tf.tensor1d([3, 4]);
+     * const c = tf.tensor1d([5, 6]);
+     * tf.stack([a, b, c]).print();
+     * ```
+     *
+     * @param tensors A list of tensor objects with the same shape and dtype.
+     * @param axis The axis to stack along. Defaults to 0 (the first dim).
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function stack_(tensors, axis = 0) {
+        const $tensors = convertToTensorArray(tensors, 'tensors', 'stack', 'string_or_numeric');
+        assert($tensors.length >= 1, () => 'Pass at least one tensor to tf.stack');
+        if ($tensors.length > 0) {
+            assert(axis <= $tensors[0].rank, () => 'Axis must be <= rank of the tensor');
+        }
+        const inputs = $tensors;
+        const attrs = { axis };
+        return ENGINE.runKernel(Pack, inputs, attrs);
+    }
+    const stack = op({ stack_ });
 
     /**
      * @license
@@ -28558,6 +40188,676 @@
      * limitations under the License.
      * =============================================================================
      */
+    /**
+     * Extracts a strided slice of a tensor.
+     *
+     * Roughly speaking, this op extracts a slice of size (end-begin)/stride from
+     * the given input tensor (x). Starting at the location specified by begin the
+     * slice continues by adding stride to the index until all dimensions are not
+     * less than end. Note that a stride can be negative, which causes a reverse
+     * slice.
+     *
+     * ```js
+     * const t = tf.tensor3d([1, 1, 1 ,2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6],
+     *    [3, 2, 3]);
+     * t.stridedSlice([1, 0, 0], [2, 1, 3], [1, 1, 1]).print()  // [[[3, 3, 3]]]
+     * t.stridedSlice([1, 0, 0], [2, 2, 3], [1, 1, 1]).print()  // [[[3, 3, 3],
+     *                                                     // [4, 4, 4]]]
+     * t.stridedSlice([1, -1, 0], [2, -3, 3], [1, -1, 1]).print() // [[[4, 4, 4],
+     *                                                     // [3, 3, 3]]]
+     * ```
+     *
+     * @param x The tensor to stride slice.
+     * @param begin The coordinates to start the slice from.
+     * @param end: The coordinates to end the slice at.
+     * @param strides: The size of the slice.
+     * @param beginMask: If the ith bit of beginMask is set, begin[i] is ignored
+     *      and the fullest possible range in that dimension is used instead.
+     * @param endMask: If the ith bit of endMask is set, end[i] is ignored
+     *      and the fullest possible range in that dimension is used instead.
+     * @param shrinkAxisMask: a bitmask where bit i implies that
+     * the ith specification should shrink the dimensionality. begin and end must
+     * imply a slice of size 1 in the dimension.
+     *
+     * @doc {heading: 'Operations', subheading: 'Slicing and Joining'}
+     */
+    function stridedSlice_(x, begin, end, strides, beginMask = 0, endMask = 0, ellipsisMask = 0, newAxisMask = 0, shrinkAxisMask = 0) {
+        const $x = convertToTensor(x, 'x', 'stridedSlice', 'string_or_numeric');
+        const inputs = { x: $x };
+        const attrs = {
+            begin,
+            end,
+            strides,
+            beginMask,
+            endMask,
+            ellipsisMask,
+            newAxisMask,
+            shrinkAxisMask
+        };
+        return ENGINE.runKernel(StridedSlice, inputs, attrs);
+    }
+    const stridedSlice$2 = op({ stridedSlice_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes tan of the input `tf.Tensor` element-wise, `tan(x)`
+     *
+     * ```js
+     * const x = tf.tensor1d([0, Math.PI / 2, Math.PI * 3 / 4]);
+     *
+     * x.tan().print();  // or tf.tan(x)
+     * ```
+     * @param x The input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Basic math'}
+     */
+    function tan_(x) {
+        const $x = convertToTensor(x, 'x', 'tan', 'float32');
+        const inputs = { x: $x };
+        return ENGINE.runKernel(Tan, inputs);
+    }
+    const tan$2 = op({ tan_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates rank-1 `tf.Tensor` with the provided values, shape and dtype.
+     *
+     * The same functionality can be achieved with `tf.tensor`, but in general
+     * we recommend using `tf.tensor1d` as it makes the code more readable.
+     *
+     * ```js
+     * tf.tensor1d([1, 2, 3]).print();
+     * ```
+     *
+     * @param values The values of the tensor. Can be array of numbers,
+     *     or a `TypedArray`.
+     * @param dtype The data type.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function tensor1d(values, dtype) {
+        assertNonNull(values);
+        const inferredShape = inferShape(values, dtype);
+        if (inferredShape.length !== 1) {
+            throw new Error('tensor1d() requires values to be a flat/TypedArray');
+        }
+        const shape = null;
+        return makeTensor(values, shape, inferredShape, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates rank-2 `tf.Tensor` with the provided values, shape and dtype.
+     *
+     * The same functionality can be achieved with `tf.tensor`, but in general
+     * we recommend using `tf.tensor2d` as it makes the code more readable.
+     *
+     *  ```js
+     * // Pass a nested array.
+     * tf.tensor2d([[1, 2], [3, 4]]).print();
+     * ```
+     * ```js
+     * // Pass a flat array and specify a shape.
+     * tf.tensor2d([1, 2, 3, 4], [2, 2]).print();
+     * ```
+     *
+     * @param values The values of the tensor. Can be nested array of numbers,
+     *     or a flat array, or a `TypedArray`.
+     * @param shape The shape of the tensor. If not provided, it is inferred from
+     *     `values`.
+     * @param dtype The data type.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function tensor2d(values, shape, dtype) {
+        assertNonNull(values);
+        if (shape != null && shape.length !== 2) {
+            throw new Error('tensor2d() requires shape to have two numbers');
+        }
+        const inferredShape = inferShape(values, dtype);
+        if (inferredShape.length !== 2 && inferredShape.length !== 1) {
+            throw new Error('tensor2d() requires values to be number[][] or flat/TypedArray');
+        }
+        if (inferredShape.length === 1 && shape == null) {
+            throw new Error('tensor2d() requires shape to be provided when `values` ' +
+                'are a flat/TypedArray');
+        }
+        return makeTensor(values, shape, inferredShape, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates rank-4 `tf.Tensor` with the provided values, shape and dtype.
+     *
+     * The same functionality can be achieved with `tf.tensor`, but in general
+     * we recommend using `tf.tensor4d` as it makes the code more readable.
+     *
+     *  ```js
+     * // Pass a nested array.
+     * tf.tensor4d([[[[1], [2]], [[3], [4]]]]).print();
+     * ```
+     * ```js
+     * // Pass a flat array and specify a shape.
+     * tf.tensor4d([1, 2, 3, 4], [1, 2, 2, 1]).print();
+     * ```
+     *
+     * @param values The values of the tensor. Can be nested array of numbers,
+     *     or a flat array, or a `TypedArray`.
+     * @param shape The shape of the tensor. Optional. If not provided,
+     *   it is inferred from `values`.
+     * @param dtype The data type.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function tensor4d(values, shape, dtype) {
+        assertNonNull(values);
+        if (shape != null && shape.length !== 4) {
+            throw new Error('tensor4d() requires shape to have four numbers');
+        }
+        const inferredShape = inferShape(values, dtype);
+        if (inferredShape.length !== 4 && inferredShape.length !== 1) {
+            throw new Error('tensor4d() requires values to be number[][][][] or flat/TypedArray');
+        }
+        if (inferredShape.length === 1 && shape == null) {
+            throw new Error('tensor4d() requires shape to be provided when `values` ' +
+                'are a flat array');
+        }
+        return makeTensor(values, shape, inferredShape, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates rank-5 `tf.Tensor` with the provided values, shape and dtype.
+     *
+     * The same functionality can be achieved with `tf.tensor`, but in general
+     * we recommend using `tf.tensor5d` as it makes the code more readable.
+     *
+     *  ```js
+     * // Pass a nested array.
+     * tf.tensor5d([[[[[1],[2]],[[3],[4]]],[[[5],[6]],[[7],[8]]]]]).print();
+     * ```
+     * ```js
+     * // Pass a flat array and specify a shape.
+     * tf.tensor5d([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 2, 2, 1]).print();
+     * ```
+     *
+     * @param values The values of the tensor. Can be nested array of numbers,
+     *     or a flat array, or a `TypedArray`.
+     * @param shape The shape of the tensor. Optional. If not provided,
+     *   it is inferred from `values`.
+     * @param dtype The data type.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function tensor5d(values, shape, dtype) {
+        assertNonNull(values);
+        if (shape != null && shape.length !== 5) {
+            throw new Error('tensor5d() requires shape to have five numbers');
+        }
+        const inferredShape = inferShape(values, dtype);
+        if (inferredShape.length !== 5 && inferredShape.length !== 1) {
+            throw new Error('tensor5d() requires values to be ' +
+                'number[][][][][] or flat/TypedArray');
+        }
+        if (inferredShape.length === 1 && shape == null) {
+            throw new Error('tensor5d() requires shape to be provided when `values` ' +
+                'are a flat array');
+        }
+        return makeTensor(values, shape, inferredShape, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates rank-6 `tf.Tensor` with the provided values, shape and dtype.
+     *
+     * The same functionality can be achieved with `tf.tensor`, but in general
+     * we recommend using `tf.tensor6d` as it makes the code more readable.
+     *
+     *  ```js
+     * // Pass a nested array.
+     * tf.tensor6d([[[[[[1],[2]],[[3],[4]]],[[[5],[6]],[[7],[8]]]]]]).print();
+     * ```
+     * ```js
+     * // Pass a flat array and specify a shape.
+     * tf.tensor6d([1, 2, 3, 4, 5, 6, 7, 8], [1, 1, 2, 2, 2, 1]).print();
+     * ```
+     *
+     * @param values The values of the tensor. Can be nested array of numbers,
+     *     or a flat array, or a `TypedArray`.
+     * @param shape The shape of the tensor. Optional. If not provided,
+     *   it is inferred from `values`.
+     * @param dtype The data type.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function tensor6d(values, shape, dtype) {
+        assertNonNull(values);
+        if (shape != null && shape.length !== 6) {
+            throw new Error('tensor6d() requires shape to have six numbers');
+        }
+        const inferredShape = inferShape(values, dtype);
+        if (inferredShape.length !== 6 && inferredShape.length !== 1) {
+            throw new Error('tensor6d() requires values to be number[][][][][][] or ' +
+                'flat/TypedArray');
+        }
+        if (inferredShape.length === 1 && shape == null) {
+            throw new Error('tensor6d() requires shape to be provided when `values` ' +
+                'are a flat array');
+        }
+        shape = shape ||
+            inferredShape;
+        return makeTensor(values, shape, inferredShape, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Finds the values and indices of the `k` largest entries along the last
+     * dimension.
+     *
+     * If the input is a vector (rank=1), finds the k largest entries in the vector
+     * and outputs their values and indices as vectors. Thus values[j] is the j-th
+     * largest entry in input, and its index is indices[j].
+     * For higher rank inputs, computes the top k entries along the last dimension.
+     *
+     * If two elements are equal, the lower-index element appears first.
+     *
+     * ```js
+     * const a = tf.tensor2d([[1, 5], [4, 3]]);
+     * const {values, indices} = tf.topk(a);
+     * values.print();
+     * indices.print();
+     * ```
+     * @param x 1-D or higher `tf.Tensor` with last dimension being at least `k`.
+     * @param k Number of top elements to look for along the last dimension.
+     * @param sorted If true, the resulting `k` elements will be sorted by the
+     *     values in descending order.
+     *
+     * @doc {heading: 'Operations', subheading: 'Evaluation'}
+     */
+    function topk_(x, k = 1, sorted = true) {
+        const $x = convertToTensor(x, 'x', 'topk');
+        if ($x.rank === 0) {
+            throw new Error('topk() expects the input to be of rank 1 or higher');
+        }
+        const lastDim = $x.shape[$x.shape.length - 1];
+        if (k < 0) {
+            throw new Error(`'k' passed to topk() must be >= 0 but got ${k}`);
+        }
+        if (k > lastDim) {
+            throw new Error(`'k' passed to topk() must be <= the last dimension (${lastDim}) ` +
+                `but got ${k}`);
+        }
+        const inputs = { x: $x };
+        const attrs = { k, sorted };
+        const [values, indices] = ENGINE.runKernel(TopK, inputs, attrs);
+        return { values, indices };
+    }
+    const topk = op({ topk_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a `tf.Tensor` with values sampled from a truncated normal
+     * distribution.
+     *
+     * ```js
+     * tf.truncatedNormal([2, 2]).print();
+     * ```
+     *
+     * The generated values follow a normal distribution with specified mean and
+     * standard deviation, except that values whose magnitude is more than 2
+     * standard deviations from the mean are dropped and re-picked.
+     *
+     * @param shape An array of integers defining the output tensor shape.
+     * @param mean The mean of the normal distribution.
+     * @param stdDev The standard deviation of the normal distribution.
+     * @param dtype The data type of the output tensor.
+     * @param seed The seed for the random number generator.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function truncatedNormal_(shape, mean = 0, stdDev = 1, dtype, seed) {
+        if (dtype != null && dtype === 'bool') {
+            throw new Error(`Unsupported data type $ { dtype }`);
+        }
+        const randGauss = new MPRandGauss(mean, stdDev, dtype, true /* truncated */, seed);
+        const res = buffer(shape, dtype);
+        for (let i = 0; i < res.values.length; i++) {
+            res.values[i] = randGauss.nextValue();
+        }
+        return res.toTensor();
+    }
+    const truncatedNormal = op({ truncatedNormal_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Finds unique elements along an axis of a tensor.
+     *
+     * It returns a tensor `values` containing all of the unique elements along the
+     * `axis` of the given tensor `x` in the same order that they occur along the
+     * `axis` in `x`; `x` does not need to be sorted. It also returns a tensor
+     * `indices` the same size as the number of the elements in `x` along the `axis`
+     * dimension. It contains the index in the unique output `values`.
+     *
+     * ```js
+     * // A 1-D tensor
+     * const a = tf.tensor1d([1, 1, 2, 4, 4, 4, 7, 8, 8]);
+     * const {values, indices} = tf.unique(a);
+     * values.print();   // [1, 2, 4, 7, 8,]
+     * indices.print();  // [0, 0, 1, 2, 2, 2, 3, 4, 4]
+     * ```
+     *
+     * ```js
+     * // A 2-D tensor with axis=0
+     * //
+     * // 'a' is: [[1, 0, 0],
+     * //          [1, 0, 0],
+     * //          [2, 0, 0]]
+     * const a = tf.tensor2d([[1, 0, 0], [1, 0, 0], [2, 0, 0]]);
+     * const {values, indices} = tf.unique(a, 0)
+     * values.print();   // [[1, 0, 0],
+     *                   //  [2, 0, 0]]
+     * indices.print();  // [0, 0, 1]
+     * ```
+     *
+     * ```js
+     * // A 2-D tensor with axis=1
+     * //
+     * // 'a' is: [[1, 0, 0],
+     * //          [1, 0, 0],
+     * //          [2, 0, 0]]
+     * const a = tf.tensor2d([[1, 0, 0], [1, 0, 0], [2, 0, 0]]);
+     * const {values, indices} = tf.unique(a, 1)
+     * values.print();   // [[1, 0],
+     *                   //  [1, 0],
+     *                   //  [2, 0]]
+     * indices.print();  // [0, 1, 1]
+     * ```
+     * @param x A tensor (int32, string, bool).
+     * @param axis The axis of the tensor to find the unique elements.
+     * @returns [uniqueElements, indices] (see above for details)
+     *
+     * @doc {heading: 'Operations', subheading: 'Evaluation'}
+     */
+    function unique_(x, axis = 0) {
+        const $x = convertToTensor(x, 'x', 'unique', 'string_or_numeric');
+        assert($x.rank > 0, () => 'The input tensor must be at least 1D');
+        const inputs = { x: $x };
+        const attrs = { axis };
+        const [values, indices] = ENGINE.runKernel(Unique, inputs, attrs);
+        return { values, indices };
+    }
+    const unique$2 = op({ unique_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the sum along segments of a `tf.Tensor`.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     * const segmentIds = tf.tensor1d([1, 2, 0, 1], 'int32');
+     * const numSegments = 3;
+     *
+     * x.unsortedSegmentSum(segmentIds, numSegments).print()
+     * //or tf.unsortedSegmentSum(x, segmentIds, numSegments)
+     * ```
+     * @param x The `tf.Tensor` that will be summed along its segments.
+     * @param segmentIds A `tf.Tensor1D` whose rank is equal to the rank of `x`'s
+     * dimension along the `axis`.  Maps each element of `x` to a segment.
+     * @param numSegments The number of distinct `segmentIds`.
+     *
+     * @doc {heading: 'Operations', subheading: 'Segment'}
+     */
+    function unsortedSegmentSum_(x, segmentIds, numSegments) {
+        const $x = convertToTensor(x, 'x', 'unsortedSegmentSum');
+        const $segmentIds = convertToTensor(segmentIds, 'segmentIds', 'unsortedSegmentSum', 'int32');
+        assert(isInt(numSegments), () => 'numSegments must be of dtype int');
+        const inputs = { x: $x, segmentIds: $segmentIds };
+        const attrs = { numSegments };
+        return ENGINE.runKernel(UnsortedSegmentSum, inputs, attrs);
+    }
+    const unsortedSegmentSum$2 = op({ unsortedSegmentSum_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Unstacks a `tf.Tensor` of rank-`R` into a list of rank-`(R-1)` `tf.Tensor`s.
+     *
+     * ```js
+     * const a = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     *
+     * tf.unstack(a).forEach(tensor => tensor.print());
+     * ```
+     *
+     * @param x A tensor object.
+     * @param axis The axis to unstack along. Defaults to 0 (the first dim).
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    function unstack_(x, axis = 0) {
+        const $x = convertToTensor(x, 'x', 'unstack', 'string_or_numeric');
+        assert(axis >= -$x.shape.length && axis < $x.shape.length, () => `Axis = ${axis} is not in [-${$x.shape.length}, ${$x.shape.length})`);
+        const inputs = { value: $x };
+        const attrs = { axis };
+        return ENGINE.runKernel(Unpack, inputs, attrs);
+    }
+    const unstack = op({ unstack_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a new variable with the provided initial value.
+     * ```js
+     * const x = tf.variable(tf.tensor([1, 2, 3]));
+     * x.assign(tf.tensor([4, 5, 6]));
+     *
+     * x.print();
+     * ```
+     *
+     * @param initialValue Initial value for the tensor.
+     * @param trainable If true, optimizers are allowed to update it.
+     * @param name Name of the variable. Defaults to a unique id.
+     * @param dtype If set, initialValue will be converted to the given type.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Creation'}
+     */
+    function variable(initialValue, trainable = true, name, dtype) {
+        return ENGINE.makeVariable(initialValue, trainable, name, dtype);
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
     function whereImpl$2(condShape, condVals) {
         const indices = [];
         for (let i = 0; i < condVals.length; i++) {
@@ -28574,6 +40874,783 @@
         }
         return out.toTensor();
     }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns the coordinates of true elements of condition.
+     *
+     * The coordinates are returned in a 2-D tensor where the first dimension (rows)
+     * represents the number of true elements, and the second dimension (columns)
+     * represents the coordinates of the true elements. Keep in mind, the shape of
+     * the output tensor can vary depending on how many true values there are in
+     * input. Indices are output in row-major order. The resulting tensor has the
+     * shape `[numTrueElems, condition.rank]`.
+     *
+     * This is analogous to calling the python `tf.where(cond)` without an x or y.
+     *
+     * ```js
+     * const cond = tf.tensor1d([false, false, true], 'bool');
+     * const result = await tf.whereAsync(cond);
+     * result.print();
+     * ```
+     *
+     * @doc {heading: 'Operations', subheading: 'Logical'}
+     */
+    async function whereAsync_(condition) {
+        const $condition = convertToTensor(condition, 'condition', 'whereAsync', 'bool');
+        const vals = await $condition.data();
+        const res = whereImpl$2($condition.shape, vals);
+        if (condition !== $condition) {
+            $condition.dispose();
+        }
+        return res;
+    }
+    const whereAsync = whereAsync_;
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Apply boolean mask to tensor.
+     *
+     * ```js
+     * const tensor = tf.tensor2d([1, 2, 3, 4, 5, 6], [3, 2]);
+     * const mask = tf.tensor1d([1, 0, 1], 'bool');
+     * const result = await tf.booleanMaskAsync(tensor, mask);
+     * result.print();
+     * ```
+     *
+     * @param tensor N-D tensor.
+     * @param mask K-D boolean tensor, K <= N and K must be known statically.
+     * @param axis A 0-D int Tensor representing the axis in tensor to mask from.
+     *     By default, axis is 0 which will mask from the first dimension.
+     *     Otherwise K + axis <= N.
+     *
+     * @doc {heading: 'Tensors', subheading: 'Slicing and Joining'}
+     */
+    async function booleanMaskAsync_(tensor, mask, axis) {
+        const $tensor = convertToTensor(tensor, 'tensor', 'boolMask');
+        const $mask = convertToTensor(mask, 'mask', 'boolMask', 'bool');
+        const axisFrom = axis == null ? 0 : axis;
+        const maskDim = $mask.rank;
+        const tensorShape = $tensor.shape;
+        assert(maskDim > 0, () => 'mask cannot be scalar');
+        assertShapesMatch(tensorShape.slice(axisFrom, axisFrom + maskDim), $mask.shape, `mask's shape must match the first K dimensions of tensor's shape,`);
+        let leadingSize = 1;
+        for (let i = axisFrom; i < axisFrom + maskDim; i++) {
+            leadingSize *= tensorShape[i];
+        }
+        const targetTensorShape = tensorShape.slice(0, axisFrom)
+            .concat([leadingSize], tensorShape.slice(axisFrom + maskDim));
+        const reshapedTensor = reshape$2($tensor, targetTensorShape);
+        const reshapedMask = reshape$2($mask, [-1]);
+        const positivePositions = await whereAsync(reshapedMask);
+        const indices = squeeze(positivePositions, [1]);
+        const res = gather(reshapedTensor, indices, axisFrom);
+        // Ensure no memory leak.
+        if (tensor !== $tensor) {
+            $tensor.dispose();
+        }
+        if (mask !== $mask) {
+            $mask.dispose();
+        }
+        indices.dispose();
+        reshapedTensor.dispose();
+        reshapedMask.dispose();
+        positivePositions.dispose();
+        return res;
+    }
+    const booleanMaskAsync = booleanMaskAsync_;
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the norm of scalar, vectors, and matrices.
+     * This function can compute several different vector norms (the 1-norm, the
+     * Euclidean or 2-norm, the inf-norm, and in general the p-norm for p > 0)
+     * and matrix norms (Frobenius, 1-norm, and inf-norm).
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 3, 4]);
+     *
+     * x.norm().print();  // or tf.norm(x)
+     * ```
+     *
+     * @param x The input array.
+     * @param ord Optional. Order of the norm. Supported norm types are
+     * following:
+     *
+     *  | ord        | norm for matrices         | norm for vectors
+     *  |------------|---------------------------|---------------------
+     *  |'euclidean' |Frobenius norm             |2-norm
+     *  |'fro'       |Frobenius norm	           |
+     *  |Infinity    |max(sum(abs(x), axis=1))   |max(abs(x))
+     *  |-Infinity   |min(sum(abs(x), axis=1))   |min(abs(x))
+     *  |1           |max(sum(abs(x), axis=0))   |sum(abs(x))
+     *  |2           |                           |sum(abs(x)^2)^1/2*
+     *
+     * @param axis Optional. If axis is null (the default), the input is
+     * considered a vector and a single vector norm is computed over the entire
+     * set of values in the Tensor, i.e. norm(x, ord) is equivalent
+     * to norm(x.reshape([-1]), ord). If axis is a integer, the input
+     * is considered a batch of vectors, and axis determines the axis in x
+     * over which to compute vector norms. If axis is a 2-tuple of integer it is
+     * considered a batch of matrices and axis determines the axes in NDArray
+     * over which to compute a matrix norm.
+     * @param keepDims Optional. If true, the norm have the same dimensionality
+     * as the input.
+     *
+     * @doc {heading: 'Operations', subheading: 'Matrices'}
+     */
+    function norm_(x, ord = 'euclidean', axis = null, keepDims = false) {
+        x = convertToTensor(x, 'x', 'norm');
+        const norm = normImpl(x, ord, axis);
+        let keepDimsShape = norm.shape;
+        if (keepDims) {
+            const axes = parseAxisParam(axis, x.shape);
+            keepDimsShape = expandShapeToKeepDim(norm.shape, axes);
+        }
+        return reshape$2(norm, keepDimsShape);
+    }
+    function normImpl(x, p, axis = null) {
+        if (x.rank === 0) {
+            return abs$2(x);
+        }
+        // consider vector when no axis is specified
+        if (x.rank !== 1 && axis === null) {
+            return normImpl(reshape$2(x, [-1]), p, axis);
+        }
+        // vector
+        if (x.rank === 1 || typeof axis === 'number' ||
+            Array.isArray(axis) && axis.length === 1) {
+            if (p === 1) {
+                return sum$2(abs$2(x), axis);
+            }
+            if (p === Infinity) {
+                return max$2(abs$2(x), axis);
+            }
+            if (p === -Infinity) {
+                return min$2(abs$2(x), axis);
+            }
+            if (p === 'euclidean' || p === 2) {
+                // norm(x, 2) = sum(abs(xi) ^ 2) ^ 1/2
+                return sqrt$2(sum$2(pow$2(abs$2(x), scalar(2, 'int32')), axis));
+            }
+            throw new Error(`Error in norm: invalid ord value: ${p}`);
+        }
+        // matrix (assumption axis[0] < axis[1])
+        if (Array.isArray(axis) && axis.length === 2) {
+            if (p === 1) {
+                return max$2(sum$2(abs$2(x), axis[0]), axis[1] - 1);
+            }
+            if (p === Infinity) {
+                return max$2(sum$2(abs$2(x), axis[1]), axis[0]);
+            }
+            if (p === -Infinity) {
+                return min$2(sum$2(abs$2(x), axis[1]), axis[0]);
+            }
+            if (p === 'fro' || p === 'euclidean') {
+                // norm(x) = sqrt(sum(pow(x, 2)))
+                return sqrt$2(sum$2(square$1(x), axis));
+            }
+            throw new Error(`Error in norm: invalid ord value: ${p}`);
+        }
+        throw new Error(`Error in norm: invalid axis: ${axis}`);
+    }
+    const norm = op({ norm_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Compute the moving average of a variable.
+     *
+     * Without zeroDebias, the moving average operation is defined by:
+     *   `v += delta`
+     * where
+     *   `delta = (1 - decay) * (x - v)`
+     *
+     * With zeroDebias (default), the `delta` term is scaled to debias the
+     * effect of the (assumed) zero-initialization of `v`.
+     *   `delta /= (1 - decay ^ step)`
+     *
+     * For more details on the zero-debiasing algorithm, see:
+     *   https://arxiv.org/abs/1412.6980
+     *
+     * Note that this function is completely stateless and does not keep track of
+     * step count. The step count needs to be maintained by the caller and passed
+     * in as `step`.
+     *
+     * @param v The current moving average value.
+     * @param x New input value, must have the same shape and dtype as `v`.
+     * @param decay The decay factor. Typical values are 0.95 and 0.99.
+     * @param step Step count.
+     * @param zeroDebias: Whether zeroDebias is to be performed (default: `true`).
+     * @returns The new moving average value.
+     *
+     * @doc {heading: 'Operations', subheading: 'Moving Average'}
+     */
+    function movingAverage_(v, x, decay, step, zeroDebias = true) {
+        const $v = convertToTensor(v, 'v', 'movingAverage');
+        const $x = convertToTensor(x, 'x', 'movingAverage');
+        const $decay = convertToTensor(decay, 'decay', 'movingAverage');
+        assertTypesMatch($v, $x);
+        assert(arraysEqual($v.shape, $x.shape), () => 'Shape mismatch in v and x');
+        const one = scalar(1);
+        const oneMinusDecay = sub$2(one, $decay);
+        let update = mul(sub$2($x, $v), oneMinusDecay);
+        if (zeroDebias) {
+            assert(step != null, () => 'When using zeroDebias: true, step is required.');
+            const $step = convertToTensor(step, 'step', 'movingAverage');
+            update = div$1(update, sub$2(one, pow$2($decay, $step)));
+        }
+        return add$1($v, update);
+    }
+    const movingAverage = op({ movingAverage_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates a new tensor by applying sparse updates to individual
+     * values or slices within a zero tensor of the given shape tensor according to
+     * indices. This operator is the inverse of the `tf.gatherND` operator which
+     * extracts values or slices from a given tensor.
+     *
+     * ```js
+     * const indices = tf.tensor2d([4, 3, 1, 7], [4, 1], 'int32');
+     * const updates = tf.tensor1d([9, 10, 11, 12]);
+     * const shape = [8];
+     * tf.scatterND(indices, updates, shape).print() //[0, 11, 0, 10, 9, 0, 0, 12]
+     * ```
+     *
+     * @param indices The tensor contains the indices into the output tensor.
+     * @param updates The tensor contains the value for the indices.
+     * @param shape: The shape of the output tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Slicing and Joining'}
+     */
+    function scatterND_(indices, updates, shape) {
+        const $indices = convertToTensor(indices, 'indices', 'scatterND', 'int32');
+        const $updates = convertToTensor(updates, 'updates', 'scatterND');
+        validateInput$1($updates, $indices, shape);
+        const inputs = { indices: $indices, updates: $updates };
+        const attrs = { shape };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        return ENGINE.runKernel(ScatterNd, inputs, attrs);
+    }
+    const scatterND = op({ scatterND_ });
+
+    /**
+     * Validate sparseToDense inputs.
+     *
+     * @param sparseIndices A 0-D, 1-D, or 2-D Tensor of type int32.
+     * sparseIndices[i] contains the complete index where sparseValues[i] will be
+     * placed.
+     * @param sparseValues A 0-D or 1-D Tensor. Values
+     * corresponding to each row of sparseIndices, or a scalar value to be used for
+     * all sparse indices.
+     * @param outputShape number[]. Shape of the dense output tensor.
+     * @param validateIndices boolean. indice validation is not supported, error
+     * will be thrown if it is set.
+     */
+    function validateInput(sparseIndices, sparseValues, outputShape, defaultValues) {
+        if (sparseIndices.dtype !== 'int32') {
+            throw new Error('tf.sparseToDense() expects the indices to be int32 type,' +
+                ` but the dtype was ${sparseIndices.dtype}.`);
+        }
+        if (sparseIndices.rank > 2) {
+            throw new Error('sparseIndices should be a scalar, vector, or matrix,' +
+                ` but got shape ${sparseIndices.shape}.`);
+        }
+        const numElems = sparseIndices.rank > 0 ? sparseIndices.shape[0] : 1;
+        const numDims = sparseIndices.rank > 1 ? sparseIndices.shape[1] : 1;
+        if (outputShape.length !== numDims) {
+            throw new Error('outputShape has incorrect number of elements:,' +
+                ` ${outputShape.length}, should be: ${numDims}.`);
+        }
+        const numValues = sparseValues.size;
+        if (!(sparseValues.rank === 0 ||
+            sparseValues.rank === 1 && numValues === numElems)) {
+            throw new Error('sparseValues has incorrect shape ' +
+                `${sparseValues.shape}, should be [] or [${numElems}]`);
+        }
+        if (sparseValues.dtype !== defaultValues.dtype) {
+            throw new Error('sparseValues.dtype must match defaultValues.dtype');
+        }
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Converts a sparse representation into a dense tensor.
+     *
+     * Builds an array dense with shape outputShape such that:
+     *
+     * // If sparseIndices is scalar
+     * dense[i] = (i == sparseIndices ? sparseValues : defaultValue)
+     *
+     * // If sparseIndices is a vector, then for each i
+     * dense[sparseIndices[i]] = sparseValues[i]
+     *
+     * // If sparseIndices is an n by d matrix, then for each i in [0, n)
+     * dense[sparseIndices[i][0], ..., sparseIndices[i][d-1]] = sparseValues[i]
+     * All other values in dense are set to defaultValue. If sparseValues is a
+     * scalar, all sparse indices are set to this single value.
+     *
+     * If indices are repeated the final value is summed over all values for those
+     * indices.
+     *
+     * ```js
+     * const indices = tf.tensor1d([4, 5, 6, 1, 2, 3], 'int32');
+     * const values = tf.tensor1d([10, 11, 12, 13, 14, 15], 'float32');
+     * const shape = [8];
+     * tf.sparseToDense(indices, values, shape).print();
+     * ```
+     *
+     * @param sparseIndices A 0-D, 1-D, or 2-D Tensor of type int32.
+     * sparseIndices[i] contains the complete index where sparseValues[i] will be
+     * placed.
+     * @param sparseValues A 0-D or 1-D Tensor. Values
+     * corresponding to each row of sparseIndices, or a scalar value to be used for
+     * all sparse indices.
+     * @param outputShape Shape of the dense output tensor. the type is inferred.
+     * @param defaultValue Scalar. Value to set for indices not specified in
+     * sparseIndices. Defaults to zero.
+     *
+     * @doc {heading: 'Operations', subheading: 'Normalization'}
+     */
+    function sparseToDense_(sparseIndices, sparseValues, outputShape, defaultValue = 0) {
+        const $sparseIndices = convertToTensor(sparseIndices, 'sparseIndices', 'sparseToDense', 'int32');
+        const $sparseValues = convertToTensor(sparseValues, 'sparseValues', 'sparseToDense');
+        const $defaultValue = convertToTensor(defaultValue, 'defaultValue', 'sparseToDense', $sparseValues.dtype);
+        validateInput($sparseIndices, $sparseValues, outputShape, $defaultValue);
+        const inputs = {
+            sparseIndices: $sparseIndices,
+            sparseValues: $sparseValues,
+            defaultValue: $defaultValue
+        };
+        const attrs = { outputShape };
+        return ENGINE.runKernel(SparseToDense, inputs, attrs);
+    }
+    const sparseToDense$2 = op({ sparseToDense_ });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Gather slices from input tensor into a Tensor with shape specified by
+     * `indices`.
+     *
+     * `indices` is an K-dimensional integer tensor, best thought of as a
+     * (K-1)-dimensional tensor of indices into input, where each element defines a
+     * slice of input:
+     * output[\\(i_0, ..., i_{K-2}\\)] = input[indices[\\(i_0, ..., i_{K-2}\\)]]
+     *
+     * Whereas in `tf.gather`, `indices` defines slices into the first dimension of
+     * input, in `tf.gatherND`, `indices` defines slices into the first N dimensions
+     * of input, where N = indices.shape[-1].
+     *
+     * The last dimension of indices can be at most the rank of input:
+     * indices.shape[-1] <= input.rank
+     *
+     * The last dimension of `indices` corresponds to elements
+     * (if indices.shape[-1] == input.rank) or slices
+     * (if indices.shape[-1] < input.rank) along dimension indices.shape[-1] of
+     * input.
+     * The output tensor has shape
+     * indices.shape[:-1] + input.shape[indices.shape[-1]:]
+     *
+     * Note that on CPU, if an out of bound index is found, an error is returned. On
+     * GPU, if an out of bound index is found, a 0 is stored in the corresponding
+     * output value.
+     *
+     * ```js
+     * const indices = tf.tensor2d([0, 1, 1, 0], [2,2], 'int32');
+     * const input = tf.tensor2d([9, 10, 11, 12], [2, 2]);
+     * tf.gatherND(input, indices).print() // [10, 11]
+     * ```
+     *
+     * @param x The tensor from which to gather values.
+     * @param indices Index tensor, must be of type int32.
+     *
+     * @doc {heading: 'Operations', subheading: 'Slicing and Joining'}
+     */
+    function gatherND_(x, indices) {
+        const $indices = convertToTensor(indices, 'indices', 'gatherND', 'int32');
+        const $x = convertToTensor(x, 'x', 'gatherND', 'string_or_numeric');
+        const inputs = { params: $x, indices: $indices };
+        return ENGINE.runKernel(GatherNd, inputs);
+    }
+    const gatherND = op({ gatherND_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Normalize noise shape based on provided tensor and noise shape.
+     *
+     * @param x Tensor.
+     * @param noiseShape The shape for the randomly generated keep/drop flags, as
+     *   an array of numbers. Optional.
+     * @returns Normalized noise shape.
+     */
+    function getNoiseShape(x, noiseShape) {
+        if (noiseShape == null) {
+            return x.shape.slice();
+        }
+        if (arraysEqual(x.shape, noiseShape)) {
+            return noiseShape;
+        }
+        if (x.shape.length === noiseShape.length) {
+            const newDimension = [];
+            for (let i = 0; i < x.shape.length; i++) {
+                if (noiseShape[i] == null && x.shape[i] != null) {
+                    newDimension.push(x.shape[i]);
+                }
+                else {
+                    newDimension.push(noiseShape[i]);
+                }
+            }
+            return newDimension;
+        }
+        return noiseShape;
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes dropout.
+     *
+     * ```js
+     * const x = tf.tensor1d([1, 2, 2, 1]);
+     * const rate = 0.75;
+     * const output = tf.dropout(x, rate);
+     * output.print();
+     * ```
+     *
+     * @param x A floating point Tensor or TensorLike.
+     * @param rate A float in the range [0, 1). The probability that each element
+     *   of x is discarded.
+     * @param noiseShape An array of numbers of type int32, representing the
+     * shape for randomly generated keep/drop flags. If the noiseShape has null
+     * value, it will be automatically replaced with the x's relative dimension
+     * size. Optional.
+     * @param seed Used to create random seeds. Optional.
+     * @returns A Tensor of the same shape of x.
+     *
+     * @doc {heading: 'Operations', subheading: 'Dropout'}
+     */
+    function dropout_(x, rate, noiseShape, seed) {
+        const $x = convertToTensor(x, 'x', 'dropout');
+        assert($x.dtype === 'float32', () => `x has to be a floating point tensor since it's going to be ` +
+            `scaled, but got a ${$x.dtype} tensor instead.`);
+        assert(rate >= 0 && rate < 1, () => `rate must be a float in the range [0, 1), but got ${rate}.`);
+        if (rate === 0) {
+            return x instanceof Tensor ? $x.clone() : $x;
+        }
+        const $noiseShape = getNoiseShape($x, noiseShape);
+        const keepProb = 1 - rate;
+        const multiplier = div$1(floor$2(add$1(randomUniform($noiseShape, 0, 1, 'float32', seed), keepProb)), keepProb);
+        return mul($x, multiplier);
+    }
+    const dropout = op({ dropout_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    function enclosingPowerOfTwo(value) {
+        // Return 2**N for integer N such that 2**N >= value.
+        return Math.floor(Math.pow(2, Math.ceil(Math.log(value) / Math.log(2.0))));
+    }
+    function cosineWindow(windowLength, a, b) {
+        const even = 1 - windowLength % 2;
+        const newValues = new Float32Array(windowLength);
+        for (let i = 0; i < windowLength; ++i) {
+            const cosArg = (2.0 * Math.PI * i) / (windowLength + even - 1);
+            newValues[i] = a - b * Math.cos(cosArg);
+        }
+        return tensor1d(newValues, 'float32');
+    }
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Returns whether the targets are in the top K predictions.
+     *
+     * ```js
+     * const predictions = tf.tensor2d([[20, 10, 40, 30], [30, 50, -20, 10]]);
+     * const targets = tf.tensor1d([2, 0]);
+     * const precision = await tf.inTopKAsync(predictions, targets);
+     * precision.print();
+     * ```
+     * @param predictions 2-D or higher `tf.Tensor` with last dimension being
+     *     at least `k`.
+     * @param targets 1-D or higher `tf.Tensor`.
+     * @param k Optional Number of top elements to look at for computing precision,
+     *     default to 1.
+     *
+     * @doc {heading: 'Operations', subheading: 'Evaluation'}
+     */
+    async function inTopKAsync_(predictions, targets, k = 1) {
+        const $predictions = convertToTensor(predictions, 'predictions', 'inTopK');
+        const $targets = convertToTensor(targets, 'targets', 'inTopK');
+        assert($predictions.rank > 1, () => 'inTopK() expects the predictions to be of rank 2 or higher, ' +
+            `but got ${$predictions.rank}`);
+        assert($predictions.rank - 1 === $targets.rank, () => `predictions rank should be 1 larger than ` +
+            `targets rank, but got predictions rank ` +
+            `${$predictions.rank} and targets rank ${$targets.rank}`);
+        assertShapesMatch($predictions.shape.slice(0, $predictions.shape.length - 1), $targets.shape, `predictions's shape should be align with the targets' shape, ` +
+            'except the last dimension.');
+        const lastDim = $predictions.shape[$predictions.shape.length - 1];
+        assert(k > 0 && k <= lastDim, () => `'k' passed to inTopK() must be > 0 && <= the predictions last ` +
+            `dimension (${lastDim}), but got ${k}`);
+        const predictionsVals = await $predictions.data();
+        const targetsVals = await $targets.data();
+        // Reshape predictionsVals into a 2d tensor [batch, lastDim]
+        // and look up topK along lastDim.
+        const [batch, size] = [predictionsVals.length / lastDim, lastDim];
+        const precision = getTypedArrayFromDType('bool', batch);
+        for (let b = 0; b < batch; b++) {
+            const offset = b * size;
+            const vals = predictionsVals.subarray(offset, offset + size);
+            const valAndInd = [];
+            for (let i = 0; i < vals.length; i++) {
+                valAndInd.push({ value: vals[i], index: i });
+            }
+            valAndInd.sort((a, b) => b.value - a.value);
+            precision[b] = 0;
+            for (let i = 0; i < k; i++) {
+                if (valAndInd[i].index === targetsVals[b]) {
+                    precision[b] = 1;
+                    break;
+                }
+            }
+        }
+        if (predictions !== $predictions) {
+            $predictions.dispose();
+        }
+        if (targets !== $targets) {
+            $targets.dispose();
+        }
+        // Output precision has the same shape as targets.
+        return tensor(precision, $targets.shape, 'bool');
+    }
+    const inTopKAsync = inTopKAsync_;
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the derivative of the filter of a 2D convolution.
+     *
+     * @param x The input tensor, of rank 4 or rank 3 of shape
+     *     [batch, height, width, inChannels]. If rank 3, batch of 1 is assumed.
+     * @param dy The dy image, of rank 4 or rank 3, of shape
+     *     [batch, height, width, outDepth]. If rank 3, batch of 1 is assumed.
+     * @param filterShape The shape of the filter, length 4,
+     *     [filterHeight, filterWidth, inDepth, outDepth].
+     * @param strides The strides of the convolution: [strideHeight,
+     * strideWidth].
+     * @param pad A string from: 'same', 'valid'. The type of padding algorithm
+     *     used in the forward prop of the op.
+     * @param dataFormat: An optional string from: "NHWC", "NCHW". Defaults to
+     *     "NHWC". Specify the data format of the input and output data. With the
+     *     default format "NHWC", the data is stored in the order of: [batch,
+     *     height, width, channels].
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     */
+    function conv2DBackpropFilter_(x, dy, filterShape, strides, pad, dataFormat = 'NHWC', dimRoundingMode) {
+        let x4D = x;
+        if (x.rank === 3) {
+            x4D = reshape$2(x, [1, x.shape[0], x.shape[1], x.shape[2]]);
+        }
+        let dy4D = dy;
+        if (dy4D.rank === 3) {
+            dy4D = reshape$2(dy, [1, dy.shape[0], dy.shape[1], dy.shape[2]]);
+        }
+        assert(x4D.rank === 4, () => `Error in conv2dDerFilter: input must be rank 4, but got shape ` +
+            `${x4D.shape}.`);
+        assert(dy4D.rank === 4, () => `Error in conv2dDerFilter: dy must be rank 4, but got shape ` +
+            `${dy4D.shape}.`);
+        assert(filterShape.length === 4, () => `Error in conv2dDerFilter: filterShape must be length 4, but got ` +
+            `${filterShape}.`);
+        const inDepth = dataFormat === 'NHWC' ? x4D.shape[3] : x4D.shape[1];
+        const outDepth = dataFormat === 'NHWC' ? dy4D.shape[3] : dy4D.shape[1];
+        assert(inDepth === filterShape[2], () => `Error in conv2dDerFilter: depth of input ${inDepth}) must ` +
+            `match input depth in filter (${filterShape[2]}.`);
+        assert(outDepth === filterShape[3], () => `Error in conv2dDerFilter: depth of dy (${outDepth}) must ` +
+            `match output depth for filter (${filterShape[3]}).`);
+        checkPadOnDimRoundingMode('conv2dDerFilter', pad, dimRoundingMode);
+        const inputs = { x: x4D, dy: dy4D };
+        const attrs = { strides, pad, dataFormat, dimRoundingMode, filterShape };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        return ENGINE.runKernel(Conv2DBackpropFilter, inputs, attrs);
+    }
+    const conv2DBackpropFilter$2 = op({ conv2DBackpropFilter_ });
 
     /**
      * @license
@@ -28639,6 +41716,1002 @@
         const gradientMode = gradientDepth > 0;
         return !gradientMode || activation === 'linear';
     };
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes a 2D convolution over the input x, optionally fused with adding a
+     * bias and applying an activation.
+     *
+     * ```js
+     * const inputDepth = 2;
+     * const inShape = [2, 2, 2, inputDepth];
+     * const outputDepth = 2;
+     * const fSize = 1;
+     * const pad = 0;
+     * const strides = 1;
+     *
+     * const x = tf.tensor4d( [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+     * 16], inShape);
+     * const w = tf.tensor4d([-1, 1, -2, 0.5], [fSize, fSize, inputDepth,
+     * outputDepth]);
+     *
+     * tf.fused.conv2d({ x, filter: w, strides, pad, dataFormat: 'NHWC',
+     * dilations: [1, 1], bias: tf.scalar(5), activation: 'relu' }).print();
+     * ```
+     *
+     * @param obj An object with the following properties:
+     * @param x The input tensor, of rank 4 or rank 3, of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is
+     * assumed.
+     * @param filter The filter, rank 4, of shape
+     *     `[filterHeight, filterWidth, inDepth, outDepth]`.
+     * @param strides The strides of the convolution: `[strideHeight,
+     * strideWidth]`.
+     * @param pad The type of padding algorithm.
+     *   - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *   - `valid` output will be smaller than input if filter is larger
+     *       than 1x1.
+     *   - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dataFormat An optional string from: "NHWC", "NCHW". Defaults to
+     *     "NHWC". Specify the data format of the input and output data. With the
+     *     default format "NHWC", the data is stored in the order of: [batch,
+     *     height, width, channels]. Only "NHWC" is currently supported.
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     in atrous convolution. Defaults to `[1, 1]`. If `dilations` is a single
+     *     number, then `dilationHeight == dilationWidth`. If it is greater than
+     *     1, then all values of `strides` must be 1.
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     * @param bias Tensor to be added to the result.
+     * @param activation Name of activation kernel (defaults to `linear`) to be
+     *     applied
+     *      after biasAdd.
+     * @param preluActivationWeights Tensor of prelu weights to be applied as part
+     *     of a `prelu` activation, typically the same shape as `x`.
+     * @param leakyreluAlpha Optional. Alpha to be applied as part of a `leakyrelu`
+     *     activation.
+     */
+    function fusedConv2d_({ x, filter, strides, pad, dataFormat = 'NHWC', dilations = [1, 1], dimRoundingMode, bias, activation = 'linear', preluActivationWeights, leakyreluAlpha }) {
+        activation = activation || 'linear';
+        if (shouldFuse(ENGINE.state.gradientDepth, activation) === false) {
+            let result = conv2d$2(x, filter, strides, pad, dataFormat, dilations, dimRoundingMode);
+            if (bias != null) {
+                result = add$1(result, bias);
+            }
+            return applyActivation$1(result, activation, preluActivationWeights, leakyreluAlpha);
+        }
+        const $x = convertToTensor(x, 'x', 'conv2d', 'float32');
+        const $filter = convertToTensor(filter, 'filter', 'conv2d', 'float32');
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        assert(x4D.rank === 4, () => `Error in fused conv2d: input must be rank 4, but got rank ` +
+            `${x4D.rank}.`);
+        assert($filter.rank === 4, () => `Error in fused conv2d: filter must be rank 4, but got rank ` +
+            `${$filter.rank}.`);
+        checkPadOnDimRoundingMode('fused conv2d', pad, dimRoundingMode);
+        assert(x4D.shape[3] === $filter.shape[2], () => `Error in conv2d: depth of input (${x4D.shape[3]}) must match ` +
+            `input depth for filter ${$filter.shape[2]}.`);
+        assert(eitherStridesOrDilationsAreOne(strides, dilations), () => 'Error in conv2D: Either strides or dilations must be 1. ' +
+            `Got strides ${strides} and dilations '${dilations}'`);
+        assert(dataFormat === 'NHWC', () => `Error in conv2d: got dataFormat of ${dataFormat} but only NHWC is currently supported.`);
+        const convInfo = computeConv2DInfo(x4D.shape, $filter.shape, strides, dilations, pad, dimRoundingMode);
+        let $bias;
+        if (bias != null) {
+            $bias = convertToTensor(bias, 'bias', 'fused conv2d');
+            [$bias] = makeTypesMatch($bias, $x);
+            assertAndGetBroadcastShape(convInfo.outShape, $bias.shape);
+        }
+        let $preluActivationWeights;
+        if (preluActivationWeights != null) {
+            $preluActivationWeights = convertToTensor(preluActivationWeights, 'prelu weights', 'fused conv2d');
+        }
+        const grad = (dy, saved) => {
+            const [$filter, x4D, y, $bias] = saved;
+            const dyActivation = getFusedDyActivation(dy, y, activation);
+            assert(tupleValuesAreOne(dilations), () => 'Error in gradient of fused conv2D: ' +
+                `dilation rates greater than 1 ` +
+                `are not yet supported in gradients. Got dilations '${dilations}'`);
+            const xDer = conv2DBackpropInput$2(x4D.shape, dyActivation, $filter, strides, pad);
+            const filterDer = conv2DBackpropFilter$2(x4D, dyActivation, $filter.shape, strides, pad);
+            const der = [xDer, filterDer];
+            if ($bias != null) {
+                const biasDer = getFusedBiasGradient($bias, dyActivation);
+                der.push(biasDer);
+            }
+            return der;
+        };
+        const inputs = {
+            x: x4D,
+            filter: $filter,
+            bias: $bias,
+            preluActivationWeights: $preluActivationWeights
+        };
+        const attrs = {
+            strides,
+            pad,
+            dataFormat,
+            dilations,
+            dimRoundingMode,
+            activation,
+            leakyreluAlpha
+        };
+        // Depending on the the params passed in we will have different number of
+        // inputs and thus a a different number of elements in the gradient.
+        if (bias == null) {
+            const customOp = customGrad((x4D, filter, save) => {
+                let res = 
+                // tslint:disable-next-line: no-unnecessary-type-assertion
+                ENGINE.runKernel(FusedConv2D, inputs, attrs);
+                save([filter, x4D, res]);
+                if (reshapedTo4D) {
+                    // tslint:disable-next-line: no-unnecessary-type-assertion
+                    res = reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+                }
+                return { value: res, gradFunc: grad };
+            });
+            return customOp(x4D, $filter);
+        }
+        else {
+            const customOpWithBias = customGrad((x4D, filter, bias, save) => {
+                let res = ENGINE.runKernel(FusedConv2D, inputs, attrs);
+                save([filter, x4D, res, bias]);
+                if (reshapedTo4D) {
+                    // tslint:disable-next-line: no-unnecessary-type-assertion
+                    res = reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+                }
+                return { value: res, gradFunc: grad };
+            });
+            return customOpWithBias(x4D, $filter, $bias);
+        }
+    }
+    const conv2d$1 = op({ fusedConv2d_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    function depthwiseConv2dNativeBackpropFilter_(x, dy, filterShape, strides, pad, dilations = [1, 1], dimRoundingMode) {
+        let x4D = x;
+        if (x.rank === 3) {
+            x4D = reshape$2(x, [1, x.shape[0], x.shape[1], x.shape[2]]);
+        }
+        let dy4D = dy;
+        if (dy4D.rank === 3) {
+            dy4D = reshape$2(dy, [1, dy.shape[0], dy.shape[1], dy.shape[2]]);
+        }
+        const inputs = { x: x4D, dy: dy4D };
+        const attrs = { strides, pad, dimRoundingMode, dilations, filterShape };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        return ENGINE.runKernel(DepthwiseConv2dNativeBackpropFilter, inputs, attrs);
+    }
+    const depthwiseConv2dNativeBackpropFilter$2 = op({ depthwiseConv2dNativeBackpropFilter_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    function depthwiseConv2dNativeBackpropInput_(xShape, dy, filter, strides, pad, dilations = [1, 1], dimRoundingMode) {
+        let dy4D = dy;
+        let reshapedTo4D = false;
+        if (dy.rank === 3) {
+            reshapedTo4D = true;
+            dy4D = reshape$2(dy, [1, dy.shape[0], dy.shape[1], dy.shape[2]]);
+        }
+        const inputs = { dy: dy4D, filter };
+        const attrs = { strides, pad, dimRoundingMode, dilations, inputShape: xShape };
+        const res = 
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        ENGINE.runKernel(DepthwiseConv2dNativeBackpropInput, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const depthwiseConv2dNativeBackpropInput$2 = op({ depthwiseConv2dNativeBackpropInput_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes depthwise 2D convolution, optionally fused with adding a
+     * bias and applying an activation.
+     *
+     * Given a 4D `input` array and a `filter` array of shape
+     * `[filterHeight, filterWidth, inChannels, channelMultiplier]` containing
+     * `inChannels` convolutional filters of depth 1, this op applies a
+     * different filter to each input channel (expanding from 1 channel to
+     * `channelMultiplier` channels for each), then concatenates the results
+     * together. The output has `inChannels * channelMultiplier` channels.
+     *
+     * See
+     * [https://www.tensorflow.org/api_docs/python/tf/nn/depthwise_conv2d](
+     *     https://www.tensorflow.org/api_docs/python/tf/nn/depthwise_conv2d)
+     * for more details.
+     *
+     * @param obj An object with the following properties:
+     * @param x The input tensor, of rank 4 or rank 3, of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is
+     * assumed.
+     * @param filter The filter tensor, rank 4, of shape
+     *     `[filterHeight, filterWidth, inChannels, channelMultiplier]`.
+     * @param strides The strides of the convolution: `[strideHeight,
+     * strideWidth]`. If strides is a single number, then `strideHeight ==
+     * strideWidth`.
+     * @param pad The type of padding algorithm.
+     *   - `same` and stride 1: output will be of same size as input,
+     *       regardless of filter size.
+     *   - `valid`: output will be smaller than input if filter is larger
+     *       than 1x1.
+     *   - For more info, see this guide:
+     *     [https://www.tensorflow.org/api_docs/python/tf/nn/convolution](
+     *          https://www.tensorflow.org/api_docs/python/tf/nn/convolution)
+     * @param dilations The dilation rates: `[dilationHeight, dilationWidth]`
+     *     in which we sample input values across the height and width dimensions
+     *     in atrous convolution. Defaults to `[1, 1]`. If `rate` is a single
+     *     number, then `dilationHeight == dilationWidth`. If it is greater than
+     *     1, then all values of `strides` must be 1.
+     * @param dataFormat: An optional string from: "NHWC", "NCHW". Defaults to
+     *     "NHWC". Specify the data format of the input and output data. With the
+     *     default format "NHWC", the data is stored in the order of: [batch,
+     *     height, width, channels]. Only "NHWC" is currently supported.
+     * @param dimRoundingMode A string from: 'ceil', 'round', 'floor'. If none is
+     *     provided, it will default to truncate.
+     * @param bias Tensor to be added to the result.
+     * @param activation Name of activation kernel (defaults to `linear`).
+     * @param preluActivationWeights Tensor of prelu weights to be applied as part
+     *     of a `prelu` activation, typically the same shape as `x`.
+     * @param leakyreluAlpha Optional. Alpha to be applied as part of a `leakyrelu`
+     *     activation.
+     */
+    function fusedDepthwiseConv2d_({ x, filter, strides, pad, dataFormat = 'NHWC', dilations = [1, 1], dimRoundingMode, bias, activation = 'linear', preluActivationWeights, leakyreluAlpha }) {
+        if (shouldFuse(ENGINE.state.gradientDepth, activation) === false) {
+            let result = depthwiseConv2d$1(x, filter, strides, pad, dataFormat, dilations, dimRoundingMode);
+            if (bias != null) {
+                result = add$1(result, bias);
+            }
+            return applyActivation$1(result, activation, preluActivationWeights, leakyreluAlpha);
+        }
+        const $x = convertToTensor(x, 'x', 'depthwiseConv2d', 'float32');
+        const $filter = convertToTensor(filter, 'filter', 'depthwiseConv2d', 'float32');
+        let x4D = $x;
+        let reshapedTo4D = false;
+        if ($x.rank === 3) {
+            reshapedTo4D = true;
+            x4D = reshape$2($x, [1, $x.shape[0], $x.shape[1], $x.shape[2]]);
+        }
+        assert(x4D.rank === 4, () => `Error in fused depthwiseConv2d: input must be rank 4, but got ` +
+            `rank ${x4D.rank}.`);
+        assert($filter.rank === 4, () => `Error in fused depthwiseConv2d: filter must be rank 4, ` +
+            `but got rank ${$filter.rank}.`);
+        assert(x4D.shape[3] === $filter.shape[2], () => `Error in fused depthwiseConv2d: number of input channels ` +
+            `(${x4D.shape[3]}) must match the inChannels dimension in ` +
+            `filter ${$filter.shape[2]}.`);
+        if (dilations == null) {
+            dilations = [1, 1];
+        }
+        assert(eitherStridesOrDilationsAreOne(strides, dilations), () => 'Error in fused depthwiseConv2d: Either strides or dilations must ' +
+            `be 1. Got strides ${strides} and dilations '${dilations}'`);
+        checkPadOnDimRoundingMode('fused depthwiseConv2d', pad, dimRoundingMode);
+        const convInfo = computeConv2DInfo(x4D.shape, $filter.shape, strides, dilations, pad, dimRoundingMode, true /* depthwise */);
+        let $bias;
+        if (bias != null) {
+            $bias = convertToTensor(bias, 'bias', 'fused conv2d');
+            [$bias] = makeTypesMatch($bias, $x);
+            assertAndGetBroadcastShape(convInfo.outShape, $bias.shape);
+        }
+        let $preluActivationWeights;
+        if (preluActivationWeights != null) {
+            $preluActivationWeights = convertToTensor(preluActivationWeights, 'prelu weights', 'fused depthwiseConv2d');
+        }
+        const grad = (dy, saved) => {
+            assert(tupleValuesAreOne(dilations), () => 'Error in gradient of fused depthwiseConv2d: dilation rates ' +
+                `greater than 1 are not yet supported. Got dilations ` +
+                `'${dilations}'`);
+            const [$filter, x4D, y, bias] = saved;
+            const dyActivation = getFusedDyActivation(dy, y, activation);
+            const xDer = depthwiseConv2dNativeBackpropInput$2(x4D.shape, dyActivation, $filter, strides, pad, dilations, dimRoundingMode);
+            const filterDer = depthwiseConv2dNativeBackpropFilter$2(x4D, dyActivation, $filter.shape, strides, pad, dilations, dimRoundingMode);
+            if (bias != null) {
+                const biasDer = getFusedBiasGradient($bias, dyActivation);
+                return [xDer, filterDer, biasDer];
+            }
+            return [xDer, filterDer];
+        };
+        const inputs = {
+            x: x4D,
+            filter: $filter,
+            bias: $bias,
+            preluActivationWeights: $preluActivationWeights
+        };
+        const attrs = {
+            strides,
+            pad,
+            dataFormat,
+            dilations,
+            dimRoundingMode,
+            activation,
+            leakyreluAlpha
+        };
+        // Depending on the the params passed in we will have different number of
+        // inputs and thus a a different number of elements in the gradient.
+        if (bias == null) {
+            const customOp = customGrad((x4D, filter, save) => {
+                // tslint:disable-next-line: no-unnecessary-type-assertion
+                let res = ENGINE.runKernel(FusedDepthwiseConv2D, inputs, attrs);
+                save([filter, x4D, res]);
+                if (reshapedTo4D) {
+                    // tslint:disable-next-line: no-unnecessary-type-assertion
+                    res = reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+                }
+                return { value: res, gradFunc: grad };
+            });
+            return customOp(x4D, $filter);
+        }
+        else {
+            const customOpWithBias = customGrad((x4D, filter, bias, save) => {
+                // tslint:disable-next-line: no-unnecessary-type-assertion
+                let res = ENGINE.runKernel(FusedDepthwiseConv2D, inputs, attrs);
+                save([filter, x4D, res, bias]);
+                if (reshapedTo4D) {
+                    // tslint:disable-next-line: no-unnecessary-type-assertion
+                    res = reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+                }
+                return { value: res, gradFunc: grad };
+            });
+            return customOpWithBias(x4D, $filter, $bias);
+        }
+    }
+    const depthwiseConv2d = op({ fusedDepthwiseConv2d_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the dot product of two matrices with optional activation and bias.
+     *
+     * ```js
+     * const a = tf.tensor2d([-1, -2], [1, 2]);
+     * const b = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+     * const bias = tf.tensor2d([1, 2], [1, 2]);
+     *
+     * tf.fused.matMul({a, b, bias, activation: 'relu'}).print();
+     * ```
+     *
+     * @param obj An object with the following properties:
+     * - `a` First matrix in dot product operation.
+     * - `b` Second matrix in dot product operation.
+     * - `transposeA` If true, `a` is transposed before multiplication.
+     * - `transposeB` If true, `b` is transposed before multiplication.
+     * - `bias` Matrix to be added to the result.
+     * - `activation` Name of activation kernel (defaults to `linear`).
+     * - `preluActivationWeights` Tensor of prelu weights.
+     * - `leakyreluAlpha` Alpha of leakyrelu.
+     */
+    function fusedMatMul_({ a, b, transposeA = false, transposeB = false, bias, activation = 'linear', preluActivationWeights, leakyreluAlpha, }) {
+        if (shouldFuse(ENGINE.state.gradientDepth, activation) === false) {
+            let result = matMul$1(a, b, transposeA, transposeB);
+            if (bias != null) {
+                result = add$1(result, bias);
+            }
+            return applyActivation$1(result, activation, preluActivationWeights, leakyreluAlpha);
+        }
+        let $a = convertToTensor(a, 'a', 'fused matMul');
+        let $b = convertToTensor(b, 'b', 'fused matMul');
+        [$a, $b] = makeTypesMatch($a, $b);
+        const innerShapeA = transposeA ? $a.shape[$a.rank - 2] : $a.shape[$a.rank - 1];
+        const innerShapeB = transposeB ? $b.shape[$b.rank - 1] : $b.shape[$b.rank - 2];
+        const outerShapeA = transposeA ? $a.shape[$a.rank - 1] : $a.shape[$a.rank - 2];
+        const outerShapeB = transposeB ? $b.shape[$b.rank - 2] : $b.shape[$b.rank - 1];
+        const outerDimsA = $a.shape.slice(0, -2);
+        const outerDimsB = $b.shape.slice(0, -2);
+        const batchDimA = sizeFromShape(outerDimsA);
+        const batchDimB = sizeFromShape(outerDimsB);
+        assert(innerShapeA === innerShapeB, () => `Error in fused matMul: inner shapes (${innerShapeA}) and (` +
+            `${innerShapeB}) of Tensors with shapes ${$a.shape} and ` +
+            `${$b.shape} and transposeA=${transposeA}` +
+            ` and transposeB=${transposeB} must match.`);
+        const outShapeOuterDims = assertAndGetBroadcastShape($a.shape.slice(0, -2), $b.shape.slice(0, -2));
+        const outShape = outShapeOuterDims.concat([outerShapeA, outerShapeB]);
+        const a3D = transposeA ?
+            reshape$2($a, [batchDimA, innerShapeA, outerShapeA]) :
+            reshape$2($a, [batchDimA, outerShapeA, innerShapeA]);
+        const b3D = transposeB ?
+            reshape$2($b, [batchDimB, outerShapeB, innerShapeB]) :
+            reshape$2($b, [batchDimB, innerShapeB, outerShapeB]);
+        let $bias;
+        if (bias != null) {
+            $bias = convertToTensor(bias, 'bias', 'fused matMul');
+            [$bias] = makeTypesMatch($bias, $a);
+            assertAndGetBroadcastShape(outShape, $bias.shape);
+        }
+        let $preluActivationWeights;
+        if (preluActivationWeights != null) {
+            $preluActivationWeights = convertToTensor(preluActivationWeights, 'prelu weights', 'fused matMul');
+        }
+        const grad = (dy, saved) => {
+            const [a3D, b3D, y, $bias] = saved;
+            // we reshape dy because the result of the forward is not
+            // necessarily going to be a 3d tensor due to a reshape done at the end of
+            // the customOp.
+            const dyActivation = getFusedDyActivation(reshape$2(dy, y.shape), y, activation);
+            let aDer;
+            let bDer;
+            if (!transposeA && !transposeB) {
+                aDer = matMul$1(dyActivation, b3D, false, true);
+                bDer = matMul$1(a3D, dyActivation, true, false);
+            }
+            else if (!transposeA && transposeB) {
+                aDer = matMul$1(dyActivation, b3D, false, false);
+                bDer = matMul$1(dyActivation, a3D, true, false);
+            }
+            else if (transposeA && !transposeB) {
+                aDer = matMul$1(b3D, dyActivation, false, true);
+                bDer = matMul$1(a3D, dyActivation, false, false);
+            }
+            else {
+                aDer = matMul$1(b3D, dyActivation, true, true);
+                bDer = matMul$1(dyActivation, a3D, true, true);
+            }
+            if (bias != null) {
+                const biasDer = getFusedBiasGradient($bias, dyActivation);
+                return [aDer, bDer, biasDer];
+            }
+            else {
+                return [aDer, bDer];
+            }
+        };
+        const inputs = {
+            a: a3D,
+            b: b3D,
+            bias: $bias,
+            preluActivationWeights: $preluActivationWeights
+        };
+        const attrs = { transposeA, transposeB, activation, leakyreluAlpha };
+        // Depending on the the params passed in we will have different number of
+        // inputs and thus a a different number of elements in the gradient.
+        if (bias == null) {
+            const customOp = customGrad((a3D, b3D, save) => {
+                const res = 
+                // tslint:disable-next-line: no-unnecessary-type-assertion
+                ENGINE.runKernel(_FusedMatMul, inputs, attrs);
+                save([a3D, b3D, res]);
+                return { value: reshape$2(res, outShape), gradFunc: grad };
+            });
+            return customOp(a3D, b3D);
+        }
+        else {
+            const customOpWithBias = customGrad((a3D, b3D, $bias, save) => {
+                const res = 
+                // tslint:disable-next-line: no-unnecessary-type-assertion
+                ENGINE.runKernel(_FusedMatMul, inputs, attrs);
+                save([a3D, b3D, res, $bias]);
+                return { value: reshape$2(res, outShape), gradFunc: grad };
+            });
+            return customOpWithBias(a3D, b3D, $bias);
+        }
+    }
+    const matMul = op({ fusedMatMul_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+
+    var fused_ops = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        conv2d: conv2d$1,
+        depthwiseConv2d: depthwiseConv2d,
+        matMul: matMul
+    });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Generate a hamming window.
+     *
+     * See: https://en.wikipedia.org/wiki/Window_function#Hann_and_Hamming_windows
+     *
+     * ```js
+     * tf.signal.hammingWindow(10).print();
+     * ```
+     * @param The length of window
+     *
+     * @doc {heading: 'Operations', subheading: 'Signal', namespace: 'signal'}
+     */
+    function hammingWindow_(windowLength) {
+        return cosineWindow(windowLength, 0.54, 0.46);
+    }
+    const hammingWindow = op({ hammingWindow_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Generate a Hann window.
+     *
+     * See: https://en.wikipedia.org/wiki/Window_function#Hann_and_Hamming_windows
+     *
+     * ```js
+     * tf.signal.hannWindow(10).print();
+     * ```
+     * @param The length of window
+     *
+     * @doc {heading: 'Operations', subheading: 'Signal', namespace: 'signal'}
+     */
+    function hannWindow_(windowLength) {
+        return cosineWindow(windowLength, 0.5, 0.5);
+    }
+    const hannWindow = op({ hannWindow_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Expands input into frames of frameLength.
+     * Slides a window size with frameStep.
+     *
+     * ```js
+     * tf.signal.frame([1, 2, 3], 2, 1).print();
+     * ```
+     * @param signal The input tensor to be expanded
+     * @param frameLength Length of each frame
+     * @param frameStep The frame hop size in samples.
+     * @param padEnd Whether to pad the end of signal with padValue.
+     * @param padValue An number to use where the input signal does
+     *     not exist when padEnd is True.
+     *
+     * @doc {heading: 'Operations', subheading: 'Signal', namespace: 'signal'}
+     */
+    function frame_(signal, frameLength, frameStep, padEnd = false, padValue = 0) {
+        let start = 0;
+        const output = [];
+        while (start + frameLength <= signal.size) {
+            output.push(slice$2(signal, start, frameLength));
+            start += frameStep;
+        }
+        if (padEnd) {
+            while (start < signal.size) {
+                const padLen = (start + frameLength) - signal.size;
+                const pad = concat$2([
+                    slice$2(signal, start, frameLength - padLen), fill$2([padLen], padValue)
+                ]);
+                output.push(pad);
+                start += frameStep;
+            }
+        }
+        if (output.length === 0) {
+            return tensor2d([], [0, frameLength]);
+        }
+        return reshape$2(concat$2(output), [output.length, frameLength]);
+    }
+    const frame = op({ frame_ });
+
+    /**
+     * @license
+     * Copyright 2019 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the Short-time Fourier Transform of signals
+     * See: https://en.wikipedia.org/wiki/Short-time_Fourier_transform
+     *
+     * ```js
+     * const input = tf.tensor1d([1, 1, 1, 1, 1])
+     * tf.signal.stft(input, 3, 1).print();
+     * ```
+     * @param signal 1-dimensional real value tensor.
+     * @param frameLength The window length of samples.
+     * @param frameStep The number of samples to step.
+     * @param fftLength The size of the FFT to apply.
+     * @param windowFn A callable that takes a window length and returns 1-d tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'Signal', namespace: 'signal'}
+     */
+    function stft_(signal, frameLength, frameStep, fftLength, windowFn = hannWindow) {
+        if (fftLength == null) {
+            fftLength = enclosingPowerOfTwo(frameLength);
+        }
+        const framedSignal = frame(signal, frameLength, frameStep);
+        const windowedSignal = mul(framedSignal, windowFn(frameLength));
+        return rfft(windowedSignal, fftLength);
+    }
+    const stft = op({ stft_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Extracts crops from the input image tensor and resizes them using bilinear
+     * sampling or nearest neighbor sampling (possibly with aspect ratio change)
+     * to a common output size specified by cropSize.
+     *
+     * @param image 4d tensor of shape `[batch,imageHeight,imageWidth, depth]`,
+     *     where imageHeight and imageWidth must be positive, specifying the
+     *     batch of images from which to take crops
+     * @param boxes 2d float32 tensor of shape `[numBoxes, 4]`. Each entry is
+     *     `[y1, x1, y2, x2]`, where `(y1, x1)` and `(y2, x2)` are the normalized
+     *     coordinates of the box in the boxInd[i]'th image in the batch
+     * @param boxInd 1d int32 tensor of shape `[numBoxes]` with values in range
+     *     `[0, batch)` that specifies the image that the `i`-th box refers to.
+     * @param cropSize 1d int32 tensor of 2 elements `[cropHeigh, cropWidth]`
+     *     specifying the size to which all crops are resized to.
+     * @param method Optional string from `'bilinear' | 'nearest'`,
+     *     defaults to bilinear, which specifies the sampling method for resizing
+     * @param extrapolationValue A threshold for deciding when to remove boxes based
+     *     on score. Defaults to 0.
+     * @return A 4D tensor of the shape `[numBoxes,cropHeight,cropWidth,depth]`
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function cropAndResize_(image, boxes, boxInd, cropSize, method = 'bilinear', extrapolationValue = 0) {
+        const $image = convertToTensor(image, 'image', 'cropAndResize');
+        const $boxes = convertToTensor(boxes, 'boxes', 'cropAndResize', 'float32');
+        const $boxInd = convertToTensor(boxInd, 'boxInd', 'cropAndResize', 'int32');
+        const numBoxes = $boxes.shape[0];
+        assert($image.rank === 4, () => 'Error in cropAndResize: image must be rank 4,' +
+            `but got rank ${$image.rank}.`);
+        assert($boxes.rank === 2 && $boxes.shape[1] === 4, () => `Error in cropAndResize: boxes must be have size [${numBoxes},4] ` +
+            `but had shape ${$boxes.shape}.`);
+        assert($boxInd.rank === 1 && $boxInd.shape[0] === numBoxes, () => `Error in cropAndResize: boxInd must be have size [${numBoxes}] ` +
+            `but had shape ${$boxes.shape}.`);
+        assert(cropSize.length === 2, () => `Error in cropAndResize: cropSize must be of length 2, but got ` +
+            `length ${cropSize.length}.`);
+        assert(cropSize[0] >= 1 && cropSize[1] >= 1, () => `cropSize must be atleast [1,1], but was ${cropSize}`);
+        assert(method === 'bilinear' || method === 'nearest', () => `method must be bilinear or nearest, but was ${method}`);
+        const inputs = { image: $image, boxes: $boxes, boxInd: $boxInd };
+        const attrs = { method, extrapolationValue, cropSize };
+        const res = ENGINE.runKernel(CropAndResize, inputs, attrs);
+        return res;
+    }
+    const cropAndResize$2 = op({ cropAndResize_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Flips the image left to right. Currently available in the CPU, WebGL, and
+     * WASM backends.
+     *
+     * @param image 4d tensor of shape `[batch, imageHeight, imageWidth, depth]`.
+     */
+    /** @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'} */
+    function flipLeftRight_(image) {
+        const $image = convertToTensor(image, 'image', 'flipLeftRight', 'float32');
+        assert($image.rank === 4, () => 'Error in flipLeftRight: image must be rank 4,' +
+            `but got rank ${$image.rank}.`);
+        const inputs = { image: $image };
+        const res = ENGINE.runKernel(FlipLeftRight, inputs, {});
+        return res;
+    }
+    const flipLeftRight = op({ flipLeftRight_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Converts images from grayscale to RGB format.
+     *
+     * @param image A grayscale tensor to convert. The `image`'s last dimension must
+     *     be size 1 with at least a two-dimensional shape.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function grayscaleToRGB_(image) {
+        const $image = convertToTensor(image, 'image', 'grayscaleToRGB');
+        const lastDimsIdx = $image.rank - 1;
+        const lastDims = $image.shape[lastDimsIdx];
+        assert($image.rank >= 2, () => 'Error in grayscaleToRGB: images must be at least rank 2, ' +
+            `but got rank ${$image.rank}.`);
+        assert(lastDims === 1, () => 'Error in grayscaleToRGB: last dimension of a grayscale image ' +
+            `should be size 1, but got size ${lastDims}.`);
+        const reps = new Array($image.rank);
+        reps.fill(1, 0, lastDimsIdx);
+        reps[lastDimsIdx] = 3;
+        return tile$2($image, reps);
+    }
+    const grayscaleToRGB = op({ grayscaleToRGB_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Rotates the input image tensor counter-clockwise with an optional offset
+     * center of rotation. Currently available in the CPU, WebGL, and WASM backends.
+     *
+     * @param image 4d tensor of shape `[batch, imageHeight, imageWidth, depth]`.
+     * @param radians The amount of rotation.
+     * @param fillValue The value to fill in the empty space leftover
+     *     after rotation. Can be either a single grayscale value (0-255), or an
+     *     array of three numbers `[red, green, blue]` specifying the red, green,
+     *     and blue channels. Defaults to `0` (black).
+     * @param center The center of rotation. Can be either a single value (0-1), or
+     *     an array of two numbers `[centerX, centerY]`. Defaults to `0.5` (rotates
+     *     the image around its center).
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function rotateWithOffset_(image, radians, fillValue = 0, center = 0.5) {
+        const $image = convertToTensor(image, 'image', 'rotateWithOffset', 'float32');
+        assert($image.rank === 4, () => 'Error in rotateWithOffset: image must be rank 4,' +
+            `but got rank ${$image.rank}.`);
+        const inputs = { image: $image };
+        const attrs = { radians, fillValue, center };
+        const res = ENGINE.runKernel(RotateWithOffset, inputs, attrs);
+        return res;
+    }
+    const rotateWithOffset = op({ rotateWithOffset_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    function nonMaxSuppSanityCheck(boxes, scores, maxOutputSize, iouThreshold, scoreThreshold, softNmsSigma) {
+        if (iouThreshold == null) {
+            iouThreshold = 0.5;
+        }
+        if (scoreThreshold == null) {
+            scoreThreshold = Number.NEGATIVE_INFINITY;
+        }
+        if (softNmsSigma == null) {
+            softNmsSigma = 0.0;
+        }
+        const numBoxes = boxes.shape[0];
+        maxOutputSize = Math.min(maxOutputSize, numBoxes);
+        assert(0 <= iouThreshold && iouThreshold <= 1, () => `iouThreshold must be in [0, 1], but was '${iouThreshold}'`);
+        assert(boxes.rank === 2, () => `boxes must be a 2D tensor, but was of rank '${boxes.rank}'`);
+        assert(boxes.shape[1] === 4, () => `boxes must have 4 columns, but 2nd dimension was ${boxes.shape[1]}`);
+        assert(scores.rank === 1, () => 'scores must be a 1D tensor');
+        assert(scores.shape[0] === numBoxes, () => `scores has incompatible shape with boxes. Expected ${numBoxes}, ` +
+            `but was ${scores.shape[0]}`);
+        assert(0 <= softNmsSigma && softNmsSigma <= 1, () => `softNmsSigma must be in [0, 1], but was '${softNmsSigma}'`);
+        return { maxOutputSize, iouThreshold, scoreThreshold, softNmsSigma };
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Performs non maximum suppression of bounding boxes based on
+     * iou (intersection over union).
+     *
+     * @param boxes a 2d tensor of shape `[numBoxes, 4]`. Each entry is
+     *     `[y1, x1, y2, x2]`, where `(y1, x1)` and `(y2, x2)` are the corners of
+     *     the bounding box.
+     * @param scores a 1d tensor providing the box scores of shape `[numBoxes]`.
+     * @param maxOutputSize The maximum number of boxes to be selected.
+     * @param iouThreshold A float representing the threshold for deciding whether
+     *     boxes overlap too much with respect to IOU. Must be between [0, 1].
+     *     Defaults to 0.5 (50% box overlap).
+     * @param scoreThreshold A threshold for deciding when to remove boxes based
+     *     on score. Defaults to -inf, which means any score is accepted.
+     * @return A 1D tensor with the selected box indices.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function nonMaxSuppression_(boxes, scores, maxOutputSize, iouThreshold = 0.5, scoreThreshold = Number.NEGATIVE_INFINITY) {
+        const $boxes = convertToTensor(boxes, 'boxes', 'nonMaxSuppression', 'float32');
+        const $scores = convertToTensor(scores, 'scores', 'nonMaxSuppression', 'float32');
+        const inputs = nonMaxSuppSanityCheck($boxes, $scores, maxOutputSize, iouThreshold, scoreThreshold);
+        maxOutputSize = inputs.maxOutputSize;
+        iouThreshold = inputs.iouThreshold;
+        scoreThreshold = inputs.scoreThreshold;
+        const attrs = { maxOutputSize, iouThreshold, scoreThreshold };
+        return ENGINE.runKernel(NonMaxSuppressionV3, { boxes: $boxes, scores: $scores }, attrs);
+    }
+    const nonMaxSuppression = op({ nonMaxSuppression_ });
 
     /**
      * @license
@@ -28866,6 +42939,3159 @@
         // the TensorFlow python version.
         return (c1.score - c2.score) ||
             ((c1.score === c2.score) && (c2.boxIndex - c1.boxIndex));
+    }
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Performs non maximum suppression of bounding boxes based on
+     * iou (intersection over union).
+     *
+     * This is the async version of `nonMaxSuppression`
+     *
+     * @param boxes a 2d tensor of shape `[numBoxes, 4]`. Each entry is
+     *     `[y1, x1, y2, x2]`, where `(y1, x1)` and `(y2, x2)` are the corners of
+     *     the bounding box.
+     * @param scores a 1d tensor providing the box scores of shape `[numBoxes]`.
+     * @param maxOutputSize The maximum number of boxes to be selected.
+     * @param iouThreshold A float representing the threshold for deciding whether
+     *     boxes overlap too much with respect to IOU. Must be between [0, 1].
+     *     Defaults to 0.5 (50% box overlap).
+     * @param scoreThreshold A threshold for deciding when to remove boxes based
+     *     on score. Defaults to -inf, which means any score is accepted.
+     * @return A 1D tensor with the selected box indices.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    async function nonMaxSuppressionAsync_(boxes, scores, maxOutputSize, iouThreshold = 0.5, scoreThreshold = Number.NEGATIVE_INFINITY) {
+        const $boxes = convertToTensor(boxes, 'boxes', 'nonMaxSuppressionAsync');
+        const $scores = convertToTensor(scores, 'scores', 'nonMaxSuppressionAsync');
+        const inputs = nonMaxSuppSanityCheck($boxes, $scores, maxOutputSize, iouThreshold, scoreThreshold);
+        maxOutputSize = inputs.maxOutputSize;
+        iouThreshold = inputs.iouThreshold;
+        scoreThreshold = inputs.scoreThreshold;
+        const boxesAndScores = await Promise.all([$boxes.data(), $scores.data()]);
+        const boxesVals = boxesAndScores[0];
+        const scoresVals = boxesAndScores[1];
+        // We call a cpu based impl directly with the typedarray data  here rather
+        // than a kernel because all kernels are synchronous (and thus cannot await
+        // .data()).
+        const { selectedIndices } = nonMaxSuppressionV3Impl$2(boxesVals, scoresVals, maxOutputSize, iouThreshold, scoreThreshold);
+        if ($boxes !== boxes) {
+            $boxes.dispose();
+        }
+        if ($scores !== scores) {
+            $scores.dispose();
+        }
+        return tensor1d(selectedIndices, 'int32');
+    }
+    const nonMaxSuppressionAsync = nonMaxSuppressionAsync_;
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Performs non maximum suppression of bounding boxes based on
+     * iou (intersection over union).
+     *
+     * This op also supports a Soft-NMS mode (c.f.
+     * Bodla et al, https://arxiv.org/abs/1704.04503) where boxes reduce the score
+     * of other overlapping boxes, therefore favoring different regions of the image
+     * with high scores. To enable this Soft-NMS mode, set the `softNmsSigma`
+     * parameter to be larger than 0.
+     *
+     * @param boxes a 2d tensor of shape `[numBoxes, 4]`. Each entry is
+     *     `[y1, x1, y2, x2]`, where `(y1, x1)` and `(y2, x2)` are the corners of
+     *     the bounding box.
+     * @param scores a 1d tensor providing the box scores of shape `[numBoxes]`.
+     * @param maxOutputSize The maximum number of boxes to be selected.
+     * @param iouThreshold A float representing the threshold for deciding whether
+     *     boxes overlap too much with respect to IOU. Must be between [0, 1].
+     *     Defaults to 0.5 (50% box overlap).
+     * @param scoreThreshold A threshold for deciding when to remove boxes based
+     *     on score. Defaults to -inf, which means any score is accepted.
+     * @param softNmsSigma A float representing the sigma parameter for Soft NMS.
+     *     When sigma is 0, it falls back to nonMaxSuppression.
+     * @return A map with the following properties:
+     *     - selectedIndices: A 1D tensor with the selected box indices.
+     *     - selectedScores: A 1D tensor with the corresponding scores for each
+     *       selected box.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function nonMaxSuppressionWithScore_(boxes, scores, maxOutputSize, iouThreshold = 0.5, scoreThreshold = Number.NEGATIVE_INFINITY, softNmsSigma = 0.0) {
+        const $boxes = convertToTensor(boxes, 'boxes', 'nonMaxSuppression');
+        const $scores = convertToTensor(scores, 'scores', 'nonMaxSuppression');
+        const params = nonMaxSuppSanityCheck($boxes, $scores, maxOutputSize, iouThreshold, scoreThreshold, softNmsSigma);
+        maxOutputSize = params.maxOutputSize;
+        iouThreshold = params.iouThreshold;
+        scoreThreshold = params.scoreThreshold;
+        softNmsSigma = params.softNmsSigma;
+        const inputs = { boxes: $boxes, scores: $scores };
+        const attrs = { maxOutputSize, iouThreshold, scoreThreshold, softNmsSigma };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const result = ENGINE.runKernel(NonMaxSuppressionV5, inputs, attrs);
+        return { selectedIndices: result[0], selectedScores: result[1] };
+    }
+    const nonMaxSuppressionWithScore = op({ nonMaxSuppressionWithScore_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Asynchronously performs non maximum suppression of bounding boxes based on
+     * iou (intersection over union).
+     *
+     * This op also supports a Soft-NMS mode (c.f.
+     * Bodla et al, https://arxiv.org/abs/1704.04503) where boxes reduce the score
+     * of other overlapping boxes, therefore favoring different regions of the image
+     * with high scores. To enable this Soft-NMS mode, set the `softNmsSigma`
+     * parameter to be larger than 0.
+     *
+     * @param boxes a 2d tensor of shape `[numBoxes, 4]`. Each entry is
+     *     `[y1, x1, y2, x2]`, where `(y1, x1)` and `(y2, x2)` are the corners of
+     *     the bounding box.
+     * @param scores a 1d tensor providing the box scores of shape `[numBoxes]`.
+     * @param maxOutputSize The maximum number of boxes to be selected.
+     * @param iouThreshold A float representing the threshold for deciding whether
+     *     boxes overlap too much with respect to IOU. Must be between [0, 1].
+     *     Defaults to 0.5 (50% box overlap).
+     * @param scoreThreshold A threshold for deciding when to remove boxes based
+     *     on score. Defaults to -inf, which means any score is accepted.
+     * @param softNmsSigma A float representing the sigma parameter for Soft NMS.
+     *     When sigma is 0, it falls back to nonMaxSuppression.
+     * @return A map with the following properties:
+     *     - selectedIndices: A 1D tensor with the selected box indices.
+     *     - selectedScores: A 1D tensor with the corresponding scores for each
+     *       selected box.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    async function nonMaxSuppressionWithScoreAsync_(boxes, scores, maxOutputSize, iouThreshold = 0.5, scoreThreshold = Number.NEGATIVE_INFINITY, softNmsSigma = 0.0) {
+        const $boxes = convertToTensor(boxes, 'boxes', 'nonMaxSuppressionAsync');
+        const $scores = convertToTensor(scores, 'scores', 'nonMaxSuppressionAsync');
+        const params = nonMaxSuppSanityCheck($boxes, $scores, maxOutputSize, iouThreshold, scoreThreshold, softNmsSigma);
+        maxOutputSize = params.maxOutputSize;
+        iouThreshold = params.iouThreshold;
+        scoreThreshold = params.scoreThreshold;
+        softNmsSigma = params.softNmsSigma;
+        const boxesAndScores = await Promise.all([$boxes.data(), $scores.data()]);
+        const boxesVals = boxesAndScores[0];
+        const scoresVals = boxesAndScores[1];
+        // We call a cpu based impl directly with the typedarray data  here rather
+        // than a kernel because all kernels are synchronous (and thus cannot await
+        // .data()).
+        const { selectedIndices, selectedScores } = nonMaxSuppressionV5Impl$2(boxesVals, scoresVals, maxOutputSize, iouThreshold, scoreThreshold, softNmsSigma);
+        if ($boxes !== boxes) {
+            $boxes.dispose();
+        }
+        if ($scores !== scores) {
+            $scores.dispose();
+        }
+        return {
+            selectedIndices: tensor1d(selectedIndices, 'int32'),
+            selectedScores: tensor1d(selectedScores)
+        };
+    }
+    const nonMaxSuppressionWithScoreAsync = nonMaxSuppressionWithScoreAsync_;
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Asynchronously performs non maximum suppression of bounding boxes based on
+     * iou (intersection over union), with an option to pad results.
+     *
+     * @param boxes a 2d tensor of shape `[numBoxes, 4]`. Each entry is
+     *     `[y1, x1, y2, x2]`, where `(y1, x1)` and `(y2, x2)` are the corners of
+     *     the bounding box.
+     * @param scores a 1d tensor providing the box scores of shape `[numBoxes]`.
+     * @param maxOutputSize The maximum number of boxes to be selected.
+     * @param iouThreshold A float representing the threshold for deciding whether
+     *     boxes overlap too much with respect to IOU. Must be between [0, 1].
+     *     Defaults to 0.5 (50% box overlap).
+     * @param scoreThreshold A threshold for deciding when to remove boxes based
+     *     on score. Defaults to -inf, which means any score is accepted.
+     * @param padToMaxOutputSize Defalts to false. If true, size of output
+     *     `selectedIndices` is padded to maxOutputSize.
+     * @return A map with the following properties:
+     *     - selectedIndices: A 1D tensor with the selected box indices.
+     *     - validOutputs: A scalar denoting how many elements in `selectedIndices`
+     *       are valid. Valid elements occur first, then padding.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function nonMaxSuppressionPadded_(boxes, scores, maxOutputSize, iouThreshold = 0.5, scoreThreshold = Number.NEGATIVE_INFINITY, padToMaxOutputSize = false) {
+        const $boxes = convertToTensor(boxes, 'boxes', 'nonMaxSuppression');
+        const $scores = convertToTensor(scores, 'scores', 'nonMaxSuppression');
+        const params = nonMaxSuppSanityCheck($boxes, $scores, maxOutputSize, iouThreshold, scoreThreshold, null /* softNmsSigma */);
+        const $maxOutputSize = params.maxOutputSize;
+        const $iouThreshold = params.iouThreshold;
+        const $scoreThreshold = params.scoreThreshold;
+        const inputs = { boxes: $boxes, scores: $scores };
+        const attrs = {
+            maxOutputSize: $maxOutputSize,
+            iouThreshold: $iouThreshold,
+            scoreThreshold: $scoreThreshold,
+            padToMaxOutputSize
+        };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const result = ENGINE.runKernel(NonMaxSuppressionV4, inputs, attrs);
+        return { selectedIndices: result[0], validOutputs: result[1] };
+    }
+    const nonMaxSuppressionPadded = op({ nonMaxSuppressionPadded_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Asynchronously performs non maximum suppression of bounding boxes based on
+     * iou (intersection over union), with an option to pad results.
+     *
+     * @param boxes a 2d tensor of shape `[numBoxes, 4]`. Each entry is
+     *     `[y1, x1, y2, x2]`, where `(y1, x1)` and `(y2, x2)` are the corners of
+     *     the bounding box.
+     * @param scores a 1d tensor providing the box scores of shape `[numBoxes]`.
+     * @param maxOutputSize The maximum number of boxes to be selected.
+     * @param iouThreshold A float representing the threshold for deciding whether
+     *     boxes overlap too much with respect to IOU. Must be between [0, 1].
+     *     Defaults to 0.5 (50% box overlap).
+     * @param scoreThreshold A threshold for deciding when to remove boxes based
+     *     on score. Defaults to -inf, which means any score is accepted.
+     * @param padToMaxOutputSize Defalts to false. If true, size of output
+     *     `selectedIndices` is padded to maxOutputSize.
+     * @return A map with the following properties:
+     *     - selectedIndices: A 1D tensor with the selected box indices.
+     *     - validOutputs: A scalar denoting how many elements in `selectedIndices`
+     *       are valid. Valid elements occur first, then padding.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    async function nonMaxSuppressionPaddedAsync_(boxes, scores, maxOutputSize, iouThreshold = 0.5, scoreThreshold = Number.NEGATIVE_INFINITY, padToMaxOutputSize = false) {
+        const $boxes = convertToTensor(boxes, 'boxes', 'nonMaxSuppressionAsync');
+        const $scores = convertToTensor(scores, 'scores', 'nonMaxSuppressionAsync');
+        const params = nonMaxSuppSanityCheck($boxes, $scores, maxOutputSize, iouThreshold, scoreThreshold, null /* softNmsSigma */);
+        const $maxOutputSize = params.maxOutputSize;
+        const $iouThreshold = params.iouThreshold;
+        const $scoreThreshold = params.scoreThreshold;
+        const [boxesVals, scoresVals] = await Promise.all([$boxes.data(), $scores.data()]);
+        // We call a cpu based impl directly with the typedarray data here rather
+        // than a kernel because all kernels are synchronous (and thus cannot await
+        // .data()).
+        const { selectedIndices, validOutputs } = nonMaxSuppressionV4Impl$2(boxesVals, scoresVals, $maxOutputSize, $iouThreshold, $scoreThreshold, padToMaxOutputSize);
+        if ($boxes !== boxes) {
+            $boxes.dispose();
+        }
+        if ($scores !== scores) {
+            $scores.dispose();
+        }
+        return {
+            selectedIndices: tensor1d(selectedIndices, 'int32'),
+            validOutputs: scalar(validOutputs, 'int32')
+        };
+    }
+    const nonMaxSuppressionPaddedAsync = nonMaxSuppressionPaddedAsync_;
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Bilinear resize a single 3D image or a batch of 3D images to a new shape.
+     *
+     * @param images The images, of rank 4 or rank 3, of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is assumed.
+     * @param size The new shape `[newHeight, newWidth]` to resize the
+     *     images to. Each channel is resized individually.
+     * @param alignCorners Defaults to `false`. If true, rescale
+     *     input by `(new_height - 1) / (height - 1)`, which exactly aligns the 4
+     *     corners of images and resized images. If false, rescale by
+     *     `new_height / height`. Treat similarly the width dimension.
+     * @param halfPixelCenters Defaults to `false`. Whether to assume pixel centers
+     *     are at 0.5, which would make the floating point coordinates of the top
+     *     left pixel 0.5, 0.5.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function resizeBilinear_(images, size, alignCorners = false, halfPixelCenters = false) {
+        const $images = convertToTensor(images, 'images', 'resizeBilinear');
+        assert($images.rank === 3 || $images.rank === 4, () => `Error in resizeBilinear: x must be rank 3 or 4, but got ` +
+            `rank ${$images.rank}.`);
+        assert(size.length === 2, () => `Error in resizeBilinear: new shape must 2D, but got shape ` +
+            `${size}.`);
+        assert(halfPixelCenters === false || alignCorners === false, () => `Error in resizeBilinear: If halfPixelCenters is true, ` +
+            `alignCorners must be false.`);
+        let batchImages = $images;
+        let reshapedTo4D = false;
+        if ($images.rank === 3) {
+            reshapedTo4D = true;
+            batchImages = reshape$2($images, [1, $images.shape[0], $images.shape[1], $images.shape[2]]);
+        }
+        const inputs = { images: batchImages };
+        const attrs = { alignCorners, halfPixelCenters, size };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(ResizeBilinear, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const resizeBilinear$2 = op({ resizeBilinear_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * NearestNeighbor resize a batch of 3D images to a new shape.
+     *
+     * @param images The images, of rank 4 or rank 3, of shape
+     *     `[batch, height, width, inChannels]`. If rank 3, batch of 1 is assumed.
+     * @param size The new shape `[newHeight, newWidth]` to resize the
+     *     images to. Each channel is resized individually.
+     * @param alignCorners Defaults to False. If true, rescale
+     *     input by `(new_height - 1) / (height - 1)`, which exactly aligns the 4
+     *     corners of images and resized images. If false, rescale by
+     *     `new_height / height`. Treat similarly the width dimension.
+     * @param halfPixelCenters Defaults to `false`. Whether to assumes pixels are of
+     *      half the actual dimensions, and yields more accurate resizes. This flag
+     *      would also make the floating point coordinates of the top left pixel
+     *      0.5, 0.5.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function resizeNearestNeighbor_(images, size, alignCorners = false, halfPixelCenters = false) {
+        const $images = convertToTensor(images, 'images', 'resizeNearestNeighbor');
+        assert($images.rank === 3 || $images.rank === 4, () => `Error in resizeNearestNeighbor: x must be rank 3 or 4, but got ` +
+            `rank ${$images.rank}.`);
+        assert(size.length === 2, () => `Error in resizeNearestNeighbor: new shape must 2D, but got shape ` +
+            `${size}.`);
+        assert($images.dtype === 'float32' || $images.dtype === 'int32', () => '`images` must have `int32` or `float32` as dtype');
+        assert(halfPixelCenters === false || alignCorners === false, () => `Error in resizeNearestNeighbor: If halfPixelCenters is true, ` +
+            `alignCorners must be false.`);
+        let batchImages = $images;
+        let reshapedTo4D = false;
+        if ($images.rank === 3) {
+            reshapedTo4D = true;
+            batchImages = reshape$2($images, [1, $images.shape[0], $images.shape[1], $images.shape[2]]);
+        }
+        const inputs = { images: batchImages };
+        const attrs = { alignCorners, halfPixelCenters, size };
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        const res = ENGINE.runKernel(ResizeNearestNeighbor, inputs, attrs);
+        if (reshapedTo4D) {
+            return reshape$2(res, [res.shape[1], res.shape[2], res.shape[3]]);
+        }
+        return res;
+    }
+    const resizeNearestNeighbor$2 = op({ resizeNearestNeighbor_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * https://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Performs image binarization with corresponding threshold
+     * (depends on the method)value, which creates a binary image from a grayscale.
+     * @param image 3d tensor of shape [imageHeight,imageWidth, depth],
+     * where imageHeight and imageWidth must be positive.The image color
+     * range should be [0, 255].
+     * @param method Optional string from `'binary' | 'otsu'`
+     * which specifies the method for thresholding. Defaults to 'binary'.
+     * @param inverted Optional boolean whichspecifies
+     * if colours should be inverted. Defaults to false.
+     * @param threshValue Optional number which defines threshold value from 0 to 1.
+     * Defaults to 0.5.
+     * @return A 3d tensor of shape [imageHeight,imageWidth, depth], which
+     * contains binarized image.
+     */
+    function threshold_(image, method = 'binary', inverted = false, threshValue = 0.5) {
+        const $image = convertToTensor(image, 'image', 'threshold');
+        /* 0.2989, 0.5870, 0.1140 are represent luma coefficients in CCIR601.
+        Reference for converting between RGB and grayscale: https://en.wikipedia.org/wiki/Luma_%28video%29  */
+        const RED_INTENCITY_COEF = 0.2989;
+        const GREEN_INTENCITY_COEF = 0.5870;
+        const BLUE_INTENCITY_COEF = 0.1140;
+        const totalPixelsInImage = $image.shape[0] * $image.shape[1];
+        let $threshold = mul(tensor1d([threshValue]), 255);
+        let r, g, b, grayscale;
+        assert($image.rank === 3, () => 'Error in threshold: image must be rank 3,' +
+            `but got rank ${$image.rank}.`);
+        assert($image.shape[2] === 3 || $image.shape[2] === 1, () => 'Error in threshold: ' +
+            'image color channel must be equal to 3 or 1' +
+            `but got ${$image.shape[2]}.`);
+        assert($image.dtype === 'int32' || $image.dtype === 'float32', () => 'Error in dtype: image dtype must be int32 or float32,' +
+            `but got dtype ${$image.dtype}.`);
+        assert(method === 'otsu' || method === 'binary', () => `Method must be binary or otsu, but was ${method}`);
+        if ($image.shape[2] === 3) {
+            [r, g, b] = split$1($image, [1, 1, 1], -1);
+            const $r = mul(r, RED_INTENCITY_COEF);
+            const $g = mul(g, GREEN_INTENCITY_COEF);
+            const $b = mul(b, BLUE_INTENCITY_COEF);
+            grayscale = add$1(add$1($r, $g), $b);
+        }
+        else {
+            grayscale = image;
+        }
+        if (method === 'otsu') {
+            const $histogram = bincount$2(cast$2(round$2(grayscale), 'int32'), tensor([]), 256);
+            $threshold = otsu($histogram, totalPixelsInImage);
+        }
+        const invCondition = inverted ?
+            lessEqual$2(grayscale, $threshold) : greater$2(grayscale, $threshold);
+        const result = cast$2(mul(invCondition, 255), 'int32');
+        return result;
+    }
+    function otsu(histogram, total) {
+        let bestThresh = tensor1d([-1]);
+        let bestInBetVar = tensor1d([0]);
+        let cInBetVar = tensor1d([0]);
+        let classFirst, classSecond, meanFirst, meanSec, weightForeground, weightBack;
+        for (let index = 0; index < histogram.size - 1; index++) {
+            classFirst = slice$2(histogram, 0, index + 1);
+            classSecond = slice$2(histogram, index + 1);
+            weightForeground = div$1(sum$2(classFirst), total);
+            weightBack = div$1(sum$2(classSecond), total);
+            const meanFirstDivA = sum$2(mul(classFirst, range$2(0, classFirst.size)));
+            meanFirst = div$1(meanFirstDivA, sum$2(classFirst));
+            const meanSecFill = fill$2(classSecond.shape, classFirst.size);
+            const meanSecAdd = add$1(range$2(0, classSecond.size), meanSecFill);
+            const meanSecMul = mul(classSecond, (meanSecAdd));
+            meanSec = div$1(sum$2(meanSecMul), sum$2(classSecond));
+            const cInBetVarSubA = sub$2(meanFirst, meanSec);
+            const cInBetVarSubB = sub$2(meanFirst, meanSec);
+            const cInBetVarMul = mul(weightForeground, weightBack);
+            cInBetVar = mul(mul(cInBetVarMul, cInBetVarSubA), cInBetVarSubB);
+            const condition = greater$2(cInBetVar, bestInBetVar);
+            bestInBetVar = where(condition, cInBetVar, bestInBetVar);
+            bestThresh = where(condition, tensor1d([index]), bestThresh);
+        }
+        return bestThresh;
+    }
+    const threshold$1 = op({ threshold_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Applies the given transform(s) to the image(s).
+     *
+     * @param image 4d tensor of shape `[batch, imageHeight, imageWidth, depth]`.
+     * @param transforms Projective transform matrix/matrices. A tensor1d of length
+     *     8 or tensor of size N x 8. If one row of transforms is [a0, a1, a2, b0
+     *     b1, b2, c0, c1], then it maps the output point (x, y) to a transformed
+     *     input point (x', y') = ((a0 x + a1 y + a2) / k, (b0 x + b1 y + b2) / k),
+     *     where k = c0 x + c1 y + 1. The transforms are inverted compared to the
+     *     transform mapping input points to output points.
+     * @param interpolation Interpolation mode.
+     *     Supported values: 'nearest', 'bilinear'. Default to 'nearest'.
+     * @param fillMode Points outside the boundaries of the input are filled
+     *     according to the given mode, one of 'constant', 'reflect', 'wrap',
+     *     'nearest'. Default to 'constant'.
+     *     'reflect': (d c b a | a b c d | d c b a ) The input is extended by
+     *     reflecting about the edge of the last pixel.
+     *     'constant': (k k k k | a b c d | k k k k) The input is extended by
+     *     filling all values beyond the edge with the same constant value k.
+     *     'wrap': (a b c d | a b c d | a b c d) The input is extended by
+     *     wrapping around to the opposite edge.
+     *     'nearest': (a a a a | a b c d | d d d d) The input is extended by
+     *     the nearest pixel.
+     * @param fillValue A float represents the value to be filled outside the
+     *     boundaries when fillMode is 'constant'.
+     * @param Output dimension after the transform, [height, width]. If undefined,
+     *     output is the same size as input image.
+     *
+     * @doc {heading: 'Operations', subheading: 'Images', namespace: 'image'}
+     */
+    function transform_(image, transforms, interpolation = 'nearest', fillMode = 'constant', fillValue = 0, outputShape) {
+        const $image = convertToTensor(image, 'image', 'transform', 'float32');
+        const $transforms = convertToTensor(transforms, 'transforms', 'transform', 'float32');
+        assert($image.rank === 4, () => 'Error in transform: image must be rank 4,' +
+            `but got rank ${$image.rank}.`);
+        assert($transforms.rank === 2 &&
+            ($transforms.shape[0] === $image.shape[0] ||
+                $transforms.shape[0] === 1) &&
+            $transforms.shape[1] === 8, () => `Error in transform: Input transform should be batch x 8 or 1 x 8`);
+        assert(outputShape == null || outputShape.length === 2, () => 'Error in transform: outputShape must be [height, width] or null, ' +
+            `but got ${outputShape}.`);
+        const inputs = { image: $image, transforms: $transforms };
+        const attrs = { interpolation, fillMode, fillValue, outputShape };
+        return ENGINE.runKernel(Transform, inputs, attrs);
+    }
+    const transform$2 = op({ transform_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Copy a tensor setting everything outside a central band in each innermost
+     * matrix to zero.
+     *
+     * The band part is computed as follows: Assume input has `k` dimensions
+     * `[I, J, K, ..., M, N]`, then the output is a tensor with the same shape where
+     * `band[i, j, k, ..., m, n] = in_band(m, n) * input[i, j, k, ..., m, n]`.
+     * The indicator function
+     * `in_band(m, n) = (num_lower < 0 || (m-n) <= num_lower))`
+     * `&& (num_upper < 0 || (n-m) <= num_upper)`
+     *
+     * ```js
+     * const x = tf.tensor2d([[ 0,  1,  2, 3],
+     *                        [-1,  0,  1, 2],
+     *                        [-2, -1,  0, 1],
+     *                        [-3, -2, -1, 0]]);
+     * let y = tf.linalg.bandPart(x, 1, -1);
+     * y.print(); // [[ 0,  1,  2, 3],
+     *            //  [-1,  0,  1, 2],
+     *            //  [ 0, -1,  0, 1],
+     *            //  [ 0, 0 , -1, 0]]
+     * let z = tf.linalg.bandPart(x, 2, 1);
+     * z.print(); // [[ 0,  1,  0, 0],
+     *            //  [-1,  0,  1, 0],
+     *            //  [-2, -1,  0, 1],
+     *            //  [ 0, -2, -1, 0]]
+     * ```
+     *
+     * @param x Rank `k` tensor
+     * @param numLower Number of subdiagonals to keep.
+     *   If negative, keep entire lower triangle.
+     * @param numUpper Number of subdiagonals to keep.
+     *   If negative, keep entire upper triangle.
+     * @returns Rank `k` tensor of the same shape as input.
+     *   The extracted banded tensor.
+     *
+     * @doc {heading:'Operations', subheading:'Linear Algebra', namespace:'linalg'}
+     */
+    function bandPart_(a, numLower, numUpper) {
+        assert(numLower % 1 === 0, () => `bandPart(): numLower must be an integer, got ${numLower}.`);
+        assert(numUpper % 1 === 0, () => `bandPart(): numUpper must be an integer, got ${numUpper}.`);
+        const $a = convertToTensor(a, 'a', 'bandPart');
+        assert($a.rank >= 2, () => `bandPart(): Rank must be at least 2, got ${$a.rank}.`);
+        const shape = $a.shape;
+        const [M, N] = $a.shape.slice(-2);
+        if (!(numLower <= M)) {
+            throw new Error(`bandPart(): numLower (${numLower})` +
+                ` must not be greater than the number of rows (${M}).`);
+        }
+        if (!(numUpper <= N)) {
+            throw new Error(`bandPart(): numUpper (${numUpper})` +
+                ` must not be greater than the number of columns (${N}).`);
+        }
+        if (numLower < 0) {
+            numLower = M;
+        }
+        if (numUpper < 0) {
+            numUpper = N;
+        }
+        const i = reshape$2(range$2(0, M, 1, 'int32'), [-1, 1]);
+        const j = range$2(0, N, 1, 'int32');
+        const ij = sub$2(i, j);
+        const inBand = logicalAnd$2(lessEqual$2(ij, scalar(+numLower, 'int32')), greaterEqual$2(ij, scalar(-numUpper, 'int32')));
+        const zero = zeros$1([M, N], $a.dtype);
+        return reshape$2(stack(unstack(reshape$2($a, [-1, M, N]))
+            .map(mat => where(inBand, mat, zero))), shape);
+    }
+    const bandPart = op({ bandPart_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Gram-Schmidt orthogonalization.
+     *
+     * ```js
+     * const x = tf.tensor2d([[1, 2], [3, 4]]);
+     * let y = tf.linalg.gramSchmidt(x);
+     * y.print();
+     * console.log('Othogonalized:');
+     * y.dot(y.transpose()).print();  // should be nearly the identity matrix.
+     * console.log('First row direction maintained:');
+     * const data = await y.array();
+     * console.log(data[0][1] / data[0][0]);  // should be nearly 2.
+     * ```
+     *
+     * @param xs The vectors to be orthogonalized, in one of the two following
+     *   formats:
+     *   - An Array of `tf.Tensor1D`.
+     *   - A `tf.Tensor2D`, i.e., a matrix, in which case the vectors are the rows
+     *     of `xs`.
+     *   In each case, all the vectors must have the same length and the length
+     *   must be greater than or equal to the number of vectors.
+     * @returns The orthogonalized and normalized vectors or matrix.
+     *   Orthogonalization means that the vectors or the rows of the matrix
+     *   are orthogonal (zero inner products). Normalization means that each
+     *   vector or each row of the matrix has an L2 norm that equals `1`.
+     *
+     * @doc {heading:'Operations', subheading:'Linear Algebra', namespace:'linalg'}
+     */
+    function gramSchmidt_(xs) {
+        let inputIsTensor2D;
+        if (Array.isArray(xs)) {
+            inputIsTensor2D = false;
+            assert(xs != null && xs.length > 0, () => 'Gram-Schmidt process: input must not be null, undefined, or ' +
+                'empty');
+            const dim = xs[0].shape[0];
+            for (let i = 1; i < xs.length; ++i) {
+                assert(xs[i].shape[0] === dim, () => 'Gram-Schmidt: Non-unique lengths found in the input vectors: ' +
+                    `(${xs[i].shape[0]} vs. ${dim})`);
+            }
+        }
+        else {
+            inputIsTensor2D = true;
+            xs = split$1(xs, xs.shape[0], 0).map(x => squeeze(x, [0]));
+        }
+        assert(xs.length <= xs[0].shape[0], () => `Gram-Schmidt: Number of vectors (${xs.length}) exceeds ` +
+            `number of dimensions (${xs[0].shape[0]}).`);
+        const ys = [];
+        const xs1d = xs;
+        for (let i = 0; i < xs.length; ++i) {
+            ys.push(ENGINE.tidy(() => {
+                let x = xs1d[i];
+                if (i > 0) {
+                    for (let j = 0; j < i; ++j) {
+                        const proj = mul(sum$2(mul(ys[j], x)), ys[j]);
+                        x = sub$2(x, proj);
+                    }
+                }
+                return div$1(x, norm(x, 'euclidean'));
+            }));
+        }
+        if (inputIsTensor2D) {
+            return stack(ys, 0);
+        }
+        else {
+            return ys;
+        }
+    }
+    const gramSchmidt = op({ gramSchmidt_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Compute QR decomposition of m-by-n matrix using Householder transformation.
+     *
+     * Implementation based on
+     *   [http://www.cs.cornell.edu/~bindel/class/cs6210-f09/lec18.pdf]
+     * (http://www.cs.cornell.edu/~bindel/class/cs6210-f09/lec18.pdf)
+     *
+     * ```js
+     * const a = tf.tensor2d([[1, 2], [3, 4]]);
+     * let [q, r] = tf.linalg.qr(a);
+     * console.log('Q');
+     * q.print();
+     * console.log('R');
+     * r.print();
+     * console.log('Orthogonalized');
+     * q.dot(q.transpose()).print()  // should be nearly the identity matrix.
+     * console.log('Reconstructed');
+     * q.dot(r).print(); // should be nearly [[1, 2], [3, 4]];
+     * ```
+     *
+     * @param x The `tf.Tensor` to be QR-decomposed. Must have rank >= 2. Suppose
+     *   it has the shape `[..., M, N]`.
+     * @param fullMatrices An optional boolean parameter. Defaults to `false`.
+     *   If `true`, compute full-sized `Q`. If `false` (the default),
+     *   compute only the leading N columns of `Q` and `R`.
+     * @returns An `Array` of two `tf.Tensor`s: `[Q, R]`. `Q` is a unitary matrix,
+     *   i.e., its columns all have unit norm and are mutually orthogonal.
+     *   If `M >= N`,
+     *     If `fullMatrices` is `false` (default),
+     *       - `Q` has a shape of `[..., M, N]`,
+     *       - `R` has a shape of `[..., N, N]`.
+     *     If `fullMatrices` is `true` (default),
+     *       - `Q` has a shape of `[..., M, M]`,
+     *       - `R` has a shape of `[..., M, N]`.
+     *   If `M < N`,
+     *     - `Q` has a shape of `[..., M, M]`,
+     *     - `R` has a shape of `[..., M, N]`.
+     * @throws If the rank of `x` is less than 2.
+     *
+     * @doc {heading:'Operations',
+     *       subheading:'Linear Algebra',
+     *       namespace:'linalg'}
+     */
+    function qr_(x, fullMatrices = false) {
+        assert(x.rank >= 2, () => `qr() requires input tensor to have a rank >= 2, but got rank ${x.rank}`);
+        if (x.rank === 2) {
+            return qr2d(x, fullMatrices);
+        }
+        else {
+            // Rank > 2.
+            // TODO(cais): Below we split the input into individual 2D tensors,
+            //   perform QR decomposition on them and then stack the results back
+            //   together. We should explore whether this can be parallelized.
+            const outerDimsProd = x.shape.slice(0, x.shape.length - 2)
+                .reduce((value, prev) => value * prev);
+            const x2ds = unstack(reshape$2(x, [
+                outerDimsProd, x.shape[x.shape.length - 2],
+                x.shape[x.shape.length - 1]
+            ]), 0);
+            const q2ds = [];
+            const r2ds = [];
+            x2ds.forEach(x2d => {
+                const [q2d, r2d] = qr2d(x2d, fullMatrices);
+                q2ds.push(q2d);
+                r2ds.push(r2d);
+            });
+            const q = reshape$2(stack(q2ds, 0), x.shape);
+            const r = reshape$2(stack(r2ds, 0), x.shape);
+            return [q, r];
+        }
+    }
+    function qr2d(x, fullMatrices = false) {
+        return ENGINE.tidy(() => {
+            assert(x.shape.length === 2, () => `qr2d() requires a 2D Tensor, but got a ${x.shape.length}D Tensor.`);
+            const m = x.shape[0];
+            const n = x.shape[1];
+            let q = eye(m); // Orthogonal transform so far.
+            let r = clone(x); // Transformed matrix so far.
+            const one2D = tensor2d([[1]], [1, 1]);
+            let w = clone(one2D);
+            const iters = m >= n ? n : m;
+            for (let j = 0; j < iters; ++j) {
+                // This tidy within the for-loop ensures we clean up temporary
+                // tensors as soon as they are no longer needed.
+                const rTemp = r;
+                const wTemp = w;
+                const qTemp = q;
+                [w, r, q] = ENGINE.tidy(() => {
+                    // Find H = I - tau * w * w', to put zeros below R(j, j).
+                    const rjEnd1 = slice$2(r, [j, j], [m - j, 1]);
+                    const normX = norm(rjEnd1);
+                    const rjj = slice$2(r, [j, j], [1, 1]);
+                    // The sign() function returns 0 on 0, which causes division by zero.
+                    const s = where(greater$2(rjj, 0), tensor2d([[-1]]), tensor2d([[1]]));
+                    const u1 = sub$2(rjj, mul(s, normX));
+                    const wPre = div$1(rjEnd1, u1);
+                    if (wPre.shape[0] === 1) {
+                        w = clone(one2D);
+                    }
+                    else {
+                        w = concat$2([
+                            one2D,
+                            slice$2(wPre, [1, 0], [wPre.shape[0] - 1, wPre.shape[1]])
+                        ], 0);
+                    }
+                    const tau = neg$2(div$1(matMul$1(s, u1), normX));
+                    // -- R := HR, Q := QH.
+                    const rjEndAll = slice$2(r, [j, 0], [m - j, n]);
+                    const tauTimesW = mul(tau, w);
+                    const wT = transpose$2(w);
+                    if (j === 0) {
+                        r = sub$2(rjEndAll, matMul$1(tauTimesW, matMul$1(wT, rjEndAll)));
+                    }
+                    else {
+                        const rTimesTau = sub$2(rjEndAll, matMul$1(tauTimesW, matMul$1(wT, rjEndAll)));
+                        r = concat$2([slice$2(r, [0, 0], [j, n]), rTimesTau], 0);
+                    }
+                    const tawTimesWT = transpose$2(tauTimesW);
+                    const qAllJEnd = slice$2(q, [0, j], [m, q.shape[1] - j]);
+                    if (j === 0) {
+                        q = sub$2(qAllJEnd, matMul$1(matMul$1(qAllJEnd, w), tawTimesWT));
+                    }
+                    else {
+                        const qTimesTau = sub$2(qAllJEnd, matMul$1(matMul$1(qAllJEnd, w), tawTimesWT));
+                        q = concat$2([slice$2(q, [0, 0], [m, j]), qTimesTau], 1);
+                    }
+                    return [w, r, q];
+                });
+                dispose([rTemp, wTemp, qTemp]);
+            }
+            if (!fullMatrices && m > n) {
+                q = slice$2(q, [0, 0], [m, n]);
+                r = slice$2(r, [0, 0], [n, n]);
+            }
+            return [q, r];
+        });
+    }
+    const qr = op({ qr_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    var Reduction;
+    (function (Reduction) {
+        Reduction[Reduction["NONE"] = 0] = "NONE";
+        Reduction[Reduction["MEAN"] = 1] = "MEAN";
+        Reduction[Reduction["SUM"] = 2] = "SUM";
+        Reduction[Reduction["SUM_BY_NONZERO_WEIGHTS"] = 3] = "SUM_BY_NONZERO_WEIGHTS";
+    })(Reduction || (Reduction = {}));
+
+    /**
+     * Computes the weighted loss between two tensors.
+     *
+     * @param losses Tensor of shape `[batch_size, d1, ... dN]`.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `losses`, and must be broadcastable to `losses` (i.e., all
+     *    dimensions must be either `1`, or the same as the corresponding
+     *    `losses` dimension).
+     *
+     * @doc {heading: 'Training', subheading: 'Losses', namespace: 'losses'}
+     */
+    function computeWeightedLoss_(losses, weights, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        const $losses = convertToTensor(losses, 'losses', 'computeWeightedLoss');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'computeWeightedLoss');
+        }
+        const weightedLoss = ($weights == null) ? $losses : mul($losses, $weights);
+        if (reduction === Reduction.NONE) {
+            return weightedLoss;
+        }
+        if (reduction === Reduction.SUM) {
+            return sum$2(weightedLoss);
+        }
+        if (reduction === Reduction.MEAN) {
+            if ($weights == null) {
+                return mean$1(weightedLoss);
+            }
+            else {
+                const broadcastFactor = $losses.size / $weights.size;
+                const result = div$1(sum$2(weightedLoss), sum$2($weights));
+                return broadcastFactor > 1 ? div$1(result, scalar(broadcastFactor)) :
+                    result;
+            }
+        }
+        if (reduction === Reduction.SUM_BY_NONZERO_WEIGHTS) {
+            if ($weights == null) {
+                return div$1(sum$2(weightedLoss), scalar($losses.size));
+            }
+            else {
+                const broadcastedWeights = mul($weights, ones($losses.shape));
+                const numNonZeros = cast$2(sum$2(notEqual$2(broadcastedWeights, scalar(0))), 'float32');
+                return div$1(sum$2(weightedLoss), numNonZeros);
+            }
+        }
+        throw Error(`Unknown reduction: ${reduction}`);
+    }
+    const computeWeightedLoss = op({ computeWeightedLoss_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the absolute difference loss between two tensors.
+     *
+     * @param labels The ground truth output tensor, same dimensions as
+     *    'predictions'.
+     * @param predictions The predicted outputs.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `labels`, and must be broadcastable to `labels` (i.e., all dimensions
+     *    must be either `1`, or the same as the corresponding `losses`
+     *    dimension).
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`
+     *
+     * @doc {heading: 'Training', subheading: 'Losses', namespace: 'losses'}
+     */
+    function absoluteDifference_(labels, predictions, weights, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        const $labels = convertToTensor(labels, 'labels', 'absoluteDifference');
+        const $predictions = convertToTensor(predictions, 'predictions', 'absoluteDifference');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'absoluteDifference');
+        }
+        assertShapesMatch($labels.shape, $predictions.shape, 'Error in absoluteDifference: ');
+        const losses = abs$2(sub$2($labels, $predictions));
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const absoluteDifference = op({ absoluteDifference_ });
+
+    /**
+     * Computes the cosine distance loss between two tensors.
+     *
+     * @param labels The ground truth output tensor, same dimensions as
+     *    'predictions'.
+     * @param predictions The predicted outputs.
+     * @param axis The dimension along which the cosine distance is computed.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `labels`, and must be broadcastable to `labels` (i.e., all dimensions
+     *    must be either `1`, or the same as the corresponding `losses`
+     *    dimension).
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`
+     *
+     * @doc {heading: 'Training', subheading: 'Losses', namespace: 'losses'}
+     */
+    function cosineDistance_(labels, predictions, axis, weights, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        const $labels = convertToTensor(labels, 'labels', 'cosineDistance');
+        const $predictions = convertToTensor(predictions, 'predictions', 'cosineDistance');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'cosineDistance');
+        }
+        assertShapesMatch($labels.shape, $predictions.shape, 'Error in cosineDistance: ');
+        const one = scalar(1);
+        const losses = sub$2(one, sum$2(mul($labels, $predictions), axis, true));
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const cosineDistance = op({ cosineDistance_ });
+
+    /**
+     * Computes the Hinge loss between two tensors.
+     *
+     * @param labels The ground truth output tensor, same dimensions as
+     *    'predictions'.
+     * @param predictions The predicted outputs.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `labels`, and must be broadcastable to `labels` (i.e., all dimensions
+     *    must be either `1`, or the same as the corresponding `losses`
+     *    dimension).
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`
+     *
+     * @doc {heading: 'Training', subheading: 'Losses', namespace: 'losses'}
+     */
+    function hingeLoss_(labels, predictions, weights, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        let $labels = convertToTensor(labels, 'labels', 'hingeLoss');
+        const $predictions = convertToTensor(predictions, 'predictions', 'hingeLoss');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'hingeLoss');
+        }
+        assertShapesMatch($labels.shape, $predictions.shape, 'Error in hingeLoss: ');
+        const one = scalar(1);
+        // Convert binary labels to (-1, 1)
+        $labels = sub$2(mul(scalar(2), $labels), one);
+        const losses = relu$2(sub$2(one, mul($labels, $predictions)));
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const hingeLoss = op({ hingeLoss_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the huber loss between two tensors.
+     *
+     * @param labels The ground truth output tensor, same dimensions as
+     *    'predictions'.
+     * @param predictions The predicted outputs.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `labels`, and must be broadcastable to `labels` (i.e., all dimensions
+     *    must be either `1`, or the same as the corresponding `losses`
+     *    dimension).
+     * @param delta Point where huber loss changes from quadratic to linear.
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`.
+     *
+     * @doc {heading: 'Training', subheading: 'Losses', namespace: 'losses'}
+     */
+    function huberLoss_(labels, predictions, weights, delta = 1.0, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        const $labels = convertToTensor(labels, 'labels', 'huberLoss');
+        const $predictions = convertToTensor(predictions, 'predictions', 'huberLoss');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'huberLoss');
+        }
+        assertShapesMatch($labels.shape, $predictions.shape, 'Error in huberLoss: ');
+        const deltaScalar = scalar(delta);
+        const error = abs$2(sub$2($predictions, $labels));
+        const quadratic = minimum$2(error, deltaScalar);
+        const linear = sub$2(error, quadratic);
+        const losses = add$1(mul(scalar(0.5), square$1(quadratic)), mul(deltaScalar, linear));
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const huberLoss = op({ huberLoss_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the log loss between two tensors.
+     *
+     * @param labels The ground truth output tensor, same dimensions as
+     *    'predictions'.
+     * @param predictions The predicted outputs.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `labels`, and must be broadcastable to `labels` (i.e., all dimensions
+     *    must be either `1`, or the same as the corresponding `losses`
+     *    dimension).
+     * @param epsilon A small increment to avoid taking log of zero
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`
+     *
+     * @doc {heading: 'Training', subheading: 'Losses', namespace: 'losses'}
+     */
+    function logLoss_(labels, predictions, weights, epsilon = 1e-7, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        const $labels = convertToTensor(labels, 'labels', 'logLoss');
+        const $predictions = convertToTensor(predictions, 'predictions', 'logLoss');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'logLoss');
+        }
+        assertShapesMatch($labels.shape, $predictions.shape, 'Error in logLoss: ');
+        const one = scalar(1);
+        const epsilonScalar = scalar(epsilon);
+        const l1 = neg$2(mul($labels, log$2(add$1($predictions, epsilonScalar))));
+        const l2 = mul(sub$2(one, $labels), log$2(add$1(sub$2(one, $predictions), epsilonScalar)));
+        const losses = sub$2(l1, l2);
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const logLoss = op({ logLoss_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the mean squared error between two tensors.
+     *
+     * @param labels The ground truth output tensor, same dimensions as
+     *    'predictions'.
+     * @param predictions The predicted outputs.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `labels`, and must be broadcastable to `labels` (i.e., all dimensions
+     *    must be either `1`, or the same as the corresponding `losses`
+     *    dimension).
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`
+     *
+     * @doc {heading: 'Training', subheading: 'Losses', namespace: 'losses'}
+     */
+    function meanSquaredError_(labels, predictions, weights, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        const $labels = convertToTensor(labels, 'labels', 'meanSquaredError');
+        const $predictions = convertToTensor(predictions, 'predictions', 'meanSquaredError');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'meanSquaredError');
+        }
+        assertShapesMatch($labels.shape, $predictions.shape, 'Error in meanSquaredError: ');
+        const losses = squaredDifference$2($labels, $predictions);
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const meanSquaredError = op({ meanSquaredError_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    function sigmoidCrossEntropyWithLogits_(labels, logits) {
+        const $labels = convertToTensor(labels, 'labels', 'sigmoidCrossEntropyWithLogits');
+        const $logits = convertToTensor(logits, 'logits', 'sigmoidCrossEntropyWithLogits');
+        assertShapesMatch($labels.shape, $logits.shape, 'Error in sigmoidCrossEntropyWithLogits: ');
+        /**
+         * Implementation Details:
+         *
+         * For brevity, let `x = logits`, `z = labels`.  The logistic loss is
+         *     z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))
+         *   = z * -log(1 / (1 + exp(-x))) + (1 - z) * -log(exp(-x) / (1 + exp(-x)))
+         *   = z * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))
+         *   = z * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))
+         *   = (1 - z) * x + log(1 + exp(-x))
+         *   = x - x * z + log(1 + exp(-x))
+         *
+         *   For x < 0, to avoid overflow in exp(-x), we reformulate the above
+         *     x - x * z + log(1 + exp(-x))
+         *   = log(exp(x)) - x * z + log(1 + exp(-x))
+         *   = - x * z + log(1 + exp(x))
+         *
+         * Hence, to ensure stability and avoid overflow, the implementation uses
+         * this equivalent formulation:
+         *     max(x, 0) - x * z + log(1 + exp(-abs(x)))
+         */
+        const maxOutput = relu$2($logits);
+        const outputXTarget = mul($logits, $labels);
+        const sigmoidOutput = log1p$2(exp$2(neg$2(abs$2($logits))));
+        return add$1(sub$2(maxOutput, outputXTarget), sigmoidOutput);
+    }
+    /**
+     * Computes the sigmoid cross entropy loss between two tensors.
+     *
+     * If labelSmoothing is nonzero, smooth the labels towards 1/2:
+     *
+     *   newMulticlassLabels = multiclassLabels * (1 - labelSmoothing)
+     *                         + 0.5 * labelSmoothing
+     *
+     * @param multiClassLabels The ground truth output tensor of shape
+     * [batch_size, num_classes], same dimensions as 'predictions'.
+     * @param logits The predicted outputs.
+     * @param weights Tensor whose rank is either 0, or the same rank as
+     *    `labels`, and must be broadcastable to `labels` (i.e., all dimensions
+     *    must be either `1`, or the same as the corresponding `losses`
+     *    dimension).
+     * @param labelSmoothing If greater than 0, then smooth the labels.
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`
+     *
+     * @doc { heading: 'Training', subheading: 'Losses', namespace: 'losses' }
+     */
+    function sigmoidCrossEntropy_(multiClassLabels, logits, weights, labelSmoothing = 0, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        let $multiClassLabels = convertToTensor(multiClassLabels, 'multiClassLabels', 'sigmoidCrossEntropy');
+        const $logits = convertToTensor(logits, 'logits', 'sigmoidCrossEntropy');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'sigmoidCrossEntropy');
+        }
+        assertShapesMatch($multiClassLabels.shape, $logits.shape, 'Error in sigmoidCrossEntropy: ');
+        if (labelSmoothing > 0) {
+            const labelSmoothingScalar = scalar(labelSmoothing);
+            const one = scalar(1);
+            const half = scalar(0.5);
+            $multiClassLabels =
+                add$1(mul($multiClassLabels, sub$2(one, labelSmoothingScalar)), mul(half, labelSmoothingScalar));
+        }
+        const losses = sigmoidCrossEntropyWithLogits_($multiClassLabels, $logits);
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const sigmoidCrossEntropy = op({ sigmoidCrossEntropy_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes softmax cross entropy between logits and labels.
+     *
+     * Measures the probability error in discrete classification tasks in which
+     * the classes are mutually exclusive (each entry is in exactly one class).
+     * For example, each CIFAR-10 image is labeled with one and only one label: an
+     * image can be a dog or a truck, but not both.
+     *
+     * `NOTE`: While the classes are mutually exclusive, their probabilities need
+     * not be. All that is required is that each row of labels is a valid
+     * probability distribution. If they are not, the computation of the gradient
+     * will be incorrect.
+     *
+     * `WARNING`: This op expects unscaled logits, since it performs a softmax on
+     * logits internally for efficiency. Do not call this op with the output of
+     * softmax, as it will produce incorrect results.
+     *
+     * logits and labels must have the same shape, e.g. [batch_size, num_classes]
+     * and the same dtype.
+     * @param labels The labels array.
+     * @param logits The logits array.
+     * @param dim The dimension softmax would be performed on. Defaults to `-1`
+     *     which indicates the last dimension.
+     */
+    function softmaxCrossEntropyWithLogits_(labels, logits, dim = -1) {
+        if (dim === -1) {
+            dim = logits.rank - 1;
+        }
+        if (dim !== logits.rank - 1) {
+            throw Error(`Softmax cross entropy along a non-last dimension is not yet ` +
+                `supported. Labels / logits was rank ${logits.rank} ` +
+                `and dim was ${dim}`);
+        }
+        // Use a custom gradient for numerical stability.
+        const customOp = customGrad((labels, logits, save) => {
+            // Reference:
+            //   1. http://cs231n.github.io/linear-classify/#softmax
+            //   2. https://blog.feedly.com/tricks-of-the-trade-logsumexp/
+            const keepDims = true;
+            const lse = logSumExp(logits, [dim], keepDims);
+            const logResult = sub$2(cast$2(logits, 'float32'), lse);
+            save([labels, logResult]);
+            const costVector = neg$2(mul(logResult, labels));
+            const value = sum$2(costVector, [dim]);
+            const gradFunc = (dy, saved) => {
+                const [labels, logResult] = saved;
+                const dyShape = expandShapeToKeepDim(dy.shape, [dim]);
+                return [
+                    mul(reshape$2(dy, dyShape), sub$2(cast$2(labels, 'float32'), exp$2(logResult))),
+                    mul(reshape$2(dy, dyShape), sub$2(exp$2(logResult), cast$2(labels, 'float32'))),
+                ];
+            };
+            return { value, gradFunc };
+        });
+        return customOp(labels, logits);
+    }
+    /**
+     * Computes the softmax cross entropy loss between two tensors.
+     *
+     * If labelSmoothing is nonzero, smooth the labels towards 1/2:
+     *
+     *   newOnehotLabels = onehotLabels * (1 - labelSmoothing)
+     *                         + labelSmoothing / numClasses
+     *
+     * @param onehotLabels One hot encoded labels
+     *    [batch_size, num_classes], same dimensions as 'predictions'.
+     * @param logits The predicted outputs.
+     * @param weights Tensor whose rank is either 0, or 1, and must be
+     *    broadcastable to `loss`  of shape [batch_size]
+     * @param labelSmoothing If greater than 0, then smooth the labels.
+     * @param reduction Type of reduction to apply to loss. Should be of type
+     *    `Reduction`
+     *
+     * @doc { heading: 'Training', subheading: 'Losses', namespace: 'losses' }
+     */
+    function softmaxCrossEntropy_(onehotLabels, logits, weights, labelSmoothing = 0, reduction = Reduction.SUM_BY_NONZERO_WEIGHTS) {
+        let $onehotLabels = convertToTensor(onehotLabels, 'onehotLabels', 'softmaxCrossEntropy');
+        const $logits = convertToTensor(logits, 'logits', 'softmaxCrossEntropy');
+        let $weights = null;
+        if (weights != null) {
+            $weights = convertToTensor(weights, 'weights', 'softmaxCrossEntropy');
+        }
+        assertShapesMatch($onehotLabels.shape, $logits.shape, 'Error in softmaxCrossEntropy: ');
+        if (labelSmoothing > 0) {
+            const labelSmoothingScalar = scalar(labelSmoothing);
+            const one = scalar(1);
+            const numClasses = scalar($onehotLabels.shape[1]);
+            $onehotLabels =
+                add$1(mul($onehotLabels, sub$2(one, labelSmoothingScalar)), div$1(labelSmoothingScalar, numClasses));
+        }
+        const losses = softmaxCrossEntropyWithLogits_($onehotLabels, $logits);
+        return computeWeightedLoss(losses, $weights, reduction);
+    }
+    const softmaxCrossEntropy = op({ softmaxCrossEntropy_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * The input SparseTensor is represented via the map of inputs {`indices`,
+     * `values`, `denseShape`}. The output SparseTensor has the same `denseShape`
+     * but with indices `outputIndices` and values `outputValues`. This op inserts a
+     * single entry for every row that doesn't have any values. The index is created
+     * as `[row, 0, ..., 0]` and the inserted value is `defaultValue`.
+     *
+     * For example, suppose `spInput` has shape [5, 6] and non-empty values:
+     * [0, 1]: a
+     * [0, 3]: b
+     * [2, 0]: c
+     * [3, 1]: d
+     *
+     * Rows 1 and 4 are empty, so the output will be of shape [5, 6] with values:
+     * [0, 1]: a
+     * [0, 3]: b
+     * [1, 0]: `defaultValue`
+     * [2, 0]: c
+     * [3, 1]: d
+     * [4, 0]: `defaultValue`
+     *
+     * The output SparseTensor will be in row-major order and will have the same
+     * shape as the input.
+     *
+     * This op also returns an indicator vector shaped [dense_shape[0]] such that
+     * emptyRowIndicator[i] = True iff row i was an empty row.
+     *
+     * And a reverse index map vector shaped [indices.shape[0]] that is used during
+     * backpropagation, reverseIndexMap[i] = outi s.t. indices[i, j] ==
+     * outputIndices[outi, j] for all j
+     *
+     * ```js
+     * const result = tf.sparse.sparseFillEmptyRows(
+     *   [[0, 0], [1, 0], [1, 3], [1, 4], [3, 2], [3, 3]],
+     *   [0, 10, 13, 14, 32, 33], [5, 6], -1);
+     * console.log(result);
+     * result['outputIndices'].print(); // [[0, 0], [1, 0], [1, 3], [1, 4],
+     *                                  //  [2, 0], [3, 2], [3, 3], [4, 0]]
+     * result['outputValues'].print(); // [0, 10, 13, 14,-1, 32, 33, -1]
+     * result['emptyRowIndicator'].print(); // [false, false, true, false, true]
+     * result['reverseIndexMap'].print(); // [0, 1, 2, 3, 5, 6]
+     * ```
+     * @param indices: 2-D. the indices of the sparse tensor.
+     * @param values: 1-D. the values of the sparse tensor.
+     * @param denseShape: 1-D. the shape of the sparse tensor.
+     * @param defaultValue: 0-D. default value to insert into location [row, 0, ...,
+     *     0] for rows missing from the input sparse tensor.
+     * @return A map with the following properties:
+     *     - outputIndices
+     *     - outputValues: 1-D. the values of the filled sparse tensor.
+     *     - emptyRowIndicator: 1-D. whether the dense row was missing in the input
+     * sparse tensor.
+     *     - reverseIndexMap: 1-D. a map from the input indices to the output
+     * indices.
+     * @doc {heading: 'Operations', subheading: 'Sparse'}
+     */
+    function sparseFillEmptyRows_(indices, values, denseShape, defaultValue) {
+        const $indices = convertToTensor(indices, 'indices', 'sparseFillEmptyRows', 'int32');
+        const $values = convertToTensor(values, 'values', 'sparseFillEmptyRows');
+        const $denseShape = convertToTensor(denseShape, 'denseShape', 'sparseFillEmptyRows', 'int32');
+        const $defaultValue = convertToTensor(defaultValue, 'defaultValue', 'sparseFillEmptyRows', $values.dtype);
+        if ($indices.rank !== 2) {
+            throw new Error(`Indices should be Tensor2D but received shape
+        ${$indices.shape}`);
+        }
+        if ($values.rank !== 1) {
+            throw new Error(`Values should be Tensor1D but received shape ${$values.shape}`);
+        }
+        if ($denseShape.rank !== 1) {
+            throw new Error(`Dense shape should be Tensor1D but received shape ${$denseShape.shape}`);
+        }
+        if ($defaultValue.rank !== 0) {
+            throw new Error(`Default value should be a scalar but received shape ${$defaultValue.shape}`);
+        }
+        const inputs = {
+            indices: $indices,
+            values: $values,
+            denseShape: $denseShape,
+            defaultValue: $defaultValue
+        };
+        const result = ENGINE.runKernel(SparseFillEmptyRows, inputs);
+        return {
+            outputIndices: result[0],
+            outputValues: result[1],
+            emptyRowIndicator: result[2],
+            reverseIndexMap: result[3]
+        };
+    }
+    const sparseFillEmptyRows$2 = op({ sparseFillEmptyRows_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * This operation has the same semantics as reshape on the represented dense
+     * tensor. The `inputIndices` are recomputed based on the requested `newShape`.
+     * If one component of `newShape` is the special value -1, the size of that
+     * dimension is computed so that the total dense size remains constant. At most
+     * one component of `newShape` can be -1. The number of dense elements implied
+     * by `newShape` must be the same as the number of dense elements originally
+     * implied by `inputShape`. Reshaping does not affect the order of values in the
+     * SparseTensor. If the input tensor has rank R_in and N non-empty values, and
+     * `newShape` has length R_out, then `inputIndices` has shape [N, R_in],
+     * `inputShape` has length R_in, `outputIndices` has shape [N, R_out], and
+     * `outputShape` has length R_out.
+     *
+     * ```js
+     * const result = tf.sparse.sparseReshape(
+     *   [[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0], [1, 2, 3]],
+     *   [2, 3, 6], [9, -1]);
+     * console.log(result);
+     * result['outputIndices'].print(); //[[0, 0], [0, 1], [1, 2], [4, 2], [8, 1]]
+     * result['outputShape'].print(); // [9, 4]
+     * ```
+     * @param inputIndices: 2-D. N x R_in matrix with the indices of non-empty
+     * values in a SparseTensor.
+     * @param inputShape: 1-D. R_in Tensor1D with the input SparseTensor's dense
+     * shape.
+     * @param newShape: 1-D. R_out Tensor1D with the requested new dense shape.
+     * @return A map with the following properties:
+     *     - outputIndices: 2-D. N x R_out matrix with the updated indices of
+     *       non-empty values in the output SparseTensor.
+     *     - outputShape: 1-D. R_out vector with the full dense shape of the output
+     *       SparseTensor. This is the same as newShape but with any -1 dimensions
+     *        filled in.
+     * @doc {heading: 'Operations', subheading: 'Sparse'}
+     */
+    function sparseReshape_(inputIndices, inputShape, newShape) {
+        const $inputIndices = convertToTensor(inputIndices, 'inputIndices', 'sparseReshape', 'int32');
+        const $inputShape = convertToTensor(inputShape, 'inputShape', 'sparseReshape', 'int32');
+        const $newShape = convertToTensor(newShape, 'newShape', 'sparseReshape', 'int32');
+        if ($inputIndices.rank !== 2) {
+            throw new Error(`Input indices should be Tensor2D but received shape
+        ${$inputIndices.shape}`);
+        }
+        if ($inputShape.rank !== 1) {
+            throw new Error(`Input shape should be Tensor1D but received shape ${$inputShape.shape}`);
+        }
+        if ($newShape.rank !== 1) {
+            throw new Error(`New shape should be Tensor1D but received shape ${$newShape.shape}`);
+        }
+        const inputs = {
+            inputIndices: $inputIndices,
+            inputShape: $inputShape,
+            newShape: $newShape
+        };
+        const result = ENGINE.runKernel(SparseReshape, inputs);
+        return { outputIndices: result[0], outputShape: result[1] };
+    }
+    const sparseReshape$2 = op({ sparseReshape_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the mean along sparse segments of a tensor.
+     *
+     * ```js
+     * const c = tf.tensor2d([[1,2,3,4], [-1,-2,-3,-4], [6,7,8,9]]);
+     * // Select two rows, one segment.
+     * const result1 = tf.sparse.sparseSegmentMean(c,
+     *                                           tf.tensor1d([0, 1], 'int32'),
+     *                                           tf.tensor1d([0, 0], 'int32'));
+     * result1.print(); // [[0, 0, 0, 0]]
+     *
+     * // Select two rows, two segments.
+     * const result2 = tf.sparse.sparseSegmentMean(c,
+     *                                             tf.tensor1d([0, 1], 'int32'),
+     *                                             tf.tensor1d([0, 1], 'int32'));
+     * result2.print(); // [[1, 2, 3, 4], [-1, -2, -3, -4]]
+     *
+     * // Select all rows, two segments.
+     * const result3 = tf.sparse.sparseSegmentMean(c,
+     *                                             tf.tensor1d([0, 1, 2], 'int32'),
+     *                                             tf.tensor1d([0, 1, 1], 'int32'));
+     * result3.print(); // [[1.0, 2.0, 3.0, 4.0], [2.5, 2.5, 2.5, 2.5]]
+     * ```
+     * @param data: A Tensor of at least one dimension with data that will be
+     *     assembled in the output.
+     * @param indices: A 1-D Tensor with indices into data. Has same rank as
+     *     segmentIds.
+     * @param segmentIds: A 1-D Tensor with indices into the output Tensor. Values
+     *     should be sorted and can be repeated.
+     * @return Has same shape as data, except for dimension 0 which has equal to
+     *         the number of segments.
+     *
+     * @doc {heading: 'Operations', subheading: 'Sparse'}
+     */
+    function sparseSegmentMean_(data, indices, segmentIds) {
+        const $data = convertToTensor(data, 'data', 'sparseSegmentMean');
+        const $indices = convertToTensor(indices, 'indices', 'sparseSegmentMean', 'int32');
+        const $segmentIds = convertToTensor(segmentIds, 'segmentIds', 'sparseSegmentMean', 'int32');
+        if ($data.rank < 1) {
+            throw new Error(`Data should be at least 1 dimensional but received scalar`);
+        }
+        if ($indices.rank !== 1) {
+            throw new Error(`Indices should be Tensor1D but received shape
+          ${$indices.shape}`);
+        }
+        if ($segmentIds.rank !== 1) {
+            throw new Error(`Segment ids should be Tensor1D but received shape
+          ${$segmentIds.shape}`);
+        }
+        const inputs = {
+            data: $data,
+            indices: $indices,
+            segmentIds: $segmentIds
+        };
+        return ENGINE.runKernel(SparseSegmentMean, inputs);
+    }
+    const sparseSegmentMean$2 = op({ sparseSegmentMean_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Computes the sum along sparse segments of a tensor.
+     *
+     * ```js
+     * const c = tf.tensor2d([[1,2,3,4], [-1,-2,-3,-4], [5,6,7,8]]);
+     * // Select two rows, one segment.
+     * const result1 = tf.sparse.sparseSegmentSum(c,
+     *                                           tf.tensor1d([0, 1], 'int32'),
+     *                                           tf.tensor1d([0, 0], 'int32'));
+     * result1.print(); // [[0, 0, 0, 0]]
+     *
+     * // Select two rows, two segment.
+     * const result2 = tf.sparse.sparseSegmentSum(c,
+     *                                           tf.tensor1d([0, 1], 'int32'),
+     *                                           tf.tensor1d([0, 1], 'int32'));
+     * result2.print(); // [[1, 2, 3, 4], [-1, -2, -3, -4]]
+     *
+     * // Select all rows, two segments.
+     * const result3 = tf.sparse.sparseSegmentSum(c,
+     *                                           tf.tensor1d([0, 1, 2], 'int32'),
+     *                                           tf.tensor1d([0, 0, 1], 'int32'));
+     * result3.print(); // [[0, 0, 0, 0], [5, 6, 7, 8]]
+     * ```
+     * @param data: A Tensor of at least one dimension with data that will be
+     *     assembled in the output.
+     * @param indices: A 1-D Tensor with indices into data. Has same rank as
+     *     segmentIds.
+     * @param segmentIds: A 1-D Tensor with indices into the output Tensor. Values
+     *     should be sorted and can be repeated.
+     * @return Has same shape as data, except for dimension 0 which has equal to
+     *         the number of segments.
+     *
+     * @doc {heading: 'Operations', subheading: 'Sparse'}
+     */
+    function sparseSegmentSum_(data, indices, segmentIds) {
+        const $data = convertToTensor(data, 'data', 'sparseSegmentSum');
+        const $indices = convertToTensor(indices, 'indices', 'sparseSegmentSum', 'int32');
+        const $segmentIds = convertToTensor(segmentIds, 'segmentIds', 'sparseSegmentSum', 'int32');
+        if ($data.rank < 1) {
+            throw new Error(`Data should be at least 1 dimensional but received scalar`);
+        }
+        if ($indices.rank !== 1) {
+            throw new Error(`Indices should be Tensor1D but received shape
+         ${$indices.shape}`);
+        }
+        if ($segmentIds.rank !== 1) {
+            throw new Error(`Segment ids should be Tensor1D but received shape
+         ${$segmentIds.shape}`);
+        }
+        const inputs = {
+            data: $data,
+            indices: $indices,
+            segmentIds: $segmentIds
+        };
+        return ENGINE.runKernel(SparseSegmentSum, inputs);
+    }
+    const sparseSegmentSum$2 = op({ sparseSegmentSum_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Creates ngrams from ragged string data.
+     *
+     * This op accepts a ragged tensor with 1 ragged dimension containing only
+     * strings and outputs a ragged tensor with 1 ragged dimension containing ngrams
+     * of that string, joined along the innermost axis.
+     *
+     * ```js
+     * const result = tf.string.stringNGrams(
+     *   ['a', 'b', 'c', 'd'], tf.tensor1d([0, 2, 4], 'int32'),
+     *   '|', [1, 2], 'LP', 'RP', -1, false);
+     * result['nGrams'].print(); // ['a', 'b', 'LP|a', 'a|b', 'b|RP',
+     *                           //  'c', 'd', 'LP|c', 'c|d', 'd|RP']
+     * result['nGramsSplits'].print(); // [0, 5, 10]
+     * ```
+     * @param data: The values tensor of the ragged string tensor to make ngrams out
+     *     of. Must be a 1D string tensor.
+     * @param dataSplits: The splits tensor of the ragged string tensor to make
+     *     ngrams out of.
+     * @param separator: The string to append between elements of the token. Use ""
+     *     for no separator.
+     * @param nGramWidths: The sizes of the ngrams to create.
+     * @param leftPad: The string to use to pad the left side of the ngram sequence.
+     *     Only used if pad_width !== 0.
+     * @param rightPad: The string to use to pad the right side of the ngram
+     *     sequence. Only used if pad_width !== 0.
+     * @param padWidth: The number of padding elements to add to each side of each
+     *     sequence. Note that padding will never be greater than `nGramWidths`-1
+     *     regardless of this value. If `padWidth`=-1 , then add max(`nGramWidths)-1
+     *     elements.
+     * @param preserveShortSequences: If true, then ensure that at least one ngram
+     *     is generated for each input sequence. In particular, if an input sequence
+     *     is shorter than min(ngramWidth) + 2*padWidth, then generate a single
+     *     ngram containing the entire sequence. If false, then no ngrams are
+     *     generated for these short input sequences.
+     * @return A map with the following properties:
+     *     - nGrams: The values tensor of the output ngrams ragged tensor.
+     *     - nGramsSplits: The splits tensor of the output ngrams ragged tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'String'}
+     */
+    function stringNGrams_(data, dataSplits, separator, nGramWidths, leftPad, rightPad, padWidth, preserveShortSequences) {
+        const $data = convertToTensor(data, 'data', 'stringNGrams', 'string');
+        if ($data.dtype !== 'string') {
+            throw new Error('Data must be of datatype string');
+        }
+        if ($data.shape.length !== 1) {
+            throw new Error(`Data must be a vector, saw: ${$data.shape}`);
+        }
+        const $dataSplits = convertToTensor(dataSplits, 'dataSplits', 'stringNGrams');
+        if ($dataSplits.dtype !== 'int32') {
+            throw new Error('Data splits must be of datatype int32');
+        }
+        const attrs = {
+            separator,
+            nGramWidths,
+            leftPad,
+            rightPad,
+            padWidth,
+            preserveShortSequences
+        };
+        const inputs = { data: $data, dataSplits: $dataSplits };
+        const result = ENGINE.runKernel(StringNGrams, inputs, attrs);
+        return { nGrams: result[0], nGramsSplits: result[1] };
+    }
+    const stringNGrams$2 = op({ stringNGrams_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Split elements of `input` based on `delimiter` into a SparseTensor .
+     *
+     * Let N be the size of source (typically N will be the batch size). Split each
+     * element of `input` based on `delimiter` and return a SparseTensor containing
+     * the splitted tokens. Empty tokens are ignored if `skipEmpty` is set to True.
+     *
+     * `delimiter` can be empty, or a string of split characters. If `delimiter` is
+     * an empty string, each element of `input` is split into individual
+     * character strings. Otherwise every character of `delimiter` is a potential
+     * split point.
+     *
+     * ```js
+     * const result = tf.string.stringSplit(['hello world',  'a b c'], ' ');
+     * result['indices'].print(); // [[0, 0], [0, 1], [1, 0], [1, 1], [1, 2]]
+     * result['values'].print(); // ['hello', 'world', 'a', 'b', 'c']
+     * result['shape'].print(); // [2, 3]
+     * ```
+     * @param input: 1-D. Strings to split.
+     * @param delimiter: 0-D. Delimiter characters, or empty string.
+     * @param skipEmpty: Optional. If true, skip the empty strings from the result.
+     *     Defaults to true.
+     * @return A map with the following properties:
+     *     - indices: A dense matrix of int32 representing the indices of the sparse
+     *       tensor.
+     *     - values: A vector of strings corresponding to the splited values.
+     *     - shape: a length-2 vector of int32 representing the shape of the sparse
+     * tensor, where the first value is N and the second value is the maximum number
+     * of tokens in a single input entry.
+     *
+     * @doc {heading: 'Operations', subheading: 'String'}
+     */
+    function stringSplit_(input, delimiter, skipEmpty = true) {
+        const $input = convertToTensor(input, 'input', 'stringSplit', 'string');
+        const $delimiter = convertToTensor(delimiter, 'delimiter', 'stringSplit', 'string');
+        if ($input.rank !== 1) {
+            throw new Error(`Input should be Tensor1D but received shape ${$input.shape}`);
+        }
+        if ($delimiter.rank !== 0) {
+            throw new Error(`Delimiter should be a scalar but received shape ${$delimiter.shape}`);
+        }
+        const attrs = { skipEmpty };
+        const inputs = { input: $input, delimiter: $delimiter };
+        const result = ENGINE.runKernel(StringSplit, inputs, attrs);
+        return { indices: result[0], values: result[1], shape: result[2] };
+    }
+    const stringSplit$2 = op({ stringSplit_ });
+
+    /**
+     * @license
+     * Copyright 2021 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /**
+     * Converts each string in the input Tensor to its hash mod by a number of
+     * buckets.
+     *
+     * The hash function is deterministic on the content of the string within the
+     * process and will never change. However, it is not suitable for cryptography.
+     * This function may be used when CPU time is scarce and inputs are trusted or
+     * unimportant. There is a risk of adversaries constructing inputs that all hash
+     * to the same bucket.
+     *
+     * ```js
+     * const result = tf.string.stringToHashBucketFast(
+     *   ['Hello', 'TensorFlow', '2.x'], 3);
+     * result.print(); // [0, 2, 2]
+     * ```
+     * @param input: The strings to assign a hash bucket.
+     * @param numBuckets: The number of buckets.
+     * @return A Tensor of the same shape as the input tensor.
+     *
+     * @doc {heading: 'Operations', subheading: 'String'}
+     */
+    function stringToHashBucketFast_(input, numBuckets) {
+        const $input = convertToTensor(input, 'input', 'stringToHashBucketFast', 'string');
+        const attrs = { numBuckets };
+        if (numBuckets <= 0) {
+            throw new Error(`Number of buckets must be at least 1`);
+        }
+        const inputs = { input: $input };
+        return ENGINE.runKernel(StringToHashBucketFast, inputs, attrs);
+    }
+    const stringToHashBucketFast$2 = op({ stringToHashBucketFast_ });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    const spectral = {
+        fft: fft$2,
+        ifft: ifft$2,
+        rfft,
+        irfft
+    };
+    const signal = {
+        hammingWindow,
+        hannWindow,
+        frame,
+        stft,
+    };
+    const image = {
+        flipLeftRight,
+        grayscaleToRGB,
+        resizeNearestNeighbor: resizeNearestNeighbor$2,
+        resizeBilinear: resizeBilinear$2,
+        rotateWithOffset,
+        cropAndResize: cropAndResize$2,
+        nonMaxSuppression,
+        nonMaxSuppressionAsync,
+        nonMaxSuppressionWithScore,
+        nonMaxSuppressionWithScoreAsync,
+        nonMaxSuppressionPadded,
+        nonMaxSuppressionPaddedAsync,
+        threshold: threshold$1,
+        transform: transform$2
+    };
+    const linalg = {
+        bandPart,
+        gramSchmidt,
+        qr
+    };
+    const losses = {
+        absoluteDifference,
+        computeWeightedLoss,
+        cosineDistance,
+        hingeLoss,
+        huberLoss,
+        logLoss,
+        meanSquaredError,
+        sigmoidCrossEntropy,
+        softmaxCrossEntropy
+    };
+    const sparse = {
+        sparseFillEmptyRows: sparseFillEmptyRows$2,
+        sparseReshape: sparseReshape$2,
+        sparseSegmentMean: sparseSegmentMean$2,
+        sparseSegmentSum: sparseSegmentSum$2
+    };
+    // tslint:disable-next-line:variable-name
+    const string = {
+        stringNGrams: stringNGrams$2,
+        stringSplit: stringSplit$2,
+        stringToHashBucketFast: stringToHashBucketFast$2
+    };
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /** @doc {heading: 'Training', subheading: 'Classes', namespace: 'train'} */
+    class Optimizer extends Serializable {
+        /**
+         * Executes `f()` and minimizes the scalar output of `f()` by computing
+         * gradients of y with respect to the list of trainable variables provided by
+         * `varList`. If no list is provided, it defaults to all trainable variables.
+         *
+         * @param f The function to execute and whose output to minimize.
+         * @param returnCost Whether to return the scalar cost value produced by
+         * executing `f()`.
+         * @param varList An optional list of variables to update. If specified, only
+         * the trainable variables in varList will be updated by minimize. Defaults to
+         * all trainable variables.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers'}
+         */
+        minimize(f, returnCost = false, varList) {
+            const { value, grads } = this.computeGradients(f, varList);
+            if (varList != null) {
+                const gradArray = varList.map(v => ({ name: v.name, tensor: grads[v.name] }));
+                this.applyGradients(gradArray);
+            }
+            else {
+                this.applyGradients(grads);
+            }
+            // Dispose gradients.
+            dispose(grads);
+            if (returnCost) {
+                return value;
+            }
+            else {
+                value.dispose();
+                return null;
+            }
+        }
+        /**
+         * The number of iterations that this optimizer instance has been invoked for.
+         */
+        get iterations() {
+            if (this.iterations_ == null) {
+                this.iterations_ = 0;
+            }
+            return this.iterations_;
+        }
+        incrementIterations() {
+            this.iterations_ = this.iterations + 1;
+        }
+        /**
+         * Executes f() and computes the gradient of the scalar output of f() with
+         * respect to the list of trainable variables provided by `varList`. If no
+         * list is provided, it defaults to all trainable variables.
+         *
+         * @param f The function to execute and whose output to use for computing
+         * gradients with respect to variables.
+         * @param varList An optional list of variables to compute gradients with
+         * respect to. If specified, only the trainable variables in varList will have
+         * gradients computed with respect to. Defaults to all trainable variables.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers'}
+         */
+        computeGradients(f, varList) {
+            return variableGrads(f, varList);
+        }
+        /**
+         * Dispose the variables (if any) owned by this optimizer instance.
+         */
+        dispose() {
+            if (this.iterations_ != null) {
+                dispose(this.iterations_);
+            }
+        }
+        async saveIterations() {
+            if (this.iterations_ == null) {
+                this.iterations_ = 0;
+            }
+            return {
+                name: 'iter',
+                // TODO(cais): Use 'int64' type when available.
+                tensor: scalar(this.iterations_, 'int32')
+            };
+        }
+        async getWeights() {
+            throw new Error('getWeights() is not implemented for this optimizer yet.');
+        }
+        async setWeights(weightValues) {
+            throw new Error(`setWeights() is not implemented for this optimizer class ` +
+                `${this.getClassName()}`);
+        }
+        /**
+         * Extract the first element of the weight values and set it
+         * as the iterations counter variable of this instance of optimizer.
+         *
+         * @param weightValues
+         * @returns Weight values with the first element consumed and excluded.
+         */
+        async extractIterations(weightValues) {
+            this.iterations_ = (await weightValues[0].tensor.data())[0];
+            return weightValues.slice(1);
+        }
+    }
+    Object.defineProperty(Optimizer, Symbol.hasInstance, {
+        value: (instance) => {
+            return instance.minimize != null && instance.computeGradients != null &&
+                instance.applyGradients != null;
+        }
+    });
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /** @doclink Optimizer */
+    class AdadeltaOptimizer extends Optimizer {
+        constructor(learningRate, rho, epsilon = null) {
+            super();
+            this.learningRate = learningRate;
+            this.rho = rho;
+            this.epsilon = epsilon;
+            this.accumulatedGrads = [];
+            this.accumulatedUpdates = [];
+            if (epsilon == null) {
+                this.epsilon = ENGINE.backend.epsilon();
+            }
+        }
+        applyGradients(variableGradients) {
+            const variableNames = Array.isArray(variableGradients) ?
+                variableGradients.map(item => item.name) :
+                Object.keys(variableGradients);
+            variableNames.forEach((name, i) => {
+                const value = ENGINE.registeredVariables[name];
+                const trainable = false;
+                if (this.accumulatedGrads[i] == null) {
+                    this.accumulatedGrads[i] = {
+                        originalName: `${name}/accum_grad`,
+                        variable: tidy(() => zerosLike$2(value).variable(trainable))
+                    };
+                }
+                if (this.accumulatedUpdates[i] == null) {
+                    this.accumulatedUpdates[i] = {
+                        originalName: `${name}/accum_var`,
+                        variable: tidy(() => zerosLike$2(value).variable(trainable))
+                    };
+                }
+                const gradient = Array.isArray(variableGradients) ?
+                    variableGradients[i].tensor :
+                    variableGradients[name];
+                if (gradient == null) {
+                    return;
+                }
+                const accumulatedGrad = this.accumulatedGrads[i].variable;
+                const accumulatedUpdate = this.accumulatedUpdates[i].variable;
+                tidy(() => {
+                    const newAccumulatedGrad = add$1(mul(accumulatedGrad, this.rho), mul(square$1(gradient), 1 - this.rho));
+                    const updates = mul(div$1(sqrt$2(add$1(accumulatedUpdate, this.epsilon)), sqrt$2(add$1(accumulatedGrad, this.epsilon))), gradient);
+                    const newAccumulatedUpdate = add$1(mul(accumulatedUpdate, this.rho), mul(square$1(updates), 1 - this.rho));
+                    accumulatedGrad.assign(newAccumulatedGrad);
+                    accumulatedUpdate.assign(newAccumulatedUpdate);
+                    const newValue = add$1(mul(updates, -this.learningRate), value);
+                    value.assign(newValue);
+                });
+            });
+            this.incrementIterations();
+        }
+        dispose() {
+            if (this.accumulatedUpdates != null) {
+                dispose(this.accumulatedGrads.map(v => v.variable));
+                dispose(this.accumulatedUpdates.map(v => v.variable));
+            }
+        }
+        async getWeights() {
+            // Order matters for Python compatibility.
+            const variables = [...this.accumulatedGrads, ...this.accumulatedUpdates];
+            return [await this.saveIterations()].concat(variables.map(v => ({ name: v.originalName, tensor: v.variable })));
+        }
+        async setWeights(weightValues) {
+            weightValues = await this.extractIterations(weightValues);
+            const variableCount = weightValues.length / 2;
+            const trainable = false;
+            this.accumulatedGrads =
+                weightValues.slice(0, variableCount).map(v => ({
+                    originalName: v.name,
+                    variable: v.tensor.variable(trainable)
+                }));
+            this.accumulatedUpdates =
+                weightValues.slice(variableCount, variableCount * 2)
+                    .map(v => ({
+                    originalName: v.name,
+                    variable: v.tensor.variable(trainable)
+                }));
+        }
+        getConfig() {
+            return {
+                'learningRate': this.learningRate,
+                'rho': this.rho,
+                'epsilon': this.epsilon
+            };
+        }
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config['learningRate'], config['rho'], config['epsilon']);
+        }
+    }
+    /** @nocollapse */
+    AdadeltaOptimizer.className = 'Adadelta'; // Name matters for Python compatibility.
+    registerClass(AdadeltaOptimizer);
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /** @doclink Optimizer */
+    class AdagradOptimizer extends Optimizer {
+        constructor(learningRate, initialAccumulatorValue = 0.1) {
+            super();
+            this.learningRate = learningRate;
+            this.initialAccumulatorValue = initialAccumulatorValue;
+            this.accumulatedGrads = [];
+        }
+        applyGradients(variableGradients) {
+            const variableNames = Array.isArray(variableGradients) ?
+                variableGradients.map(item => item.name) :
+                Object.keys(variableGradients);
+            variableNames.forEach((name, i) => {
+                const value = ENGINE.registeredVariables[name];
+                if (this.accumulatedGrads[i] == null) {
+                    const trainable = false;
+                    this.accumulatedGrads[i] = {
+                        originalName: `${name}/accumulator`,
+                        variable: tidy(() => fill$2(value.shape, this.initialAccumulatorValue)
+                            .variable(trainable))
+                    };
+                }
+                const gradient = Array.isArray(variableGradients) ?
+                    variableGradients[i].tensor :
+                    variableGradients[name];
+                if (gradient == null) {
+                    return;
+                }
+                const accumulatedGrad = this.accumulatedGrads[i].variable;
+                tidy(() => {
+                    const newAccumulatedGrad = add$1(accumulatedGrad, square$1(gradient));
+                    accumulatedGrad.assign(newAccumulatedGrad);
+                    const newValue = add$1(mul(div$1(gradient, sqrt$2(add$1(newAccumulatedGrad, ENGINE.backend.epsilon()))), -this.learningRate), value);
+                    value.assign(newValue);
+                });
+            });
+            this.incrementIterations();
+        }
+        dispose() {
+            if (this.accumulatedGrads != null) {
+                dispose(this.accumulatedGrads.map(v => v.variable));
+            }
+        }
+        async getWeights() {
+            // Order matters for Python compatibility.
+            return [await this.saveIterations()].concat(this.accumulatedGrads.map(v => ({ name: v.originalName, tensor: v.variable })));
+        }
+        async setWeights(weightValues) {
+            weightValues = await this.extractIterations(weightValues);
+            const trainable = false;
+            this.accumulatedGrads = weightValues.map(v => ({ originalName: v.name, variable: v.tensor.variable(trainable) }));
+        }
+        getConfig() {
+            return {
+                'learningRate': this.learningRate,
+                'initialAccumulatorValue': this.initialAccumulatorValue,
+            };
+        }
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config['learningRate'], config['initialAccumulatorValue']);
+        }
+    }
+    /** @nocollapse */
+    AdagradOptimizer.className = 'Adagrad'; // Note: Name matters for Python compatibility.
+    registerClass(AdagradOptimizer);
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    class AdamOptimizer extends Optimizer {
+        constructor(learningRate, beta1, beta2, epsilon = null) {
+            super();
+            this.learningRate = learningRate;
+            this.beta1 = beta1;
+            this.beta2 = beta2;
+            this.epsilon = epsilon;
+            this.accumulatedFirstMoment = [];
+            this.accumulatedSecondMoment = [];
+            tidy(() => {
+                // accB* will be updated by batch.
+                this.accBeta1 = scalar(beta1).variable();
+                this.accBeta2 = scalar(beta2).variable();
+            });
+            if (epsilon == null) {
+                this.epsilon = ENGINE.backend.epsilon();
+            }
+        }
+        applyGradients(variableGradients) {
+            const varNames = Array.isArray(variableGradients) ?
+                variableGradients.map(v => v.name) :
+                Object.keys(variableGradients);
+            tidy(() => {
+                const oneMinusAccBeta1 = sub$2(1, this.accBeta1);
+                const oneMinusAccBeta2 = sub$2(1, this.accBeta2);
+                varNames.forEach((name, i) => {
+                    const value = ENGINE.registeredVariables[name];
+                    const trainable = false;
+                    if (this.accumulatedFirstMoment[i] == null) {
+                        this.accumulatedFirstMoment[i] = {
+                            originalName: `${name}/m`,
+                            variable: tidy(() => zerosLike$2(value).variable(trainable))
+                        };
+                    }
+                    if (this.accumulatedSecondMoment[i] == null) {
+                        this.accumulatedSecondMoment[i] = {
+                            originalName: `${name}/v`,
+                            variable: tidy(() => zerosLike$2(value).variable(trainable))
+                        };
+                    }
+                    const gradient = Array.isArray(variableGradients) ?
+                        variableGradients[i].tensor :
+                        variableGradients[name];
+                    if (gradient == null) {
+                        return;
+                    }
+                    const firstMoment = this.accumulatedFirstMoment[i].variable;
+                    const secondMoment = this.accumulatedSecondMoment[i].variable;
+                    const newFirstMoment = add$1(mul(firstMoment, this.beta1), mul(gradient, 1 - this.beta1));
+                    const newSecondMoment = add$1(mul(secondMoment, this.beta2), mul(square$1(gradient), 1 - this.beta2));
+                    const biasCorrectedFirstMoment = div$1(newFirstMoment, oneMinusAccBeta1);
+                    const biasCorrectedSecondMoment = div$1(newSecondMoment, oneMinusAccBeta2);
+                    firstMoment.assign(newFirstMoment);
+                    secondMoment.assign(newSecondMoment);
+                    const newValue = add$1(mul(div$1(biasCorrectedFirstMoment, add$1(sqrt$2(biasCorrectedSecondMoment), this.epsilon)), -this.learningRate), value);
+                    value.assign(newValue);
+                });
+                this.accBeta1.assign(mul(this.accBeta1, this.beta1));
+                this.accBeta2.assign(mul(this.accBeta2, this.beta2));
+            });
+            this.incrementIterations();
+        }
+        dispose() {
+            this.accBeta1.dispose();
+            this.accBeta2.dispose();
+            if (this.accumulatedFirstMoment != null) {
+                dispose(this.accumulatedFirstMoment.map(v => v.variable));
+            }
+            if (this.accumulatedSecondMoment != null) {
+                dispose(this.accumulatedSecondMoment.map(v => v.variable));
+            }
+        }
+        async getWeights() {
+            // Order matters for Python compatibility.
+            const variables = [...this.accumulatedFirstMoment, ...this.accumulatedSecondMoment];
+            return [await this.saveIterations()].concat(variables.map(v => ({ name: v.originalName, tensor: v.variable })));
+        }
+        async setWeights(weightValues) {
+            weightValues = await this.extractIterations(weightValues);
+            tidy(() => {
+                this.accBeta1.assign(pow$2(this.beta1, this.iterations_ + 1));
+                this.accBeta2.assign(pow$2(this.beta2, this.iterations_ + 1));
+            });
+            const variableCount = weightValues.length / 2;
+            const trainable = false;
+            this.accumulatedFirstMoment =
+                weightValues.slice(0, variableCount).map(v => ({
+                    originalName: v.name,
+                    variable: v.tensor.variable(trainable)
+                }));
+            this.accumulatedSecondMoment =
+                weightValues.slice(variableCount, variableCount * 2)
+                    .map(v => ({
+                    originalName: v.name,
+                    variable: v.tensor.variable(trainable)
+                }));
+        }
+        getConfig() {
+            return {
+                'learningRate': this.learningRate,
+                'beta1': this.beta1,
+                'beta2': this.beta2,
+                'epsilon': this.epsilon,
+            };
+        }
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config['learningRate'], config['beta1'], config['beta2'], config['epsilon']);
+        }
+    }
+    /** @nocollapse */
+    AdamOptimizer.className = 'Adam'; // Note: Name matters for Python compatibility.
+    registerClass(AdamOptimizer);
+
+    /**
+    * @license
+    * Copyright 2018 Google LLC. All Rights Reserved.
+    * Licensed under the Apache License, Version 2.0 (the "License");
+    * you may not use this file except in compliance with the License.
+    * You may obtain a copy of the License at
+    *
+    * http://www.apache.org/licenses/LICENSE-2.0
+    *
+    * Unless required by applicable law or agreed to in writing, software
+    * distributed under the License is distributed on an "AS IS" BASIS,
+    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    * See the License for the specific language governing permissions and
+    * limitations under the License.
+    * =============================================================================
+    */
+    class AdamaxOptimizer extends Optimizer {
+        constructor(learningRate, beta1, beta2, epsilon = null, decay = 0.0) {
+            super();
+            this.learningRate = learningRate;
+            this.beta1 = beta1;
+            this.beta2 = beta2;
+            this.epsilon = epsilon;
+            this.decay = decay;
+            this.accumulatedFirstMoment = [];
+            this.accumulatedWeightedInfNorm = [];
+            tidy(() => {
+                this.iteration = scalar(0).variable();
+                this.accBeta1 = scalar(beta1).variable();
+            });
+            if (epsilon == null) {
+                this.epsilon = ENGINE.backend.epsilon();
+            }
+        }
+        applyGradients(variableGradients) {
+            const variableNames = Array.isArray(variableGradients) ?
+                variableGradients.map(item => item.name) :
+                Object.keys(variableGradients);
+            tidy(() => {
+                const oneMinusAccBeta1 = sub$2(1, this.accBeta1);
+                const lr = div$1(-this.learningRate, add$1(mul(this.iteration, this.decay), 1));
+                variableNames.forEach((name, i) => {
+                    const value = ENGINE.registeredVariables[name];
+                    const trainable = false;
+                    if (this.accumulatedFirstMoment[i] == null) {
+                        this.accumulatedFirstMoment[i] = {
+                            originalName: `${name}/m`,
+                            variable: zerosLike$2(value).variable(trainable)
+                        };
+                    }
+                    if (this.accumulatedWeightedInfNorm[i] == null) {
+                        this.accumulatedWeightedInfNorm[i] = {
+                            originalName: `${name}/v`,
+                            variable: zerosLike$2(value).variable(trainable)
+                        };
+                    }
+                    const gradient = Array.isArray(variableGradients) ?
+                        variableGradients[i].tensor :
+                        variableGradients[name];
+                    if (gradient == null) {
+                        return;
+                    }
+                    const firstMoment = this.accumulatedFirstMoment[i].variable;
+                    const weightedInfNorm = this.accumulatedWeightedInfNorm[i].variable;
+                    const newFirstMoment = add$1(mul(firstMoment, this.beta1), mul(gradient, 1 - this.beta1));
+                    const ut0 = mul(weightedInfNorm, this.beta2);
+                    const ut1 = abs$2(gradient);
+                    const newWeightedInfNorm = maximum$2(ut0, ut1);
+                    firstMoment.assign(newFirstMoment);
+                    weightedInfNorm.assign(newWeightedInfNorm);
+                    const newValue = add$1(mul(div$1(lr, oneMinusAccBeta1), div$1(newFirstMoment, add$1(newWeightedInfNorm, this.epsilon))), value);
+                    value.assign(newValue);
+                });
+                this.iteration.assign(add$1(this.iteration, 1));
+                this.accBeta1.assign(mul(this.accBeta1, this.beta1));
+            });
+            this.incrementIterations();
+        }
+        dispose() {
+            this.accBeta1.dispose();
+            this.iteration.dispose();
+            if (this.accumulatedFirstMoment != null) {
+                dispose(this.accumulatedFirstMoment.map(v => v.variable));
+            }
+            if (this.accumulatedWeightedInfNorm != null) {
+                dispose(this.accumulatedWeightedInfNorm.map(v => v.variable));
+            }
+        }
+        async getWeights() {
+            throw new Error('getWeights() is not implemented for Adamax yet.');
+        }
+        async setWeights(weightValues) {
+            throw new Error('setWeights() is not implemented for Adamax yet.');
+        }
+        getConfig() {
+            return {
+                'learningRate': this.learningRate,
+                'beta1': this.beta1,
+                'beta2': this.beta2,
+                'epsilon': this.epsilon,
+                'decay': this.decay
+            };
+        }
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config['learningRate'], config['beta1'], config['beta2'], config['epsilon'], config['decay']);
+        }
+    }
+    /** @nocollapse */
+    AdamaxOptimizer.className = 'Adamax'; // Note: Name matters for Python compatbility.
+    registerClass(AdamaxOptimizer);
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /** @doclink Optimizer */
+    class SGDOptimizer extends Optimizer {
+        constructor(learningRate) {
+            super();
+            this.learningRate = learningRate;
+            this.setLearningRate(learningRate);
+        }
+        applyGradients(variableGradients) {
+            const varNames = Array.isArray(variableGradients) ?
+                variableGradients.map(v => v.name) :
+                Object.keys(variableGradients);
+            varNames.forEach((name, i) => {
+                const gradient = Array.isArray(variableGradients) ?
+                    variableGradients[i].tensor :
+                    variableGradients[name];
+                if (gradient == null) {
+                    return;
+                }
+                const value = ENGINE.registeredVariables[name];
+                tidy(() => {
+                    const newValue = add$1(mul(this.c, gradient), value);
+                    value.assign(newValue);
+                });
+            });
+            this.incrementIterations();
+        }
+        /**
+         * Sets the learning rate of the optimizer.
+         */
+        setLearningRate(learningRate) {
+            this.learningRate = learningRate;
+            if (this.c != null) {
+                this.c.dispose();
+            }
+            this.c = keep(scalar(-learningRate));
+        }
+        dispose() {
+            this.c.dispose();
+        }
+        async getWeights() {
+            return [await this.saveIterations()];
+        }
+        async setWeights(weightValues) {
+            weightValues = await this.extractIterations(weightValues);
+            if (weightValues.length !== 0) {
+                throw new Error('SGD optimizer does not have settable weights.');
+            }
+        }
+        getConfig() {
+            return { 'learningRate': this.learningRate };
+        }
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config['learningRate']);
+        }
+    }
+    /** @nocollapse */
+    SGDOptimizer.className = 'SGD'; // Note: Name matters for Python compatibility.
+    registerClass(SGDOptimizer);
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /** @doclink Optimizer */
+    class MomentumOptimizer extends SGDOptimizer {
+        constructor(learningRate, momentum, useNesterov = false) {
+            super(learningRate);
+            this.learningRate = learningRate;
+            this.momentum = momentum;
+            this.useNesterov = useNesterov;
+            this.accumulations = [];
+            this.m = scalar(this.momentum);
+        }
+        applyGradients(variableGradients) {
+            const variableNames = Array.isArray(variableGradients) ?
+                variableGradients.map(item => item.name) :
+                Object.keys(variableGradients);
+            variableNames.forEach((name, i) => {
+                const value = ENGINE.registeredVariables[name];
+                if (this.accumulations[i] == null) {
+                    const trainable = false;
+                    this.accumulations[i] = {
+                        originalName: `${name}/momentum`,
+                        variable: tidy(() => zerosLike$2(value).variable(trainable))
+                    };
+                }
+                const accumulation = this.accumulations[i].variable;
+                const gradient = Array.isArray(variableGradients) ?
+                    variableGradients[i].tensor :
+                    variableGradients[name];
+                if (gradient == null) {
+                    return;
+                }
+                tidy(() => {
+                    let newValue;
+                    const newAccumulation = add$1(mul(this.m, accumulation), gradient);
+                    if (this.useNesterov) {
+                        newValue = add$1(mul(this.c, add$1(gradient, mul(newAccumulation, this.m))), value);
+                    }
+                    else {
+                        newValue = add$1(mul(this.c, newAccumulation), value);
+                    }
+                    accumulation.assign(newAccumulation);
+                    value.assign(newValue);
+                });
+            });
+            this.incrementIterations();
+        }
+        dispose() {
+            this.m.dispose();
+            if (this.accumulations != null) {
+                dispose(this.accumulations.map(v => v.variable));
+            }
+        }
+        /**
+         * Sets the momentum of the optimizer.
+         *
+         * @param momentum
+         */
+        setMomentum(momentum) {
+            this.momentum = momentum;
+        }
+        async getWeights() {
+            // Order matters for Python compatibility.
+            return [await this.saveIterations()].concat(this.accumulations.map(v => ({ name: v.originalName, tensor: v.variable })));
+        }
+        async setWeights(weightValues) {
+            weightValues = await this.extractIterations(weightValues);
+            const trainable = false;
+            this.accumulations = weightValues.map(v => ({ originalName: v.name, variable: v.tensor.variable(trainable) }));
+        }
+        getConfig() {
+            return {
+                'learningRate': this.learningRate,
+                'momentum': this.momentum,
+                'useNesterov': this.useNesterov
+            };
+        }
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config['learningRate'], config['momentum'], config['useNesterov']);
+        }
+    }
+    /** @nocollapse */
+    MomentumOptimizer.className = 'Momentum'; // Name matters for Python compatibility.
+    registerClass(MomentumOptimizer);
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    /** @doclink Optimizer */
+    class RMSPropOptimizer extends Optimizer {
+        constructor(learningRate, decay = 0.9, momentum = 0.0, epsilon = null, centered = false) {
+            super();
+            this.learningRate = learningRate;
+            this.decay = decay;
+            this.momentum = momentum;
+            this.epsilon = epsilon;
+            this.accumulatedMeanSquares = [];
+            this.accumulatedMoments = [];
+            this.accumulatedMeanGrads = [];
+            this.centered = centered;
+            if (epsilon == null) {
+                this.epsilon = ENGINE.backend.epsilon();
+            }
+            if (learningRate == null) {
+                throw new Error(`learningRate for RMSPropOptimizer must be defined.`);
+            }
+        }
+        applyGradients(variableGradients) {
+            const variableNames = Array.isArray(variableGradients) ?
+                variableGradients.map(item => item.name) :
+                Object.keys(variableGradients);
+            variableNames.forEach((name, i) => {
+                const value = ENGINE.registeredVariables[name];
+                const trainable = false;
+                if (this.accumulatedMeanSquares[i] == null) {
+                    this.accumulatedMeanSquares[i] = {
+                        originalName: `${name}/rms`,
+                        variable: tidy(() => zerosLike$2(value).variable(trainable))
+                    };
+                }
+                if (this.accumulatedMoments[i] == null) {
+                    this.accumulatedMoments[i] = {
+                        originalName: `${name}/momentum`,
+                        variable: tidy(() => zerosLike$2(value).variable(trainable))
+                    };
+                }
+                if (this.accumulatedMeanGrads[i] == null && this.centered) {
+                    this.accumulatedMeanGrads[i] = {
+                        originalName: `${name}/mg`,
+                        variable: tidy(() => zerosLike$2(value).variable(trainable))
+                    };
+                }
+                const gradient = Array.isArray(variableGradients) ?
+                    variableGradients[i].tensor :
+                    variableGradients[name];
+                if (gradient == null) {
+                    return;
+                }
+                const accumulatedMeanSquare = this.accumulatedMeanSquares[i].variable;
+                const accumulatedMoments = this.accumulatedMoments[i].variable;
+                tidy(() => {
+                    const newAccumulatedMeanSquare = add$1(mul(accumulatedMeanSquare, this.decay), mul(square$1(gradient), 1 - this.decay));
+                    if (this.centered) {
+                        const accumulatedMeanGrad = this.accumulatedMeanGrads[i].variable;
+                        // Centered gradient
+                        const newAccumulatedMeanGrad = add$1(mul(accumulatedMeanGrad, this.decay), mul(gradient, 1 - this.decay));
+                        const gradContribution = div$1(mul(gradient, this.learningRate), sqrt$2(sub$2(newAccumulatedMeanSquare, add$1(square$1(newAccumulatedMeanGrad), this.epsilon))));
+                        const newAccumulatedMoments = add$1(mul(accumulatedMoments, this.momentum), gradContribution);
+                        accumulatedMeanSquare.assign(newAccumulatedMeanSquare);
+                        accumulatedMeanGrad.assign(newAccumulatedMeanGrad);
+                        accumulatedMoments.assign(newAccumulatedMoments);
+                        const newValue = sub$2(value, newAccumulatedMoments);
+                        value.assign(newValue);
+                    }
+                    else {
+                        // Plain gradient
+                        const newAccumulatedMeanSquare = add$1(mul(accumulatedMeanSquare, this.decay), mul(square$1(gradient), 1 - this.decay));
+                        const newAccumulatedMoments = add$1(mul(accumulatedMoments, this.momentum), div$1(mul(gradient, this.learningRate), sqrt$2(add$1(newAccumulatedMeanSquare, this.epsilon))));
+                        accumulatedMeanSquare.assign(newAccumulatedMeanSquare);
+                        accumulatedMoments.assign(newAccumulatedMoments);
+                        const newValue = sub$2(value, newAccumulatedMoments);
+                        value.assign(newValue);
+                    }
+                });
+            });
+            this.incrementIterations();
+        }
+        dispose() {
+            if (this.accumulatedMeanSquares != null) {
+                dispose(this.accumulatedMeanSquares.map(v => v.variable));
+            }
+            if (this.accumulatedMeanGrads != null && this.centered) {
+                dispose(this.accumulatedMeanGrads.map(v => v.variable));
+            }
+            if (this.accumulatedMoments != null) {
+                dispose(this.accumulatedMoments.map(v => v.variable));
+            }
+        }
+        async getWeights() {
+            // Order matters for Python compatibility.
+            const variables = [...this.accumulatedMeanSquares, ...this.accumulatedMoments];
+            if (this.centered) {
+                variables.push(...this.accumulatedMeanGrads);
+            }
+            return [await this.saveIterations()].concat(variables.map(v => ({ name: v.originalName, tensor: v.variable })));
+        }
+        async setWeights(weightValues) {
+            weightValues = await this.extractIterations(weightValues);
+            const variableCount = this.centered ? weightValues.length / 3 : weightValues.length / 2;
+            const trainable = false;
+            this.accumulatedMeanSquares =
+                weightValues.slice(0, variableCount).map(v => ({
+                    originalName: v.name,
+                    variable: v.tensor.variable(trainable)
+                }));
+            this.accumulatedMoments =
+                weightValues.slice(variableCount, variableCount * 2)
+                    .map(v => ({
+                    originalName: v.name,
+                    variable: v.tensor.variable(trainable)
+                }));
+            if (this.centered) {
+                this.accumulatedMeanGrads =
+                    weightValues.slice(variableCount * 2, variableCount * 3)
+                        .map(v => ({
+                        originalName: v.name,
+                        variable: v.tensor.variable(trainable)
+                    }));
+            }
+        }
+        getConfig() {
+            return {
+                'learningRate': this.learningRate,
+                'decay': this.decay,
+                'momentum': this.momentum,
+                'epsilon': this.epsilon,
+                'centered': this.centered
+            };
+        }
+        /** @nocollapse */
+        static fromConfig(cls, config) {
+            return new cls(config['learningRate'], config['decay'], config['momentum'], config['epsilon'], config['centered']);
+        }
+    }
+    /** @nocollapse */
+    RMSPropOptimizer.className = 'RMSProp'; // Note: Name matters for Python compatibility.
+    registerClass(RMSPropOptimizer);
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    class OptimizerConstructors {
+        /**
+         * Constructs a `tf.SGDOptimizer` that uses stochastic gradient descent.
+         *
+         * ```js
+         * // Fit a quadratic function by learning the coefficients a, b, c.
+         * const xs = tf.tensor1d([0, 1, 2, 3]);
+         * const ys = tf.tensor1d([1.1, 5.9, 16.8, 33.9]);
+         *
+         * const a = tf.scalar(Math.random()).variable();
+         * const b = tf.scalar(Math.random()).variable();
+         * const c = tf.scalar(Math.random()).variable();
+         *
+         * // y = a * x^2 + b * x + c.
+         * const f = x => a.mul(x.square()).add(b.mul(x)).add(c);
+         * const loss = (pred, label) => pred.sub(label).square().mean();
+         *
+         * const learningRate = 0.01;
+         * const optimizer = tf.train.sgd(learningRate);
+         *
+         * // Train the model.
+         * for (let i = 0; i < 10; i++) {
+         *   optimizer.minimize(() => loss(f(xs), ys));
+         * }
+         *
+         * // Make predictions.
+         * console.log(
+         *     `a: ${a.dataSync()}, b: ${b.dataSync()}, c: ${c.dataSync()}`);
+         * const preds = f(xs).dataSync();
+         * preds.forEach((pred, i) => {
+         *   console.log(`x: ${i}, pred: ${pred}`);
+         * });
+         * ```
+         *
+         * @param learningRate The learning rate to use for the SGD algorithm.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers', namespace: 'train'}
+         */
+        static sgd(learningRate) {
+            return new SGDOptimizer(learningRate);
+        }
+        /**
+         * Constructs a `tf.MomentumOptimizer` that uses momentum gradient
+         * descent.
+         *
+         * See
+         * [http://proceedings.mlr.press/v28/sutskever13.pdf](
+         * http://proceedings.mlr.press/v28/sutskever13.pdf)
+         *
+         * @param learningRate The learning rate to use for the Momentum gradient
+         * descent algorithm.
+         * @param momentum The momentum to use for the momentum gradient descent
+         * algorithm.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers', namespace: 'train'}
+         */
+        static momentum(learningRate, momentum, useNesterov = false) {
+            return new MomentumOptimizer(learningRate, momentum, useNesterov);
+        }
+        /**
+         * Constructs a `tf.RMSPropOptimizer` that uses RMSProp gradient
+         * descent. This implementation uses plain momentum and is not centered
+         * version of RMSProp.
+         *
+         * See
+         * [http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf](
+         * http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf)
+         *
+         * @param learningRate The learning rate to use for the RMSProp gradient
+         * descent algorithm.
+         * @param decay The discounting factor for the history/coming gradient.
+         * @param momentum The momentum to use for the RMSProp gradient descent
+         * algorithm.
+         * @param epsilon Small value to avoid zero denominator.
+         * @param centered If true, gradients are normalized by the estimated
+         * variance of the gradient.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers', namespace: 'train'}
+         */
+        static rmsprop(learningRate, decay = .9, momentum = 0.0, epsilon = null, centered = false) {
+            return new RMSPropOptimizer(learningRate, decay, momentum, epsilon, centered);
+        }
+        /**
+         * Constructs a `tf.AdamOptimizer` that uses the Adam algorithm.
+         * See [https://arxiv.org/abs/1412.6980](https://arxiv.org/abs/1412.6980)
+         *
+         * @param learningRate The learning rate to use for the Adam gradient
+         * descent algorithm.
+         * @param beta1 The exponential decay rate for the 1st moment estimates.
+         * @param beta2 The exponential decay rate for the 2nd moment estimates.
+         * @param epsilon A small constant for numerical stability.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers', namespace: 'train'}
+         */
+        static adam(learningRate = 0.001, beta1 = 0.9, beta2 = 0.999, epsilon = null) {
+            return new AdamOptimizer(learningRate, beta1, beta2, epsilon);
+        }
+        /**
+         * Constructs a `tf.AdadeltaOptimizer` that uses the Adadelta algorithm.
+         * See [https://arxiv.org/abs/1212.5701](https://arxiv.org/abs/1212.5701)
+         *
+         * @param learningRate The learning rate to use for the Adadelta gradient
+         * descent algorithm.
+         * @param rho The learning rate decay over each update.
+         * @param epsilon A constant epsilon used to better condition the grad
+         * update.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers', namespace: 'train'}
+         */
+        static adadelta(learningRate = .001, rho = .95, epsilon = null) {
+            return new AdadeltaOptimizer(learningRate, rho, epsilon);
+        }
+        /**
+         * Constructs a `tf.AdamaxOptimizer` that uses the Adamax algorithm.
+         * See [https://arxiv.org/abs/1412.6980](https://arxiv.org/abs/1412.6980)
+         *
+         * @param learningRate The learning rate to use for the Adamax gradient
+         * descent algorithm.
+         * @param beta1 The exponential decay rate for the 1st moment estimates.
+         * @param beta2 The exponential decay rate for the 2nd moment estimates.
+         * @param epsilon A small constant for numerical stability.
+         * @param decay The learning rate decay over each update.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers', namespace: 'train'}
+         */
+        static adamax(learningRate = 0.002, beta1 = 0.9, beta2 = 0.999, epsilon = null, decay = 0.0) {
+            return new AdamaxOptimizer(learningRate, beta1, beta2, epsilon, decay);
+        }
+        /**
+         * Constructs a `tf.AdagradOptimizer` that uses the Adagrad algorithm.
+         * See
+         * [http://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf](
+         * http://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf)
+         * or
+         * [http://ruder.io/optimizing-gradient-descent/index.html#adagrad](
+         * http://ruder.io/optimizing-gradient-descent/index.html#adagrad)
+         *
+         * @param learningRate The learning rate to use for the Adagrad gradient
+         * descent algorithm.
+         * @param initialAccumulatorValue Starting value for the accumulators, must be
+         * positive.
+         *
+         * @doc {heading: 'Training', subheading: 'Optimizers', namespace: 'train'}
+         */
+        static adagrad(learningRate, initialAccumulatorValue = 0.1) {
+            return new AdagradOptimizer(learningRate, initialAccumulatorValue);
+        }
+    }
+
+    /**
+     * @license
+     * Copyright 2018 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    const train = {
+        sgd: OptimizerConstructors.sgd,
+        momentum: OptimizerConstructors.momentum,
+        adadelta: OptimizerConstructors.adadelta,
+        adagrad: OptimizerConstructors.adagrad,
+        rmsprop: OptimizerConstructors.rmsprop,
+        adamax: OptimizerConstructors.adamax,
+        adam: OptimizerConstructors.adam
+    };
+
+    /**
+     * @license
+     * Copyright 2017 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+    const delayCallback = (() => {
+        if (typeof requestAnimationFrame !== 'undefined') {
+            return requestAnimationFrame;
+        }
+        else if (typeof setImmediate !== 'undefined') {
+            return setImmediate;
+        }
+        return (f) => f(); // no delays
+    })();
+    /**
+     * Returns a promise that resolve when a requestAnimationFrame has completed.
+     *
+     * On Node.js this uses setImmediate instead of requestAnimationFrame.
+     *
+     * This is simply a sugar method so that users can do the following:
+     * `await tf.nextFrame();`
+     *
+     * @doc {heading: 'Performance', subheading: 'Timing'}
+     */
+    function nextFrame() {
+        return new Promise(resolve => delayCallback(() => resolve()));
     }
 
     /**
@@ -29835,7 +47061,7 @@
         getSliceSize: getSliceSize,
         prepareAndValidate: prepareAndValidate,
         validateUpdateShape: validateUpdateShape,
-        validateInput: validateInput,
+        validateInput: validateInput$1,
         calculateShapes: calculateShapes,
         SELU_SCALEALPHA: SELU_SCALEALPHA,
         SELU_SCALE: SELU_SCALE,
@@ -29846,7 +47072,7 @@
         ERF_A4: ERF_A4,
         ERF_A5: ERF_A5,
         warn: warn,
-        log: log$2,
+        log: log$3,
         mergeRealAndImagArrays: mergeRealAndImagArrays,
         splitRealAndImagArrays: splitRealAndImagArrays,
         complexWithEvenIndex: complexWithEvenIndex,
@@ -29873,6 +47099,496 @@
         getSparseSegmentReductionNonIncreasingSegmentIdsErrorMessage: getSparseSegmentReductionNonIncreasingSegmentIdsErrorMessage,
         getSparseSegmentReductionSegmentIdOutOfRangeErrorMessage: getSparseSegmentReductionSegmentIdOutOfRangeErrorMessage,
         getSparseSegmentReductionIndicesOutOfRangeErrorMessage: getSparseSegmentReductionIndicesOutOfRangeErrorMessage
+    });
+
+    /**
+     * @license
+     * Copyright 2020 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+
+    var kernel_impls = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        nonMaxSuppressionV3Impl: nonMaxSuppressionV3Impl$2,
+        nonMaxSuppressionV4Impl: nonMaxSuppressionV4Impl$2,
+        nonMaxSuppressionV5Impl: nonMaxSuppressionV5Impl$2,
+        whereImpl: whereImpl$2
+    });
+
+    /**
+     * @license
+     * Copyright 2017 Google LLC. All Rights Reserved.
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     * http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     * =============================================================================
+     */
+
+    var tf = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        AdadeltaOptimizer: AdadeltaOptimizer,
+        AdagradOptimizer: AdagradOptimizer,
+        AdamOptimizer: AdamOptimizer,
+        AdamaxOptimizer: AdamaxOptimizer,
+        MomentumOptimizer: MomentumOptimizer,
+        Optimizer: Optimizer,
+        OptimizerConstructors: OptimizerConstructors,
+        RMSPropOptimizer: RMSPropOptimizer,
+        SGDOptimizer: SGDOptimizer,
+        Tensor: Tensor,
+        TensorBuffer: TensorBuffer,
+        Variable: Variable,
+        get Rank () { return Rank; },
+        sumOutType: sumOutType,
+        upcastType: upcastType,
+        get Reduction () { return Reduction; },
+        customGrad: customGrad,
+        grad: grad,
+        grads: grads,
+        valueAndGrad: valueAndGrad,
+        valueAndGrads: valueAndGrads,
+        variableGrads: variableGrads,
+        Environment: Environment,
+        env: env,
+        get ENV () { return ENV$2; },
+        nextFrame: nextFrame,
+        KernelBackend: KernelBackend,
+        DataStorage: DataStorage,
+        abs: abs$2,
+        acos: acos$2,
+        acosh: acosh$2,
+        add: add$1,
+        addN: addN$2,
+        all: all$2,
+        any: any$2,
+        argMax: argMax$2,
+        argMin: argMin$2,
+        asin: asin$2,
+        asinh: asinh$2,
+        atan: atan$2,
+        atan2: atan2$2,
+        atanh: atanh$2,
+        avgPool: avgPool$2,
+        avgPool3d: avgPool3d,
+        basicLSTMCell: basicLSTMCell,
+        batchToSpaceND: batchToSpaceND$2,
+        batchNorm: batchNorm$2,
+        batchNorm2d: batchNorm2d,
+        batchNorm3d: batchNorm3d,
+        batchNorm4d: batchNorm4d,
+        bincount: bincount$2,
+        broadcastArgs: broadcastArgs$2,
+        broadcastTo: broadcastTo,
+        buffer: buffer,
+        cast: cast$2,
+        ceil: ceil$2,
+        clipByValue: clipByValue$2,
+        clone: clone,
+        complex: complex$2,
+        concat: concat$2,
+        concat1d: concat1d,
+        concat2d: concat2d,
+        concat3d: concat3d,
+        concat4d: concat4d,
+        conv1d: conv1d,
+        conv2d: conv2d$2,
+        conv2dTranspose: conv2dTranspose,
+        conv3d: conv3d,
+        conv3dTranspose: conv3dTranspose,
+        cos: cos$2,
+        cosh: cosh$2,
+        cumsum: cumsum$2,
+        denseBincount: denseBincount$2,
+        depthToSpace: depthToSpace$2,
+        depthwiseConv2d: depthwiseConv2d$1,
+        diag: diag$2,
+        dilation2d: dilation2d,
+        div: div$1,
+        divNoNan: divNoNan,
+        dot: dot,
+        einsum: einsum$2,
+        elu: elu$2,
+        equal: equal$2,
+        erf: erf$2,
+        exp: exp$2,
+        expandDims: expandDims$2,
+        expm1: expm1$2,
+        eye: eye,
+        fill: fill$2,
+        floor: floor$2,
+        floorDiv: floorDiv$2,
+        gather: gather,
+        greater: greater$2,
+        greaterEqual: greaterEqual$2,
+        imag: imag$2,
+        isFinite: isFinite$3,
+        isInf: isInf$2,
+        isNaN: isNaN$3,
+        leakyRelu: leakyRelu$2,
+        less: less$2,
+        lessEqual: lessEqual$2,
+        linspace: linspace,
+        localResponseNormalization: localResponseNormalization,
+        log: log$2,
+        log1p: log1p$2,
+        logSigmoid: logSigmoid,
+        logSoftmax: logSoftmax,
+        logSumExp: logSumExp,
+        logicalAnd: logicalAnd$2,
+        logicalNot: logicalNot$2,
+        logicalOr: logicalOr$2,
+        logicalXor: logicalXor,
+        matMul: matMul$1,
+        max: max$2,
+        maxPool: maxPool$2,
+        maxPool3d: maxPool3d$1,
+        maxPoolWithArgmax: maxPoolWithArgmax,
+        maximum: maximum$2,
+        mean: mean$1,
+        meshgrid: meshgrid,
+        min: min$2,
+        minimum: minimum$2,
+        mirrorPad: mirrorPad$1,
+        mod: mod$2,
+        moments: moments,
+        mul: mul,
+        multiRNNCell: multiRNNCell,
+        multinomial: multinomial$2,
+        neg: neg$2,
+        notEqual: notEqual$2,
+        oneHot: oneHot$2,
+        ones: ones,
+        onesLike: onesLike$2,
+        outerProduct: outerProduct,
+        pad: pad,
+        pad1d: pad1d,
+        pad2d: pad2d,
+        pad3d: pad3d,
+        pad4d: pad4d,
+        pool: pool$1,
+        pow: pow$2,
+        prelu: prelu$2,
+        print: print,
+        prod: prod$2,
+        rand: rand,
+        randomGamma: randomGamma,
+        randomNormal: randomNormal,
+        randomUniform: randomUniform,
+        range: range$2,
+        real: real$2,
+        reciprocal: reciprocal$2,
+        relu: relu$2,
+        relu6: relu6$2,
+        reshape: reshape$2,
+        reverse: reverse$2,
+        reverse1d: reverse1d,
+        reverse2d: reverse2d,
+        reverse3d: reverse3d,
+        reverse4d: reverse4d,
+        round: round$2,
+        rsqrt: rsqrt$2,
+        scalar: scalar,
+        selu: selu$2,
+        separableConv2d: separableConv2d,
+        setdiff1dAsync: setdiff1dAsync,
+        sigmoid: sigmoid$2,
+        sign: sign$2,
+        sin: sin$2,
+        sinh: sinh$2,
+        slice: slice$2,
+        slice1d: slice1d,
+        slice2d: slice2d,
+        slice3d: slice3d,
+        slice4d: slice4d,
+        softmax: softmax$2,
+        softplus: softplus$2,
+        spaceToBatchND: spaceToBatchND$2,
+        fft: fft$2,
+        ifft: ifft$2,
+        irfft: irfft,
+        rfft: rfft,
+        split: split$1,
+        sqrt: sqrt$2,
+        square: square$1,
+        squaredDifference: squaredDifference$2,
+        squeeze: squeeze,
+        stack: stack,
+        step: step$2,
+        stridedSlice: stridedSlice$2,
+        sub: sub$2,
+        sum: sum$2,
+        tan: tan$2,
+        tanh: tanh$2,
+        tensor: tensor,
+        tensor1d: tensor1d,
+        tensor2d: tensor2d,
+        tensor3d: tensor3d,
+        tensor4d: tensor4d,
+        tensor5d: tensor5d,
+        tensor6d: tensor6d,
+        tile: tile$2,
+        topk: topk,
+        truncatedNormal: truncatedNormal,
+        unique: unique$2,
+        unsortedSegmentSum: unsortedSegmentSum$2,
+        unstack: unstack,
+        variable: variable,
+        where: where,
+        whereAsync: whereAsync,
+        zeros: zeros$1,
+        zerosLike: zerosLike$2,
+        op: op,
+        OP_SCOPE_SUFFIX: OP_SCOPE_SUFFIX,
+        booleanMaskAsync: booleanMaskAsync,
+        transpose: transpose$2,
+        norm: norm,
+        movingAverage: movingAverage,
+        scatterND: scatterND,
+        sparseToDense: sparseToDense$2,
+        gatherND: gatherND,
+        dropout: dropout,
+        enclosingPowerOfTwo: enclosingPowerOfTwo,
+        cosineWindow: cosineWindow,
+        inTopKAsync: inTopKAsync,
+        image: image,
+        linalg: linalg,
+        losses: losses,
+        spectral: spectral,
+        fused: fused_ops,
+        signal: signal,
+        sparse: sparse,
+        string: string,
+        train: train,
+        enableProdMode: enableProdMode,
+        enableDebugMode: enableDebugMode,
+        disableDeprecationWarnings: disableDeprecationWarnings,
+        deprecationWarn: deprecationWarn,
+        disposeVariables: disposeVariables,
+        engine: engine,
+        memory: memory,
+        profile: profile,
+        tidy: tidy,
+        dispose: dispose,
+        keep: keep,
+        time: time,
+        setBackend: setBackend,
+        ready: ready,
+        getBackend: getBackend,
+        removeBackend: removeBackend,
+        findBackend: findBackend,
+        findBackendFactory: findBackendFactory,
+        registerBackend: registerBackend,
+        backend: backend,
+        setPlatform: setPlatform,
+        getKernel: getKernel,
+        getGradient: getGradient,
+        getKernelsForBackend: getKernelsForBackend,
+        registerKernel: registerKernel,
+        registerGradient: registerGradient,
+        unregisterKernel: unregisterKernel,
+        unregisterGradient: unregisterGradient,
+        copyRegisteredKernels: copyRegisteredKernels,
+        Abs: Abs,
+        Acos: Acos,
+        Acosh: Acosh,
+        Add: Add,
+        AddN: AddN,
+        All: All,
+        Any: Any,
+        ArgMax: ArgMax,
+        ArgMin: ArgMin,
+        Asin: Asin,
+        Asinh: Asinh,
+        Atan: Atan,
+        Atanh: Atanh,
+        Atan2: Atan2,
+        AvgPool: AvgPool,
+        AvgPoolGrad: AvgPoolGrad,
+        AvgPool3D: AvgPool3D,
+        AvgPool3DGrad: AvgPool3DGrad,
+        BatchMatMul: BatchMatMul,
+        BatchToSpaceND: BatchToSpaceND,
+        Bincount: Bincount,
+        BroadcastTo: BroadcastTo,
+        BroadcastArgs: BroadcastArgs,
+        Cast: Cast,
+        Ceil: Ceil,
+        ClipByValue: ClipByValue,
+        Complex: Complex,
+        ComplexAbs: ComplexAbs,
+        Concat: Concat,
+        Conv2D: Conv2D,
+        Conv2DBackpropFilter: Conv2DBackpropFilter,
+        Conv2DBackpropInput: Conv2DBackpropInput,
+        Conv3D: Conv3D,
+        Conv3DBackpropFilterV2: Conv3DBackpropFilterV2,
+        Conv3DBackpropInputV2: Conv3DBackpropInputV2,
+        Cos: Cos,
+        Cosh: Cosh,
+        Cumsum: Cumsum,
+        CropAndResize: CropAndResize,
+        DenseBincount: DenseBincount,
+        DepthToSpace: DepthToSpace,
+        DepthwiseConv2dNative: DepthwiseConv2dNative,
+        DepthwiseConv2dNativeBackpropFilter: DepthwiseConv2dNativeBackpropFilter,
+        DepthwiseConv2dNativeBackpropInput: DepthwiseConv2dNativeBackpropInput,
+        Diag: Diag,
+        Dilation2D: Dilation2D,
+        Dilation2DBackpropInput: Dilation2DBackpropInput,
+        Dilation2DBackpropFilter: Dilation2DBackpropFilter,
+        RealDiv: RealDiv,
+        Einsum: Einsum,
+        Elu: Elu,
+        EluGrad: EluGrad,
+        Erf: Erf,
+        Equal: Equal,
+        Exp: Exp,
+        ExpandDims: ExpandDims,
+        Expm1: Expm1,
+        FFT: FFT,
+        Fill: Fill,
+        FlipLeftRight: FlipLeftRight,
+        Floor: Floor,
+        FloorDiv: FloorDiv,
+        FusedBatchNorm: FusedBatchNorm,
+        GatherV2: GatherV2,
+        GatherNd: GatherNd,
+        Greater: Greater,
+        GreaterEqual: GreaterEqual,
+        Identity: Identity,
+        IFFT: IFFT,
+        Imag: Imag,
+        IsFinite: IsFinite,
+        IsInf: IsInf,
+        IsNan: IsNan,
+        LeakyRelu: LeakyRelu,
+        Less: Less,
+        LessEqual: LessEqual,
+        LinSpace: LinSpace,
+        Log: Log,
+        Log1p: Log1p,
+        LogicalAnd: LogicalAnd,
+        LogicalNot: LogicalNot,
+        LogicalOr: LogicalOr,
+        LogSoftmax: LogSoftmax,
+        LRN: LRN,
+        LRNGrad: LRNGrad,
+        Max: Max,
+        Maximum: Maximum,
+        MaxPool: MaxPool,
+        MaxPoolGrad: MaxPoolGrad,
+        MaxPool3D: MaxPool3D,
+        MaxPool3DGrad: MaxPool3DGrad,
+        MaxPoolWithArgmax: MaxPoolWithArgmax,
+        Mean: Mean,
+        Min: Min,
+        Minimum: Minimum,
+        MirrorPad: MirrorPad,
+        Mod: Mod,
+        Multinomial: Multinomial,
+        Multiply: Multiply,
+        Neg: Neg,
+        NotEqual: NotEqual,
+        NonMaxSuppressionV3: NonMaxSuppressionV3,
+        NonMaxSuppressionV4: NonMaxSuppressionV4,
+        NonMaxSuppressionV5: NonMaxSuppressionV5,
+        OnesLike: OnesLike,
+        OneHot: OneHot,
+        Pack: Pack,
+        PadV2: PadV2,
+        Pool: Pool,
+        Pow: Pow,
+        Prelu: Prelu,
+        Prod: Prod,
+        Range: Range,
+        Real: Real,
+        Reciprocal: Reciprocal,
+        Relu: Relu,
+        Reshape: Reshape,
+        ResizeNearestNeighbor: ResizeNearestNeighbor,
+        ResizeNearestNeighborGrad: ResizeNearestNeighborGrad,
+        ResizeBilinear: ResizeBilinear,
+        ResizeBilinearGrad: ResizeBilinearGrad,
+        Relu6: Relu6,
+        Reverse: Reverse,
+        Round: Round,
+        Rsqrt: Rsqrt,
+        ScatterNd: ScatterNd,
+        Select: Select,
+        Selu: Selu,
+        Slice: Slice,
+        Sin: Sin,
+        Sinh: Sinh,
+        Sign: Sign,
+        Sigmoid: Sigmoid,
+        Softplus: Softplus,
+        Sqrt: Sqrt,
+        Sum: Sum,
+        SpaceToBatchND: SpaceToBatchND,
+        SplitV: SplitV,
+        Softmax: Softmax,
+        SparseFillEmptyRows: SparseFillEmptyRows,
+        SparseReshape: SparseReshape,
+        SparseSegmentMean: SparseSegmentMean,
+        SparseSegmentSum: SparseSegmentSum,
+        SparseToDense: SparseToDense,
+        SquaredDifference: SquaredDifference,
+        Square: Square,
+        StridedSlice: StridedSlice,
+        StringNGrams: StringNGrams,
+        StringSplit: StringSplit,
+        StringToHashBucketFast: StringToHashBucketFast,
+        Sub: Sub,
+        Tan: Tan,
+        Tanh: Tanh,
+        Tile: Tile,
+        TopK: TopK,
+        Transform: Transform,
+        Transpose: Transpose,
+        Unique: Unique,
+        Unpack: Unpack,
+        UnsortedSegmentSum: UnsortedSegmentSum,
+        ZerosLike: ZerosLike,
+        Step: Step,
+        FromPixels: FromPixels,
+        RotateWithOffset: RotateWithOffset,
+        _FusedMatMul: _FusedMatMul,
+        FusedConv2D: FusedConv2D,
+        FusedDepthwiseConv2D: FusedDepthwiseConv2D,
+        version_core: version,
+        browser: browser,
+        io: io,
+        math: math,
+        serialization: serialization,
+        test_util: test_util,
+        util: util,
+        backend_util: backend_util,
+        broadcast_util: broadcast_util,
+        tensor_util: tensor_util,
+        slice_util: slice_util,
+        gather_util: gather_nd_util,
+        scatter_util: scatter_nd_util,
+        device_util: device_util,
+        kernel_impls: kernel_impls
     });
 
     /**
@@ -60255,6 +77971,7 @@ return a / b;`;
     }
 
     window.d3 = d3;
+    window.tf = tf;
     /* eslint-enable @typescript-eslint/no-explicit-any */
     // Set the dimensions and margins of the plot
     const margin = { top: 0, right: 0, bottom: 30, left: 60 }, width = 800, height = 800;
@@ -60278,6 +77995,8 @@ return a / b;`;
     }
     getData().then(function (data) {
         data = data.slice(0, 1000);
+        const vectors = tensor2d(data.map((d) => d.vector));
+        const defaultColor = "#69b3a2";
         console.log(tensor(data[0].vector));
         // TODO: consider doing transforms within svg instead of in d3?
         // Add X axis
@@ -60296,7 +78015,7 @@ return a / b;`;
             .append("g")
             .attr("transform", `translate(${margin.left}, 0)`)
             .call(axisLeft(y));
-        const freqRankToRadius = pow$2()
+        const freqRankToRadius = pow$3()
             .exponent(0.5)
             .domain(extent$1(data, (d) => d.freqRank))
             .range([15, 2]);
@@ -60306,6 +78025,7 @@ return a / b;`;
             .selectAll("dot")
             .data(data.slice(0, 1000))
             .join("circle")
+            .attr("class", "word-embedding")
             .attr("cx", function (d) {
             return x(d.vector[0]);
         })
@@ -60313,7 +78033,7 @@ return a / b;`;
             return y(d.vector[1]);
         })
             .attr("r", (d) => freqRankToRadius(d.freqRank))
-            .style("fill", "#69b3a2")
+            .style("fill", defaultColor)
             .style("opacity", 0.5)
             .on("mouseover", function (event, d) {
             tooltip.style("display", "block");
@@ -60331,6 +78051,15 @@ return a / b;`;
             .on("mouseleave", function (event, d) {
             select$3(this).style("opacity", 0.5);
             tooltip.style("display", "none");
+        })
+            .on("click", (event, d) => {
+            // Highlight the 10 nearest neighbors.
+            selectAll(".word-embedding").style("fill", defaultColor);
+            const similarities = flatten(matMul$1(vectors, tensor2d(d.vector, [300, 1])).arraySync());
+            const sim10 = [...similarities].sort(descending$2)[10];
+            selectAll(".word-embedding")
+                .filter((d) => similarities[d.freqRank] >= sim10)
+                .style("fill", "red");
         });
     });
 
