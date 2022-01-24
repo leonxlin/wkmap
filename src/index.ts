@@ -35,6 +35,7 @@ interface Record {
   vectorNormed?: number[];
   freqRank: number;
   node?: Element;
+  plotPos: number[];
 }
 
 async function getData(): Promise<Record[]> {
@@ -45,6 +46,7 @@ async function getData(): Promise<Record[]> {
       word: row[0],
       vector: row.slice(1).map((a) => parseFloat(a)),
       freqRank: index,
+      plotPos: [0, 0],
     };
   });
 }
@@ -56,14 +58,8 @@ function saveVectorsNormed(data: Record[], vectorsNormed: tf.Tensor) {
   }
 }
 
-function xComp(d: Record) {
-  // TODO: make this better
-  return d.vectorNormed ? d.vectorNormed[0] : d.vector[0];
-}
-
-function yComp(d: Record) {
-  // TODO: make this better
-  return d.vectorNormed ? d.vectorNormed[1] : d.vector[1];
+function getComponent(i: number) {
+  return (d: Record) => (d.vectorNormed ? d.vectorNormed[i] : d.vector[i]);
 }
 
 function updatePositions(
@@ -77,8 +73,10 @@ function updatePositions(
     .scaleLinear()
     .domain(d3.extent(data, getX) as [number, number])
     .range([margin.left, margin.left + width]);
+  d3.select(".x-axis").remove();
   svg
     .append("g")
+    .attr("class", "x-axis")
     .attr("transform", `translate(0, ${height})`)
     .call(d3.axisBottom(axisX));
 
@@ -87,12 +85,18 @@ function updatePositions(
     .scaleLinear()
     .domain(d3.extent(data, getY) as [number, number])
     .range([margin.top + height, margin.top]);
+  d3.select(".y-axis").remove();
   svg
     .append("g")
+    .attr("class", "y-axis")
     .attr("transform", `translate(${margin.left}, 0)`)
     .call(d3.axisLeft(axisY));
 
   d3.selectAll(".word-embedding")
+    .each((d) => {
+      const dr = d as Record;
+      dr.plotPos = [getX(dr), getY(dr)];
+    })
     .attr("cx", function (d) {
       return axisX(getX(d as Record));
     })
@@ -110,6 +114,17 @@ getData().then(function (data: Record[]) {
     tf.norm(vectors, /*ord=*/ 2, /*dim=*/ 0, /*keepDims=*/ true)
   );
   saveVectorsNormed(data, vectorsNormed);
+
+  d3.selectAll<HTMLInputElement, undefined>("[name=projection]").on(
+    "click",
+    function () {
+      if (this.value == "comp01") {
+        updatePositions(data, getComponent(0), getComponent(1));
+      } else if (this.value == "comp23") {
+        updatePositions(data, getComponent(2), getComponent(3));
+      }
+    }
+  );
 
   const defaultColor = "#69b3a2";
 
@@ -139,7 +154,7 @@ getData().then(function (data: Record[]) {
         coords[0] += 10;
         coords[1] += 10;
         tooltip
-          .html(`${d.word}: ${xComp(d)}, ${yComp(d)}`)
+          .html(`${d.word}: ${d.plotPos}`)
           .style("left", coords[0] + "px")
           .style("top", coords[1] + "px");
         d3.select(this).style("opacity", 1);
@@ -178,5 +193,5 @@ getData().then(function (data: Record[]) {
         });
     });
 
-  updatePositions(data, xComp, yComp);
+  updatePositions(data, getComponent(0), getComponent(1));
 });

@@ -77989,6 +77989,7 @@ return a / b;`;
                     word: row[0],
                     vector: row.slice(1).map((a) => parseFloat(a)),
                     freqRank: index,
+                    plotPos: [0, 0],
                 };
             });
         });
@@ -77999,13 +78000,8 @@ return a / b;`;
             data[i].vectorNormed = vals[i];
         }
     }
-    function xComp(d) {
-        // TODO: make this better
-        return d.vectorNormed ? d.vectorNormed[0] : d.vector[0];
-    }
-    function yComp(d) {
-        // TODO: make this better
-        return d.vectorNormed ? d.vectorNormed[1] : d.vector[1];
+    function getComponent(i) {
+        return (d) => (d.vectorNormed ? d.vectorNormed[i] : d.vector[i]);
     }
     function updatePositions(data, getX, getY) {
         // TODO: consider doing transforms within svg instead of in d3?
@@ -78013,19 +78009,27 @@ return a / b;`;
         const axisX = linear()
             .domain(extent$1(data, getX))
             .range([margin.left, margin.left + width]);
+        select$3(".x-axis").remove();
         svg
             .append("g")
+            .attr("class", "x-axis")
             .attr("transform", `translate(0, ${height})`)
             .call(axisBottom(axisX));
         // Add Y axis
         const axisY = linear()
             .domain(extent$1(data, getY))
             .range([margin.top + height, margin.top]);
+        select$3(".y-axis").remove();
         svg
             .append("g")
+            .attr("class", "y-axis")
             .attr("transform", `translate(${margin.left}, 0)`)
             .call(axisLeft(axisY));
         selectAll(".word-embedding")
+            .each((d) => {
+            const dr = d;
+            dr.plotPos = [getX(dr), getY(dr)];
+        })
             .attr("cx", function (d) {
             return axisX(getX(d));
         })
@@ -78038,6 +78042,14 @@ return a / b;`;
         const vectors = tensor2d(data.map((d) => d.vector));
         const vectorsNormed = div$1(vectors, norm(vectors, /*ord=*/ 2, /*dim=*/ 0, /*keepDims=*/ true));
         saveVectorsNormed(data, vectorsNormed);
+        selectAll("[name=projection]").on("click", function () {
+            if (this.value == "comp01") {
+                updatePositions(data, getComponent(0), getComponent(1));
+            }
+            else if (this.value == "comp23") {
+                updatePositions(data, getComponent(2), getComponent(3));
+            }
+        });
         const defaultColor = "#69b3a2";
         const freqRankToRadius = pow$3()
             .exponent(0.5)
@@ -78061,7 +78073,7 @@ return a / b;`;
             coords[0] += 10;
             coords[1] += 10;
             tooltip
-                .html(`${d.word}: ${xComp(d)}, ${yComp(d)}`)
+                .html(`${d.word}: ${d.plotPos}`)
                 .style("left", coords[0] + "px")
                 .style("top", coords[1] + "px");
             select$3(this).style("opacity", 1);
@@ -78086,7 +78098,7 @@ return a / b;`;
                 }
             });
         });
-        updatePositions(data, xComp, yComp);
+        updatePositions(data, getComponent(0), getComponent(1));
     });
 
 })();

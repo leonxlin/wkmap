@@ -9,11 +9,21 @@
   </head>
 
   <body>
-    <p>Hullo</p>
-
     <div class="plot">
       <svg></svg>
       <div class="tooltip"></div>
+    </div>
+
+
+    <div class="knobs">
+      <label>
+        <input type="radio" name="projection" value="comp01" checked />
+        Components 0 and 1
+      </label>
+      <label>
+        <input type="radio" name="projection" value="comp23" />
+        Components 2 and 3
+      </label>
     </div>
 
     <script src="bundle.js"></script>
