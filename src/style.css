@@ -1,0 +1,13 @@
+.plot {
+  position: relative;
+  padding: 0;
+}
+
+.tooltip {
+  position: absolute;
+  display: none;
+  margin: 0;
+  padding: 10px;
+  background: white;
+  border: solid 1px;
+}

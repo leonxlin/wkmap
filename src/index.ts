@@ -1,24 +1,27 @@
-import { add } from "./math";
-
 import * as d3 from "d3";
 
-const xx = 20;
-const yy = 10;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Needed to make typescript happy when defining properties on the global window object for easy debugging.
+declare global {
+  interface Window {
+    d3: any;
+  }
+}
+window.d3 = d3;
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
-console.log(`${xx} + ${yy} = ${add(xx, yy)}`);
-// set the dimensions and margins of the graph
-const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-  width = 460 - margin.left - margin.right,
-  height = 400 - margin.top - margin.bottom;
+// Set the dimensions and margins of the plot
+const margin = { top: 0, right: 0, bottom: 30, left: 60 },
+  width = 800,
+  height = 800;
 
-// append the svg object to the body of the page
+// Append the svg object to the body of the page
 const svg = d3
-  .select(".plot")
-  .append("svg")
+  .select(".plot svg")
   .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+  .attr("height", height + margin.top + margin.bottom);
+
+const tooltip = d3.select(".tooltip");
 
 interface Record {
   word: string;
@@ -38,12 +41,14 @@ async function getData(): Promise<Record[]> {
 
 getData().then(function (data: Record[]) {
   console.log(data.slice(0, 100));
+  data = data.slice(0, 1000);
 
+  // TODO: consider doing transforms within svg instead of in d3?
   // Add X axis
   const x = d3
     .scaleLinear()
     .domain(d3.extent(data, (d) => d.vector[0]) as [number, number])
-    .range([0, width]);
+    .range([margin.left, margin.left + width]);
   svg
     .append("g")
     .attr("transform", `translate(0, ${height})`)
@@ -53,11 +58,12 @@ getData().then(function (data: Record[]) {
   const y = d3
     .scaleLinear()
     .domain(d3.extent(data, (d) => d.vector[1]) as [number, number])
-    .range([0, width]);
-  svg.append("g").call(d3.axisLeft(y));
+    .range([margin.top + height, margin.top]);
+  svg
+    .append("g")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .call(d3.axisLeft(y));
 
-  console.log(x);
-  console.log(y);
   // Add dots
   svg
     .append("g")
@@ -70,6 +76,30 @@ getData().then(function (data: Record[]) {
     .attr("cy", function (d) {
       return y(d.vector[1]);
     })
-    .attr("r", 1.5)
-    .style("fill", "#69b3a2");
+    .attr("r", 4)
+    .style("fill", "#69b3a2")
+    .style("opacity", 0.5)
+    .on("mouseover", function (event: MouseEvent, d: Record) {
+      tooltip.style("display", "block");
+    })
+    .on(
+      "mousemove",
+      function (this: d3.BaseType, event: MouseEvent, d: Record) {
+        const coords = d3.pointer(event, svg.node());
+        coords[0] += 10;
+        coords[1] += 10;
+        tooltip
+          .html(`${d.word}: ${d.vector[0]}, ${d.vector[1]}`)
+          .style("left", coords[0] + "px")
+          .style("top", coords[1] + "px");
+        d3.select(this).style("opacity", 1);
+      }
+    )
+    .on(
+      "mouseleave",
+      function (this: d3.BaseType, event: MouseEvent, d: Record) {
+        d3.select(this).style("opacity", 0.5);
+        tooltip.style("display", "none");
+      }
+    );
 });
