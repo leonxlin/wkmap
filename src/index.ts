@@ -66,6 +66,41 @@ function yComp(d: Record) {
   return d.vectorNormed ? d.vectorNormed[1] : d.vector[1];
 }
 
+function updatePositions(
+  data: Record[],
+  getX: (d: Record) => number,
+  getY: (d: Record) => number
+): void {
+  // TODO: consider doing transforms within svg instead of in d3?
+  // Add X axis
+  const axisX = d3
+    .scaleLinear()
+    .domain(d3.extent(data, getX) as [number, number])
+    .range([margin.left, margin.left + width]);
+  svg
+    .append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(axisX));
+
+  // Add Y axis
+  const axisY = d3
+    .scaleLinear()
+    .domain(d3.extent(data, getY) as [number, number])
+    .range([margin.top + height, margin.top]);
+  svg
+    .append("g")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .call(d3.axisLeft(axisY));
+
+  d3.selectAll(".word-embedding")
+    .attr("cx", function (d) {
+      return axisX(getX(d as Record));
+    })
+    .attr("cy", function (d) {
+      return axisY(getY(d as Record));
+    });
+}
+
 getData().then(function (data: Record[]) {
   data = data.slice(0, 10000);
 
@@ -77,27 +112,6 @@ getData().then(function (data: Record[]) {
   saveVectorsNormed(data, vectorsNormed);
 
   const defaultColor = "#69b3a2";
-
-  // TODO: consider doing transforms within svg instead of in d3?
-  // Add X axis
-  const x = d3
-    .scaleLinear()
-    .domain(d3.extent(data, xComp) as [number, number])
-    .range([margin.left, margin.left + width]);
-  svg
-    .append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(x));
-
-  // Add Y axis
-  const y = d3
-    .scaleLinear()
-    .domain(d3.extent(data, yComp) as [number, number])
-    .range([margin.top + height, margin.top]);
-  svg
-    .append("g")
-    .attr("transform", `translate(${margin.left}, 0)`)
-    .call(d3.axisLeft(y));
 
   const freqRankToRadius = d3
     .scalePow()
@@ -112,12 +126,6 @@ getData().then(function (data: Record[]) {
     .data(data)
     .join("circle")
     .attr("class", "word-embedding")
-    .attr("cx", function (d) {
-      return x(xComp(d));
-    })
-    .attr("cy", function (d) {
-      return y(yComp(d));
-    })
     .attr("r", (d) => freqRankToRadius(d.freqRank))
     .style("fill", defaultColor)
     .style("opacity", 0.5)
@@ -169,4 +177,6 @@ getData().then(function (data: Record[]) {
           }
         });
     });
+
+  updatePositions(data, xComp, yComp);
 });

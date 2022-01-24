@@ -78007,29 +78007,38 @@ return a / b;`;
         // TODO: make this better
         return d.vectorNormed ? d.vectorNormed[1] : d.vector[1];
     }
+    function updatePositions(data, getX, getY) {
+        // TODO: consider doing transforms within svg instead of in d3?
+        // Add X axis
+        const axisX = linear()
+            .domain(extent$1(data, getX))
+            .range([margin.left, margin.left + width]);
+        svg
+            .append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(axisBottom(axisX));
+        // Add Y axis
+        const axisY = linear()
+            .domain(extent$1(data, getY))
+            .range([margin.top + height, margin.top]);
+        svg
+            .append("g")
+            .attr("transform", `translate(${margin.left}, 0)`)
+            .call(axisLeft(axisY));
+        selectAll(".word-embedding")
+            .attr("cx", function (d) {
+            return axisX(getX(d));
+        })
+            .attr("cy", function (d) {
+            return axisY(getY(d));
+        });
+    }
     getData().then(function (data) {
         data = data.slice(0, 10000);
         const vectors = tensor2d(data.map((d) => d.vector));
         const vectorsNormed = div$1(vectors, norm(vectors, /*ord=*/ 2, /*dim=*/ 0, /*keepDims=*/ true));
         saveVectorsNormed(data, vectorsNormed);
         const defaultColor = "#69b3a2";
-        // TODO: consider doing transforms within svg instead of in d3?
-        // Add X axis
-        const x = linear()
-            .domain(extent$1(data, xComp))
-            .range([margin.left, margin.left + width]);
-        svg
-            .append("g")
-            .attr("transform", `translate(0, ${height})`)
-            .call(axisBottom(x));
-        // Add Y axis
-        const y = linear()
-            .domain(extent$1(data, yComp))
-            .range([margin.top + height, margin.top]);
-        svg
-            .append("g")
-            .attr("transform", `translate(${margin.left}, 0)`)
-            .call(axisLeft(y));
         const freqRankToRadius = pow$3()
             .exponent(0.5)
             .domain(extent$1(data, (d) => d.freqRank))
@@ -78041,12 +78050,6 @@ return a / b;`;
             .data(data)
             .join("circle")
             .attr("class", "word-embedding")
-            .attr("cx", function (d) {
-            return x(xComp(d));
-        })
-            .attr("cy", function (d) {
-            return y(yComp(d));
-        })
             .attr("r", (d) => freqRankToRadius(d.freqRank))
             .style("fill", defaultColor)
             .style("opacity", 0.5)
@@ -78083,6 +78086,7 @@ return a / b;`;
                 }
             });
         });
+        updatePositions(data, xComp, yComp);
     });
 
 })();
