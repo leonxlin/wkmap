@@ -17,7 +17,7 @@ window.tf = tf;
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 // Set the dimensions and margins of the plot
-const margin = { top: 0, right: 0, bottom: 30, left: 60 },
+const margin = { top: 30, right: 30, bottom: 30, left: 60 },
   width = 800,
   height = 800;
 
@@ -77,7 +77,7 @@ function updatePositions(
   svg
     .append("g")
     .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${height})`)
+    .attr("transform", `translate(0, ${height + margin.top})`)
     .call(d3.axisBottom(axisX));
 
   // Add Y axis
@@ -105,6 +105,50 @@ function updatePositions(
     });
 }
 
+function useGirlBoyPositions(data: Record[], vectors: tf.Tensor) {
+  let girl!: tf.Tensor, boy!: tf.Tensor;
+  data.forEach((d) => {
+    if (d.word == "girl" && d.vectorNormed) {
+      girl = tf.tensor(d.vectorNormed);
+    } else if (d.word == "boy" && d.vectorNormed) {
+      boy = tf.tensor(d.vectorNormed);
+    }
+  });
+
+  const N = data.length;
+
+  if (!girl || !boy) {
+    console.log("One or both vectors not found!");
+    return;
+  }
+
+  const girlBoy = tf.sub(boy, girl);
+  const girlOthers = tf.sub(vectors, tf.reshape(girl, [1, 300]));
+  const sims = tf.div(
+    tf.matMul(girlOthers, tf.reshape(girlBoy, [300, 1])),
+    tf.dot(girlBoy, girlBoy)
+  );
+  const distancesToGirlBoyLine = tf.norm(
+    tf.sub(
+      girlOthers,
+      tf.matMul(tf.reshape(sims, [N, 1]), tf.reshape(girlBoy, [1, 300]))
+    ),
+    /*ord=*/ 2,
+    /*axis=*/ 1
+  );
+
+  const distancesArr = tf.util.flatten(
+    distancesToGirlBoyLine.arraySync()
+  ) as number[];
+  const simsArr = tf.util.flatten(sims.arraySync()) as number[];
+
+  updatePositions(
+    data,
+    (d: Record) => simsArr[d.freqRank],
+    (d: Record) => distancesArr[d.freqRank]
+  );
+}
+
 getData().then(function (data: Record[]) {
   data = data.slice(0, 10000);
 
@@ -122,6 +166,8 @@ getData().then(function (data: Record[]) {
         updatePositions(data, getComponent(0), getComponent(1));
       } else if (this.value == "comp23") {
         updatePositions(data, getComponent(2), getComponent(3));
+      } else if (this.value == "girlboy") {
+        useGirlBoyPositions(data, vectorsNormed);
       }
     }
   );

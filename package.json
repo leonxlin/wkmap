@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx eslint ./src --ext .js,.jsx,.ts,.tsx && npx prettier --write ./src './*.js' && npx rollup -c",
+    "build": "npx eslint ./src --ext .js,.jsx,.ts,.tsx && npx prettier --write ./src && npx rollup -c",
     "start": "npm run-script build"
   },
   "repository": {

@@ -77974,7 +77974,7 @@ return a / b;`;
     window.tf = tf;
     /* eslint-enable @typescript-eslint/no-explicit-any */
     // Set the dimensions and margins of the plot
-    const margin = { top: 0, right: 0, bottom: 30, left: 60 }, width = 800, height = 800;
+    const margin = { top: 30, right: 30, bottom: 30, left: 60 }, width = 800, height = 800;
     // Append the svg object to the body of the page
     const svg = select$3(".plot svg")
         .attr("width", width + margin.left + margin.right)
@@ -78013,7 +78013,7 @@ return a / b;`;
         svg
             .append("g")
             .attr("class", "x-axis")
-            .attr("transform", `translate(0, ${height})`)
+            .attr("transform", `translate(0, ${height + margin.top})`)
             .call(axisBottom(axisX));
         // Add Y axis
         const axisY = linear()
@@ -78037,6 +78037,31 @@ return a / b;`;
             return axisY(getY(d));
         });
     }
+    function useGirlBoyPositions(data, vectors) {
+        let girl, boy;
+        data.forEach((d) => {
+            if (d.word == "girl" && d.vectorNormed) {
+                girl = tensor(d.vectorNormed);
+            }
+            else if (d.word == "boy" && d.vectorNormed) {
+                boy = tensor(d.vectorNormed);
+            }
+        });
+        const N = data.length;
+        if (!girl || !boy) {
+            console.log("One or both vectors not found!");
+            return;
+        }
+        const girlBoy = sub$2(boy, girl);
+        const girlOthers = sub$2(vectors, reshape$2(girl, [1, 300]));
+        const sims = div$1(matMul$1(girlOthers, reshape$2(girlBoy, [300, 1])), dot(girlBoy, girlBoy));
+        const distancesToGirlBoyLine = norm(sub$2(girlOthers, matMul$1(reshape$2(sims, [N, 1]), reshape$2(girlBoy, [1, 300]))), 
+        /*ord=*/ 2, 
+        /*axis=*/ 1);
+        const distancesArr = flatten(distancesToGirlBoyLine.arraySync());
+        const simsArr = flatten(sims.arraySync());
+        updatePositions(data, (d) => simsArr[d.freqRank], (d) => distancesArr[d.freqRank]);
+    }
     getData().then(function (data) {
         data = data.slice(0, 10000);
         const vectors = tensor2d(data.map((d) => d.vector));
@@ -78048,6 +78073,9 @@ return a / b;`;
             }
             else if (this.value == "comp23") {
                 updatePositions(data, getComponent(2), getComponent(3));
+            }
+            else if (this.value == "girlboy") {
+                useGirlBoyPositions(data, vectorsNormed);
             }
         });
         const defaultColor = "#69b3a2";
