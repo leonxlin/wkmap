@@ -167,6 +167,56 @@ function computeWordPairProjection(
   return tf.concat2d([sims, distancesToABLine], /*axis=*/ 1);
 }
 
+// wordsA and wordsB need not have the same length.
+function useAvgOfWordPairPostions2(
+  data: Record[],
+  vectors: tf.Tensor2D,
+  wordsA: string[],
+  wordsB: string[]
+) {
+  const vecsA = [] as tf.Tensor2D[],
+    vecsB = [] as tf.Tensor2D[];
+  data.forEach((d) => {
+    if (wordsA.includes(d.word) && d.vectorNormed) {
+      vecsA.push(tf.tensor2d(d.vectorNormed, [300, 1]));
+    } else if (wordsB.includes(d.word) && d.vectorNormed) {
+      vecsB.push(tf.tensor2d(d.vectorNormed, [300, 1]));
+    }
+  });
+
+  const matA = tf.concat2d(vecsA, /*axis=*/ 1);
+  const matB = tf.concat2d(vecsB, /*axis=*/ 1);
+  const simsA = tf.matMul(vectors, matA);
+  const simsB = tf.matMul(vectors, matB);
+  const aggDistA = tf.exp(
+    tf.mean(
+      tf.log(tf.maximum(tf.mul(tf.sub(1, simsA), 0.5), 0)),
+      /*axis=*/ 1,
+      /*keepDims=*/ true
+    )
+  );
+  const aggDistB = tf.exp(
+    tf.mean(
+      tf.log(tf.maximum(tf.mul(tf.sub(1, simsB), 0.5), 0)),
+      /*axis=*/ 1,
+      /*keepDims=*/ true
+    )
+  );
+
+  const totDist = tf.add(aggDistA, aggDistB);
+  const abScale = tf.div(aggDistA, totDist);
+  const coords = tf.concat([abScale, totDist], /*axis=*/ 1);
+  const coordsArr = coords.arraySync() as number[][];
+
+  updatePositions(
+    data,
+    (d: Record) => coordsArr[d.freqRank][0],
+    (d: Record) => coordsArr[d.freqRank][1]
+  );
+  showWords(wordsA.concat(wordsB));
+}
+
+// wordsA and wordsB must be the same length.
 function useAvgOfWordPairPositions(
   data: Record[],
   vectors: tf.Tensor2D,
@@ -235,6 +285,20 @@ getData().then(function (data: Record[]) {
         );
       } else if (this.value == "liberty") {
         useAvgOfWordPairPositions(
+          data,
+          vectorsNormed,
+          ["libertarian", "liberty", "libertarianism"],
+          ["authoritarian", "authority", "authoritarianism"]
+        );
+      } else if (this.value == "gender2") {
+        useAvgOfWordPairPostions2(
+          data,
+          vectorsNormed,
+          ["girl", "woman", "female", "she"],
+          ["boy", "man", "male", "he"]
+        );
+      } else if (this.value == "liberty2") {
+        useAvgOfWordPairPostions2(
           data,
           vectorsNormed,
           ["libertarian", "liberty", "libertarianism"],
