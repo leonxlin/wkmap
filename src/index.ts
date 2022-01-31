@@ -42,7 +42,7 @@ interface Record {
 }
 
 async function getData(): Promise<Record[]> {
-  const raw = await d3.text("./data/wiki-news-300d-10k-filtered.vec");
+  const raw = await d3.text("./data/wiki-news-300d-50k-filtered.vec");
   const dsv = d3.dsvFormat(" ");
   return dsv.parseRows(raw).map((row, index) => {
     return {
@@ -111,7 +111,19 @@ function updatePositions(
     })
     .attr("cy", function (d) {
       return axisY(getY(d as Record));
-    });
+    })
+    .filter((d) => {
+      return (d as Record).freqRank < 1000;
+    })
+    .style("display", "inline");
+}
+
+function showWords(words: string[]): void {
+  d3.selectAll(".word-embedding")
+    .filter((d) => {
+      return words.includes((d as Record).word);
+    })
+    .style("display", "inline");
 }
 
 function computeWordPairProjection(
@@ -155,6 +167,27 @@ function computeWordPairProjection(
   return tf.concat2d([sims, distancesToABLine], /*axis=*/ 1);
 }
 
+function useAvgOfWordPairPositions(
+  data: Record[],
+  vectors: tf.Tensor2D,
+  wordsA: string[],
+  wordsB: string[]
+) {
+  const projs: tf.Tensor2D[] = [];
+  for (let i = 0; i < wordsA.length; ++i) {
+    projs.push(computeWordPairProjection(wordsA[i], wordsB[i], data, vectors));
+  }
+  const coords = tf.div(tf.addN(projs), wordsA.length) as tf.Tensor2D;
+  const coordsArr = coords.arraySync() as number[][];
+
+  updatePositions(
+    data,
+    (d: Record) => coordsArr[d.freqRank][0],
+    (d: Record) => coordsArr[d.freqRank][1]
+  );
+  showWords(wordsA.concat(wordsB));
+}
+
 function useGirlBoyPositions(data: Record[], vectors: tf.Tensor2D) {
   const coords = computeWordPairProjection("girl", "boy", data, vectors);
   const coordsArr = coords.arraySync() as number[][];
@@ -164,11 +197,10 @@ function useGirlBoyPositions(data: Record[], vectors: tf.Tensor2D) {
     (d: Record) => coordsArr[d.freqRank][0],
     (d: Record) => coordsArr[d.freqRank][1]
   );
+  showWords(["girl", "boy"]);
 }
 
 getData().then(function (data: Record[]) {
-  data = data.slice(0, 10000);
-
   const vectors = tf.tensor2d(data.map((d) => d.vector));
   const vectorNorms = tf.norm(
     vectors,
@@ -194,6 +226,20 @@ getData().then(function (data: Record[]) {
           (d) => Math.log(d.freqRank + 1),
           (d) => d.norm || -1
         );
+      } else if (this.value == "gender") {
+        useAvgOfWordPairPositions(
+          data,
+          vectorsNormed,
+          ["girl", "woman", "female", "she"],
+          ["boy", "man", "male", "he"]
+        );
+      } else if (this.value == "liberty") {
+        useAvgOfWordPairPositions(
+          data,
+          vectorsNormed,
+          ["libertarian", "liberty", "libertarianism"],
+          ["authoritarian", "authority", "authoritarianism"]
+        );
       }
     }
   );
@@ -216,6 +262,7 @@ getData().then(function (data: Record[]) {
     .attr("r", (d) => freqRankToRadius(d.freqRank))
     .style("fill", defaultColor)
     .style("opacity", 0.5)
+    .style("display", "none")
     .on("mouseover", function (event: MouseEvent, d: Record) {
       tooltip.style("display", "block");
     })
@@ -256,6 +303,7 @@ getData().then(function (data: Record[]) {
 
       d3.selectAll(".word-embedding")
         .filter((d) => similarities[(d as Record).freqRank] >= sim10)
+        .style("display", "inline")
         .style("fill", "red")
         .each(function (this) {
           const node = this as Element;

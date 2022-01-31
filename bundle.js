@@ -77982,7 +77982,7 @@ return a / b;`;
     const tooltip = select$3(".tooltip");
     function getData() {
         return __awaiter(this, void 0, void 0, function* () {
-            const raw = yield text("./data/wiki-news-300d-10k-filtered.vec");
+            const raw = yield text("./data/wiki-news-300d-50k-filtered.vec");
             const dsv = dsvFormat(" ");
             return dsv.parseRows(raw).map((row, index) => {
                 return {
@@ -78037,7 +78037,18 @@ return a / b;`;
         })
             .attr("cy", function (d) {
             return axisY(getY(d));
-        });
+        })
+            .filter((d) => {
+            return d.freqRank < 1000;
+        })
+            .style("display", "inline");
+    }
+    function showWords(words) {
+        selectAll(".word-embedding")
+            .filter((d) => {
+            return words.includes(d.word);
+        })
+            .style("display", "inline");
     }
     function computeWordPairProjection(wordA, wordB, data, vectors) {
         let vecA, vecB;
@@ -78062,13 +78073,23 @@ return a / b;`;
         /*keepDims=*/ true);
         return concat2d([sims, distancesToABLine], /*axis=*/ 1);
     }
+    function useAvgOfWordPairPositions(data, vectors, wordsA, wordsB) {
+        const projs = [];
+        for (let i = 0; i < wordsA.length; ++i) {
+            projs.push(computeWordPairProjection(wordsA[i], wordsB[i], data, vectors));
+        }
+        const coords = div$1(addN$2(projs), wordsA.length);
+        const coordsArr = coords.arraySync();
+        updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][1]);
+        showWords(wordsA.concat(wordsB));
+    }
     function useGirlBoyPositions(data, vectors) {
         const coords = computeWordPairProjection("girl", "boy", data, vectors);
         const coordsArr = coords.arraySync();
         updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][1]);
+        showWords(["girl", "boy"]);
     }
     getData().then(function (data) {
-        data = data.slice(0, 10000);
         const vectors = tensor2d(data.map((d) => d.vector));
         const vectorNorms = norm(vectors, 
         /*ord=*/ 2, 
@@ -78089,6 +78110,12 @@ return a / b;`;
             else if (this.value == "freqlen") {
                 updatePositions(data, (d) => Math.log(d.freqRank + 1), (d) => d.norm || -1);
             }
+            else if (this.value == "gender") {
+                useAvgOfWordPairPositions(data, vectorsNormed, ["girl", "woman", "female", "she"], ["boy", "man", "male", "he"]);
+            }
+            else if (this.value == "liberty") {
+                useAvgOfWordPairPositions(data, vectorsNormed, ["libertarian", "liberty", "libertarianism"], ["authoritarian", "authority", "authoritarianism"]);
+            }
         });
         const defaultColor = "#69b3a2";
         const freqRankToRadius = pow$3()
@@ -78105,6 +78132,7 @@ return a / b;`;
             .attr("r", (d) => freqRankToRadius(d.freqRank))
             .style("fill", defaultColor)
             .style("opacity", 0.5)
+            .style("display", "none")
             .on("mouseover", function (event, d) {
             tooltip.style("display", "block");
         })
@@ -78130,6 +78158,7 @@ return a / b;`;
             const sim10 = [...similarities].sort(descending$2)[10];
             selectAll(".word-embedding")
                 .filter((d) => similarities[d.freqRank] >= sim10)
+                .style("display", "inline")
                 .style("fill", "red")
                 .each(function () {
                 const node = this;

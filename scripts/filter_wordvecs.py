@@ -1,4 +1,8 @@
-"""Filter word vector files to exclude lines with quotation marks."""
+"""Filter word vector files to exclude lines with quotation marks.
+
+Example invocation:
+python scripts/filter_wordvecs.py data/wiki-news-300d-50k.vec data/wiki-news-50k-filtered.vec
+"""
 
 import sys
 
