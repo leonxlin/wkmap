@@ -77975,6 +77975,7 @@ return a / b;`;
     /* eslint-enable @typescript-eslint/no-explicit-any */
     // Set the dimensions and margins of the plot
     const margin = { top: 30, right: 30, bottom: 30, left: 60 }, width = 800, height = 800;
+    const defaultColor = "#69b3a2";
     // Append the svg object to the body of the page
     const svg = select$3(".plot svg")
         .attr("width", width + margin.left + margin.right)
@@ -78043,12 +78044,21 @@ return a / b;`;
         })
             .style("display", "inline");
     }
-    function showWords(words) {
-        selectAll(".word-embedding")
+    function showWords(words, highlight = false) {
+        const selection = selectAll(".word-embedding")
             .filter((d) => {
             return words.includes(d.word);
         })
             .style("display", "inline");
+        if (highlight) {
+            selectAll(".word-embedding").style("fill", defaultColor);
+            selection.style("fill", "red").each(function () {
+                const node = this;
+                if (node.parentNode) {
+                    node.parentNode.appendChild(node); // Bring to front.
+                }
+            });
+        }
     }
     function computeWordPairProjection(wordA, wordB, data, vectors) {
         let vecA, vecB;
@@ -78152,10 +78162,11 @@ return a / b;`;
                 useAvgOfWordPairPositions2(data, vectorsNormed, ["libertarian", "liberty", "libertarianism"], ["authoritarian", "authority", "authoritarianism"]);
             }
             else if (this.value == "chinaus") {
-                useAvgOfWordPairPositions(data, vectorsNormed, ["China", "Chinese"], ["U.S.", "American"]);
+                useAvgOfWordPairPositions(data, vectorsNormed, ["China", "Chinese"], ["U.S.", "American"]
+                // TODO: Adjectives are closer to the American side. Why?
+                );
             }
         });
-        const defaultColor = "#69b3a2";
         const freqRankToRadius = pow$3()
             .exponent(0.5)
             .domain(extent$1(data, (d) => d.freqRank))
@@ -78194,18 +78205,15 @@ return a / b;`;
             const similarities = flatten(matMul$1(vectorsNormed, tensor2d(d.vectorNormed || d.vector, [300, 1]))
                 .arraySync());
             const sim10 = [...similarities].sort(descending$2)[10];
-            selectAll(".word-embedding")
+            showWords(data
                 .filter((d) => similarities[d.freqRank] >= sim10)
-                .style("display", "inline")
-                .style("fill", "red")
-                .each(function () {
-                const node = this;
-                if (node.parentNode) {
-                    node.parentNode.appendChild(node); // Bring to front.
-                }
-            });
+                .map((d) => d.word), 
+            /*highlight=*/ true);
         });
         updatePositions(data, getComponent(0), getComponent(1));
+        select$3("[name=customWord]").on("input", function () {
+            showWords([this.value], true);
+        });
     });
 
 })();

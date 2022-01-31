@@ -21,6 +21,8 @@ const margin = { top: 30, right: 30, bottom: 30, left: 60 },
   width = 800,
   height = 800;
 
+const defaultColor = "#69b3a2";
+
 // Append the svg object to the body of the page
 const svg = d3
   .select(".plot svg")
@@ -118,12 +120,23 @@ function updatePositions(
     .style("display", "inline");
 }
 
-function showWords(words: string[]): void {
-  d3.selectAll(".word-embedding")
+function showWords(words: string[], highlight = false): void {
+  const selection = d3
+    .selectAll(".word-embedding")
     .filter((d) => {
       return words.includes((d as Record).word);
     })
     .style("display", "inline");
+
+  if (highlight) {
+    d3.selectAll(".word-embedding").style("fill", defaultColor);
+    selection.style("fill", "red").each(function (this) {
+      const node = this as Element;
+      if (node.parentNode) {
+        node.parentNode.appendChild(node); // Bring to front.
+      }
+    });
+  }
 }
 
 function computeWordPairProjection(
@@ -316,8 +329,6 @@ getData().then(function (data: Record[]) {
     }
   );
 
-  const defaultColor = "#69b3a2";
-
   const freqRankToRadius = d3
     .scalePow()
     .exponent(0.5)
@@ -373,17 +384,20 @@ getData().then(function (data: Record[]) {
       ) as number[];
       const sim10 = [...similarities].sort(d3.descending)[10];
 
-      d3.selectAll(".word-embedding")
-        .filter((d) => similarities[(d as Record).freqRank] >= sim10)
-        .style("display", "inline")
-        .style("fill", "red")
-        .each(function (this) {
-          const node = this as Element;
-          if (node.parentNode) {
-            node.parentNode.appendChild(node); // Bring to front.
-          }
-        });
+      showWords(
+        data
+          .filter((d) => similarities[d.freqRank] >= sim10)
+          .map((d) => d.word),
+        /*highlight=*/ true
+      );
     });
 
   updatePositions(data, getComponent(0), getComponent(1));
+
+  d3.select<HTMLInputElement, undefined>("[name=customWord]").on(
+    "input",
+    function () {
+      showWords([this.value], true);
+    }
+  );
 });
