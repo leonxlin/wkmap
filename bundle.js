@@ -77994,10 +77994,12 @@ return a / b;`;
             });
         });
     }
-    function saveVectorsNormed(data, vectorsNormed) {
-        const vals = vectorsNormed.arraySync();
-        for (let i = 0; i < vals.length; ++i) {
-            data[i].vectorNormed = vals[i];
+    function saveVectorsNormed(data, vectorNorms, vectorsNormed) {
+        const vnds = vectorsNormed.arraySync();
+        const vns = flatten(vectorNorms.arraySync());
+        for (let i = 0; i < vnds.length; ++i) {
+            data[i].vectorNormed = vnds[i];
+            data[i].norm = vns[i];
         }
     }
     function getComponent(i) {
@@ -78037,36 +78039,43 @@ return a / b;`;
             return axisY(getY(d));
         });
     }
-    function useGirlBoyPositions(data, vectors) {
-        let girl, boy;
+    function computeWordPairProjection(wordA, wordB, data, vectors) {
+        let vecA, vecB;
         data.forEach((d) => {
-            if (d.word == "girl" && d.vectorNormed) {
-                girl = tensor(d.vectorNormed);
+            if (d.word == wordA && d.vectorNormed) {
+                vecA = tensor(d.vectorNormed);
             }
-            else if (d.word == "boy" && d.vectorNormed) {
-                boy = tensor(d.vectorNormed);
+            else if (d.word == wordB && d.vectorNormed) {
+                vecB = tensor(d.vectorNormed);
             }
         });
         const N = data.length;
-        if (!girl || !boy) {
-            console.log("One or both vectors not found!");
-            return;
+        if (!vecA || !vecB) {
+            throw new Error(`Vector not found for ${wordA} or ${wordB} or both`);
         }
-        const girlBoy = sub$2(boy, girl);
-        const girlOthers = sub$2(vectors, reshape$2(girl, [1, 300]));
-        const sims = div$1(matMul$1(girlOthers, reshape$2(girlBoy, [300, 1])), dot(girlBoy, girlBoy));
-        const distancesToGirlBoyLine = norm(sub$2(girlOthers, matMul$1(reshape$2(sims, [N, 1]), reshape$2(girlBoy, [1, 300]))), 
+        const vecAB = sub$2(vecB, vecA);
+        const vecAOs = sub$2(vectors, reshape$2(vecA, [1, 300]));
+        const sims = div$1(matMul$1(vecAOs, reshape$2(vecAB, [300, 1])), dot(vecAB, vecAB));
+        const distancesToABLine = norm(sub$2(vecAOs, matMul$1(reshape$2(sims, [N, 1]), reshape$2(vecAB, [1, 300]))), 
         /*ord=*/ 2, 
-        /*axis=*/ 1);
-        const distancesArr = flatten(distancesToGirlBoyLine.arraySync());
-        const simsArr = flatten(sims.arraySync());
-        updatePositions(data, (d) => simsArr[d.freqRank], (d) => distancesArr[d.freqRank]);
+        /*axis=*/ 1, 
+        /*keepDims=*/ true);
+        return concat2d([sims, distancesToABLine], /*axis=*/ 1);
+    }
+    function useGirlBoyPositions(data, vectors) {
+        const coords = computeWordPairProjection("girl", "boy", data, vectors);
+        const coordsArr = coords.arraySync();
+        updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][1]);
     }
     getData().then(function (data) {
         data = data.slice(0, 10000);
         const vectors = tensor2d(data.map((d) => d.vector));
-        const vectorsNormed = div$1(vectors, norm(vectors, /*ord=*/ 2, /*dim=*/ 0, /*keepDims=*/ true));
-        saveVectorsNormed(data, vectorsNormed);
+        const vectorNorms = norm(vectors, 
+        /*ord=*/ 2, 
+        /*dim=*/ 1, 
+        /*keep_dims=*/ true);
+        const vectorsNormed = div$1(vectors, vectorNorms);
+        saveVectorsNormed(data, vectorNorms, vectorsNormed);
         selectAll("[name=projection]").on("click", function () {
             if (this.value == "comp01") {
                 updatePositions(data, getComponent(0), getComponent(1));
@@ -78076,6 +78085,9 @@ return a / b;`;
             }
             else if (this.value == "girlboy") {
                 useGirlBoyPositions(data, vectorsNormed);
+            }
+            else if (this.value == "freqlen") {
+                updatePositions(data, (d) => Math.log(d.freqRank + 1), (d) => d.norm || -1);
             }
         });
         const defaultColor = "#69b3a2";

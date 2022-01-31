@@ -32,7 +32,10 @@ const tooltip = d3.select(".tooltip");
 interface Record {
   word: string;
   vector: number[];
+  norm?: number;
   vectorNormed?: number[];
+
+  // Rank by word frequency (0 corresponding to most frequent). Also, index into
   freqRank: number;
   node?: Element;
   plotPos: number[];
@@ -51,10 +54,16 @@ async function getData(): Promise<Record[]> {
   });
 }
 
-function saveVectorsNormed(data: Record[], vectorsNormed: tf.Tensor) {
-  const vals = vectorsNormed.arraySync() as number[][];
-  for (let i = 0; i < vals.length; ++i) {
-    data[i].vectorNormed = vals[i];
+function saveVectorsNormed(
+  data: Record[],
+  vectorNorms: tf.Tensor,
+  vectorsNormed: tf.Tensor
+) {
+  const vnds = vectorsNormed.arraySync() as number[][];
+  const vns = tf.util.flatten(vectorNorms.arraySync()) as number[];
+  for (let i = 0; i < vnds.length; ++i) {
+    data[i].vectorNormed = vnds[i];
+    data[i].norm = vns[i];
   }
 }
 
@@ -105,47 +114,55 @@ function updatePositions(
     });
 }
 
-function useGirlBoyPositions(data: Record[], vectors: tf.Tensor) {
-  let girl!: tf.Tensor, boy!: tf.Tensor;
+function computeWordPairProjection(
+  wordA: string,
+  wordB: string,
+  data: Record[],
+  vectors: tf.Tensor2D
+): tf.Tensor2D {
+  let vecA!: tf.Tensor, vecB!: tf.Tensor;
   data.forEach((d) => {
-    if (d.word == "girl" && d.vectorNormed) {
-      girl = tf.tensor(d.vectorNormed);
-    } else if (d.word == "boy" && d.vectorNormed) {
-      boy = tf.tensor(d.vectorNormed);
+    if (d.word == wordA && d.vectorNormed) {
+      vecA = tf.tensor(d.vectorNormed);
+    } else if (d.word == wordB && d.vectorNormed) {
+      vecB = tf.tensor(d.vectorNormed);
     }
   });
 
   const N = data.length;
 
-  if (!girl || !boy) {
-    console.log("One or both vectors not found!");
-    return;
+  if (!vecA || !vecB) {
+    throw new Error(`Vector not found for ${wordA} or ${wordB} or both`);
+    console.log(`Vector not found for ${wordA} or ${wordB} or both`);
   }
 
-  const girlBoy = tf.sub(boy, girl);
-  const girlOthers = tf.sub(vectors, tf.reshape(girl, [1, 300]));
+  const vecAB = tf.sub(vecB, vecA);
+  const vecAOs = tf.sub(vectors, tf.reshape(vecA, [1, 300]));
   const sims = tf.div(
-    tf.matMul(girlOthers, tf.reshape(girlBoy, [300, 1])),
-    tf.dot(girlBoy, girlBoy)
-  );
-  const distancesToGirlBoyLine = tf.norm(
+    tf.matMul(vecAOs, tf.reshape(vecAB, [300, 1])),
+    tf.dot(vecAB, vecAB)
+  ) as tf.Tensor2D;
+  const distancesToABLine = tf.norm(
     tf.sub(
-      girlOthers,
-      tf.matMul(tf.reshape(sims, [N, 1]), tf.reshape(girlBoy, [1, 300]))
+      vecAOs,
+      tf.matMul(tf.reshape(sims, [N, 1]), tf.reshape(vecAB, [1, 300]))
     ),
     /*ord=*/ 2,
-    /*axis=*/ 1
-  );
+    /*axis=*/ 1,
+    /*keepDims=*/ true
+  ) as tf.Tensor2D;
 
-  const distancesArr = tf.util.flatten(
-    distancesToGirlBoyLine.arraySync()
-  ) as number[];
-  const simsArr = tf.util.flatten(sims.arraySync()) as number[];
+  return tf.concat2d([sims, distancesToABLine], /*axis=*/ 1);
+}
+
+function useGirlBoyPositions(data: Record[], vectors: tf.Tensor2D) {
+  const coords = computeWordPairProjection("girl", "boy", data, vectors);
+  const coordsArr = coords.arraySync() as number[][];
 
   updatePositions(
     data,
-    (d: Record) => simsArr[d.freqRank],
-    (d: Record) => distancesArr[d.freqRank]
+    (d: Record) => coordsArr[d.freqRank][0],
+    (d: Record) => coordsArr[d.freqRank][1]
   );
 }
 
@@ -153,11 +170,14 @@ getData().then(function (data: Record[]) {
   data = data.slice(0, 10000);
 
   const vectors = tf.tensor2d(data.map((d) => d.vector));
-  const vectorsNormed = tf.div(
+  const vectorNorms = tf.norm(
     vectors,
-    tf.norm(vectors, /*ord=*/ 2, /*dim=*/ 0, /*keepDims=*/ true)
+    /*ord=*/ 2,
+    /*dim=*/ 1,
+    /*keep_dims=*/ true
   );
-  saveVectorsNormed(data, vectorsNormed);
+  const vectorsNormed = tf.div(vectors, vectorNorms) as tf.Tensor2D;
+  saveVectorsNormed(data, vectorNorms, vectorsNormed);
 
   d3.selectAll<HTMLInputElement, undefined>("[name=projection]").on(
     "click",
@@ -168,6 +188,12 @@ getData().then(function (data: Record[]) {
         updatePositions(data, getComponent(2), getComponent(3));
       } else if (this.value == "girlboy") {
         useGirlBoyPositions(data, vectorsNormed);
+      } else if (this.value == "freqlen") {
+        updatePositions(
+          data,
+          (d) => Math.log(d.freqRank + 1),
+          (d) => d.norm || -1
+        );
       }
     }
   );
