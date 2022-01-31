@@ -78074,7 +78074,7 @@ return a / b;`;
         return concat2d([sims, distancesToABLine], /*axis=*/ 1);
     }
     // wordsA and wordsB need not have the same length.
-    function useAvgOfWordPairPostions2(data, vectors, wordsA, wordsB) {
+    function useAvgOfWordPairPositions2(data, vectors, wordsA, wordsB) {
         const vecsA = [], vecsB = [];
         data.forEach((d) => {
             if (wordsA.includes(d.word) && d.vectorNormed) {
@@ -78095,10 +78095,10 @@ return a / b;`;
         /*axis=*/ 1, 
         /*keepDims=*/ true));
         const totDist = add$1(aggDistA, aggDistB);
-        const abScale = div$1(aggDistA, totDist);
+        const abScale = softmax$2(concat$2([aggDistA, aggDistB], /*axis=*/ 1));
         const coords = concat$2([abScale, totDist], /*axis=*/ 1);
         const coordsArr = coords.arraySync();
-        updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][1]);
+        updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][2]);
         showWords(wordsA.concat(wordsB));
     }
     // wordsA and wordsB must be the same length.
@@ -78140,16 +78140,19 @@ return a / b;`;
                 updatePositions(data, (d) => Math.log(d.freqRank + 1), (d) => d.norm || -1);
             }
             else if (this.value == "gender") {
-                useAvgOfWordPairPositions(data, vectorsNormed, ["girl", "woman", "female", "she"], ["boy", "man", "male", "he"]);
+                useAvgOfWordPairPositions(data, vectorsNormed, ["girl", "woman", "female", "she", "herself", "mother", "daughter"], ["boy", "man", "male", "he", "himself", "father", "son"]);
             }
             else if (this.value == "liberty") {
                 useAvgOfWordPairPositions(data, vectorsNormed, ["libertarian", "liberty", "libertarianism"], ["authoritarian", "authority", "authoritarianism"]);
             }
             else if (this.value == "gender2") {
-                useAvgOfWordPairPostions2(data, vectorsNormed, ["girl", "woman", "female", "she"], ["boy", "man", "male", "he"]);
+                useAvgOfWordPairPositions2(data, vectorsNormed, ["girl", "woman", "female", "she", "herself", "mother", "daughter"], ["boy", "man", "male", "he", "himself", "father", "son"]);
             }
             else if (this.value == "liberty2") {
-                useAvgOfWordPairPostions2(data, vectorsNormed, ["libertarian", "liberty", "libertarianism"], ["authoritarian", "authority", "authoritarianism"]);
+                useAvgOfWordPairPositions2(data, vectorsNormed, ["libertarian", "liberty", "libertarianism"], ["authoritarian", "authority", "authoritarianism"]);
+            }
+            else if (this.value == "chinaus") {
+                useAvgOfWordPairPositions(data, vectorsNormed, ["China", "Chinese"], ["U.S.", "American"]);
             }
         });
         const defaultColor = "#69b3a2";

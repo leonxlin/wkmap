@@ -168,7 +168,7 @@ function computeWordPairProjection(
 }
 
 // wordsA and wordsB need not have the same length.
-function useAvgOfWordPairPostions2(
+function useAvgOfWordPairPositions2(
   data: Record[],
   vectors: tf.Tensor2D,
   wordsA: string[],
@@ -204,14 +204,14 @@ function useAvgOfWordPairPostions2(
   );
 
   const totDist = tf.add(aggDistA, aggDistB);
-  const abScale = tf.div(aggDistA, totDist);
+  const abScale = tf.softmax(tf.concat([aggDistA, aggDistB], /*axis=*/ 1));
   const coords = tf.concat([abScale, totDist], /*axis=*/ 1);
   const coordsArr = coords.arraySync() as number[][];
 
   updatePositions(
     data,
     (d: Record) => coordsArr[d.freqRank][0],
-    (d: Record) => coordsArr[d.freqRank][1]
+    (d: Record) => coordsArr[d.freqRank][2]
   );
   showWords(wordsA.concat(wordsB));
 }
@@ -280,8 +280,8 @@ getData().then(function (data: Record[]) {
         useAvgOfWordPairPositions(
           data,
           vectorsNormed,
-          ["girl", "woman", "female", "she"],
-          ["boy", "man", "male", "he"]
+          ["girl", "woman", "female", "she", "herself", "mother", "daughter"],
+          ["boy", "man", "male", "he", "himself", "father", "son"]
         );
       } else if (this.value == "liberty") {
         useAvgOfWordPairPositions(
@@ -291,18 +291,26 @@ getData().then(function (data: Record[]) {
           ["authoritarian", "authority", "authoritarianism"]
         );
       } else if (this.value == "gender2") {
-        useAvgOfWordPairPostions2(
+        useAvgOfWordPairPositions2(
           data,
           vectorsNormed,
-          ["girl", "woman", "female", "she"],
-          ["boy", "man", "male", "he"]
+          ["girl", "woman", "female", "she", "herself", "mother", "daughter"],
+          ["boy", "man", "male", "he", "himself", "father", "son"]
         );
       } else if (this.value == "liberty2") {
-        useAvgOfWordPairPostions2(
+        useAvgOfWordPairPositions2(
           data,
           vectorsNormed,
           ["libertarian", "liberty", "libertarianism"],
           ["authoritarian", "authority", "authoritarianism"]
+        );
+      } else if (this.value == "chinaus") {
+        useAvgOfWordPairPositions(
+          data,
+          vectorsNormed,
+          ["China", "Chinese"],
+          ["U.S.", "American"]
+          // TODO: Adjectives are closer to the American side. Why?
         );
       }
     }
