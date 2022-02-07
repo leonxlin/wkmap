@@ -15,3 +15,4 @@ another wikipedia visualization project
 - `qrank.csv` from `https://qrank.wmcloud.org/`, downloaded 2022-01-16
 - `wdump-2075.nt` from https://wdumps.toolforge.org/dump/2080 - Filtered wikidata to instances of Q35120 (entity)
 - `wiki-news-300d-1M.vec` from https://fasttext.cc/docs/en/english-vectors.html
+- `wikipedia2vec_enwiki_20180420_300d.txt.bz2` from https://wikipedia2vec.github.io/wikipedia2vec/pretrained/
