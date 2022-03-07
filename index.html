@@ -14,8 +14,8 @@
       <div class="tooltip"></div>
     </div>
 
-
     <div class="knobs">
+      <!-- TODO: don't show options that don't work for the current data source. -->
       <label>
         <input type="radio" name="projection" value="comp01" checked />
         Components 0 and 1
@@ -49,10 +49,23 @@
         chinaus
       </label>
       <label>
+        <input type="radio" name="projection" value="chinaus_entities" />
+        chinaus_entities
+      </label>
+
+      <label>
         <input type="radio" name="projection" value="freqlen" />
         frequency rank, norm
       </label>
       <input type="text" name="customWord" />
+    </div>
+
+    <div class="data-sources">
+      <select name="data-sources">
+        <option value="">--Please choose a data source--</option>
+        <option value="./data/wiki-news-300d-50k-filtered.vec">fasttext wiki news 50k</option>
+        <option value="./data/wikipedia2vec_enwiki_20180420_300d_un_members.txt">Wikipedia2Vec UN member countries</option>
+      </select>
     </div>
 
     <script src="bundle.js"></script>

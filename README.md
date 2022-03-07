@@ -16,3 +16,7 @@ another wikipedia visualization project
 - `wdump-2075.nt` from https://wdumps.toolforge.org/dump/2080 - Filtered wikidata to instances of Q35120 (entity)
 - `wiki-news-300d-1M.vec` from https://fasttext.cc/docs/en/english-vectors.html
 - `wikipedia2vec_enwiki_20180420_300d.txt.bz2` from https://wikipedia2vec.github.io/wikipedia2vec/pretrained/
+
+## Notes
+
+- TODO: something is wrong with vector.ts; compare plots with commit 4231260a2dd85fe64e3d2af6a5b3337da6c80138 or earlier

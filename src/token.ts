@@ -7,7 +7,7 @@ export interface Token {
   // Index in source data (which may be sorted by frequency/importance).
   index: number;
 
-  // Properties related to the html element representing this record.
+  // Properties related to the html element representing this token.
   node?: Element;
   plotPos: number[];
 }
