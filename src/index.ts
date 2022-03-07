@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 
+import { Token } from "./token";
+
 import "@tensorflow/tfjs-backend-cpu";
 import "@tensorflow/tfjs-backend-webgl";
 import * as tf from "@tensorflow/tfjs-core";
@@ -31,33 +33,21 @@ const svg = d3
 
 const tooltip = d3.select(".tooltip");
 
-interface Record {
-  word: string;
-  vector: number[];
-  norm?: number;
-  vectorNormed?: number[];
-
-  // Rank by word frequency (0 corresponding to most frequent). Also, index into
-  freqRank: number;
-  node?: Element;
-  plotPos: number[];
-}
-
-async function getData(): Promise<Record[]> {
+async function getData(): Promise<Token[]> {
   const raw = await d3.text("./data/wiki-news-300d-50k-filtered.vec");
   const dsv = d3.dsvFormat(" ");
   return dsv.parseRows(raw).map((row, index) => {
     return {
-      word: row[0],
+      name: row[0],
       vector: row.slice(1).map((a) => parseFloat(a)),
-      freqRank: index,
+      index: index,
       plotPos: [0, 0],
     };
   });
 }
 
 function saveVectorsNormed(
-  data: Record[],
+  data: Token[],
   vectorNorms: tf.Tensor,
   vectorsNormed: tf.Tensor
 ) {
@@ -70,13 +60,13 @@ function saveVectorsNormed(
 }
 
 function getComponent(i: number) {
-  return (d: Record) => (d.vectorNormed ? d.vectorNormed[i] : d.vector[i]);
+  return (d: Token) => (d.vectorNormed ? d.vectorNormed[i] : d.vector[i]);
 }
 
 function updatePositions(
-  data: Record[],
-  getX: (d: Record) => number,
-  getY: (d: Record) => number
+  data: Token[],
+  getX: (d: Token) => number,
+  getY: (d: Token) => number
 ): void {
   // TODO: consider doing transforms within svg instead of in d3?
   // Add X axis
@@ -105,17 +95,17 @@ function updatePositions(
 
   d3.selectAll(".word-embedding")
     .each((d) => {
-      const dr = d as Record;
+      const dr = d as Token;
       dr.plotPos = [getX(dr), getY(dr)];
     })
     .attr("cx", function (d) {
-      return axisX(getX(d as Record));
+      return axisX(getX(d as Token));
     })
     .attr("cy", function (d) {
-      return axisY(getY(d as Record));
+      return axisY(getY(d as Token));
     })
     .filter((d) => {
-      return (d as Record).freqRank < 1000;
+      return (d as Token).index < 1000;
     })
     .style("display", "inline");
 }
@@ -124,7 +114,7 @@ function showWords(words: string[], highlight = false): void {
   const selection = d3
     .selectAll(".word-embedding")
     .filter((d) => {
-      return words.includes((d as Record).word);
+      return words.includes((d as Token).name);
     })
     .style("display", "inline");
 
@@ -142,14 +132,14 @@ function showWords(words: string[], highlight = false): void {
 function computeWordPairProjection(
   wordA: string,
   wordB: string,
-  data: Record[],
+  data: Token[],
   vectors: tf.Tensor2D
 ): tf.Tensor2D {
   let vecA!: tf.Tensor, vecB!: tf.Tensor;
   data.forEach((d) => {
-    if (d.word == wordA && d.vectorNormed) {
+    if (d.name == wordA && d.vectorNormed) {
       vecA = tf.tensor(d.vectorNormed);
-    } else if (d.word == wordB && d.vectorNormed) {
+    } else if (d.name == wordB && d.vectorNormed) {
       vecB = tf.tensor(d.vectorNormed);
     }
   });
@@ -182,7 +172,7 @@ function computeWordPairProjection(
 
 // wordsA and wordsB need not have the same length.
 function useAvgOfWordPairPositions2(
-  data: Record[],
+  data: Token[],
   vectors: tf.Tensor2D,
   wordsA: string[],
   wordsB: string[]
@@ -190,9 +180,9 @@ function useAvgOfWordPairPositions2(
   const vecsA = [] as tf.Tensor2D[],
     vecsB = [] as tf.Tensor2D[];
   data.forEach((d) => {
-    if (wordsA.includes(d.word) && d.vectorNormed) {
+    if (wordsA.includes(d.name) && d.vectorNormed) {
       vecsA.push(tf.tensor2d(d.vectorNormed, [300, 1]));
-    } else if (wordsB.includes(d.word) && d.vectorNormed) {
+    } else if (wordsB.includes(d.name) && d.vectorNormed) {
       vecsB.push(tf.tensor2d(d.vectorNormed, [300, 1]));
     }
   });
@@ -223,15 +213,15 @@ function useAvgOfWordPairPositions2(
 
   updatePositions(
     data,
-    (d: Record) => coordsArr[d.freqRank][0],
-    (d: Record) => coordsArr[d.freqRank][2]
+    (d: Token) => coordsArr[d.index][0],
+    (d: Token) => coordsArr[d.index][2]
   );
   showWords(wordsA.concat(wordsB));
 }
 
 // wordsA and wordsB must be the same length.
 function useAvgOfWordPairPositions(
-  data: Record[],
+  data: Token[],
   vectors: tf.Tensor2D,
   wordsA: string[],
   wordsB: string[]
@@ -245,25 +235,25 @@ function useAvgOfWordPairPositions(
 
   updatePositions(
     data,
-    (d: Record) => coordsArr[d.freqRank][0],
-    (d: Record) => coordsArr[d.freqRank][1]
+    (d: Token) => coordsArr[d.index][0],
+    (d: Token) => coordsArr[d.index][1]
   );
   showWords(wordsA.concat(wordsB));
 }
 
-function useGirlBoyPositions(data: Record[], vectors: tf.Tensor2D) {
+function useGirlBoyPositions(data: Token[], vectors: tf.Tensor2D) {
   const coords = computeWordPairProjection("girl", "boy", data, vectors);
   const coordsArr = coords.arraySync() as number[][];
 
   updatePositions(
     data,
-    (d: Record) => coordsArr[d.freqRank][0],
-    (d: Record) => coordsArr[d.freqRank][1]
+    (d: Token) => coordsArr[d.index][0],
+    (d: Token) => coordsArr[d.index][1]
   );
   showWords(["girl", "boy"]);
 }
 
-getData().then(function (data: Record[]) {
+getData().then(function (data: Token[]) {
   const vectors = tf.tensor2d(data.map((d) => d.vector));
   const vectorNorms = tf.norm(
     vectors,
@@ -286,7 +276,7 @@ getData().then(function (data: Record[]) {
       } else if (this.value == "freqlen") {
         updatePositions(
           data,
-          (d) => Math.log(d.freqRank + 1),
+          (d) => Math.log(d.index + 1),
           (d) => d.norm || -1
         );
       } else if (this.value == "gender") {
@@ -329,10 +319,10 @@ getData().then(function (data: Record[]) {
     }
   );
 
-  const freqRankToRadius = d3
+  const indexToRadius = d3
     .scalePow()
     .exponent(0.5)
-    .domain(d3.extent(data, (d) => d.freqRank) as [number, number])
+    .domain(d3.extent(data, (d) => d.index) as [number, number])
     .range([15, 2]);
 
   // Add dots
@@ -342,34 +332,31 @@ getData().then(function (data: Record[]) {
     .data(data)
     .join("circle")
     .attr("class", "word-embedding")
-    .attr("r", (d) => freqRankToRadius(d.freqRank))
+    .attr("r", (d) => indexToRadius(d.index))
     .style("fill", defaultColor)
     .style("opacity", 0.5)
     .style("display", "none")
-    .on("mouseover", function (event: MouseEvent, d: Record) {
+    .on("mouseover", function (event: MouseEvent, d: Token) {
       tooltip.style("display", "block");
     })
-    .on(
-      "mousemove",
-      function (this: d3.BaseType, event: MouseEvent, d: Record) {
-        const coords = d3.pointer(event, svg.node());
-        coords[0] += 10;
-        coords[1] += 10;
-        tooltip
-          .html(`${d.word}: ${d.plotPos}`)
-          .style("left", coords[0] + "px")
-          .style("top", coords[1] + "px");
-        d3.select(this).style("opacity", 1);
-      }
-    )
+    .on("mousemove", function (this: d3.BaseType, event: MouseEvent, d: Token) {
+      const coords = d3.pointer(event, svg.node());
+      coords[0] += 10;
+      coords[1] += 10;
+      tooltip
+        .html(`${d.name}: ${d.plotPos}`)
+        .style("left", coords[0] + "px")
+        .style("top", coords[1] + "px");
+      d3.select(this).style("opacity", 1);
+    })
     .on(
       "mouseleave",
-      function (this: d3.BaseType, event: MouseEvent, d: Record) {
+      function (this: d3.BaseType, event: MouseEvent, d: Token) {
         d3.select(this).style("opacity", 0.5);
         tooltip.style("display", "none");
       }
     )
-    .on("click", (event: MouseEvent, d: Record) => {
+    .on("click", (event: MouseEvent, d: Token) => {
       // Highlight the 10 nearest neighbors.
 
       d3.selectAll(".word-embedding").style("fill", defaultColor);
@@ -385,9 +372,7 @@ getData().then(function (data: Record[]) {
       const sim10 = [...similarities].sort(d3.descending)[10];
 
       showWords(
-        data
-          .filter((d) => similarities[d.freqRank] >= sim10)
-          .map((d) => d.word),
+        data.filter((d) => similarities[d.index] >= sim10).map((d) => d.name),
         /*highlight=*/ true
       );
     });

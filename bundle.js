@@ -77987,9 +77987,9 @@ return a / b;`;
             const dsv = dsvFormat(" ");
             return dsv.parseRows(raw).map((row, index) => {
                 return {
-                    word: row[0],
+                    name: row[0],
                     vector: row.slice(1).map((a) => parseFloat(a)),
-                    freqRank: index,
+                    index: index,
                     plotPos: [0, 0],
                 };
             });
@@ -78040,14 +78040,14 @@ return a / b;`;
             return axisY(getY(d));
         })
             .filter((d) => {
-            return d.freqRank < 1000;
+            return d.index < 1000;
         })
             .style("display", "inline");
     }
     function showWords(words, highlight = false) {
         const selection = selectAll(".word-embedding")
             .filter((d) => {
-            return words.includes(d.word);
+            return words.includes(d.name);
         })
             .style("display", "inline");
         if (highlight) {
@@ -78063,10 +78063,10 @@ return a / b;`;
     function computeWordPairProjection(wordA, wordB, data, vectors) {
         let vecA, vecB;
         data.forEach((d) => {
-            if (d.word == wordA && d.vectorNormed) {
+            if (d.name == wordA && d.vectorNormed) {
                 vecA = tensor(d.vectorNormed);
             }
-            else if (d.word == wordB && d.vectorNormed) {
+            else if (d.name == wordB && d.vectorNormed) {
                 vecB = tensor(d.vectorNormed);
             }
         });
@@ -78087,10 +78087,10 @@ return a / b;`;
     function useAvgOfWordPairPositions2(data, vectors, wordsA, wordsB) {
         const vecsA = [], vecsB = [];
         data.forEach((d) => {
-            if (wordsA.includes(d.word) && d.vectorNormed) {
+            if (wordsA.includes(d.name) && d.vectorNormed) {
                 vecsA.push(tensor2d(d.vectorNormed, [300, 1]));
             }
-            else if (wordsB.includes(d.word) && d.vectorNormed) {
+            else if (wordsB.includes(d.name) && d.vectorNormed) {
                 vecsB.push(tensor2d(d.vectorNormed, [300, 1]));
             }
         });
@@ -78108,7 +78108,7 @@ return a / b;`;
         const abScale = softmax$2(concat$2([aggDistA, aggDistB], /*axis=*/ 1));
         const coords = concat$2([abScale, totDist], /*axis=*/ 1);
         const coordsArr = coords.arraySync();
-        updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][2]);
+        updatePositions(data, (d) => coordsArr[d.index][0], (d) => coordsArr[d.index][2]);
         showWords(wordsA.concat(wordsB));
     }
     // wordsA and wordsB must be the same length.
@@ -78119,13 +78119,13 @@ return a / b;`;
         }
         const coords = div$1(addN$2(projs), wordsA.length);
         const coordsArr = coords.arraySync();
-        updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][1]);
+        updatePositions(data, (d) => coordsArr[d.index][0], (d) => coordsArr[d.index][1]);
         showWords(wordsA.concat(wordsB));
     }
     function useGirlBoyPositions(data, vectors) {
         const coords = computeWordPairProjection("girl", "boy", data, vectors);
         const coordsArr = coords.arraySync();
-        updatePositions(data, (d) => coordsArr[d.freqRank][0], (d) => coordsArr[d.freqRank][1]);
+        updatePositions(data, (d) => coordsArr[d.index][0], (d) => coordsArr[d.index][1]);
         showWords(["girl", "boy"]);
     }
     getData().then(function (data) {
@@ -78147,7 +78147,7 @@ return a / b;`;
                 useGirlBoyPositions(data, vectorsNormed);
             }
             else if (this.value == "freqlen") {
-                updatePositions(data, (d) => Math.log(d.freqRank + 1), (d) => d.norm || -1);
+                updatePositions(data, (d) => Math.log(d.index + 1), (d) => d.norm || -1);
             }
             else if (this.value == "gender") {
                 useAvgOfWordPairPositions(data, vectorsNormed, ["girl", "woman", "female", "she", "herself", "mother", "daughter"], ["boy", "man", "male", "he", "himself", "father", "son"]);
@@ -78167,9 +78167,9 @@ return a / b;`;
                 );
             }
         });
-        const freqRankToRadius = pow$3()
+        const indexToRadius = pow$3()
             .exponent(0.5)
-            .domain(extent$1(data, (d) => d.freqRank))
+            .domain(extent$1(data, (d) => d.index))
             .range([15, 2]);
         // Add dots
         svg
@@ -78178,7 +78178,7 @@ return a / b;`;
             .data(data)
             .join("circle")
             .attr("class", "word-embedding")
-            .attr("r", (d) => freqRankToRadius(d.freqRank))
+            .attr("r", (d) => indexToRadius(d.index))
             .style("fill", defaultColor)
             .style("opacity", 0.5)
             .style("display", "none")
@@ -78190,7 +78190,7 @@ return a / b;`;
             coords[0] += 10;
             coords[1] += 10;
             tooltip
-                .html(`${d.word}: ${d.plotPos}`)
+                .html(`${d.name}: ${d.plotPos}`)
                 .style("left", coords[0] + "px")
                 .style("top", coords[1] + "px");
             select$3(this).style("opacity", 1);
@@ -78205,9 +78205,7 @@ return a / b;`;
             const similarities = flatten(matMul$1(vectorsNormed, tensor2d(d.vectorNormed || d.vector, [300, 1]))
                 .arraySync());
             const sim10 = [...similarities].sort(descending$2)[10];
-            showWords(data
-                .filter((d) => similarities[d.freqRank] >= sim10)
-                .map((d) => d.word), 
+            showWords(data.filter((d) => similarities[d.index] >= sim10).map((d) => d.name), 
             /*highlight=*/ true);
         });
         updatePositions(data, getComponent(0), getComponent(1));
