@@ -78028,7 +78028,7 @@ return a / b;`;
             .attr("class", "y-axis")
             .attr("transform", `translate(${margin.left}, 0)`)
             .call(axisLeft(axisY));
-        selectAll(".word-embedding")
+        selectAll(".embedding")
             .each((d) => {
             const dr = d;
             dr.plotPos = [getX(dr), getY(dr)];
@@ -78045,13 +78045,13 @@ return a / b;`;
             .style("display", "inline");
     }
     function showWords(words, highlight = false) {
-        const selection = selectAll(".word-embedding")
+        const selection = selectAll(".embedding")
             .filter((d) => {
             return words.includes(d.name);
         })
             .style("display", "inline");
         if (highlight) {
-            selectAll(".word-embedding").style("fill", defaultColor);
+            selectAll(".embedding").style("fill", defaultColor);
             selection.style("fill", "red").each(function () {
                 const node = this;
                 if (node.parentNode) {
@@ -78177,7 +78177,7 @@ return a / b;`;
             .selectAll("dot")
             .data(data)
             .join("circle")
-            .attr("class", "word-embedding")
+            .attr("class", "embedding")
             .attr("r", (d) => indexToRadius(d.index))
             .style("fill", defaultColor)
             .style("opacity", 0.5)
@@ -78201,7 +78201,7 @@ return a / b;`;
         })
             .on("click", (event, d) => {
             // Highlight the 10 nearest neighbors.
-            selectAll(".word-embedding").style("fill", defaultColor);
+            selectAll(".embedding").style("fill", defaultColor);
             const similarities = flatten(matMul$1(vectorsNormed, tensor2d(d.vectorNormed || d.vector, [300, 1]))
                 .arraySync());
             const sim10 = [...similarities].sort(descending$2)[10];

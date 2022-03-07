@@ -93,7 +93,7 @@ function updatePositions(
     .attr("transform", `translate(${margin.left}, 0)`)
     .call(d3.axisLeft(axisY));
 
-  d3.selectAll(".word-embedding")
+  d3.selectAll(".embedding")
     .each((d) => {
       const dr = d as Token;
       dr.plotPos = [getX(dr), getY(dr)];
@@ -112,14 +112,14 @@ function updatePositions(
 
 function showWords(words: string[], highlight = false): void {
   const selection = d3
-    .selectAll(".word-embedding")
+    .selectAll(".embedding")
     .filter((d) => {
       return words.includes((d as Token).name);
     })
     .style("display", "inline");
 
   if (highlight) {
-    d3.selectAll(".word-embedding").style("fill", defaultColor);
+    d3.selectAll(".embedding").style("fill", defaultColor);
     selection.style("fill", "red").each(function (this) {
       const node = this as Element;
       if (node.parentNode) {
@@ -331,7 +331,7 @@ getData().then(function (data: Token[]) {
     .selectAll("dot")
     .data(data)
     .join("circle")
-    .attr("class", "word-embedding")
+    .attr("class", "embedding")
     .attr("r", (d) => indexToRadius(d.index))
     .style("fill", defaultColor)
     .style("opacity", 0.5)
@@ -359,7 +359,7 @@ getData().then(function (data: Token[]) {
     .on("click", (event: MouseEvent, d: Token) => {
       // Highlight the 10 nearest neighbors.
 
-      d3.selectAll(".word-embedding").style("fill", defaultColor);
+      d3.selectAll(".embedding").style("fill", defaultColor);
 
       const similarities = tf.util.flatten(
         tf
