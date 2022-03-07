@@ -78035,7 +78035,12 @@ return a / b;`;
           if (!this.tokens)
               return [];
           this.tokens.forEach((d) => {
-              d.plotPos = [d.vector[component1], d.vector[component2]];
+              if (d.vectorNormed) {
+                  d.plotPos = [d.vectorNormed[component1], d.vectorNormed[component2]];
+              }
+              else {
+                  throw new Error(`vectorNormed not found for ${d.name}`);
+              }
           });
           return this.tokens;
       }
@@ -78045,7 +78050,7 @@ return a / b;`;
               return [];
           const projs = [];
           for (let i = 0; i < tokenNamesA.length; ++i) {
-              projs.push(computeWordPairProjection(tokenNamesA[i], tokenNamesB[i], this.tokens, this.vectors));
+              projs.push(computeWordPairProjection(tokenNamesA[i], tokenNamesB[i], this.tokens, this.vectorsNormed));
           }
           const coords = div$1(addN$2(projs), tokenNamesA.length);
           const coordsArr = coords.arraySync();
@@ -78067,8 +78072,8 @@ return a / b;`;
           });
           const matA = concat2d(vecsA, /*axis=*/ 1);
           const matB = concat2d(vecsB, /*axis=*/ 1);
-          const simsA = matMul$1(this.vectors, matA);
-          const simsB = matMul$1(this.vectors, matB);
+          const simsA = matMul$1(this.vectorsNormed, matA);
+          const simsB = matMul$1(this.vectorsNormed, matB);
           const aggDistA = exp$2(mean$1(log$2(maximum$2(mul(sub$2(1, simsA), 0.5), 0)), 
           /*axis=*/ 1, 
           /*keepDims=*/ true));

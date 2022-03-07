@@ -95,7 +95,11 @@ export class VectorManager {
   projectToComponents(component1: number, component2: number): Token[] {
     if (!this.tokens) return [];
     this.tokens.forEach((d) => {
-      d.plotPos = [d.vector[component1], d.vector[component2]];
+      if (d.vectorNormed) {
+        d.plotPos = [d.vectorNormed[component1], d.vectorNormed[component2]];
+      } else {
+        throw new Error(`vectorNormed not found for ${d.name}`);
+      }
     });
     return this.tokens;
   }
@@ -114,7 +118,7 @@ export class VectorManager {
           tokenNamesA[i],
           tokenNamesB[i],
           this.tokens,
-          this.vectors
+          this.vectorsNormed
         )
       );
     }
@@ -144,8 +148,8 @@ export class VectorManager {
 
     const matA = tf.concat2d(vecsA, /*axis=*/ 1);
     const matB = tf.concat2d(vecsB, /*axis=*/ 1);
-    const simsA = tf.matMul(this.vectors, matA);
-    const simsB = tf.matMul(this.vectors, matB);
+    const simsA = tf.matMul(this.vectorsNormed, matA);
+    const simsB = tf.matMul(this.vectorsNormed, matB);
     const aggDistA = tf.exp(
       tf.mean(
         tf.log(tf.maximum(tf.mul(tf.sub(1, simsA), 0.5), 0)),

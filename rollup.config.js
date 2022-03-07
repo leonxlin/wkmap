@@ -14,15 +14,4 @@ export default [
     ],
     plugins: [typescript(), commonjs(), resolve()],
   },
-  {
-    input: ["src/countries.ts"],
-    output: [
-      {
-        file: "countries_bundle.js",
-        format: "iife",
-        name: "countries_bundle",
-      },
-    ],
-    plugins: [typescript(), commonjs(), resolve()],
-  },
 ];
